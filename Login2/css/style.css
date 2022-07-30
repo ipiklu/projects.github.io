@@ -1,0 +1,92 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{
+	background-color: #FFFFFF;
+	color: #000000;
+}
+
+
+.loginbox{
+	padding-top: 90px;
+	float: right;
+    width: 100%;
+	max-width: 50%;
+	height:auto;
+}
+
+h1{
+	padding: 0;
+	font-size:50px;
+	text-align: center;
+	color: #646464;
+	max-width: 100%;
+	height:auto;
+}
+
+h2{
+	text-align: left;
+	color: #646464;
+	width: 250px;
+	max-width: 100%;
+	height:auto;
+}
+h1, h2, h3, h4, h5, h6 {
+ 
+    font-family: "Overlock", Arial, Helvetica, sans-serif;
+}
+
+.img-area{
+	
+	float: left;
+	width: 100%;
+	max-width: 100%;
+	height:auto;	
+}
+input[type=email], input[type=password] {
+  width: 260px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 9px;
+  font-size: 16px;
+  background-color:#F4C1DD;
+  background-position: 20px 20px; 
+  background-repeat: no-repeat;
+  padding: 12px 20px 12px 40px;
+  transition: width 0.4s ease-in-out;
+}
+
+input[type=email]:focus {
+  width: 270px;
+}
+input[type=password]:focus {
+  width: 270px;
+}
+
+.button{
+    background-color: #AA205C; /* toppaneColor */
+    border: none;
+	width: 260px;
+	height: 50px;
+    color: white;
+    text-align: center;
+	font-style:normal;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+	background-image:-webkit-linear-gradient(top, #AA205C, #AD0A36);
+	
+}
+
+.flx{
+	display:flex;
+	}
+	
+footer{
+	text-align: center;
+	color: #646464;
+	font-family: "Overlock", Arial, Helvetica, sans-serif;
+}
