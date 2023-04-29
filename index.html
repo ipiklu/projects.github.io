@@ -1,26 +1,75 @@
 <!doctype html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="alertify.js-0.3.11/themes/alertify.core.css" />
+	<link rel="stylesheet" href="alertify.js-0.3.11/themes/alertify.default.css" />
+    <script src="alertify.js-0.3.11/lib/alertify.min.js"></script>
 <meta charset="utf-8">
-<title>INDEX</title>
+<meta name="theme-color" content="#AA205C" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PikLu's Server</title>
 </head>
 
 <body>
-<h1>Projects</h1>
-<li>
-	<a href="Login/index.html" >Login</a>
-</li>
-<li>
-	<a href="Login-v2.0/index.html">Login-v2.0</a>
-</li>
-<li>
-	<a href="dashboard/index.html">Dashboard</a>
-</li>
-<li>
-	<a href="dashboard-v2.0/index.html">Dashboard-v2.0</a>
-</li>
-<li>
-	<a href="timepass/server/index.html">Timepass</a>
-</li>
+	<div class="header" style="background-color:#AA205C">
+       <a href="../server/index.html" title="Home"><img src="img/s.gif" style="max-width: 2%; max-height: 3%; float:left"/></a>
+    </div>
+
+	<p align="center"><img src="img/cLL.gif"></p>
+    	<h1 align="center" class="loader" style="color:#AA205C; font-family:'Century Gothic'" >Welcome to server maintenance<span class="loader__dot">.</span><span class="loader__dot">.</span><span class="loader__dot">.</span><span onClick="return(view());" title="About Us" ><font style="font-size: 20px;" color="#AA205C"></font><img src="img/LOADING.gif" style="width:50px"></span></button></h1>
+        
+        <div align="center">
+       	  <font color="#AA205C"><h2 align="center">Server Index:</h2></font>
+            <img src="img/settings.gif" style="max-width:33px" />
+                <table width="500" border="2" style="max-width:70%">
+                	<tr>
+                   		<td width="38"><a href="Login/index.html" title="Login page design"><img src="img/folder.png" style="max-width:27px"/></td>
+                        <td width="507" ><a href="Login/index.html" title="Login page design" style="color:#AA205C;"> Login </a></td>
+                	</tr>
+                    <tr>
+                   		<td width="38"><a href="Login-v2.0/index.html" title="Login_V2 page design"><img src="img/folder.png" style="max-width:27px"/></td>
+                        <td width="507" ><a href="Login-v2.0/index.html" title="Login_V2 page design" style="color:#AA205C;" > Login-v2.0 </a></td>
+                	</tr>
+                    <tr>
+                   		<td width="38"><a href="dashboard/index.html" title="Dashboard page design"><img src="img/folder.png" style="max-width:27px"/></td>
+                        <td width="507" ><a href="dashboard/index.html" title="Dashboard page design" style="color:#AA205C;" > Dashboard </a></td>
+                	</tr>
+                    <tr>
+                   		<td width="38"><a href="dashboard-v2.0/index.html" title="Dashboard-V2 page design"><img src="img/folder.png" style="max-width:27px"/></td>
+                        <td width="507" ><a href="dashboard-v2.0/index.html" title="Dashboard-V2 page design" style="color:#AA205C;" > Dashboard-v2.0 </a></td>
+                	</tr>
+                    <tr>
+                   		<td width="38"><a href="timepass/server/index.html" title="Informative Project"><img src="img/folder.png" style="max-width:27px"/></td>
+                        <td width="507" ><a href="timepass/server/index.html" title="Informative Project" style="color:#AA205C;" > Timepass </a></td>
+                	</tr>
+                 </table>             
+        </div>
+        
+     
+<!-------DOT style --->        
+<style>    
+@keyframes blink {50% { color: transparent }}
+.loader__dot { animation: 1s blink infinite }
+.loader__dot:nth-child(2) { animation-delay: 250ms }
+.loader__dot:nth-child(3) { animation-delay: 500ms }
+</style> 
+<!--------------------Hover Only--------->
+<script> 
+	  function view() {
+          alertify.alert("<a href='https://www.linkedin.com/in/sayantan-kundu-52650758'><img src='img/linkedin.png' style='max-width: 90%; max-height: 70%'/></a><br/><a href='https://twitter.com/piklu21'><img src='img/twitter.png' style='max-width: 30%; max-height: 30%'/></a><a href='https://www.facebook.com/kundupiklu'><img src='img/facebook.jpg' style='max-width: 30%; max-height: 30%'/> </a><a href='https://www.instagram.com/i_piklu/'><img src='img/instagram.png' style='max-width: 30%; max-height: 30%'/></a><p style='color:#AA205C; font-style:italic; font-weight:bolder; font-size:25px' />STAY HOME, STAY SAFE.</p><p style='color:#AA205C; font-style:italic; font-weight:bolder; font-size:25px' />#Covid-19 #HomeQuarantine</p>");
+          return false;
+    } 
+    </script>
+
+<footer align="center" style="position:fixed; color:#AA205C; bottom: 0; width: 100%;">
+<center> <font color="#AA205C">
+   <p id="date"> </p>
+   <script>
+	document.getElementById("date").innerHTML = Date();
+   </script> </font></center>
+    	<p>|| Copyright protected &copy; <script>document.write(new Date().getFullYear())</script>, All Rights Not Reserved ||</p><p> Design by Sayantan Kundu</p>
+    </footer>
+
 </body>
 </html>
