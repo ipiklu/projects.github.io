@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<!---Design--->
+	<link rel="stylesheet" href="css/design.css" />
+<!---Alert--->
+	<link rel="stylesheet" href="../alertify.js-0.3.11/themes/alertify.core.css" />
+	<link rel="stylesheet" href="../alertify.js-0.3.11/themes/alertify.default.css" />
+    <script src="../alertify.js-0.3.11/lib/alertify.min.js"></script>
+    <script src="js/design.js"></script>
+    
+<title>Notebook</title>
+</head>
+
+<body>
+	<div class="header" style="background-color:#AA205C">
+       <a href="../index.html" title="Home"><img src="img/s.gif" style="max-width: 2%; max-height: 3%; float:left"/></a>
+       <button class="btn signup" onClick="window.location='../index.html'" title="Go back to Timepass-project library" style="background:#AA205C; color:#EEE; float:right">
+     	<img src="img/back.gif" style="max-width:10px" />Back</button>
+    </div>
+    <br>
+    <br>
+    <p contenteditable="true" title="Click-me and press enter to expand" class="btn signup"/>
+    
+    <!-----------------------Footer---------------------------> 
+	<footer align="center" style="position:relative; color:#AA205C; bottom: 0; width: 100%;">
+<center> <font color="#AA205C">
+   <p id="date"> </p>
+   <script>
+	document.getElementById("date").innerHTML = Date();
+   </script> </font></center>
+    	<p>|| Copyright protected &copy; <script>document.write(new Date().getFullYear())</script>, All Rights Not Reserved ||</p><p> Design by Sayantan Kundu</p>
+    </footer>
+    <center>
+       <span onClick="return(view());" title="About Us" ><font style="font-size: 20px;" color="#AA205C"></font><img src="img/LOADING.gif" style="width:50px"></span>
+    </center>
+</body>
+</html>
