@@ -215,6 +215,7 @@
         border: none;
         cursor: pointer;
         border-radius: 20px;
+		font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
       }
       .gridc {
         grid-column-gap: 4px;
