@@ -35,6 +35,21 @@
    </script> </font></center>
     	<p>|| Copyright protected &copy; <script>document.write(new Date().getFullYear())</script>, All Rights Not Reserved ||</p><p> Design by Sayantan Kundu</p>
     </footer>
+    
+   <!-----------------------Disable CTRL_Key & Right Click---------------------------> 
+    <script>
+		document.addEventListener("keydown", function (event){
+    		if (event.ctrlKey){
+       			event.preventDefault();
+    		}
+    		if(event.keyCode == 123){
+       			event.preventDefault();
+    		}
+		});
+		document.addEventListener('contextmenu', 
+     		event => event.preventDefault()
+		);    
+    </script>
     <center>
        <span onClick="return(view());" title="About Us" ><font style="font-size: 20px;" color="#AA205C"></font><img src="img/LOADING.gif" style="width:50px"></span>
     </center>
