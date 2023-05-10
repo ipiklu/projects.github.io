@@ -6,12 +6,6 @@ box-sizing border box is used to include
 padding and border in the total width
 and height of the element, and font-family
 can be specified by the user */
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: content-box;
-	font-family: 'Courier New', Courier, monospace;
-}
    @font-face {
             font-family: google;
             src: url("fonts/google_sans/GoogleSans-Regular.ttf");
