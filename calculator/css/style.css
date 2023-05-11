@@ -74,6 +74,7 @@ and border can all be customized by the user.
 The border-radius property allows you to give
 an element rounded corners.*/
 input[type=text] {
+	width: 210px;
 	font-size: 12px;
 	padding: 15px 0;
 	font-weight: 900;
