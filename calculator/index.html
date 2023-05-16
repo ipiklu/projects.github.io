@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>Percentage Calculator</title>
+    <link rel = "icon" href="img/s.gif" type="image/x-icon">
 	<link rel="stylesheet" href="css/style.css" type="text/css" />
     <script src="js/default.js"></script>
     <!---Alert--->
@@ -15,14 +16,18 @@
 <body>
 <div class="header" style="background-color:#AA205C">
        <a href="../index.html" title="Home"><img src="img/s.gif" style="max-width: 2%; max-height: 3%; float:left"/></a>
-       <button class="btn signup" onClick="window.location='../index.html'" title="Go back to main library" style="background:#AA205C; color:#EEE; float:right">
+       <button class="btn signup btnEffect" onClick="window.location='../index.html'" title="Go back to main library" style="background:#AA205C; color:#EEE; float:right">
      	<img src="img/back.gif" style="max-width:10px" />Back</button>
-       <button class="btn signup" onClick="window.print()" title="Print this page" style="background:#AA205C; color:#EEE; float:right">
+       <button class="btn signup btnEffect" onClick="window.print()" title="Print this page" style="background:#AA205C; color:#EEE; float:right">
      	<img src="img/print.gif" style="max-width:10px" />Print</button>
+        <button class="btn signup btnEffect" onClick="window.location='index.html'" title="Print this page" style="background:#AA205C; color:#EEE; float:right">
+     	<img src="img/settings.gif" style="max-width:10px" />Refresh</button>
+        
     </div>
 
     
     <br /><br /><br><br>
+    
 <div class="flx2  btn">    
 	
 	<div class="btn signup">
@@ -35,7 +40,8 @@
 
 		<!-- onclick event is to call the function when
 			user click on the button-->
-		<button class="btn signup" onclick="percentage_1()">Calculate</button><br>
+		<button class="btn signup btnEffect" onclick="percentage_1()">Calculate</button><br>
+     	
 
 			<!-- Read-only input field to display
 			output and cannot be modified -->
@@ -52,7 +58,7 @@
 		
 		<!-- onclick event is to call the function
 			when user click on the button -->
-		<button class="btn signup" onclick="percentage_2()">Calculate</button>
+		<button class="btn signup btnEffect" onclick="percentage_2()">Calculate</button>
 		<br>
 		
 		<!-- Read-only input field to display

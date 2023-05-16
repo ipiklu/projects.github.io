@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Generate PDF using jsPDF Library</title>
+      <!--JSPDF CDN-->
+      <script src="convert.js"></script>
+  
+</head>
+<body>
+   <div class="container">
+      <div id="generatePdf">
+         <h2>Enter data and generate PDF</h2>
+         <form>
+         	<p>First Name</p>
+         	<input type="text" />
+            <p>Last Name</p>
+            <input type="text" />
+            <p>Gender</p>
+            <input type="radio" value="Male">
+  				<label for="male">Male</label>
+  			<input type="radio" value="Female">
+  				<label for="female">Female</label>
+			<p>Date of Birth</p>
+            <input type="date" />
+            <p>Email ID</p>
+            <input type="email" />
+            <p>Address</p>
+            <input type="textarea" />
+         </form>
+         <br>
+         <br>
+      </div>
+      <button id="pdfButton">Generate PDF</button>
+   </div>
+   <script>
+      var button = document.getElementById("pdfButton");
+      button.addEventListener("click", function () {
+         var doc = new jsPDF("p", "mm", [300, 300]);
+         var makePDF = document.querySelector("#generatePdf");
+         // fromHTML Method
+         doc.fromHTML(makePDF);
+         doc.save("output.pdf");
+      });
+   </script>
+</body>
+</html>
