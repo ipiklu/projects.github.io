@@ -97,7 +97,7 @@ div {
         font-family: google;
         background: #AA205c;
         border: none;
-        width: 40%;
+        width:auto;
         padding: 8px;
         cursor: pointer;
         height: auto;
