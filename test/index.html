@@ -1,114 +1,97 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<!---Design--->
-	<link rel="stylesheet" href="css/design.css" />
-<!---Alert--->
-	<link rel="stylesheet" href="../alertify.js-0.3.11/themes/alertify.core.css" />
-	<link rel="stylesheet" href="../alertify.js-0.3.11/themes/alertify.default.css" />
-    <script src="../alertify.js-0.3.11/lib/alertify.min.js"></script>
-    <script src="js/design.js"></script>
-     <!-- html2pdf CDN-->
-    <script src=
-"https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js">
-    </script>
-    <!-- WebCam CDN-->
-     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.js">
+   <title>Generate PDF using jsPDF Library</title>
+      <!--JSPDF CDN-->
+      <script src="convert.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.js">
         </script>
-    
-<title>Generate PDF using jsPDF Library</title>
-<link rel = "icon" href="img/s.gif" type="image/x-icon">
+     <link rel="stylesheet" href="style.css" type="text/css" />
+  
 </head>
-
 <body>
-	<div class="header" style="background-color:#AA205C">
-       <a href="../index.html" title="Home"><img src="img/s.gif" style="max-width: 2%; max-height: 3%; float:left"/></a>
-       <button class="btn signup btnEffect" onClick="window.location='../index.html'" title="Go back to main library" style="background:#AA205C; color:#EEE; float:right">
-     	<img src="img/back.gif" style="max-width:10px" />Back</button>
-       <button class="btn signup btnEffect" onClick="window.print()" title="Print this page" style="background:#AA205C; color:#EEE; float:right">
-     	<img src="img/print.gif" style="max-width:10px" />Print</button>
+   <!--Header.-->
+    <div style="width:100%;overflow:hidden;margin:0;padding:20px 0;">
+        <h1>Online Test (Sample)</h1>
     </div>
-    <br>
-    <br>
-    <br>
-    <div align="center">
-      <div align="center">
-       <h2>Enter data and generate PDF</h2>
-       <form id="makepdf" class="flx2">
-        <table>
-        <tr>
-        <td>
-          	<p id="snapShot" class="imgBox"></p>
-            <br/><br/>
-            <input type="button" id="btTakeSnap" class="btn signup btnEffect" onclick="onlineTestApp.takeSnapshot(this)" value="Take a Snapshot" />
-       		<br/><br/>
-        </td>
-     <!--The floating picture box to capture webcam image.-->
-        <td>
-        	<div id="picturebox" style="width:100%;height:100%;">
-              <div class="revdivshowimg">
+    
+    <!--Student details.-->
+    <div id="student_details">
+        <h2>Student Details</h2>
+        <ul>
+            <li><label>Name:</label> 
+                <input type="text" id="txtStudentName" placeholder="enter your name" />
+            </li>
+            <li><label>Class:</label> 
+                <input type="text" id="txtClass" placeholder="enter your class" />
+            </li>
+            <li><label>Picture:</label>
+                <p id="snapShot" style="width:125px;height:107px;border:solid 1px #888;margin-left:2%;"></p>
+                
+                <input type="button" id="btTakeSnap" 
+                    onclick="onlineTestApp.takeSnapshot(this)" 
+                        value="Take a Snapshot" />
+            </li>
+        </ul>
+    </div>
+
+    <!--Data entry section.-->
+    <div id="container_data_entry">
+        <!--Suject header.-->
+        <h2 id="subject"><b>Subject - Computer Science</b></h2> <br />
+
+        <!--Questions and input fields for answers.-->
+        <div id="container" style="width:100%;overflow:auto;">
+            <ul>
+                <li>
+                    <b>Q No. 1:</b> 
+                        What are Binary Operators? Give examples of arithmatic binary operators.
+                </li>
+                <li><textarea id="a1"></textarea></li>
+            </ul>
+            <ul>
+                <li>
+                    <b>Q No. 2:</b> 
+                        What is type conversion? What is meant by implicit and explicit type conversion?
+                </li>
+                <li><textarea id="a2"></textarea></li>
+            </ul>
+            <ul>
+                <li><b>
+                    Q No. 3:</b> 
+                        What do you mean by dynamic initialization of a variable? Give an example.
+                </li>
+                <li><textarea id="a3"></textarea></li>
+            </ul>
+        </div>
+        
+        <!--The floating picture box to capture webcam image.-->
+        <div id="picturebox" style="width:100%;height:100%;">
+            <div class="revdivshowimg">
 
                 <div id="camera" style="height:auto;text-align:center;margin:0 auto;"></div>
 
                 <p>
                     <!--Add picture.-->
-                    <input type="button" class="btn signup btnEffect" value="Ok" id="btAddPicture" 
+                    <input type="button" value="Ok" id="btAddPicture" 
                         onclick="onlineTestApp.addCamPicture()" /> 
 
                     <!--Cancel it.-->
-                    <input type="button" class="btn signup btnEffect" value="Cancel" 
+                    <input type="button" value="Cancel" 
                         onclick="document.getElementById('picturebox').style.display = 'none';" />
                 </p>
                 <input type="hidden" id="dataurl" />
             </div>
-        	</div>
-         </td>
-        </tr>
-        
-        <tr>
-         	<td>First Name
-         		<input type="text" placeholder="Please type your first name"/>
-            </td>
-        </tr>
-        <tr>
-            <td>Last Name
-            	<input type="text" placeholder="Please type your last name" />
-            </td>
-        <tr>
-            <td>Gender
-            	<input type="radio" name="options" value="Male">
-  					<label for="male">Male</label>
-  				<input type="radio" name="options" value="Female">
-  					<label for="female">Female</label>
-			</td>
-        </tr>
-        <tr>
-			<td>Date of Birth
-            	<input type="date" />
-            </td>
-        </tr>
-        <tr>
-            <td>Email ID
-            	<input type="email" placeholder="Please type your Email"/>
-            </td>
-        </tr>
-        <tr>
-            <td>Address
-            	<textarea placeholder="Please type your address"></textarea>
-            </td>
-         </tr>
-         </tr>
-         </table>
-         </form>
-         <br>
-      </div>
-      <button id="button" class="btn signup btnEffect">Generate PDF</button>
-   </div>
-   <br>
-   <br>
- <script>
+        </div>
+        <div style="text-align:center;">
+            <!--Convert the data to PDF.-->
+            <input type="button" style="" value="Print to PDF" id="btPrint" 
+                onclick="onlineTestApp.printPage();" />
+        </div>
+    </div>
+
+  </body>
+  <script>
   // Camera Settings.
     Webcam.set({
         width: 220,
@@ -206,20 +189,5 @@
         }
     }
   </script>
-    
-    
-    
-    <!-----------------------Footer---------------------------> 
-	<footer align="center" style="position:relative; color:#AA205C; bottom: 0; width: 100%;">
-<center> <font color="#AA205C">
-   <p id="date"> </p>
-   <script>
-	document.getElementById("date").innerHTML = Date();
-   </script> </font></center>
-    	<p>|| Copyright protected &copy; <script>document.write(new Date().getFullYear())</script>, All Rights Not Reserved ||</p><p> Design by Sayantan Kundu</p>
-    </footer>
-    <center>
-       <span onClick="return(view());" title="About Us" ><font style="font-size: 20px;" color="#AA205C"></font><img src="img/LOADING.gif" style="width:50px"></span>
-    </center>
-</body>
+  
 </html>
