@@ -14,7 +14,11 @@ div {
 	box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034);
 }
 form {
-  width:75%;
+  display: flex;
+  font-weight: 400;
+  font-family: 'Inter';
+  -left: 20vw;
+  min-width: 100%;
   display: grid; /* display:flex works too since body is the only grid cell */
   margin:auto;
   border: 1px solid;
@@ -309,10 +313,23 @@ form {
           background-color: #fff;
           color:white;
         }
-      @media screen and (max-width: 640px) {
-        table tr:nth-child(odd) {
-          background-color: gainsboro;
-        }
+@media screen and (min-width: 10px) and (max-width: 540px){
+
+.supernova .form-all, .form-all {
+
+    margin-left: opx !important;
+
+    margin-right: 0px !important;
+
+}
+
+.form-all {
+
+    width: 95%;
+
+}
+
+}
         input[type="text"],
         input[type="password"]
 		input[type="email"]
