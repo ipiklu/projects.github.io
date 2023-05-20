@@ -4,6 +4,19 @@
             font-family: google;
             src: url("fonts/google_sans/GoogleSans-Regular.ttf");
         }
+body {
+        -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+        margin: 0px;
+        /* background: url("bac.jpg");*/
+        background-size: cover;
+        background-repeat: no-repeat; 
+        scroll-behavior: smooth;
+        background-attachment: fixed;
+        font-family: google,sans-serif;
+        background: linear-gradient(#FFFFFF,#FFFFFF);
+		font-size: 1.1em;
+		background-color: #FFFFFF ;
+}
       
 
 div {
@@ -40,6 +53,12 @@ form {
         transition: all 0.3s ease;
 		  
 }
+form:hover {
+			margin-top:25px;
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.5);
+            /* Lowering the shadow */
+        }
       td {
         text-align: center;
 		margin:auto;
@@ -194,32 +213,10 @@ form {
             border-radius: 20px;
             color: #511086;
       }
-   
-
-      .header {
-        z-index: 1;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        text-align: center;
-
-        width: 100%;
-
-        position: fixed;
-
-        left: 50%;
-
-        transform: translate(-50%, 0);
-
-        color: white;
-
-        background-color: #FFFFFF;
-
-        padding: 15px;
-
-        font-family: google;
-        font-size: 25px;
-      }
+  
       input[type="text"],
       input[type="password"],
+	  input[type="number"],
 	  input[type="email"],
 	  textarea,
 	  input[type="date"] {
@@ -245,6 +242,9 @@ form {
 	  	width: 270px;
 		}
 	  input[type=date]:focus {
+	  	width: 270px;
+		}
+	  input[type=number]:focus {
 	  	width: 270px;
 		}
 	  input[type=radio]:focus {
@@ -335,12 +335,6 @@ form {
 
 }
 
-.form-all {
-
-    width: 95%;
-
-}
-
 }
         input[type="text"],
         input[type="password"]
@@ -381,28 +375,26 @@ form {
           border-radius: 10px;
         }
         .header {
-          z-index: 1;
-          text-align: center;
+        z-index: 1;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        text-align: center;
 
-          width: 100%;
+        width: 100%;
 
-          position: fixed;
+        position: fixed;
 
-          left: 50%;
+        left: 50%;
 
-          transform: translate(-50%, 0);
+        transform: translate(-50%, 0);
 
-          color: white;
+        color: white;
 
-          background-color: #FFFFFF;
+        background-color: #FFFFFF;
 
-          padding-left: 0px;
-          padding-top: 10px;
-          padding-right: 0px;
-          padding-bottom: 10px;
+        padding: 15px;
 
-          font-family: google;
-          font-size: 25px;
+        font-family: google;
+        font-size: 25px;
           
         }
         tr td:nth-child(2){

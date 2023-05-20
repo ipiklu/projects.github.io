@@ -37,7 +37,7 @@
        <h2>Enter data and generate PDF</h2>
        <input type="button" id="btTakeSnap" class="btn signup btnEffect" onclick="onlineTestApp.takeSnapshot(this)" value="Take a Snapshot" />
        		<br/><br/>
-       <form id="makepdf" class="form-all">
+       <form id="makepdf">
         <table>
         <tr>
         <td>
@@ -88,10 +88,23 @@
             </td>
         </tr>
         <tr>
-            <td>Email ID
-            	<input type="email" placeholder="Please type your Email"/>
+			<td>Mobile Number
+            	<input type="number" onBlur="phonenumber" placeholder="Mobile Number" />
             </td>
         </tr>
+        <tr>
+            <td>Email ID
+            	<input type="email" id="txtEmail" onBlur="ValidateEmail()" placeholder="Please type your Email"/>
+                <label id="lblSuccess" style="color:#29DB21"></label>
+                
+            </td>
+         </tr>
+                <tr>
+                	<td>
+                    	<label id="lblError" style="color:#AA205C"></label>
+                
+            		</td>
+        		</tr>
         <tr>
             <td>Address
             	<textarea placeholder="Please type your address"></textarea>
