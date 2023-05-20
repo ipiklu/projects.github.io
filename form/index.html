@@ -11,11 +11,10 @@
     <script src="../alertify.js-0.3.11/lib/alertify.min.js"></script>
     <script src="js/design.js"></script>
      <!-- html2pdf CDN-->
-    <script src=
-"https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js">
+    <script src="js/html2pdf.bundle.js">
     </script>
     <!-- WebCam CDN-->
-     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.js">
+     <script type="text/javascript" src="js/webcam.js">
         </script>
     
 <title>Generate PDF using jsPDF Library</title>
@@ -36,18 +35,17 @@
     <div align="center">
       <div align="center">
        <h2>Enter data and generate PDF</h2>
+       <input type="button" id="btTakeSnap" class="btn signup btnEffect" onclick="onlineTestApp.takeSnapshot(this)" value="Take a Snapshot" />
+       		<br/><br/>
        <form id="makepdf" class="form-all">
         <table>
         <tr>
         <td>
           	<p id="snapShot" class="imgBox"></p>
             <br/><br/>
-            <input type="button" id="btTakeSnap" class="btn signup btnEffect" onclick="onlineTestApp.takeSnapshot(this)" value="Take a Snapshot" />
-       		<br/><br/>
         </td>
      <!--The floating picture box to capture webcam image.-->
-        <td>
-        	<div id="picturebox" style="width:100%;height:100%;">
+        <td><div id="picturebox" style="width:100%;height:100%;">
               <div class="revdivshowimg">
 
                 <div id="camera" style="height:auto;text-align:center;margin:0 auto;"></div>
@@ -69,7 +67,7 @@
         
         <tr>
          	<td>First Name
-         		<input type="text" placeholder="Please type your first name"/>
+         		<input type="text" id="name" placeholder="Please type your first name"/>
             </td>
         </tr>
         <tr>
@@ -227,7 +225,7 @@
     	<p>|| Copyright protected &copy; <script>document.write(new Date().getFullYear())</script>, All Rights Not Reserved ||</p><p> Design by Sayantan Kundu</p>
     </footer>
     <center>
-       <span onClick="return(view());" title="About Us" ><font style="font-size: 20px;" color="#AA205C"></font><img src="img/LOADING.gif" style="width:50px"></span>
+       <span onClick="return(view());" title="About Us" class="abt" ><font style="font-size: 20px;" color="#AA205C"></font><img src="img/LOADING.gif" style="width:50px"></span>
     </center>
 </body>
 </html>

@@ -14,19 +14,31 @@ div {
 	box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034);
 }
 form {
-  display: flex;
+  justify-content: center;
   font-weight: 400;
   font-family: 'Inter';
-  -left: 20vw;
-  min-width: 100%;
-  display: grid; /* display:flex works too since body is the only grid cell */
-  margin:auto;
-  border: 1px solid;
+  min-width: 500px;
+  text-align:center;
+  margin:0 auto;
+  border: 1px #FFFFFF;
   padding: 12px 20px 12px 40px;
   box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034),
           0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
           0 22.3px 17.9px rgba(0, 0, 0, 0.072),
           0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+		  
+        padding-left: 25px;
+        padding-right: 25px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-radius: 5px;
+        outline: none;
+        color: black;
+        text-decoration: none;
+        font-family: google;
+        font-size: 18px;
+        transition: all 0.3s ease;
+		  
 }
       td {
         text-align: center;
@@ -342,11 +354,11 @@ form {
           width: 70%;
           text-align: center;
           outline: none;
+		  resize:both;
         }
         .card2 {
           /*            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);*/
           transition: 0.3s;
-
           background-color: white;
           width: 80%;
           height: auto;
@@ -516,4 +528,7 @@ h2{
 			margin:auto;
 			
         
+		}
+		.abt{
+			cursor:help;
 		}
