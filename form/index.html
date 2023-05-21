@@ -94,14 +94,12 @@
         </tr>
         <tr>
             <td>Email ID
-            	<input type="email" id="txtEmail" onBlur="ValidateEmail()" placeholder="Please type your Email"/>
-                <label id="lblSuccess" style="color:#29DB21"></label>
-                
+            	<input type="email" id="emailInput" placeholder="Please type your Email"/>
             </td>
          </tr>
                 <tr>
                 	<td>
-                    	<label id="lblError" style="color:#AA205C"></label>
+                    	<label id="error" style="color:#AA205C"></label>
                 
             		</td>
         		</tr>
@@ -225,7 +223,23 @@
         }
     }
   </script>
-    
+<script>
+emailInput.onblur = function() {
+  if (!emailInput.value.includes('@') || !emailInput.value.includes('.')) { // not email
+    emailInput.classList.add('invalid');
+    error.innerHTML = 'Please enter a correct email.'
+  }
+};
+
+emailInput.onfocus = function() {
+  if (this.classList.contains('invalid')) {
+    // remove the "error" indication, because the user wants to re-enter something
+    this.classList.remove('invalid');
+    error.innerHTML = "";
+  }
+};
+
+</script>
     
     
     <!-----------------------Footer---------------------------> 
