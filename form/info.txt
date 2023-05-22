@@ -1,0 +1,43 @@
+pdf file name based on user input
+See more: C#ASP.NET
+i created pdf file. i want to name the pdf file based on user input.
+eg, if user types his first name as John, then the pdf file name should be John.pdf and it should be opened in new window.
+My code:
+pdf1 is the folder where all the pdf files to be stored.
+Response.Write("<script type='text/javascript'>");
+Response.Write("window.open('pdf1/AalimAdmission.pdf','_blank')");
+
+Response.Write("</script>");
+Posted 13-Mar-13 20:11pm
+sukumari1
+Add a Solution
+1 solution
+
+
+
+
+
+Solution 1
+suppose your text box id is "txt1" then use
+
+
+Response.Write("");
+Response.Write("window.open('pdf1/'+document.getElementById("txt1").Value+'.pdf','_blank')")
+Response.Write("");
+  Permalink  Posted 13-Mar-13 20:16pm
+Anupam Singh
+Comments
+sukumari1 14-Mar-13 3:14am    
+i have stored user input in a string called name.
+i tried giving Response.Write("window.open('pdf1/'+document.getElementById(name).Value+'.pdf','_blank')")
+it's not working.
+[no name] 14-Mar-13 3:49am    
+Try this
+if name declared server side
+Response.Write("window.open('pdf1/'+<%=name%>+'.pdf','_blank')")
+
+if name declared client side
+Response.Write("window.open('pdf1/'+name+'.pdf','_blank')")
+sukumari1 16-Mar-13 5:57am    
+i got it.by giving
+Response.Write("window.open('pdf1/'"+name+"'.pdf','_blank')")

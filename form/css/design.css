@@ -28,6 +28,7 @@ div {
 }
 form {
   justify-content: center;
+  color:#AA205c;
   font-weight: 400;
   font-family: 'Inter';
   min-width: 500px;
@@ -46,7 +47,6 @@ form {
         padding-bottom: 10px;
         border-radius: 5px;
         outline: none;
-        color: black;
         text-decoration: none;
         font-family: google;
         font-size: 18px;
@@ -226,6 +226,7 @@ form:hover {
 		  border-radius: 9px;
 		  font-size: 16px;
 		  background-color:#F4C1DD;
+		  color:black;
 		  background-position: 20px 20px; 
 		  background-repeat: no-repeat;
 		  padding: 12px 20px 12px 40px;
@@ -234,18 +235,23 @@ form:hover {
 	  
 	  input[type=email]:focus {
   		width: 270px;
+		background-color:#fff;
 		}
 	  input[type=text]:focus {
 		width: 270px;
+		background-color:#fff;
 		}
 	  textarea:focus {
 	  	width: 270px;
+		background-color:#fff;
 		}
 	  input[type=date]:focus {
 	  	width: 270px;
+		background-color:#fff;
 		}
 	  input[type=number]:focus {
 	  	width: 270px;
+		background-color:#fff;
 		}
 	  input[type=radio]:focus {
 	  	width: 10px;
@@ -326,16 +332,14 @@ form:hover {
           color:white;
         }
 @media screen and (min-width: 10px) and (max-width: 540px){
-
-.supernova .form-all, .form-all {
-
-    margin-left: opx !important;
-
-    margin-right: 0px !important;
-
-}
-
-}
+	div{
+		margin:auto;
+		padding:0;
+	}
+	form{
+		margin-left: opx !important;
+		margin-right: 0px !important;
+	}
         input[type="text"],
         input[type="password"]
 		input[type="email"]
@@ -350,6 +354,7 @@ form:hover {
           outline: none;
 		  resize:both;
         }
+}
         .card2 {
           /*            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);*/
           transition: 0.3s;
