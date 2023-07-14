@@ -108,9 +108,10 @@ hr.solid {
   padding: 12px 20px 12px 40px;
   margin: 10px 10px;
   transition: width 0.4s ease-in-out;
+  
 }
 
-.pat_info:focus{
+.pat_info:hover{
 	width: 270px;
 }
 .pat_info:link, .pat_info:visited {
