@@ -4,7 +4,10 @@
             font-family: google;
             src: url("fonts/google_sans/GoogleSans-Regular.ttf");
         }
-      
+      th, td {
+  		border: 1px dotted #AA205C;
+  		border-radius: 10px;
+		}
 
 
       .signup {
