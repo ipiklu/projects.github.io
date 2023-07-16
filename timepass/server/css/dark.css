@@ -50,7 +50,7 @@ input:checked ~ label{
 .background{
   position: absolute;
   width: 100%;
-  height: 120vh;
+  height: 100vh;
   background: #fff;
   z-index: -1;
   transition: 0.5s;
