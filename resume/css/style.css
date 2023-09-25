@@ -30,18 +30,10 @@ body {
 		background-color: #FFFFFF ;
 }
 
-/* font-weight Specifies weight of glyphs
-in the font, their degree of blackness or
-stroke */
-h1 {
-	font-weight: 900;
-	margin-bottom: 12px;
-}
-
 div {
-	width:60%;
-	margin:auto;
-	padding: 12px 20px 12px 40px;
+	width:auto;
+	margin:0;
+	padding: 0;
 	text-align: center;
 	box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034);
 }
@@ -93,48 +85,8 @@ input[type=text] {
 	flex-wrap: wrap;
 }
 
-    .signup {
-        border: 1px solid #AA205c;
-        background: #AA205c;
-        padding-left: 25px;
-        padding-right: 25px;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        border-radius: 5px;
-        cursor: pointer;
-        outline: none;
-        color: white;
-        text-decoration: none;
-        font-family: google;
-        font-size: 18px;
-        transition: all 0.3s ease;
-      }
       table tr:nth-child(odd) {
         background-color: gainsboro;
-      }
-
-      .signup:hover {
-        border: 1px solid #AA205c;
-        color: white;
-        box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
-          0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
-          0 22.3px 17.9px rgba(0, 0, 0, 0.072),
-          0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
-        background:#AA205c;
-      }
-
- .btn {
-        padding-left: 50px;
-        padding-right: 50px;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        font-size: 17px;
-        background:#fff;
-        outline: none;
-        color: black;
-        border: none;
-        cursor: pointer;
-        border-radius: 20px;
       }
 .header {
         z-index: 1;
@@ -158,23 +110,3 @@ input[type=text] {
         font-family: google;
         font-size: 25px;
       }
-	  
-	       .btnEffect {
-            cursor: pointer;
-            outline: none;
-            transition: 0.2s all;
-        }
-        /* Adding transformation when the button is active */
-          
-        .btnEffect:active {
-            transform: scale(0.98);
-            /* Scaling button to 0.98 to its original size */
-            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
-            /* Lowering the shadow */
-        }
-		
-	img {
-        	border-radius: 10px;
-        	margin: 5px;
-        	width: 90%;
-      	}
