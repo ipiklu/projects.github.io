@@ -1,34 +1,79 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!---Design--->
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!---Design--->
 	<link rel="stylesheet" href="css/design.css" />
-    <link rel="stylesheet" href="css/style.css" />
-  <!---Alert--->
+    <link rel="stylesheet" href="css/dark.css" />
 	<link rel="stylesheet" href="../alertify.js-0.3.11/themes/alertify.core.css" />
 	<link rel="stylesheet" href="../alertify.js-0.3.11/themes/alertify.default.css" />
     <script src="../alertify.js-0.3.11/lib/alertify.min.js"></script>
-    <script src="js/design.js"></script>
-  <!--PDF Viewer-->
-  	<script type="text/javascript" src="js/pdf.min.js"></script>
-	<link href="css/pdf_viewer.min.css" rel="stylesheet" type="text/css" />
-    <script src="js/pdfViewer.js"></script>
-<title>My Resume</title>
+    <script src="js/design.js" ></script>
+<meta charset="utf-8">
+<meta name="theme-color" content="#AA205C" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>PikLu's Server</title>
 <link rel = "icon" href="img/s.gif" type="image/x-icon">
 </head>
-  <body>
-    <div>
-       <a href="../index.html" title="Home"><img src="img/s.gif" style="max-width: 2%; max-height: 3%; float:left"/></a>
-       		<font color="#AA205C"><h1 align="center">Resume of Sayantan Kundu
-       <button class="btn signup btnEffect" onClick="window.location='../index.html'" title="Go back to main library" style="float:right">
-     		<img src="img/back.gif" style="max-width:10px" />Back</button></h1></font>
+
+<body>
+	<div>
+       <a href="../index.html" title="Home"><img src="img/s.gif" class="imgS" style="max-width: 2%; max-height: 3%; float:left"/></a>
+		<div align="right">
+  			<input type="checkbox" id="dark-mode">
+  			<label for="dark-mode"></label>
+  			<div class="background"></div>
+		</div>
     </div>
-    <object data="data/Resume2024_C2.pdf" type="application/pdf" width="100%" height="800px">
-      <p>Unable to display PDF file. <a href="data/Resume2024_C2.pdf">Download</a> instead.</p>
-    </object>
-    
-  <!-----------------------Footer---------------------------> 
+
+	<p align="center"><img src="img/cLL.gif"></p>
+    	<h1 align="center" class="loader" style="color:#AA205C; font-family:'Century Gothic'" >Welcome to server maintenance<span class="loader__dot">.</span><span class="loader__dot">.</span><span class="loader__dot">.</span><span onClick="return(view());" title="About Us" ><font style="font-size: 20px;" color="#AA205C"></font><img src="img/LOADING.gif" style="width:50px"></span></button></h1>
+        
+        <div align="center">
+       	  <font color="#AA205C"><h2 align="center">Server Index:</h2></font>
+            <img src="img/settings.gif" style="max-width:33px" />
+                <table width="500" border="2" bordercolor="#AA205C" style="max-width:70%">
+                	<tr>
+                    	<td width="44"><img src="img/arrow.gif" width="38" height="38"></td>
+                    	<td width="100" align="right">
+                        	<marquee behavior="scroll" style="color:#AA205C">
+                            	<span class="loader__dot">Click the </span>
+                                <span class="loader__dot" style="font-weight: bolder">Download button </span>
+                                <span class="loader__dot">for App Download</span>
+                            </marquee>
+                    		<a href="data/PeeS.apk" download>
+  								<img src="img/download.png" class="btnEffect" title="App Download" width="38" height="38" >
+							</a>
+                         </td>
+                    </tr>
+                	<tr>
+                   		<td width="38"><a href="../index.html" title="Back to Projects"><img src="img/back.gif" class="btn signup btnEffect" style="max-width:27px"/></td>
+                        <td width="507" ><a href="../index.html" title="Back to Projects" style="color:#AA205C;"> /.... </a></td>
+                	</tr>
+                    <tr>
+                   		<td width="38"><a href="online/index.html" title="Online Resume">
+                        	<img src="img/folder.png" class="btn signup btnEffect" style="max-width:27px"/></td>
+                        <td width="507" ><a href="online/index.html" title="Online Resume" style="color:#AA205C;">Online View</a></td>
+                	</tr>
+                    <tr>
+                   		<td width="38"><a href="PDF/index.html" title="View/ Download PDF version" >
+                        	<img src="img/folder.png" class="btn signup btnEffect" style="max-width:27px"/></td>
+                        <td width="507" ><a href="PDF/index.html" title="View/ Download PDF version" style="color:#AA205C;">PDF desktop view/ Mobile Download </a></td>
+                	</tr>
+                    
+                 </table>             
+        </div>
+        
+     
+<!------------------------DOT style------------------------------->        
+<style>    
+@keyframes blink {50% { color: transparent }}
+.loader__dot { animation: 1s blink infinite }
+.loader__dot:nth-child(2) { animation-delay: 250ms }
+.loader__dot:nth-child(3) { animation-delay: 500ms }
+</style> 
+
+<!---------------------------Footer---------------------------------------------------->     
 <footer align="center" style="position:relative; color:#AA205C; bottom: 0; width: 100%;">
 <center> <font color="#AA205C">
    <p id="date"> </p>
@@ -37,23 +82,6 @@
    </script> </font></center>
     	<p>|| Copyright protected &copy; <script>document.write(new Date().getFullYear())</script>, All Rights Not Reserved ||</p><p> Design by Sayantan Kundu</p>
     </footer>
-    
-   <!-----------------------Disable CTRL_Key & Right Click---------------------------> 
-    <script>
-		document.addEventListener("keydown", function (event){
-    		if (event.ctrlKey){
-       			event.preventDefault();
-    		}
-    		if(event.keyCode == 123){
-       			event.preventDefault();
-    		}
-		});
-		document.addEventListener('contextmenu', 
-     		event => event.preventDefault()
-		);    
-    </script>
-    <center>
-       <span onClick="return(view());" title="About Us" ><font style="font-size: 20px;" color="#AA205C"></font><img src="img/LOADING.gif" style="width:50px"></span>
-    </center>
-  </body>
+
+</body>
 </html>

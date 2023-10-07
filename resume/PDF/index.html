@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!---Design--->
+	<link rel="stylesheet" href="css/design.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  <!---Alert--->
+	<link rel="stylesheet" href="../alertify.js-0.3.11/themes/alertify.core.css" />
+	<link rel="stylesheet" href="../alertify.js-0.3.11/themes/alertify.default.css" />
+    <script src="../alertify.js-0.3.11/lib/alertify.min.js"></script>
+    <script src="js/design.js"></script>
+  <!--PDF Viewer-->
+  	<script type="text/javascript" src="js/pdf.min.js"></script>
+	<link href="css/pdf_viewer.min.css" rel="stylesheet" type="text/css" />
+    <script src="js/pdfViewer.js"></script>
+<title>My Resume</title>
+<link rel = "icon" href="img/s.gif" type="image/x-icon">
+</head>
+  <body>
+    <div>
+       <a href="../../index.html" title="Home"><img src="img/s.gif" class="imgS" style="max-width: 2%; max-height: 3%; float:left"/></a>
+       		<font color="#AA205C"><h1 align="center">Resume of Sayantan Kundu
+       <button class="btn signup btnEffect" onClick="window.location='../index.html'" title="Go back to Resume library" style="float:right">
+     		<img src="img/back.gif" style="max-width:10px" />Back</button></h1></font>
+    </div>
+    <object data="data/Resume2024_C2.pdf" type="application/pdf" width="100%" height="800px">
+      <p>Unable to display PDF file. <a href="data/Resume2024_C2.pdf">Download</a> instead.</p>
+    </object>
+    
+  <!-----------------------Footer---------------------------> 
+<footer align="center" style="position:relative; color:#AA205C; bottom: 0; width: 100%;">
+<center> <font color="#AA205C">
+   <p id="date"> </p>
+   <script>
+	document.getElementById("date").innerHTML = Date();
+   </script> </font></center>
+    	<p>|| Copyright protected &copy; <script>document.write(new Date().getFullYear())</script>, All Rights Not Reserved ||</p><p> Design by Sayantan Kundu</p>
+    </footer>
+    
+   <!-----------------------Disable CTRL_Key & Right Click---------------------------> 
+    <script>
+		document.addEventListener("keydown", function (event){
+    		if (event.ctrlKey){
+       			event.preventDefault();
+    		}
+    		if(event.keyCode == 123){
+       			event.preventDefault();
+    		}
+		});
+		document.addEventListener('contextmenu', 
+     		event => event.preventDefault()
+		);    
+    </script>
+    <center>
+       <span onClick="return(view());" title="About Us" ><font style="font-size: 20px;" color="#AA205C"></font><img src="img/LOADING.gif" style="width:50px"></span>
+    </center>
+  </body>
+</html>

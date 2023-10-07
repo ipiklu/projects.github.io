@@ -1,0 +1,114 @@
+@charset "utf-8";
+/* CSS Document */
+        @font-face {
+            font-family: google;
+            src: url("fonts/google_sans/GoogleSans-Regular.ttf");
+        }
+      th, td {
+  		border: 1px dotted #AA205C;
+  		border-radius: 10px;
+		}
+
+
+      .signup {
+        border: 1px solid #FFF;
+        background: #FFF;
+        padding-left: 25px;
+        padding-right: 25px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        outline: none;
+        color: white;
+        text-decoration: none;
+        font-family: google;
+        font-size: 18px;
+        transition: all 0.3s ease;
+      }
+
+      .signup:hover {
+        border: 1px solid #FFF;
+        color: white;
+        box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+          0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+          0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+          0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+        background: rgba(0, 0, 0, 0);
+      }
+   
+      .btn {
+        padding-left: 0;
+        padding-right: 10px;
+        font-size: 17px;
+        background:rgba(0, 0, 0, 0);
+        outline: none;
+        color: rgba(0, 0, 0, 0) ;
+        border: none;
+        cursor: pointer;
+        border-radius: 20px;
+		font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      }
+
+	       .btnEffect {
+            cursor: pointer;
+            outline: none;
+            transition: 0.2s all;
+        }
+        /* Adding transformation when the button is active */
+          
+        .btnEffect:active {
+            transform: scale(0.98);
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px #AA205c;
+            /* Lowering the shadow */
+        }
+ 
+ .header {
+        z-index: 1;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        text-align: center;
+
+        width: 100%;
+
+        position: fixed;
+
+        left: 50%;
+
+        transform: translate(-50%, 0);
+
+        color: white;
+
+        background-color: #FFFFFF;
+
+        padding: 2px;
+
+        font-family: google;
+        font-size: 25px;
+      }
+	  
+	  .imgS {
+        border-radius: 10px;
+        margin: 5px;
+        width: 90%;
+	  }
+	  
+	  .w3-margin-bottom:hover{
+			margin-top:25px;
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.5);
+            /* Lowering the shadow */
+        }
+		
+		.w3-margin-b2:hover{
+			margin-top:25px;
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.5);
+            /* Lowering the shadow */
+        }
+		.w3-card-4:hover{
+			margin-top:25px;
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.5);
+            /* Lowering the shadow */
+        }

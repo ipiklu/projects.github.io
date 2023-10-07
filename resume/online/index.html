@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<title>Online Resume</title>
+<link rel = "icon" href="img/s.gif" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!---Design--->
+<link rel="stylesheet" href="css/w3.css">
+<link rel="stylesheet" href="css/family_Roboto.css">
+<link rel="stylesheet" href="css/dark.css" />
+<link rel="stylesheet" href="css/design.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.core.css" />
+<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.default.css" />
+<script src="../../alertify.js-0.3.11/lib/alertify.min.js"></script>
+
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+</style>
+<body class="w3-light-grey">
+	<div>
+       <div class="header" style="background-color:#AA205C">
+     		<a href="../../index.html" title="Home"><img src="img/s.gif" class="imgS" style="max-width: 2%; max-height: 3%; float:left"/></a>
+     		<center>Online Resume
+            	<span onClick="return(view());" title="About Us" ><font style="font-size: 20px;" color="#AA205C"></font><img src="img/LOADING.gif" style="width:50px"></span>
+            </center>
+     		<button class="btn signup btnEffect" onClick="window.location='../index.html'" title="Go back to Resume library" style="background:#AA205C; color:#EEE; float:right">
+     		<img src="img/back.gif" style="max-width:10px" />Back</button>
+		</div>
+			<br><br><br><br>
+		<div align="right">
+  			<input type="checkbox" id="dark-mode">
+  			<label for="dark-mode"></label>
+  			<div class="background"></div>
+		</div>
+    </div>
+
+<!-- Page Container -->
+<div class="w3-content w3-margin-top" style="max-width:1400px;">
+
+  <!-- The Grid -->
+  <div class="w3-row-padding">
+  
+    <!-- Left Column -->
+    <div class="w3-third">
+    
+      <div class="w3-white w3-text-grey w3-card-4">
+        <div class="w3-display-container">
+          <img src="img/img.JPG" style="width:100%" alt="Avatar">
+          <div class="w3-display-bottomleft w3-container w3-text-white">
+            <h2>Sayantan Kundu</h2>
+          </div>
+        </div>
+        <div class="w3-container w3-wide">
+          <p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal"></i>IT Analyst</p>
+          <p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal"></i>Pune, India</p>
+          <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal"></i>kundupiklu@gmail.com</p>
+          <p><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-teal"></i>XXXXXX7030</p>
+          <hr>
+
+          <p class="w3-large"><b><i class="fa fa-asterisk fa-fw w3-margin-right w3-text-teal"></i>Skills</b></p>
+          <p>SQL</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:100%">100%</div>
+          </div>
+          <p>UNIX/ Linux</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:95%">
+              <div class="w3-center w3-text-white">95%</div>
+            </div>
+          </div>
+          <p>HTML/ CSS</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:100%">100%</div>
+          </div>
+          <p>Microsoft Excel</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:90%">90%</div>
+          </div>
+          <br>
+
+          <p class="w3-large w3-text-theme"><b><i class="fa fa-globe fa-fw w3-margin-right w3-text-teal"></i>Languages</b></p>
+          <p class="fa w3-wide">Bengali</p>
+          <div class="w3-light-grey w3-round-xlarge">
+            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="height:24px;width:100%">100%</div>
+          </div>
+          <p class="fa w3-wide">Hindi</p>
+          <div class="w3-light-grey w3-round-xlarge">
+            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="height:24px;width:50%">50%</div>
+          </div>
+          <p>English</p>
+            <div class="w3-light-grey w3-round-xlarge">
+              <div class="w3-container w3-center w3-round-xlarge w3-teal" style="height:24px;width:100%">100%</div>
+            </div>
+          <br>
+
+          <p class="w3-large w3-text-theme"><b><i class="fa fa-codepen fa-fw w3-margin-right w3-text-teal"></i>Projects</b></p>
+          	<p class="fa w3-wide">GOOGLE DATA ANALYTICS CASE STUDY-1 | Cyclistic Tripdata 
+            	<a href="https://www.kaggle.com/code/ipiklu/google-data-analytics-capstone-case-study-1/notebook" target="_blank" class="fa-arrow-right"></a>
+            </p>
+          	<p class="fa w3-wide">GOOGLE DATA ANALYTICS CASE STUDY-2 | Smartwatch
+            	<a href="https://www.kaggle.com/code/ipiklu/google-data-analytics-capstone-case-study-2/notebook" target="_blank" class="fa-arrow-right"></a>
+            </p>
+            <br>
+        </div>
+      </div><br>
+
+    <!-- End Left Column -->
+    </div>
+
+    <!-- Right Column -->
+    <div class="w3-twothird w3-wide">
+    
+      <div class="w3-container w3-card w3-white w3-margin-bottom">
+        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-suitcase fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>Work Experience</h2>
+        <div class="w3-container">
+          <h5 class="w3-opacity"><b>IT Analyst / TATA CCONSULTANCY SERVICES</b></h5>
+          <h6 class="w3-text-teal"><i class="fa fa-calendar fa-fw w3-margin-right"></i>Apr 2023 - <span class="w3-tag w3-teal w3-round">Current</span></h6>
+          <p>Operations of VI! UPSS (Unified Prepaid Support System)</p>
+          <hr>
+        </div>
+        <div class="w3-container">
+          <h5 class="w3-opacity"><b>SHIFT ENGINEER / IT CONFIG INDIA PVT LTD</b></h5>
+          <h6 class="w3-text-teal"><i class="fa fa-calendar fa-fw w3-margin-right"></i>Feb 2018 - Mar 2023</h6>
+          <p>Monitor and maintenance of JBOSS applications and report generation</p>
+          <p>Worked in POC to implement a centralized dedicated mass alert that enables comprehensive delivery of text messages to end-user devices over cellular network infrastructure</p>
+          <p>Live project(NPCI mobile banking) integration and testing</p>
+          <hr>
+        </div>
+        <div class="w3-container">
+          <h5 class="w3-opacity"><b>Junior System Administrator / INTERSOFTKK INDIA PVT LTD</b></h5>
+          <h6 class="w3-text-teal"><i class="fa fa-calendar fa-fw w3-margin-right"></i>Jun 2016 - Feb 2018</h6>
+          <p>Performed system administration tasks • Automation with Cronjob • Web developer - Wrote and reviewed code for HTML and CSS • Monitored system performance using AWS console</p><br>
+        </div>
+      </div>
+
+      <div class="w3-container w3-card w3-white w3-margin-b2">
+        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>Education</h2>
+        <div class="w3-container">
+          <h5 class="w3-opacity"><b>M.A.K.A.U.T UNIVERSITY</b></h5>
+          <h6 class="w3-text-teal"><i class="fa fa-calendar fa-fw w3-margin-right"></i>Aug 2011-2015 | Kolkata, India</h6>
+          <h6 class="w3-text-teal"><i class="fa fa-check-circle-o fa-fw w3-margin-right"></i>CGPA: 6•89 /10</h6>
+          <p>B.Tech in Computer Science and Engineering</p>
+          <hr>
+        </div>
+        <div class="w3-container">
+          <h5 class="w3-opacity"><b>W.B.C.H.S.E</b></h5>
+          <h6 class="w3-text-teal"><i class="fa fa-calendar fa-fw w3-margin-right"></i>2008-2011 | Bankura, West-Bengal India</h6>
+          <h6 class="w3-text-teal"><i class="fa fa-check-circle-o fa-fw w3-margin-right"></i>Percentage: 63 /100</h6>
+          <p>12th Board 2011| West-Bengal, India</p>
+          <hr>
+        </div>
+        <div class="w3-container">
+          <h5 class="w3-opacity"><b>W.B.B.S.E</b></h5>
+          <h6 class="w3-text-teal"><i class="fa fa-calendar fa-fw w3-margin-right"></i>2007-2008 | Bankura, West-Bengal India</h6>
+          <h6 class="w3-text-teal"><i class="fa fa-check-circle-o fa-fw w3-margin-right"></i>Percentage: 65 /100</h6>
+          <p>10th Board 2008| WB, India</p>
+          <hr>
+        </div>
+      </div>
+
+    <!-- End Right Column -->
+    </div>
+    
+  <!-- End Grid -->
+  </div>
+  
+  <!-- End Page Container -->
+</div>
+
+<!-------Hover Only---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<script> 
+	  function view() {
+          alertify.alert("<a href='https://www.linkedin.com/in/sayantan-kundu-52650758'><img src='img/linkedin.png' style='max-width: 90%; max-height: 70%'/></a><br/><a href='https://twitter.com/piklu21'><img src='img/twitter.png' style='max-width: 30%; max-height: 30%'/></a><a href='https://www.facebook.com/kundupiklu'><img src='img/facebook.jpg' style='max-width: 30%; max-height: 30%'/> </a><a href='https://www.instagram.com/i_piklu/'><img src='img/instagram.png' style='max-width: 30%; max-height: 30%'/></a><p style='color:#AA205C; font-style:italic; font-weight:bolder; font-size:25px' />STAY HOME, STAY SAFE.</p><p style='color:#AA205C; font-style:italic; font-weight:bolder; font-size:25px' />#Covid-19 #HomeQuarantine</p>");
+          return false;
+    }
+</script>
+
+<!-------Footer---------------------------------------------------------------------------------------------------------------------------------->
+<footer class="w3-container w3-teal w3-center w3-margin-top">
+  <p>Find me on social media.</p>
+  <a href="https://www.facebook.com/kundupiklu" title="Facebook" target="_blank"><i class="fa fa-facebook-official w3-hover-opacity" ></i></a>
+  <a href="https://www.instagram.com/i_piklu/" title="Instagram" target="_blank"><i class="fa fa-instagram w3-hover-opacity"></i></a>
+  <a href="https://twitter.com/piklu21" title="Twitter" target="_blank"><i class="fa fa-twitter w3-hover-opacity"></i></a>
+  <a href="https://www.linkedin.com/in/sayantan-kundu-52650758/" title="LinkedIn" target="_blank"><i class="fa fa-linkedin w3-hover-opacity"></i></a>
+  <p>Created by <a href="https://ipiklu.github.io/projects.github.io/">PeeS</a></p>
+</footer>
+
+</body>
+</html>
