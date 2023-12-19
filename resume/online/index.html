@@ -14,6 +14,24 @@
 <link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.default.css" />
 <script src="../../alertify.js-0.3.11/lib/alertify.min.js"></script>
 
+<!--SnowFall---20 To 31st December Only-------------------------------------------->
+<!---->
+<script src="js/snowstorm-min.js"></script>
+<script>
+snowStorm.snowColor = '#AA205C'; //give the snowflakes another colour
+snowStorm.flakesMaxActive = 96; //the maximum number of active snow flakes on the screen, lowering this may increase performance
+snowStorm.followMouse = true; //the snow will fall in a certain direction based on the position of your mouse
+snowStorm.snowCharacter = '&#x1F385;'; //change the flake to a specific character
+snowStorm.snowStick = true; //if true, the snow will stick to the bottom of the screen
+</script>
+<script>
+snowStorm.animationInterval = 20; //milliseconds per frame, the higher the less CPU load
+snowStorm.flakesMaxActive = 30; //maximum number of active snow flakes, the lower the less CPU/GPU is needed to draw them
+snowStorm.freezeOnBlur = true; //recommended: stops the snow effect when the user switches to another tab or window
+snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affected by the window scroll. Disable to prevent extra CPU load
+</script>
+
+
 <style>
 html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 </style>
@@ -185,6 +203,14 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
   <a href="https://www.linkedin.com/in/sayantan-kundu-52650758/" title="LinkedIn" target="_blank"><i class="fa fa-linkedin w3-hover-opacity"></i></a>
   <p>Created by <a href="https://ipiklu.github.io/projects.github.io/">PeeS</a></p>
 </footer>
+
+<!-- Scripts For 20 To 31st December Only--->
+<!---->
+			<script src="js/jquery.min.js"></script>
+			<script src="js/skel.min.js"></script>
+			<script src="js/util.js"></script>
+			<script src="js/main.js"></script>
+
 
 </body>
 </html>
