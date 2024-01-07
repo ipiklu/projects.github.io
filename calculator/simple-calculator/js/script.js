@@ -27,3 +27,7 @@ buttons.forEach((button) => {
   //Button click listener calls calculate() with dataset value as argument.
   button.addEventListener("click", (e) => calculate(e.target.dataset.value));
 });
+
+function closeFunction(){
+      window.close()
+   };
