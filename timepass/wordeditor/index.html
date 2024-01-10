@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Word-Editor</title>
+    <link rel = "icon" href="img/s.gif" type="image/x-icon">
+	<link rel="stylesheet" href="css/style.css" type="text/css" />	
+    
+    <!---Alert--->
+    <link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.core.css" />
+	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.default.css" />
+    <script src="../../alertify.js-0.3.11/lib/alertify.min.js"></script>
+    
+    <!-- Ignite UI for jQuery Required Combined CSS Files -->
+    <link href="http://cdn-na.infragistics.com/igniteui/2023.1/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="http://cdn-na.infragistics.com/igniteui/2023.1/latest/css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.8.3.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI for jQuery Required Combined JavaScript Files -->
+    <script src="http://cdn-na.infragistics.com/igniteui/2023.1/latest/js/infragistics.core.js"></script>
+    <script src="http://cdn-na.infragistics.com/igniteui/2023.1/latest/js/infragistics.lob.js"></script>
+	
+    <!-- Local File -->
+    <script src="js/script.js"></script>
+    
+</head>
+<body>
+<div class="header" style="background-color:#AA205C">
+       <a href="../../index.html" title="Home"><img src="img/s.gif" style="max-width: 2%; max-height: 3%; float:left"/></a>
+       <button class="btn signup btnEffect" onClick="window.location='../server/index.html'" title="Go back to main library" style="background:#AA205C; color:#EEE; float:right">
+     	<img src="img/back.gif" style="max-width:10px" />Back</button>
+       <button class="btn signup btnEffect" onClick="window.print()" title="Print this page" style="background:#AA205C; color:#EEE; float:right">
+     	<img src="img/print.gif" style="max-width:10px" />Print</button>
+        <button class="btn signup btnEffect" onClick="window.location='index.html'" title="Print this page" style="background:#AA205C; color:#EEE; float:right">
+     	<img src="img/settings.gif" style="max-width:10px" />Refresh</button>    
+    </div>    
+    <br /><br /><br><br><br>
+
+
+    
+    <!--igHtmlEditor target element-->
+    <div id="htmlEditor">
+        Use the fastest jQuery grid on the market to get more interactivity out of your static HTML tables and data. Our latest iteration offers more line of business features, along with our unrivalled quality and performance.
+    </div>
+
+    <div id="toolbarHolder">
+        <div id="text"></div>
+    </div>
+    
+<!---------------------------Footer---------------------------------------------------->     
+
+<footer align="center" style="position:relative; color:#AA205C; bottom: 0; width: 100%;">
+	<center> <font color="#AA205C">
+   		<p id="date"> </p>
+   	<script>
+		document.getElementById("date").innerHTML = Date();
+   </script> </font></center><p>|| Copyright protected &copy; <script>document.write(new Date().getFullYear())</script>, All Rights Not Reserved ||</p><p> Design by Sayantan Kundu</p>
+</footer>
+
+	<center>
+       <span onClick="return(view());" title="About Us" ><font style="font-size: 20px;" color="#AA205C"></font><img src="img/LOADING.gif" style="width:50px"></span>
+    </center>
+
+</body>
+</html>
