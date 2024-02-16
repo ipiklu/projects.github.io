@@ -1,77 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/style.css" type="text/css" />
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
-    <link rel="stylesheet" href="style.css" />
-<!--SnowFall---20 To 31st December Only-------------------------------------------->
-<!--
-<script src="../js/snowstorm-min.js"></script>
-<script>
-snowStorm.snowColor = '#AA205C'; //give the snowflakes another colour
-snowStorm.flakesMaxActive = 96; //the maximum number of active snow flakes on the screen, lowering this may increase performance
-snowStorm.followMouse = true; //the snow will fall in a certain direction based on the position of your mouse
-snowStorm.snowCharacter = '&#x1F385;'; //change the flake to a specific character
-snowStorm.snowStick = true; //if true, the snow will stick to the bottom of the screen
-</script>
-<script>
-snowStorm.animationInterval = 20; //milliseconds per frame, the higher the less CPU load
-snowStorm.flakesMaxActive = 30; //maximum number of active snow flakes, the lower the less CPU/GPU is needed to draw them
-snowStorm.freezeOnBlur = true; //recommended: stops the snow effect when the user switches to another tab or window
-snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affected by the window scroll. Disable to prevent extra CPU load
-</script>
-  
--->   
-    
-  </head>
-  <body>
-  <div class="container">
-  <div class="header" style="background-color:#AA205C">
-  	<a href="../../index.html" title="Home"><img src="../img/s.gif" style="max-width: 2%; max-height: 3%; float:left"/></a>
-       <button class="btn signup btnEffect" onclick="closeFunction()" title="CLOSE" style="background:#AA205C; color:#EEE; float:right">
-     	<img src="img/bad-good.gif" style="max-width:10px" />CLOSE</button>
-   </div> 
-      <input type="text" class="display" />
-      <div class="buttons">
-        <button class="operator" data-value="AC">AC</button>
-        <button class="operator" data-value="DEL">DEL</button>
-        <button class="operator" data-value="%">%</button>
-        <button class="operator" data-value="/">/</button>
-
-        <button data-value="7">7</button>
-        <button data-value="8">8</button>
-        <button data-value="9">9</button>
-        <button class="operator" data-value="*">*</button>
-
-        <button data-value="4">4</button>
-        <button data-value="5">5</button>
-        <button data-value="6">6</button>
-        <button class="operator" data-value="-">-</button>
-
-        <button data-value="1">1</button>
-        <button data-value="2">2</button>
-        <button data-value="3">3</button>
-        <button class="operator" data-value="+">+</button>
-
-        <button data-value="0">0</button>
-        <button data-value="00">00</button>
-        <button data-value=".">.</button>
-        <button class="operator" data-value="=">=</button>
-      </div>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Spartan&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Saira:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/calc.css">
+    <link rel = "icon" href="img/s.gif" type="image/x-icon">
+</head>
+<body>
+    <div id="background" class="background">
+        <div class="calc-container container-fluid">            
+            <div class="row">
+             <div class="calc-title calc-title-dark">Calculator</div>
+                <div class="theme-palette">
+                    <i class="far fa-palette"></i>
+                    <a href="../../index.html" title="Home">
+                    	<img src="img/s.gif" class="imgS" style="max-width: 5%; max-height: 7%; float:left"/>
+                     </a>
+                </div>                
+                <div id="themeSwitch" class="theme-switch-container">
+                    <div id="themeToggleBtn" class="theme-toggle-btn">
+                        <i class="far fa-lightbulb fa-display-none"></i>
+                        <i class="fas fa-moon"></i>
+                    </div>                    
+                </div>
+                <div id="screenContainer" class="screen-container">
+                    <p class="screen-text">
+                        0                        
+                    </p>
+                    <p class="screen-text-after">                                                                     
+                    </p>
+                </div>
+                <div class="container-fluid buttons-container">
+                    <div class="row buttons-row">
+                        <div class="col-3 button-div">      
+                            <button class="button button-dark">7</button>
+                    </div>
+                    <div class="col-3 button-div">
+                        <button class="button button-dark">8</button>            
+                    </div>
+                    <div class="col-3 button-div">            
+                        <button class="button button-dark">9</button>            
+                    </div>
+                    <div class="col-3 button-div">            
+                        <button class="button button-dark unique-btn-dark">DEL</button>            
+                    </div>
+                    <div class="col-3 button-div">            
+                        <button class="button button-dark">4</button>            
+                    </div>
+                    <div class="col-3 button-div">            
+                        <button class="button button-dark">5</button>            
+                    </div>
+                    <div class="col-3 button-div">            
+                        <button class="button button-dark">6</button>            
+                    </div>
+                    <div class="col-3 button-div">            
+                        <button class="button button-dark">+</button>            
+                    </div>
+                    <div class="col-3 button-div">            
+                        <button class="button button-dark">1</button>            
+                    </div>
+                    <div class="col-3 button-div">            
+                        <button class="button button-dark">2</button>            
+                    </div>
+                    <div class="col-3 button-div">            
+                        <button class="button button-dark">3</button>            
+                    </div>
+                    <div class="col-3 button-div">            
+                        <button class="button button-dark">-</button>            
+                    </div>
+                    <div class="col-3 button-div">            
+                        <button class="button button-dark">.</button>            
+                    </div>
+                    <div class="col-3 button-div">            
+                        <button class="button button-dark">0</button>            
+                    </div>
+                    <div class="col-3 button-div">            
+                        <button class="button button-dark">/</button>            
+                    </div>
+                    <div class="col-3 button-div">            
+                        <button class="button button-dark">x</button>            
+                    </div>
+                    <div class="col-6 button-div">            
+                        <button class="button button-dark unique-btn-dark">RESET</button>            
+                    </div>
+                    <div class="col-6 button-div">            
+                        <button class="button button-dark equals-dark">=</button>            
+                    </div>                                
+                </div>                
+            </div>
+        </div>
+        </div>       
     </div>
-
-    <script src="js/script.js"></script>
-
-<!-- Scripts For 20 To 31st December Only--->
-<!--
-			<script src="../js/jquery.min.js"></script>
-			<script src="../js/skel.min.js"></script>
-			<script src="../js/util.js"></script>
-			<script src="../js/main.js"></script>
- -->
-   
-  </body>
+    <script src="js/calc.js"></script>
+</body>
 </html>
