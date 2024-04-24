@@ -60,10 +60,9 @@ form:hover {
             /* Lowering the shadow */
         }
       td {
-        text-align: center;
+        text-align: left;
 		margin:auto;
 		padding: 12px 20px 12px 40px;
-		text-align: center;
 		
       }
       .fa {
@@ -220,6 +219,7 @@ form:hover {
 	  input[type="email"],
 	  textarea,
 	  input[type="date"] {
+		  float:right;
           width: 260px;
 		  box-sizing: border-box;
 		  border: 2px solid #ccc;
