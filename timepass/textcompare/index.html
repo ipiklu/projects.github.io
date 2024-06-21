@@ -1,36 +1,43 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="stylesheet" href="css/style.css" />
-    <script src="js/script.js"></script>
-    
-    <!---Alert--->
-    <link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.core.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!---Design--->
+	<link rel="stylesheet" href="css/style.css" />
+	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.core.css" />
 	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.default.css" />
-    <script src="../../alertify.js-0.3.11/lib/alertify.min.js"></script>
-
-<title>Text-Editor</title>
+	<script src="../../alertify.js-0.3.11/lib/alertify.min.js"></script>
+    <script src="js/main.js"></script>
+<!---metadata--->    
+<meta charset="utf-8">
+<meta name="theme-color" content="#AA205C" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Text Comparison</title>
 <link rel = "icon" href="img/s.gif" type="image/x-icon">
 </head>
-
 <body>
 <div class="header" style="background-color:#AA205C">
-       <a href="../../index.html" title="Home"><img src="img/s.gif" style="max-width: 2%; max-height: 3%; float:left"/></a>
+       <a href="../../index.html" title="Home"><img src="img/s.gif" class="imgS" style="max-width: 2%; max-height: 3%; float:left"/></a>
        <button class="btn signup btnEffect" onClick="window.location='../server/index.html'" title="Go back to main library" style="background:#AA205C; color:#EEE; float:right">
      	<img src="img/back.gif" style="max-width:10px" />Back</button>
        <button class="btn signup btnEffect" onClick="window.print()" title="Print this page" style="background:#AA205C; color:#EEE; float:right">
      	<img src="img/print.gif" style="max-width:10px" />Print</button>
-        <button class="btn signup btnEffect" onClick="window.location='index.html'" title="Print this page" style="background:#AA205C; color:#EEE; float:right">
-     	<img src="img/settings.gif" style="max-width:10px" />Refresh</button>    
-    </div>    
-    <br /><br /><br><br><br>    
-<main>
-    <textarea id="editor">
-    </textarea>
-</main>
-
+    </div>
+    <br>
+    <br>
+    <br>
+    <a href="index.html" title="Text-Comparison"><h1>Text Comparison</h1></a>
+	<form class="form2">
+    	<div>
+    		<p class="result" id="result"></p>
+    	</div>
+        <label for="text1" class="form2 btn btnEffect signup">Text 1:</label>
+        <textarea id="text1" class="form1 btn signup" title="Click to type"></textarea>
+        <label for="text2" class="form2 btn btnEffect signup">Text 2:</label>
+        <textarea id="text2" class="form1 btn signup" title="Click to type"></textarea>
+        <button type="button" class="btn signup btnEffect" onclick="compare()">COMPARE</button>
+	</form>
 <!---------------------------Footer---------------------------------------------------->     
 
 <footer align="center" style="position:relative; color:#AA205C; bottom: 0; width: 100%;">
@@ -44,6 +51,5 @@
 	<center>
        <span onClick="return(view());" title="About Us" ><font style="font-size: 20px;" color="#AA205C"></font><img src="img/LOADING.gif" style="width:50px"></span>
     </center>
-
 </body>
 </html>

@@ -1,29 +1,12 @@
 @charset "utf-8";
 /* CSS Document */
-
-body {
-     margin: 4rem auto;
-     padding: 0 2rem;
-     background-color: #f9f9fb;
-     }
-main {
-     width: 100%;
-     }
-/* Styles for link */
-        a {
-            text-decoration: none;
+/* Reset styles for HTML elements */
+        @font-face {
+            font-family: google;
+            src: url("fonts/google_sans/GoogleSans-Regular.ttf");
         }
-
-        /* Styles for page header */
-        h1 {
-            font-size: 36px;
-            text-align: center;
-            margin-bottom: 20px;
-            color: #AA205C;
-        }
-  
-	 
-body {
+      
+      body {
         -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
         margin: 0px;
         /* background: url("bac.jpg");*/
@@ -35,9 +18,79 @@ body {
         background: linear-gradient(#FFFFFF,#FFFFFF);
 		font-size: 1.1em;
 		background-color: #FFFFFF ;
-}
-	 
-.header {
+        
+      }
+
+        /* Styles for link */
+        a {
+            text-decoration: none;
+        }
+
+        /* Styles for page header */
+        h1 {
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #AA205C;
+        }
+
+        /* Styles for form */
+        .form1 {
+            background-color: #FFF;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+		
+		.form2 {
+            background-color: #FFF;
+            padding: 20px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Styles for labels and text fields */
+        label, textarea {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #AA205C;
+        }
+
+        textarea {
+            width: 100%;
+            width: 500px;
+            height: 200px;
+            padding: 10px;
+            border: 1px solid #888;
+            border-radius: 5px;
+            background-color: #555;
+            color: BLACK;
+            resize: none;
+        }
+
+
+        
+        /* Styles for result */
+        .result {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+            color: #f2f2f2;
+        }
+        .identical {
+            color: #21C934;
+        }
+        .different {
+            color: #C13636;
+        }
+ .header {
         z-index: 1;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         text-align: center;
@@ -93,9 +146,9 @@ body {
         padding-top: 10px;
         padding-bottom: 10px;
         font-size: 17px;
-        background:#fff;
+        background:rgba(0, 0, 0, 0.1);
         outline: none;
-        color: black;
+        color: #AA205c;
         border: none;
         cursor: pointer;
         border-radius: 20px;
