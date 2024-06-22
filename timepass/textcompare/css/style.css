@@ -20,7 +20,14 @@
 		background-color: #FFFFFF ;
         
       }
-
+	  
+	  div {
+		width:60%;
+		margin:auto;
+		padding: 12px 20px 12px 40px;
+		text-align: center;
+		box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034);
+	  }
         /* Styles for link */
         a {
             text-decoration: none;
