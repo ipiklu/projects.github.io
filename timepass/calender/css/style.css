@@ -1,0 +1,362 @@
+@charset "utf-8";
+/* CSS Document */
+/* styles.css */
+
+/* General styling for the entire page */
+body {
+	font-family: Arial, sans-serif;
+	background-color: white;
+	margin: 0;
+}
+
+.wrapper {
+	max-width: 1100px;
+	margin: 15px auto;
+}
+
+/* Calendar container */
+.container-calendar {
+	background: #ffffff;
+	padding: 15px;
+	max-width: 900px;
+	margin: 0 auto;
+	overflow: auto;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	display: flex;
+	justify-content: space-between;
+}
+
+/* Event section styling */
+#event-section {
+	padding: 10px;
+	background: #f5f5f5;
+	margin: 20px 10px;
+	border: 1px solid #ccc;
+}
+
+.container-calendar #left h1 {
+	color: #AA205C;
+	text-align: center;
+	margin: 20px 10px;
+	padding: 10px 0;
+}
+
+#event-section h3 {
+	color: #AA205C;
+	font-size: 18px;
+	margin: 0;
+}
+
+#event-section input[type="date"] {
+	margin: 10px 0;
+	padding: 5px;
+	width: 80%;
+}
+
+#event-section button {
+	background: #AA205C;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	cursor: pointer;
+}
+
+.event-marker {
+	position: relative;
+}
+
+.event-marker::after {
+	content: '';
+	display: block;
+	width: 6px;
+	height: 6px;
+	background-color: red;
+	border-radius: 50%;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+}
+
+/* event tooltip styling */
+.event-tooltip {
+	position: absolute;
+	background-color: rgba(234, 232, 232, 0.763);
+	color: black;
+	padding: 10px;
+	border-radius: 4px;
+	bottom: 20px;
+	left: 50%;
+	transform: translateX(-50%);
+	display: none;
+	transition: all 0.3s;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	z-index: 1;
+}
+
+.event-marker:hover .event-tooltip {
+	display: block;
+}
+
+/* Reminder section styling */
+#reminder-section {
+	padding: 10px;
+	background: #f5f5f5;
+	margin: 20px 10px;
+	border: 1px solid #ccc;
+}
+
+#reminder-section h3 {
+	color: #AA205C;
+	font-size: 18px;
+	margin: 0;
+}
+
+#reminderList {
+	list-style: none;
+	padding: 0;
+}
+
+#reminderList li {
+	margin: 5px 0;
+	font-size: 16px;
+}
+
+/* Style for the delete buttons */
+.delete-event {
+	background: rgb(237, 19, 19);
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	cursor: pointer;
+	margin-left: 10px;
+	align-items: right;
+}
+
+/* Buttons in the calendar */
+.button-container-calendar button {
+	cursor: pointer;
+	background: #AA205C;
+	color: #fff;
+	border: 1px solid #AA205C;
+	border-radius: 4px;
+	padding: 5px 10px;
+}
+
+/* Calendar table */
+.table-calendar {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.table-calendar td,
+.table-calendar th {
+	padding: 5px;
+	border: 1px solid #e2e2e2;
+	text-align: center;
+	vertical-align: top;
+}
+
+/* Date picker */
+.date-picker.selected {
+	background-color: #f2f2f2;
+	font-weight: bold;
+	outline: 1px dashed #00BCD4;
+}
+
+.date-picker.selected span {
+	border-bottom: 2px solid currentColor;
+}
+
+/* Day-specific styling */
+.date-picker:nth-child(1) {
+	color: red;
+	/* Sunday */
+}
+
+.date-picker:nth-child(6) {
+	color: #AA205C;
+	/* Friday */
+}
+
+/* Hover effect for date cells */
+.date-picker:hover {
+	background-color: #AA205C;
+	color: white;
+	cursor: pointer;
+}
+
+/* Header for month and year */
+#monthAndYear {
+	color:#AA205C;
+	text-align: center;
+	margin-top: 0;
+}
+
+/* Navigation buttons */
+.button-container-calendar {
+	position: relative;
+	margin-bottom: 1em;
+	overflow: hidden;
+	clear: both;
+}
+
+#previous {
+	float: left;
+}
+
+#next {
+	float: right;
+}
+
+/* Footer styling */
+.footer-container-calendar {
+	margin-top: 1em;
+	border-top: 1px solid #dadada;
+	padding: 10px 0;
+}
+
+.footer-container-calendar select {
+	cursor: pointer;
+	background: #ffffff;
+	color: #585858;
+	border: 1px solid #bfc5c5;
+	border-radius: 3px;
+	padding: 5px 1em;
+}
+
+input[type=text], input[type=date]{
+  width: 200px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 9px;
+  font-size: 16px;
+  background-color:#F4C1DD;
+  background-position: 20px 20px; 
+  background-repeat: no-repeat;
+  padding: 12px 20px 12px 40px;
+  transition: width 0.4s ease-in-out;
+}
+
+input[type=text]:focus {
+  width: 220px;
+}
+
+
+input[type=date]:focus {
+  width: 220px;
+}
+
+    .signup {
+        border: 1px solid #AA205c;
+        background: #AA205c;
+        padding-left: 25px;
+        padding-right: 25px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        outline: none;
+        color: white;
+        text-decoration: none;
+        font-family: google;
+        font-size: 18px;
+        transition: all 0.3s ease;
+      }
+      table tr:nth-child(odd) {
+        background-color: gainsboro;
+      }
+
+      .signup:hover {
+        border: 1px solid #AA205c;
+        color: white;
+        box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+          0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+          0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+          0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+        background:#AA205c;
+      }
+
+ .btn {
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 17px;
+        background:#fff;
+        outline: none;
+        color: black;
+        border: none;
+        cursor: pointer;
+        border-radius: 20px;
+      }
+.header {
+        z-index: 1;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        text-align: center;
+
+        width: 100%;
+
+        position: fixed;
+
+        left: 50%;
+
+        transform: translate(-50%, 0);
+
+        color: white;
+
+        background-color: #FFFFFF;
+
+        padding: 15px;
+
+        font-family: google;
+        font-size: 25px;
+      }
+	  
+	       .btnEffect {
+            cursor: pointer;
+            outline: none;
+            transition: 0.2s all;
+        }
+        /* Adding transformation when the button is active */
+          
+        .btnEffect:active {
+            transform: scale(0.98);
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+            /* Lowering the shadow */
+        }
+		
+	img {
+        	border-radius: 10px;
+        	margin: 5px;
+        	width: 90%;
+      	}
+		
+@media screen and (max-width: 640px) {
+		input[type="text"] {
+          font-size: 15px;
+          padding: 7px;
+          border-radius: 5px;
+          border: 1px solid silver;
+          width: 70%;
+          text-align: center;
+          outline: none;
+        }
+		
+		.container-calendar {
+			background: #ffffff;
+			padding: 15px;
+			max-width: 700px;
+			margin: 0 auto;
+			overflow: auto;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+			display: flex;
+			justify-content: space-between;
+		}
+		
+		.wrapper {
+			max-width: 700px;
+			margin: 15px auto;
+		}        
+
+}
