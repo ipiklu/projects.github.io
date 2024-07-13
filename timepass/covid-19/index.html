@@ -102,12 +102,12 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
 <title>Covid-19 Bankura</title>
 </head>
 <body>
-<div class="header" style="background-color:#AA205C">
-     <a href="../../index.html" title="Home"><img src="img/s.gif" style="max-width: 2%; max-height: 3%; float:left"/></a>
-     <center>Covid-19 Status Bankura</center>
-     <button class="btn signup btnEffect" onClick="window.location='../server/index.html'" title="Go back to Timepass-project library" style="background:#AA205C; color:#EEE; float:right">
+<div id="printPageButton" class="header" style="background-color:#AA205C">
+   <a href="../../index.html" title="Home"><img src="img/s.gif" style="max-width: 2%; max-height: 3%; float:left"/></a>
+   <center>Covid-19 Status Bankura</center>
+   <button id="printPageButton" class="btn signup btnEffect" onClick="window.location='../server/index.html'" title="Go back to Timepass-project library" style="background:#AA205C; color:#EEE; float:right">
      <img src="img/back.gif" style="max-width:10px" />Back</button>
-     <button class="btn signup btnEffect" onClick="window.location='../server/data/index.htm'" title="View Data-Source" style="background:#AA205C; color:#EEE; float:right">
+   <button id="printPageButton" class="btn signup btnEffect" onClick="window.location='../server/data/index.htm'" title="View Data-Source" style="background:#AA205C; color:#EEE; float:right">
      <img src="img/settings.gif" style="max-width:10px" />Data-Source</button>
 </div>
 
@@ -115,7 +115,7 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
     <br /><br /><br><br>
     
    <center> <font color="#AA205C"><ul>Last Updated on 17th November 2020</ul>
-   <div align="right">
+   <div align="right" id="printPageButton">
   		<input type="checkbox" id="dark-mode">
   		<label for="dark-mode"></label>
   		<div class="background"></div>
@@ -386,7 +386,7 @@ airline_seat_flat
     <br /><br /><br />
 		    
     <!-----------------------Footer---------------------------> 
-		<div align="center" style="color:#AA205C;">Visitors : </div>
+		<div id="printPageButton" align="center" style="color:#AA205C;">Visitors : </div>
 		
 <br />
     

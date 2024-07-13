@@ -13,8 +13,19 @@ body {
         background: linear-gradient(#FFFFFF,#FFFFFF);
 		font-size: 1.1em;
 		background-color: #FFFFFF;
-        
+		
       }
+
+input[type="text"], textarea{
+		color: #AA205c;	
+}
+
+/*Change text in autofill textbox*/
+input:-webkit-autofill{
+	-webkit-box-shadow: 0 0 0 30px #F7F1BC inset !important;
+    -webkit-text-fill-color: #AA205c !important;
+	
+}
 
 label{
   position: relative;
@@ -58,6 +69,7 @@ input:checked ~ label{
 input:checked + label + .background{
   background: #242424;
 }
-input{
+
+input[type="checkbox"]{
   display: none;
 }

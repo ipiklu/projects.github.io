@@ -180,3 +180,9 @@
         	margin: 5px;
         	width: 90%;
       	}
+		
+@media print {
+  #printPageButton {
+    display: none;
+  }
+}

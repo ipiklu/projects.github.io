@@ -188,6 +188,12 @@ form:hover {
         margin: 5px;
         width: 90%;
       }
+	        
+	.uploadedimg {
+        border-radius: 10px;
+        margin: 5px;
+        width: 30%;
+      }
 
       /*
               .card:hover {
@@ -232,6 +238,16 @@ form:hover {
 		  padding: 12px 20px 12px 40px;
 		  transition: width 0.4s ease-in-out;
 	  }
+input[type="file"] {
+  display: none;
+}	  
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
 	  
 	  input[type=email]:focus {
   		width: 270px;
@@ -331,19 +347,25 @@ form:hover {
           background-color: #fff;
           color:white;
         }
-@media screen and (min-width: 10px) and (max-width: 540px){
+		
+@media screen and (max-width: 600px){
 	div{
-		margin:auto;
 		padding:0;
+		width:100%;
+		margin:auto;
+		text-align: center;
+		box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034);
 	}
+	
 	form{
+		max-width: 100%;
 		margin-left: opx !important;
 		margin-right: 0px !important;
 	}
         input[type="text"],
-        input[type="password"]
-		input[type="email"]
-	  	input[type="textarea"]
+        input[type="password"],
+		input[type="email"],
+	  	input[type="textarea"],
 	  	input[type="date"] {
           font-size: 15px;
           padding: 7px;
@@ -354,6 +376,18 @@ form:hover {
           outline: none;
 		  resize:both;
         }
+		
+		input[type="button"], label {
+			align-content:center;
+		}	  
+
+	.custom-file-upload {
+  		border: 1px solid #ccc;
+  		display: inline-block;
+  		padding: 6px 12px;
+  		cursor: pointer;
+	}
+
 }
         .card2 {
           /*            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);*/
@@ -529,3 +563,8 @@ h2{
 		.abt{
 			cursor:help;
 		}
+@media print {
+  #printPageButton {
+    display: none;
+  }
+}

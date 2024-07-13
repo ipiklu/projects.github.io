@@ -1,0 +1,92 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+
+<head> 
+	<meta charset="UTF-8" /> 
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+    <!---Alert--->
+	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.core.css" />
+	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.default.css" />
+    <script src="../../alertify.js-0.3.11/lib/alertify.min.js"></script>
+	<title>Build-Resume</title> 
+    <link rel = "icon" href="img/s.gif" type="image/x-icon">
+	<!-- style link here -->
+	<link rel="stylesheet" href="css/style.css" /> 
+    <link rel="stylesheet" href="css/dark.css" />
+</head> 
+
+<body> 
+	<!-- input container starts here -->
+	<section class="resume-builder"> 
+		<div class="container">
+        <a href="../../index.html" title="Home"><img src="img/s.gif" style="max-width: 2%; max-height: 3%; float:left"/></a> 
+        		<button class="btn signup btnEffect" onClick="window.location='../server/index.html'" title="Go back to main library" style="background:#AA205C; color:#EEE; float:right">
+     			<img src="img/back.gif" style="max-width:10px" />Back</button>
+		<h1>Build-Resume</h1> 
+				<div align="right">
+  					<input type="checkbox" id="dark-mode">
+  					<label for="dark-mode"></label>
+  					<div class="background"></div>
+				</div>
+			<div class="resume_container"> 
+				<form class="inputField"> 
+					<input type="text"
+						name="name"
+						placeholder="Your Name"
+						title="Enter Your Name" /> 
+					<input type="text"
+						name="title"
+						placeholder="Title/Sub Heading"
+						title="Enter Title/Sub Heading" /> 
+					<textarea name="work_experience" placeholder="Work Experience" cols="40" rows="3" title="Enter Your Work Experience"></textarea> 
+					<textarea name="academic_details" placeholder="Academic Details" cols="40" rows="3" title="Enter Your Academic Details"></textarea> 
+					<input type="text" placeholder="Objective"
+						title="Enter Your Objective"
+						name="objective" /> 
+					<textarea name="skills" title="Enter Your Skills" placeholder="Skills" cols="40" rows="3"></textarea> 
+					<textarea name="projects" title="Enter Your Projects" placeholder="Projects" cols="40" rows="3"></textarea> 
+					<textarea name="achievements" placeholder="Achievements" cols="40" rows="3" title="Enter Your Achievements"></textarea> 
+					<textarea name="contact" placeholder="Contact Information" cols="40" rows="3" title="Enter Your Contact Information"></textarea> 
+				</form> 
+			</div> 
+            <br/>
+			<p class="tip"> 
+				**You can use markup in the text area for text decoration** 
+			</p> 
+		</div>
+        <br/><br/>
+    <!-----------------------Footer---------------------------> 
+	<footer align="center" style="position:relative; color:#AA205C; bottom: 0; width: 100%;">
+		<center> 
+        	<font color="#AA205C">
+            	<p id="date"> </p>
+				   <script>
+                    document.getElementById("date").innerHTML = Date();
+                   </script>
+            </font>
+         </center>
+            <p>|| Copyright protected &copy; <script>document.write(new Date().getFullYear())</script>, All Rights Not Reserved ||</p><p> Design by Sayantan Kundu</p>
+    </footer>
+    <center>
+       <span onClick="return(view());" title="About Us" ><font style="font-size: 20px;" color="#AA205C"></font><img src="img/LOADING.gif" style="width:50px"></span>
+    </center>
+         
+	</section> 
+	
+    <!-- input container ends here -->
+
+	<!-- output container starts here -->
+	<div class="output_container"></div> 
+	<!-- output container ends here -->
+
+	<!-- preview button -->
+	<button id="printPageButton" onclick="hide()" class="btn signup btnEffect"> 
+		Generate / Edit 
+	</button> 
+
+	<!-- script link here -->
+	<script src="js/script.js"></script> 
+</body> 
+
+</html>

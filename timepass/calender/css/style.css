@@ -360,3 +360,9 @@ input[type=date]:focus {
 		}        
 
 }
+
+@media print {
+  #printPageButton {
+    display: none;
+  }
+}

@@ -1,0 +1,287 @@
+@charset "utf-8";
+/* CSS Document */
+
+* { 
+	margin: 0; 
+	padding: 0; 
+	box-sizing: border-box; 
+} 
+
+body { 
+	background-image: linear-gradient(#fff, rgba(0, 0, 0, 0)); 
+	background-attachment: fixed; 
+	font-family: Arial, Helvetica, sans-serif; 
+} 
+
+.resume-builder { 
+	padding: 0 ; 
+} 
+
+.container { 
+	padding: 0 ; 
+	background: rgba(0, 0, 0, 0); 
+	border-radius: 10px; 
+	height: auto; 
+	width: auto; 
+	margin: auto; 
+} 
+
+.container h1 { 
+	text-align: center; 
+	background-color: #AA205C; 
+	padding: 15px; 
+	color: white; 
+	margin-bottom: 20px; 
+} 
+
+.resume_container{
+	
+	justify-content: center;
+  	color:#AA205c;
+  	font-weight: 400;
+  	font-family: 'Inter';
+  	max-width: 80%;
+  	text-align:center;
+  	margin:0 auto;
+  	border: 1px #FFFFFF;
+  	padding: 12px 20px 12px 40px;
+  	box-shadow:  0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+          0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+          0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+          0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);	  
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    outline: none;
+    text-decoration: none;
+    font-family: google;
+    font-size: 18px;
+    transition: all 0.3s ease;
+		  
+}
+.resume_container:hover {
+			margin-top:25px;
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.5);
+            /* Lowering the shadow */
+        }
+
+input, 
+textarea { 
+	background-color: transparent; 
+	margin: 10px 0; 
+	padding: 5px; 
+	outline: none; 
+	border: none; 
+	border-bottom: 2px solid black; 
+	display: block; 
+	width: 100%; 
+} 
+
+button { 
+	border: none; 
+	background-color: white; 
+	padding: 15px; 
+	border-radius: 7px; 
+	font-weight: bold; 
+	cursor: pointer; 
+	display: block; 
+	margin: auto; 
+	margin-bottom: 20px; 
+} 
+
+button:hover { 
+	font-size: medium; 
+} 
+
+.output-container { 
+	display: none; 
+	width: 60%; 
+	margin: 10px auto; 
+} 
+
+.output { 
+	background-color: white; 
+	border: 2px solid white; 
+	margin-bottom: 10px; 
+} 
+
+.heading { 
+	padding: 20px 10px; 
+	text-align: center; 
+	color: white; 
+	background-color: rgb(50, 50, 50); 
+	text-transform: uppercase; 
+} 
+
+.heading h4 { 
+	color: rgb(200, 200, 200); 
+	padding-top: 9px; 
+} 
+
+.info { 
+	display: flex; 
+	padding: 20px; 
+} 
+
+.left { 
+	width: 40%; 
+	border-right: 2px dashed black; 
+	display: flex; 
+	flex-direction: column; 
+	justify-content: space-evenly; 
+} 
+
+.right { 
+	width: 60%; 
+	padding-left: 20px; 
+	display: flex; 
+	flex-direction: column; 
+	justify-content: space-evenly; 
+} 
+
+.box { 
+	margin: 10px 0; 
+	padding: 5px 10px; 
+	height: auto; 
+	overflow-wrap: break-word; 
+} 
+
+.box h2, 
+.box p { 
+	margin-bottom: 5px; 
+} 
+
+.tip { 
+	font-size: small; 
+	color: gray; 
+	text-align: center; 
+} 
+
+.credit { 
+	text-align: center; 
+	font-weight: bold; 
+	padding: 10px 3px; 
+	color: rgb(80, 80, 80); 
+} 
+
+a { 
+	color: black; 
+} 
+
+a:hover { 
+	color: rgb(247, 28, 12); 
+	font-weight: bold; 
+} 
+
+.signup {
+        border: 1px solid #AA205c;
+        background: #AA205c;
+        padding-left: 25px;
+        padding-right: 25px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        outline: none;
+        color: white;
+        text-decoration: none;
+        font-family: google;
+        font-size: 18px;
+        transition: all 0.3s ease;
+      }
+      .signup:hover {
+        border: 1px solid #AA205c;
+        color: white;
+        box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+          0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+          0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+          0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+        background:#AA205c;
+      }
+
+ .btn {
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 17px;
+        background:#fff;
+        outline: none;
+        color: black;
+        border: none;
+        cursor: pointer;
+        border-radius: 20px;
+      }
+	  
+	       .btnEffect {
+            cursor: pointer;
+            outline: none;
+            transition: 0.2s all;
+        }
+        /* Adding transformation when the button is active */
+          
+        .btnEffect:active {
+            transform: scale(0.98);
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+            /* Lowering the shadow */
+        }
+		
+	img {
+        	border-radius: 10px;
+        	margin: 5px;
+        	width: 90%;
+      	}
+
+/* media queries begin */
+@media screen and (max-width: 920px) { 
+	.container { 
+		width: 100%; 
+	} 
+
+	.output-container { 
+		width: 87%; 
+	} 
+} 
+
+@media screen and (max-width: 600px) { 
+	.resume-builder { 
+		padding: 0; 
+	} 
+
+	h1 { 
+		font-size: 160%; 
+	} 
+
+	.info { 
+		display: flex; 
+		padding: 20px; 
+	} 
+
+	.left { 
+		width: 100%; 
+		border-right: 2px dashed black; 
+		display: flex; 
+		flex-direction: column; 
+		justify-content: space-evenly; 
+	} 
+
+	.right { 
+		width: 100%; 
+		padding-left: 20px; 
+		display: flex; 
+		flex-direction: column; 
+		justify-content: space-evenly;  
+	} 
+} 
+
+@media print {
+  #printPageButton {
+    display: none;
+  }
+}
+
+/* media queries end here */
