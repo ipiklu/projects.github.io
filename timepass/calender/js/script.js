@@ -106,7 +106,7 @@ currentYear = today.getFullYear();
 selectYear = document.getElementById("year");
 selectMonth = document.getElementById("month");
 
-createYear = generate_year_range(1947, 3000);
+createYear = generate_year_range(1582, 3000);
 
 document.getElementById("year").innerHTML = createYear;
 

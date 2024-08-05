@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <!---Alert--->
+	<link rel="stylesheet" href="../../../alertify.js-0.3.11/themes/alertify.core.css" />
+	<link rel="stylesheet" href="../../../alertify.js-0.3.11/themes/alertify.default.css" />
+    <script src="../../../alertify.js-0.3.11/lib/alertify.min.js"></script>
+    <title>Theme Clock</title>
+    <link rel = "icon" href="img/s.gif" type="image/x-icon">
+  </head>
+  <body>
+  <div class="header" style="background-color:#AA205C">
+       <a href="../../../index.html" title="Home"><img src="img/s.gif" style="max-width: 2%; max-height: 3%; float:left"/></a>
+       <button id="printPageButton" class="btn signup btnEffect" onClick="window.location='../index.html'" title="Go back to main library" style="background:#AA205C; color:#EEE; float:right">
+     	<img src="img/back.gif" style="max-width:10px" />Back</button>
+       <button id="printPageButton" class="btn signup btnEffect" onClick="window.print()" title="Print this page" style="background:#AA205C; color:#EEE; float:right">
+     	<img src="img/print.gif" style="max-width:10px" />Print</button>
+        <button id="printPageButton" class="btn signup btnEffect" onClick="window.location='index.html'" title="Print this page" style="background:#AA205C; color:#EEE; float:right">
+     	<img src="img/settings.gif" style="max-width:10px" />Refresh</button>
+    </div>    
+    <br /><br /><br><br><br><br><br>
+    <!-- Inspired by this dribbble shot https://dribbble.com/shots/5958443-Alarm-clock -->
+
+    <p align="center"><button class="toggle btn signup btnEffect">Dark mode</button></p>
+
+    <div class="clock-container">
+      <div class="clock">
+        <div class="needle hour"></div>
+        <div class="needle minute"></div>
+        <div class="needle second"></div>
+        <div class="center-point"></div>
+      </div>
+
+      <div class="time"></div>
+      <div class="date"></div>
+    </div>
+
+    <script src="js/script.js"></script>
+    
+ <!-----------------------Footer---------------------------> 
+	<footer align="center" style="position:relative; color:#AA205C; bottom: 0; width: 100%;">
+		<center> 
+        	<font color="#AA205C">
+            	<p id="date"> </p>
+				   <script>
+                    document.getElementById("date").innerHTML = Date();
+                   </script>
+            </font>
+         </center>
+            <p>|| Copyright protected &copy; <script>document.write(new Date().getFullYear())</script>, All Rights Not Reserved ||</p><p> Design by Sayantan Kundu</p>
+    </footer>
+    <center>
+       <span onClick="return(view());" title="About Us" ><font style="font-size: 20px;" color="#AA205C"></font><img src="img/LOADING.gif" style="width:50px"></span>
+    </center>   
+  </body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"/>
+    <link rel="stylesheet" href="css/style.css" />
+    <!---Alert--->
+	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.core.css" />
+	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.default.css" />
+    <script src="../../alertify.js-0.3.11/lib/alertify.min.js"></script>
+    <title>Sticky Notes</title>
+    <link rel = "icon" href="img/s.gif" type="image/x-icon">
+  </head>
+  <body>
+  	<div class="header" style="background-color:#AA205C">
+       <a href="../../index.html" title="Home"><img src="img/s.gif" style="max-width: 2%; max-height: 3%; float:left"/></a>
+       <button id="printPageButton" class="btn signup btnEffect" onClick="window.location='../index.html'" title="Go back to main library" style="background:#AA205C; color:#EEE; float:right">
+     	<img src="img/back.gif" style="max-width:10px" />Back</button>
+       <button id="printPageButton" class="btn signup btnEffect" onClick="window.print()" title="Print this page" style="background:#AA205C; color:#EEE; float:right">
+     	<img src="img/print.gif" style="max-width:10px" />Print</button>
+       <button class="add btn signup btnEffect" id="add" title="Add notes" style="background:#AA205C; color:#EEE; float:right">
+      	<i class="fas fa-plus"></i>Add note</button>
+        <span onClick="return(view());" title="About Us" style="float:left">
+        	<font style="font-size: 20px;" color="#AA205C"></font><img src="img/LOADING.gif"  style="width:50px">
+        </span>
+	 </div>
+    <br>
+    <br>
+    <script src="js/marked.min.js"></script>
+    <script src="js/script.js"></script>    
+  </body>
+</html>
