@@ -126,8 +126,6 @@ canvas {
 @media screen and (max-width: 940px) {
 		canvas {
   			border: 2px solid #AA205C;
-			width:480px;
-			height:640px ;
 		}
 		
 		.toolbox {
