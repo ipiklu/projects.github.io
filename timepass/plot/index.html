@@ -1,0 +1,59 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>PLoT</title> 
+    <link rel = "icon" href="img/s.gif" type="image/x-icon">
+ <!---Alert--->
+	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.core.css" />
+	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.default.css" />
+    <script src="../../alertify.js-0.3.11/lib/alertify.min.js"></script>
+ <!---Design--->   
+    <link rel="stylesheet" href="css/style.css">
+	<script src="js/plotly-latest.min.js"> </script> 
+	<script src="js/math.js"></script> 
+</head> 
+
+<body> 
+<div class="top-header" style="background-color:#AA205C">
+       <a href="../../index.html" title="Home"><img src="img/s.gif" style="max-width: 2%; max-height: 3%; float:left"/></a>
+       <span onClick="return(view());" title="About Us" ><font style="font-size: 20px;" color="#AA205C"></font><img src="img/LOADING.gif" style="width:50px; float:left"></span>
+       <button id="printPageButton" class="btn signup btnEffect" onClick="window.location='../server/index.html'" title="Go back to main library" style="background:#AA205C; color:#EEE; float:right">
+     	<img src="img/back.gif" style="max-width:10px" />Back</button>
+       <button id="printPageButton" class="btn signup btnEffect" onClick="window.print()" title="Print this page" style="background:#AA205C; color:#EEE; float:right">
+     	<img src="img/print.gif" style="max-width:10px" />Print</button>
+        <button id="printPageButton" class="btn signup btnEffect" onClick="window.location='index.html'" title="Refresh this page" style="background:#AA205C; color:#EEE; float:right">
+     	<img src="img/settings.gif" style="max-width:10px" />Refresh</button>  
+    </div>
+<div class="container">
+  <header>
+    <h1>Graph Plotter</h1>
+    <div class="input-container">
+      <input type="text" id="functionInput"
+					placeholder="Enter a function, e.g. y = x^2">
+      <button class="btn signup btnEffect" onclick="plotGraph()">Plot</button>
+    </div>
+  </header>
+  <div class="main-content">
+    <div class="graph" id="graph"></div>
+  </div>
+</div>
+<br /><br /><br><br><br><br><br>
+<script src="js/script.js"></script> 
+    
+    <!-----------------------Footer---------------------------> 
+	<footer align="center" style="position:fixed; color:#AA205C; bottom: 0; width: 100%;">
+		<center> 
+        	<font color="#AA205C">
+            	<p id="date"> </p>
+				   <script>
+                    document.getElementById("date").innerHTML = Date();
+                   </script>
+            </font>
+         </center>
+            <p>|| Copyright protected &copy; <script>document.write(new Date().getFullYear())</script>, All Rights Not Reserved ||</p><p> Design by Sayantan Kundu</p>
+    </footer>
+</body> 
+
+</html>
