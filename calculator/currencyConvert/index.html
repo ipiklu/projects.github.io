@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <link rel = "icon" href="img/s.gif" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+     <!---Alert--->
+    <link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.core.css" />
+	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.default.css" />
+    <script src="../../alertify.js-0.3.11/lib/alertify.min.js"></script>
+    
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Lobster&family=Pacifico&display=swap" rel="stylesheet">
+    <!-- linking style.css file-->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+<div class="header" style="background-color:#AA205C">
+       <a href="../../index.html" title="Home"><img src="img/s.gif" style="max-width: 2%; max-height: 3%; float:left"/></a>
+       <button id="printPageButton" class="btn signup btnEffect" onClick="window.location='../index.html'" title="Go back to main library" style="background:#AA205C; color:#EEE; float:right">
+     	<img src="img/back.gif" style="max-width:10px" />Back</button>
+       <button id="printPageButton" class="btn signup btnEffect" onClick="window.print()" title="Print this page" style="background:#AA205C; color:#EEE; float:right">
+     	<img src="img/print.gif" style="max-width:10px" />Print</button>
+        <button id="printPageButton" class="btn signup btnEffect" onClick="reloadClear()" title="Refresh this page" style="background:#AA205C; color:#EEE; float:right">
+     	<img src="img/settings.gif" style="max-width:10px" />Refresh</button>    
+    </div>    
+    <br /><br /><br>
+    <!-- Currency Converter -->
+    <h1 class="heading text-center display-2">
+        Currency Converter
+    </h1>
+    <hr>
+    <div class="container">
+        <div class="main">
+            <div class="form-group">
+                <label for="oamount">
+                    Amount to Convert :
+                </label>
+                <input type="text" style="color: #AA205c;" class="form-control searchBox" placeholder="0.00" id="oamount">
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="color: #AA205c;">From</span>
+                        </div>
+                        <select class="form-control from" id="sel1" style="color: #AA205c;">
+                            <option value="">Select One …</option>
+                            <option value="USD">USD</option>
+                            <option value="AED">AED</option>
+                            <option value="ARS">ARS</option>
+                            <option value="AUD">AUD</option>
+                            <option value="BGN">BGN</option>
+                            <option value="BRL">BRL</option>
+                            <option value="BSD">BSD</option>
+                            <option value="CAD">CAD</option>
+                            <option value="CHF">CHF</option>
+                            <option value="CLP">CLP</option>
+                            <option value="CNY">CNY</option>
+                            <option value="COP">COP</option>
+                            <option value="CZK">CZK</option>
+                            <option value="DKK">DKK</option>
+                            <option value="DOP">DOP</option>
+                            <option value="EGP">EGP</option>
+                            <option value="EUR">EUR</option>
+                            <option value="FJD">FJD</option>
+                            <option value="GBP">GBP</option>
+                            <option value="GTQ">GTQ</option>
+                            <option value="HKD">HKD</option>
+                            <option value="HRK">HRK</option>
+                            <option value="HUF">HUF</option>
+                            <option value="IDR">IDR</option>
+                            <option value="ILS">ILS</option>
+                            <option value="INR">INR</option>
+                            <option value="ISK">ISK</option>
+                            <option value="JPY">JPY</option>
+                            <option value="KRW">KRW</option>
+                            <option value="KZT">KZT</option>
+                            <option value="MVR">MVR</option>
+                            <option value="MXN">MXN</option>
+                            <option value="MYR">MYR</option>
+                            <option value="NOK">NOK</option>
+                            <option value="NZD">NZD</option>
+                            <option value="PAB">PAB</option>
+                            <option value="PEN">PEN</option>
+                            <option value="PHP">PHP</option>
+                            <option value="PKR">PKR</option>
+                            <option value="PLN">PLN</option>
+                            <option value="PYG">PYG</option>
+                            <option value="RON">RON</option>
+                            <option value="RUB">RUB</option>
+                            <option value="SAR">SAR</option>
+                            <option value="SEK">SEK</option>
+                            <option value="SGD">SGD</option>
+                            <option value="THB">THB</option>
+                            <option value="TRY">TRY</option>
+                            <option value="TWD">TWD</option>
+                            <option value="UAH">UAH</option>
+                            <option value="UYU">UYU</option>
+                            <option value="ZAR">ZAR</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="color: #AA205c;">To</span>
+                        </div>
+                        <select class="form-control to" id="sel2" style="color: #AA205c;">
+                            <option value="">Select One …</option>
+                            <option value="USD">USD</option>
+                            <option value="AED">AED</option>
+                            <option value="ARS">ARS</option>
+                            <option value="AUD">AUD</option>
+                            <option value="BGN">BGN</option>
+                            <option value="BRL">BRL</option>
+                            <option value="BSD">BSD</option>
+                            <option value="CAD">CAD</option>
+                            <option value="CHF">CHF</option>
+                            <option value="CLP">CLP</option>
+                            <option value="CNY">CNY</option>
+                            <option value="COP">COP</option>
+                            <option value="CZK">CZK</option>
+                            <option value="DKK">DKK</option>
+                            <option value="DOP">DOP</option>
+                            <option value="EGP">EGP</option>
+                            <option value="EUR">EUR</option>
+                            <option value="FJD">FJD</option>
+                            <option value="GBP">GBP</option>
+                            <option value="GTQ">GTQ</option>
+                            <option value="HKD">HKD</option>
+                            <option value="HRK">HRK</option>
+                            <option value="HUF">HUF</option>
+                            <option value="IDR">IDR</option>
+                            <option value="ILS">ILS</option>
+                            <option value="INR">INR</option>
+                            <option value="ISK">ISK</option>
+                            <option value="JPY">JPY</option>
+                            <option value="KRW">KRW</option>
+                            <option value="KZT">KZT</option>
+                            <option value="MVR">MVR</option>
+                            <option value="MXN">MXN</option>
+                            <option value="MYR">MYR</option>
+                            <option value="NOK">NOK</option>
+                            <option value="NZD">NZD</option>
+                            <option value="PAB">PAB</option>
+                            <option value="PEN">PEN</option>
+                            <option value="PHP">PHP</option>
+                            <option value="PKR">PKR</option>
+                            <option value="PLN">PLN</option>
+                            <option value="PYG">PYG</option>
+                            <option value="RON">RON</option>
+                            <option value="RUB">RUB</option>
+                            <option value="SAR">SAR</option>
+                            <option value="SEK">SEK</option>
+                            <option value="SGD">SGD</option>
+                            <option value="THB">THB</option>
+                            <option value="TRY">TRY</option>
+                            <option value="TWD">TWD</option>
+                            <option value="UAH">UAH</option>
+                            <option value="UYU">UYU</option>
+                            <option value="ZAR">ZAR</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+
+                <!-- convert button -->
+                <button class="btn signup btnEffect convert m-2" type="submit">
+                    Convert
+                </button>
+                <!-- reset button -->
+                <button class="btn signup btnEffect m-2" onclick="clearVal()">
+                    Reset
+                </button>
+            </div>
+
+        </div>
+
+        <div id="finalAmount" class="text-center">
+
+            <!-- Display the converted amount -->
+            <h2>Converted Amount :
+                <span class="finalValue" style="color:green;">
+                </span>
+            </h2>
+        </div>
+    </div>
+
+    <!-- linking script.js file -->
+    <script src="js/script.js"></script>
+    
+    <!-----------------------Footer---------------------------> 
+	<footer align="center" style="position:relative; color:#AA205C; bottom: 0; width: 100%;">
+		<center> 
+        	<font color="#AA205C">
+            	<p id="date"> </p>
+				   <script>
+                    document.getElementById("date").innerHTML = Date();
+                   </script>
+            </font>
+         </center>
+            <p>|| Copyright protected &copy; <script>document.write(new Date().getFullYear())</script>, All Rights Not Reserved ||</p><p> Design by Sayantan Kundu</p>
+    </footer>
+    <center>
+       <span onClick="return(view());" title="About Us" ><font style="font-size: 20px;" color="#AA205C"></font><img src="img/LOADING.gif" style="width:50px"></span>
+    </center>
+    
+</body>
+
+</html>

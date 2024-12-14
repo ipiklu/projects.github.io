@@ -1,23 +1,8 @@
 @charset "utf-8";
 /* CSS Document */
-
-/* A margin and padding are provided 0
-box-sizing border box is used to include
-padding and border in the total width
-and height of the element, and font-family
-can be specified by the user */
-   @font-face {
-            font-family: google;
-            src: url("fonts/google_sans/GoogleSans-Regular.ttf");
-        }
-
-/* The user display allows you to specify the
-background colour and height. The
-display:flex property, which is aligned at the
-centre, is used to fill available free space
-or to shrink them to prevent overflow */
-body {
-        -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+/* Reset default styling */
+body, h1, h2, p {
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
         margin: 0px;
         /* background: url("bac.jpg");*/
         background-size: cover;
@@ -25,117 +10,24 @@ body {
         scroll-behavior: smooth;
         background-attachment: fixed;
         font-family: google,sans-serif;
-        background: linear-gradient(#FFFFFF,#FFFFFF);
 		font-size: 1.1em;
-		background-color: #FFFFFF ;
+		color: #AA205c;
 }
 
-/* font-weight Specifies weight of glyphs
-in the font, their degree of blackness or
-stroke */
-h1 {
-	font-weight: 900;
-	margin-bottom: 12px;
+/* Body and text styling */
+body {
+    font-family: 'Amiri', serif;
+    background-color: #f8f9fa;
+    color: #333;
 }
 
-div {
-	width:60%;
-	margin:auto;
-	padding: 12px 20px 12px 40px;
-	text-align: center;
-	box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034);
+/* Heading styling */
+.heading {
+    margin: 20px 0;
+    font-family: 'Lobster', cursive;
+    color: #AA205c;
 }
 
-
-input[type=number] {
-	width: 84px;
-	font-size: 18px;
-	padding: 8px;
-	margin: 0px 8px 8px 8px;
-	border: 2px solid #ccc;
-}
-
-/* The text-transform:uppercase property
-causes characters to be raised to uppercase.
-The button's font-weight, font-size, and
-cursor type can be customised by the user. */
-button {
-	text-transform: uppercase;
-	font-weight: 900;
-	font-size: 20px;
-	margin: 12px 0;
-	padding: 8px;
-	cursor: pointer;
-	letter-spacing: 1px;
-}
-
-/* The font-weight, font-size, background-color,
-and border can all be customized by the user.
-The border-radius property allows you to give
-an element rounded corners.*/
-input[type=text] {
-	width: 200px;
-	font-size: 12px;
-	padding: 15px 0;
-	font-weight: 900;
-	text-align: center;
-	background-color: #f7f7f7;
-	border: 2px solid #ccc;
-	border-radius: 20px;
-}
-.flx1{
-	
-	display:flex;
-}
-
-.flx2{
-	display:flex;
-	flex-wrap: wrap;
-}
-
-    .signup {
-        border: 1px solid #AA205c;
-        background: #AA205c;
-        padding-left: 25px;
-        padding-right: 25px;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        border-radius: 5px;
-        cursor: pointer;
-        outline: none;
-        color: white;
-        text-decoration: none;
-        font-family: google;
-        font-size: 18px;
-        transition: all 0.3s ease;
-      }
-      table tr:nth-child(odd) {
-        background-color: gainsboro;
-      }
-
-      .signup:hover {
-        border: 1px solid #AA205c;
-        color: white;
-        box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
-          0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
-          0 22.3px 17.9px rgba(0, 0, 0, 0.072),
-          0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
-        background:#AA205c;
-      }
-
- .btn {
-        padding-left: 50px;
-        padding-right: 50px;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        font-size: 17px;
-        background:#fff;
-        outline: none;
-        color: black;
-        border: none;
-        cursor: pointer;
-        border-radius: 20px;
-      }
 .header {
         z-index: 1;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -158,8 +50,84 @@ input[type=text] {
         font-family: google;
         font-size: 25px;
       }
+
+/* Container styling */
+.container {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Main section */
+.main {
+    padding: 20px;
+}
+
+/* Form group */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* Input field */
+.form-control {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Prevent text wrapping in select options */
+.form-control option {
+    white-space: nowrap;
+}
+
+/* Button styling */
+.signup {
+        border: 1px solid #AA205c;
+        background: #AA205c;
+        padding-left: 25px;
+        padding-right: 25px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        outline: none;
+        color: white;
+        text-decoration: none;
+        font-family: google;
+        font-size: 18px;
+        transition: all 0.3s ease;
+      }
+
+      .signup:hover {
+        border: 1px solid #AA205c;
+        color: white;
+        box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+          0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+          0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+          0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+        background:#AA205c;
+      }
+
+ .btn {
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 17px;
+        background:#AA205c;
+        outline: none;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 20px;
+      }
 	  
-	       .btnEffect {
+	  .btnEffect {
             cursor: pointer;
             outline: none;
             transition: 0.2s all;
@@ -178,8 +146,56 @@ input[type=text] {
         	margin: 5px;
         	width: 90%;
       	}
-		
+	  
+
+/* Center text */
+.text-center {
+    text-align: center;
+}
+
+/* Converted amount display */
+#finalAmount {
+    margin-top: 20px;
+}
+
+label {
+ color: #AA205c;
+	
+}
+
+.finalValue {
+    color: green;
+    font-weight: bold;
+}
+
 @media screen and (max-width: 600px) { 
+
+	.main {
+		padding: 15px;
+	}
+	
+	/* Form group */
+	.form-group {
+		margin-bottom: 10px;
+	}
+	
+	/* Input field */
+	.form-control {
+		border-radius: 5px;
+		border: 1px solid #ccc;
+		padding: 10px;
+		font-size: 16px;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.container {
+    	margin-top: 15px;
+    	padding: 10px;
+    	background-color: #ffffff;
+    	border-radius: 5px;
+    	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	}
 	.signup {
         border: 1px solid #AA205c;
         background: #AA205c;
@@ -213,9 +229,9 @@ input[type=text] {
         padding-top: 5px;
         padding-bottom: 5px;
         font-size: 8px;
-        background:#fff;
+        background:#AA205c;
         outline: none;
-        color: black;
+        color: white;
         border: none;
         cursor: pointer;
         border-radius: 10px;
@@ -236,7 +252,6 @@ input[type=text] {
         }
 } 
 
-		
 @media print {
   #printPageButton {
     display: none;

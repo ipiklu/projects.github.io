@@ -22,6 +22,11 @@ function percentage_2() {
 			.value = (num1 * 100) / num2 + "%";
 }
 
+function reloadClear() {
+  window.localStorage.clear();
+  window.location.reload(true);
+  return false;
+}
 
  <!---POPUP Coustomization---> 
 	  function view() {
