@@ -154,48 +154,104 @@ body {
         width: 90%;
       }
 	  
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 600px) {
 
-.header {
-        z-index: 1;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        text-align: center;
-        width: 100%;
-        position: fixed;
-        left: 50%;
-        transform: translate(-50%, 0);
-        color: white;
-        background-color: #FFFFFF;
-        padding: 0;
-        font-family: google;
-        font-size: 25px;
-      }	
-
-.note {
-  background-color: #fff;
-  box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.1);
-  margin: 120px 90px;
-  width: 100%;
-  overflow-y: scroll;
-}
-
-.note textarea {
-  outline: none;
-  font-family: inherit;
-  font-size: 1.2rem;
-  border: none;
-  height: 400px;
-  width: 100%;
-  padding: 10px;
-}
-
-.main {
-  padding: 20px;
-}
-
-.hidden {
-  display: none;
-}
+		.header {
+				z-index: 1;
+				box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+				text-align: center;
+				width: 100%;
+				position: fixed;
+				left: 50%;
+				transform: translate(-50%, 0);
+				color: white;
+				background-color: #FFFFFF;
+				padding: 0;
+				font-family: google;
+				font-size: 25px;
+			  }	
+			  
+	   .signup {
+				border: 1px solid #AA205c;
+				background: #AA205c;
+				padding-left: 10px;
+				padding-right: 10px;
+				padding-top: 10px;
+				padding-bottom: 5px;
+				border-radius: 5px;
+				cursor: pointer;
+				outline: none;
+				color: white;
+				text-decoration: none;
+				font-family: google;
+				font-size: 5px;
+				transition: all 0.3s ease;
+			  }
+		
+		.signup:hover {
+				border: 1px solid #AA205c;
+				color: white;
+				box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+				  0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+				  0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+				  0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+				background:#AA205c;
+			  }
+		
+		 .btn {
+				padding-left: 5px;
+				padding-right: 5px;
+				padding-top: 5px;
+				padding-bottom: 5px;
+				font-size: 12px;
+				background:rgba(0, 0, 0, 0.1);
+				outline: none;
+				color: black;
+				border: none;
+				cursor: pointer;
+				border-radius: 10px;
+			  }
+			  
+			  .btnEffect {
+					cursor: pointer;
+					outline: none;
+					transition: 0.2s all;
+				}
+				/* Adding transformation when the button is active */
+				  
+				.btnEffect:active {
+					transform: scale(0.98);
+					/* Scaling button to 0.98 to its original size */
+					box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+					/* Lowering the shadow */
+				} 
+			  
+		
+		.note {
+		  background-color: #fff;
+		  box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.1);
+		  margin: 120px 90px;
+		  width: 100%;
+		  overflow-y: scroll;
+		}
+		
+		.note textarea {
+		  outline: none;
+		  font-family: inherit;
+		  font-size: 1.2rem;
+		  border: none;
+		  height: 400px;
+		  width: 100%;
+		  padding: 10px;
+		}
+		
+		.main {
+		  padding: 20px;
+		}
+		
+		.hidden {
+		  display: none;
+		}
 
 
 }
