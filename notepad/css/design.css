@@ -277,89 +277,68 @@
           background-color: #1d7ece;
           color:white;
         }
-      @media screen and (max-width: 640px) {
-        table tr:nth-child(odd) {
-          background-color: gainsboro;
-        }
-        input[type="text"],
-        input[type="password"] {
-          font-size: 15px;
-          padding: 7px;
-          border-radius: 5px;
-          border: 1px solid silver;
-          width: 70%;
-          text-align: center;
-          outline: none;
-        }
-        .card2 {
-          /*            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);*/
-          transition: 0.3s;
-
-          background-color: white;
-          width: 80%;
-          height: auto;
-          font-family: google;
-
-          color: dimgray;
-          border-radius: 10px;
-        }
-
-        .card {
-          /*            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);*/
-          transition: 0.3s;
-
-          background-color: rgba(255, 255, 255, 0.8);
-          width: 80%;
-          height: auto;
-          font-family: google;
-
-          color: dimgray;
-          border-radius: 10px;
-        }
-        .header {
-          z-index: 1;
-          text-align: center;
-
-          width: 100%;
-
-          position: fixed;
-
-          left: 50%;
-
-          transform: translate(-50%, 0);
-
-          color: white;
-
-          background-color: #FFFFFF;
-
-          padding-left: 0px;
-          padding-top: 10px;
-          padding-right: 0px;
-          padding-bottom: 10px;
-
-          font-family: google;
-          font-size: 25px;
-          
-        }
-        tr td:nth-child(2){
-          background-color: #ff5141;
-          color:white;
-        }
-        tr td:nth-child(3){
-          background-color: #ff8811;
-          color:white;
-        }
-        tr td:nth-child(4){
-          background-color: #80bb22;
-          color:white;
-        }
-        tr td:nth-child(5){
-          background-color: #1d7ece;
-          color:white;
-        }
-        
-        
-      }
+@media screen and (max-width: 600px) {
+	
+		p {
+			margin-top: 15px;
+		}
+ 
+		 .signup {
+				border: 1px solid #AA205c;
+				background: #AA205c;
+				padding-left: 10px;
+				padding-right: 10px;
+				padding-top: 10px;
+				padding-bottom: 5px;
+				border-radius: 5px;
+				cursor: pointer;
+				outline: none;
+				color: white;
+				text-decoration: none;
+				font-family: google;
+				font-size: 5px;
+				transition: all 0.3s ease;
+			  }
+		
+			  .signup:hover {
+				border: 1px solid #AA205c;
+				color: white;
+				box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+				  0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+				  0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+				  0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+				background:#AA205c;
+			  }
+		
+		 .btn {
+				padding-left: 5px;
+				padding-right: 5px;
+				padding-top: 5px;
+				padding-bottom: 5px;
+				font-size: 12px;
+				background:rgba(0, 0, 0, 0.1);
+				outline: none;
+				color: black;
+				border: none;
+				cursor: pointer;
+				border-radius: 10px;
+			  }
+			  
+			  .btnEffect {
+					cursor: pointer;
+					outline: none;
+					transition: 0.2s all;
+				}
+				/* Adding transformation when the button is active */
+				  
+				.btnEffect:active {
+					transform: scale(0.98);
+					/* Scaling button to 0.98 to its original size */
+					box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+					/* Lowering the shadow */
+				}       
+				
+ }
 
    .ln {
         text-decoration: none;
