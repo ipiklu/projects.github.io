@@ -1,0 +1,179 @@
+@charset "utf-8";
+/* CSS Document */
+       /* General body styling for the terminal environment */
+        body {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            font-family: 'Fira Code', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        /* Main container for the terminal window */
+        #terminal {
+            width: 90%;
+            max-width: 800px;
+            height: 80%;
+            background-color: #000;
+            border: 1px solid #333;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Container for the terminal output */
+        #output {
+            flex-grow: 1;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            padding-right: 10px; /* To prevent scrollbar from covering text */
+            scrollbar-width: thin;
+            scrollbar-color: #0f0 #333;
+        }
+
+        /* Scrollbar styling for Webkit browsers */
+        #output::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #output::-webkit-scrollbar-track {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        #output::-webkit-scrollbar-thumb {
+            background-color: #0f0;
+            border-radius: 4px;
+            border: 2px solid #333;
+        }
+
+        /* Individual line of output */
+        .line {
+            line-height: 1.5;
+        }
+
+        /* Styling for the prompt line itself */
+        .prompt-line {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+        }
+
+        /* Styling for the prompt text itself (e.g., "user@web-terminal:~$") */
+        .prompt-text {
+            color: #0f0;
+            margin-right: 5px;
+            user-select: none; /* Prevent selection of the prompt text */
+        }
+        
+        /* The span where the user's text is rendered */
+        .current-input {
+            white-space: pre;
+        }
+
+        /* The simulated cursor, a blinking block */
+        .cursor {
+            background-color: #0f0;
+            width: 8px;
+            height: 1.2rem;
+            margin-left: 2px;
+            animation: blink 1s step-end infinite;
+        }
+
+        /* A simple animation for a blinking cursor */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+		}
+		
+    .signup {
+        border: 1px solid #AA205c;
+        background: #AA205c;
+        padding-left: 25px;
+        padding-right: 25px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        outline: none;
+        color: white;
+        text-decoration: none;
+        font-family: google;
+        font-size: 18px;
+        transition: all 0.3s ease;
+      }
+      .signup:hover {
+        border: 1px solid #AA205c;
+        color: white;
+        box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+          0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+          0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+          0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+        background:#AA205c;
+      }
+
+ .btn {
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 17px;
+        background:#fff;
+        outline: none;
+        color: black;
+        border: none;
+        cursor: pointer;
+        border-radius: 20px;
+      }
+.header {
+        z-index: 1;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        text-align: center;
+
+        width: 100%;
+
+        position: fixed;
+
+        left: 50%;
+
+        transform: translate(-50%, 0);
+
+        color: white;
+
+        background-color: #FFFFFF;
+
+        padding: 15px;
+
+        font-family: google;
+        font-size: 25px;
+      }
+	  
+	       .btnEffect {
+            cursor: pointer;
+            outline: none;
+            transition: 0.2s all;
+        }
+        /* Adding transformation when the button is active */
+          
+        .btnEffect:active {
+            transform: scale(0.98);
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+            /* Lowering the shadow */
+        }
+		
+	img {
+        	border-radius: 10px;
+        	margin: 5px;
+        	width: 90%;
+      	}

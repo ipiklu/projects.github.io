@@ -32,21 +32,13 @@ body {
         z-index: 1;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         text-align: center;
-
         width: 100%;
-
         position: fixed;
-
         left: 50%;
-
         transform: translate(-50%, 0);
-
         color: white;
-
         background-color: #FFFFFF;
-
         padding: 15px;
-
         font-family: google;
         font-size: 25px;
       }
@@ -250,6 +242,7 @@ label {
             box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
             /* Lowering the shadow */
         }
+		
 } 
 
 @media print {
