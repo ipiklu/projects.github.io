@@ -9,14 +9,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-       <button id="printPageButton" class="btn signup btnEffect" onClick="window.location='../server/index.html'" title="Go back to main library" style="background:#AA205C; color:#EEE; float:right">
+     <div id="terminal-container">
+        <button id="printPageButton" class="btn signup btnEffect" onClick="window.location='../server/index.html'" title="Go back to main library" style="background:#AA205C; color:#EEE; float:right">
      	<img src="img/s.gif" style="max-width:10px" />Exit Terminal</button>
-    </div> 
-<div id="terminal">
-    <div id="output">
-        <div class="line">Web-Terminal v4.1</div>
-        <div class="line">Type 'help' to see available commands.</div>
-        <div class="line"></div>
+        <div id="output"></div>
+        	<div class="line">Web-Terminal v4.1</div>
+        	<div class="line">Type 'help' to see available commands.</div>
+        	<div class="line"></div>
+        <input type="text" id="hidden-input" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" />
     </div>
 </div>
 
