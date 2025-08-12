@@ -20,7 +20,7 @@
             box-sizing: border-box;
             background-color: #000;
 			border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+            animation: animated-border-glow 8s infinite linear;
             overflow: hidden;
         }
 
@@ -162,3 +162,26 @@
         	margin: 5px;
         	width: 90%;
       	}
+/* Keyframes for the new animated border glow */
+@keyframes animated-border-glow {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.3); /* Blue */
+    }
+    25% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 255, 100, 0.3); /* Green */
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 100, 100, 0.3); /* Red */
+    }
+    75% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 255, 100, 0.3); /* Yellow */
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.3); /* Blue (back to start) */
+    }
+}
