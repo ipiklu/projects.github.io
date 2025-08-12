@@ -237,6 +237,15 @@
             'exit': (args, onComplete) => {
                 printLine('Exiting terminal session...');
                 printLine('This would typically return you to the previous page in your browser.');
+				if (window.history.length > 1) {
+      				window.history.back();
+    			} 
+				else {
+      			// If there's no previous page, you can do something else,
+      			// like redirecting to a home page.
+      			console.log("No previous page to go back to.");
+      			// Example: window.location.href = '/'; // redirect to the homepage
+    			}
                 onComplete();
             },
             'ping': (args, onComplete) => {
