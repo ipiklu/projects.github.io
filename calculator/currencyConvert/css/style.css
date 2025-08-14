@@ -38,7 +38,7 @@ body {
         transform: translate(-50%, 0);
         color: white;
         background-color: #FFFFFF;
-        padding: 15px;
+        padding: 10px;
         font-family: google;
         font-size: 25px;
       }
@@ -139,6 +139,13 @@ body {
         	width: 90%;
       	}
 	  
+.s-logo {
+	border-radius: 10px;
+	margin-top: 10px;
+	max-width:40px;
+	max-height: 90%;
+	float:left;
+}
 
 /* Center text */
 .text-center {
