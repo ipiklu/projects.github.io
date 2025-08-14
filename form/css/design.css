@@ -430,7 +430,7 @@ input[type="file"] {
 
         background-color: #FFFFFF;
 
-        padding: 15px;
+        padding: 10px;
 
         font-family: google;
         font-size: 25px;
@@ -563,6 +563,15 @@ h2{
 		.abt{
 			cursor:help;
 		}
+		
+.s-logo {
+	border-radius: 10px;
+	margin-top: 10px;
+	max-width:40px;
+	max-height: 90%;
+	float:left;
+}
+
 @media print {
   #printPageButton {
     display: none;

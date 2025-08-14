@@ -68,30 +68,29 @@
         z-index: 1;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         text-align: center;
-
         width: 100%;
-
         position: fixed;
-
         left: 50%;
-
         transform: translate(-50%, 0);
-
         color: white;
-
         background-color: #FFFFFF;
-
-        padding: 2px;
-
+        padding: 0;
         font-family: google;
         font-size: 25px;
-      }
+ }
 	  
 	  .imgS {
         border-radius: 10px;
         margin: 5px;
         width: 90%;
 	  }
+.s-logo {
+	border-radius: 10px;
+	margin-top: 10px;
+	max-width:40px;
+	max-height: 90%;
+	float:left;
+}
 	  
 	  .w3-margin-bottom:hover{
 			margin-top:25px;

@@ -137,13 +137,13 @@
 
         background-color: #FFFFFF;
 
-        padding: 15px;
+        padding: 10px;
 
         font-family: google;
         font-size: 25px;
       }
 	  
-	       .btnEffect {
+	 	.btnEffect {
             cursor: pointer;
             outline: none;
             transition: 0.2s all;
@@ -162,6 +162,13 @@
         	margin: 5px;
         	width: 90%;
       	}
+		
+.s-logo {
+	border-radius: 10px;
+	max-width:40px;
+	max-height: 90%;
+}
+
 /* Keyframes for the new animated border glow */
 @keyframes animated-border-glow {
     0% {

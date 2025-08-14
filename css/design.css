@@ -64,11 +64,13 @@
             /* Lowering the shadow */
         }
  
- .imgS {
+.imgS {
         border-radius: 10px;
         margin: 1.7px;
-        width: 90%;
-	  }
+        max-width:40px;
+		max-height: 90%;
+		float:left;
+	 }
 	  
 #myInput {
   background-image: url('/css/searchicon.png');

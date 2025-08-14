@@ -299,7 +299,7 @@ input[type=date]:focus {
         transform: translate(-50%, 0);
         color: white;
         background-color: #FFFFFF;
-        padding: 15px;
+        padding: 10px;
         font-family: google;
         font-size: 25px;
       }
@@ -323,6 +323,14 @@ input[type=date]:focus {
         	margin: 5px;
         	width: 90%;
       	}
+		
+.s-logo {
+	border-radius: 10px;
+	margin-top: 10px;
+	max-width:40px;
+	max-height: 90%;
+	float:left;
+}
 		
 @media screen and (max-width: 640px) {
 		input[type="text"] {

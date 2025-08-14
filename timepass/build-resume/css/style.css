@@ -236,6 +236,14 @@ a:hover {
         	width: 90%;
       	}
 
+.s-logo {
+	border-radius: 10px;
+	margin-top: 10px;
+	max-width:40px;
+	max-height: 90%;
+	float:left;
+}
+
 /* media queries begin */
 @media screen and (max-width: 920px) { 
 	.container { 
