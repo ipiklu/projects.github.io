@@ -1,3 +1,6 @@
+@charset "utf-8";
+/* CSS Document */
+
 /* Import Google font - Poppins */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 * {box-sizing: border-box;}
@@ -67,6 +70,18 @@ input:checked ~ label{
   z-index: -1;
   transition: 0.5s;
 }
+input, 
+textarea { 
+	background-color: transparent; 
+	margin: 10px 0; 
+	padding: 5px; 
+	outline: none; 
+	border: none; 
+	color:#AA205c;
+	border-bottom: 2px solid black; 
+	display: block; 
+	width: 100%; 
+} 
 input:checked + label + .background{
   background: #242424;
 }
