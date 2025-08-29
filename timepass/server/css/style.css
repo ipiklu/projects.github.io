@@ -11,7 +11,7 @@
             align-items: center;   /* Aligns content to the center */
             min-height: 100vh;
             /*overflow: hidden;*/
-            touch-action: none; /* Prevents default browser actions like pulling to refresh */
+            /*touch-action: none; /* Prevents default browser actions like pulling to refresh */
 			margin: 0; /* Remove default body margin */
 			
         }
