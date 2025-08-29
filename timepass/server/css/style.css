@@ -191,7 +191,7 @@
 					align-items: center;   /* Aligns content to the center */
 					max-width:120vh;
 					/*overflow: hidden;*/
-					touch-action: none; /* Prevents default browser actions like pulling to refresh */
+					/*touch-action: none; /* Prevents default browser actions like pulling to refresh */
 			}
 			
 		}
