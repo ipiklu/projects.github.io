@@ -1,20 +1,23 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<!---Design--->
-	<link rel="stylesheet" href="css/design.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PikLu's Server</title>
+    <link rel = "icon" href="img/s.gif" type="image/x-icon">
+    <!-- Inter font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/dark.css" />
-	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.core.css" />
+    <!-- Tailwind CSS for utility classes -->
+    <script src="js/tailwindcss.js"></script>
+    <!-- Alertify -->
+    <link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.core.css" />
 	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.default.css" />
     <script src="../../alertify.js-0.3.11/lib/alertify.min.js"></script>
-    <script src="js/design.js" ></script>
-<meta charset="utf-8">
-<meta name="theme-color" content="#AA205C" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>PikLu's Server</title>
-<link rel = "icon" href="img/s.gif" type="image/x-icon">
-
+    
 <!--SnowFall---20 To 31st December Only-------------------------------------------->
 <!--
 <script src="js/snowstorm-min.js"></script>
@@ -33,79 +36,51 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
 </script>
 
 -->
-
+    
 </head>
-
-<body>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
 	<div>
-       <a href="../../index.html" title="Home"><img src="img/s.gif" class="imgS"/></a>
+       <a href="../../index.html" title="Home"><img src="img/s.gif" class="s-logo imgS"/></a>
 		<div align="right">
   			<input type="checkbox" id="dark-mode">
   			<label for="dark-mode"></label>
   			<div class="background"></div>
 		</div>
+        	<p align="center"><img src="img/cLL.gif"></p>
+    	<h1 align="center" class="loader" style="color:#AA205C; font-size:36px; font-weight: bold; font-family:'Century Gothic'">Welcome to server maintenance<span class="loader__dot">.</span><span class="loader__dot">.</span><span class="loader__dot">.</span></h1>
+        <font color="#AA205C"><h2 align="center" style="font-weight: bold; font-size:26px; font-family:'Century Gothic'">Server Index:</h2></font>
+            <img src="img/settings.gif" onClick="reloadClear()" style="max-width:33px; display: block; margin: 0 auto; cursor: pointer;" title="Click to Hard Refresh"/>
     </div>
-
-	<p align="center"><img src="img/cLL.gif"></p>
-    	<h1 align="center" class="loader" style="color:#AA205C; font-family:'Century Gothic'" >Welcome to server maintenance<span class="loader__dot">.</span><span class="loader__dot">.</span><span class="loader__dot">.</span><span onClick="return(view());" title="About Us" ><font style="font-size: 20px;" color="#AA205C"></font><img src="img/LOADING.gif" style="width:50px"></span></button></h1>
-        
-        <div align="center">
-       	  <font color="#AA205C"><h2 align="center">Server Index:</h2></font>
-            <img src="img/settings.gif" style="max-width:33px" />
-                <table width="500" border="2" bordercolor="#AA205C" style="max-width:70%">
-                	<tr>
-                    	<td width="44"><img src="img/arrow.gif" width="38" height="38"></td>
-                    	<td width="100" align="right">
-                        	<marquee behavior="scroll" style="color:#AA205C">
-                            	<span class="loader__dot">Click the </span>
-                                <span class="loader__dot" style="font-weight: bolder">Download button </span>
-                                <span class="loader__dot">for App Download</span>
-                            </marquee>
-                    		<a href="data/PeeS.apk" download>
-  								<img src="img/android-icon.png" class="btn signup btnEffect" title="App Download" style="max-width:48px" >
-							</a>
-                         </td>
-                    </tr>
-                	<tr>
-                   		<td width="38"><a href="../../index.html" title="Back to Projects"><img src="img/back.gif" class="btn signup btnEffect" style="max-width:27px"/></td>
-                        <td width="507" ><a href="../../index.html" title="Back to Projects" style="color:#AA205C;"> /.... </a></td>
-                	</tr>
-                    <tr>
-                   		<td width="38"><a href="../build-resume/index.html" title="Create own resume"><img src="img/folder.png" class="btn signup btnEffect" style="max-width:27px"/></td>
-                        <td width="507" ><a href="../build-resume/index.html" title="Create own resume" style="color:#AA205C;" > Build-Resume </a></td>
-                	</tr>
-                    <tr>
-                   		<td width="38"><a href="../covid-19/index.html" title="Covid-Homepage"><img src="img/folder.png" class="btn signup btnEffect" style="max-width:27px"/></td>
-                        <td width="507" ><a href="../covid-19/index.html" title="Covid-Homepage" style="color:#AA205C;" > Covid-19 </a></td>
-                	</tr>
-                    <tr>
-                   		<td width="38"><a href="../calender/index.html" title="Reminder Calender"><img src="img/folder.png" class="btn signup btnEffect" style="max-width:27px"/></td>
-                        <td width="507" ><a href="../calender/index.html" title="Reminder Calender" style="color:#AA205C;" > Calender </a></td>
-                	</tr>
-                    <tr>
-                   		<td width="38"><a href="../texteditor/index.html" title="Text-Editor"><img src="img/folder.png" class="btn signup btnEffect" style="max-width:27px"/></td>
-                        <td width="507" ><a href="../texteditor/index.html" title="Text-Editor" style="color:#AA205C;" > Text-Editor </a></td>
-                	</tr>
-                    <tr>
-                   		<td width="38"><a href="../textcompare/index.html" title="Text-Compare"><img src="img/folder.png" class="btn signup btnEffect" style="max-width:27px"/></td>
-                        <td width="507" ><a href="../textcompare/index.html" title="Text-Compare" style="color:#AA205C;" > Text-Compare </a></td>
-                	</tr>
-                     <tr>
-                   		<td width="38"><a href="../plot/index.html" title="PLoT"><img src="img/folder.png" class="btn signup btnEffect" style="max-width:27px"/></td>
-                        <td width="507" ><a href="../plot/index.html" title="PLoT" style="color:#AA205C;" > PLoT </a></td>
-                	</tr>
-                    <tr>
-                   		<td width="38"><a href="../chatbot/index.html" title="AI-CHAT"><img src="img/chat-bot.png" class="btn signup btnEffect" style="max-width:27px"/></td>
-                        <td width="507" ><a href="../chatbot/index.html" title="AI-CHAT" style="color:#AA205C;" > AI-CHAT </a></td>
-                	</tr>
-                    <tr>
-                   		<td width="38"><a href="../terminal/index.html" title="Terminal (Command Practice)"><img src="img/terminal-icon-lg.png" class="btn signup btnEffect" style="max-width:27px"/></td>
-                        <td width="507" ><a href="../terminal/index.html" title="Terminal (Command Practice)" style="color:#AA205C;" > Terminal (Command Practice) </a></td>
-                	</tr>
-                 </table>             
+	<br />
+    <div class="scene" align="center">
+        <div id="globe">
+            <!-- The base sphere and wireframe grid -->
+            <div class="globe-sphere"></div>
+            <div class="globe-grid">
+                <div class="globe-grid-lat"></div>
+                <div class="globe-grid-lon"></div>
+            </div>   
+            <!-- Menu links, which will rotate with the globe -->
+            <a href="../../index.html" title="Back to Projects" class="globe-link" style="--y-angle: 0deg; --x-angle: 0deg;">/....
+            	<img src="img/back.gif" class="btn signup btnEffect" style="max-width:27px"/></a>
+            <a href="../build-resume/index.html" title="Create own resume" class="globe-link" style="--y-angle: 60deg; --x-angle: 30deg;">Build-Resume</a>
+            <a href="../covid-19/index.html" title="Covid-Homepage" class="globe-link" style="--y-angle: -60deg; --x-angle: -30deg;">Covid-19</a>
+            <a href="../calendar/index.html" title="Reminder Calendar" class="globe-link" style="--y-angle: 120deg; --x-angle: -20deg;">Calendar</a>
+            <a href="../texteditor/index.html" title="Text-Editor" class="globe-link" style="--y-angle: -120deg; --x-angle: 20deg;">Text-Editor</a>
+            <a href="../textcompare/index.html" title="Text-Compare" class="globe-link" style="--y-angle: 180deg; --x-angle: 0deg;">Text-Compare</a>
+            <a href="../plot/index.html" title="PLoT" class="globe-link" style="--y-angle: 45deg; --x-angle: -45deg;">PLoT</a>
+            <a href="../chatbot/index.html" title="AI-CHAT" class="globe-link" style="--y-angle: -45deg; --x-angle: 45deg;">AI-CHAT
+            	<img src="img/chat-bot.png" class="btn signup btnEffect" style="max-width:27px"/></a>
+            <a href="../terminal/index.html" title="Terminal (Command Practice)" class="globe-link" style="--y-angle: 90deg; --x-angle: 15deg;">Terminal (Command Practice)
+            	<img src="img/terminal-icon-lg.png" class="btn signup btnEffect" style="max-width:27px"/></a>
+            <a onClick="return(view());" title="About Us" class="globe-link" style="--y-angle: -90deg; --x-angle: -15deg;">
+            	<img src="img/LOADING.gif" style="width:50px"></a>
+            <a href="data/PeeS.apk" download class="globe-link" style="--y-angle: 150deg; --x-angle: 40deg;">
+            	<img src="img/android-icon.png" class="btn signup btnEffect" title="App Download" style="max-width:48px" ></a>
         </div>
-        
-     
+    </div>
+    <script src="js/script.js"></script>
+    
 <!------------------------DOT style------------------------------->        
 <style>    
 @keyframes blink {50% { color: transparent }}
@@ -122,7 +97,9 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
 	document.getElementById("date").innerHTML = Date();
    </script> </font></center>
     	<p>|| Copyright protected &copy; <script>document.write(new Date().getFullYear())</script>, All Rights Not Reserved ||</p><p> Design by Sayantan Kundu</p>
+        <br />
     </footer>
+    <br />
     
 <!-- Scripts For 20 To 31st December Only--->
 <!--
@@ -131,6 +108,5 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
 			<script src="js/util.js"></script>
 			<script src="js/main.js"></script>
 -->
-
 </body>
 </html>

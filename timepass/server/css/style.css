@@ -1,0 +1,289 @@
+@charset "utf-8";
+/* CSS Document */
+
+        /* Base styles */
+        body {
+            background: linear-gradient(to bottom right, #f8fafc, #e2e8f0);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Aligns content to the center */
+            align-items: center;   /* Aligns content to the center */
+            min-height: 100vh;
+            /*overflow: hidden;*/
+            touch-action: none; /* Prevents default browser actions like pulling to refresh */
+			margin: 0; /* Remove default body margin */
+			
+        }
+		
+		header { 
+			background-color: #AA205C; 
+			color: white; 
+			padding: 20px 0; 
+			border-top-left-radius: 10px; 
+			border-top-right-radius: 10px; 
+		} 
+
+		h1 { 
+			margin: 0; 
+		}
+
+
+        /* Container for the 3D scene */
+        .scene {
+            width: 80vw;
+            height: 80vw;
+            max-width: 600px;
+            max-height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1200px; /* Provides the 3D perspective */
+            perspective-origin: 50% 50%;
+        }
+		
+
+        /* The globe container, allowing 3D transformations */
+        #globe {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d; /* Key for 3D children */
+            cursor: grab; /* Change cursor back to grab for drag-control */
+        }
+
+        /* Styling for the main globe sphere */
+        .globe-sphere {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            /* A subtle gradient and inner shadow to give it form */
+            /*background: radial-gradient(circle at 50% 50%, #e2e8f0 0%, #cbd5e1 100%);*/
+			background: linear-gradient(to bottom, #AA205C, rgba(170, 32, 92, 0));
+			animation: animated-border-glow 8s infinite linear;
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.2);
+            transform: translateZ(-2px);
+        }
+
+        /* Container for the latitude and longitude lines */
+        .globe-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            transform-style: preserve-3d;
+        }
+
+        /* The latitude rings */
+        .globe-grid-lat {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid rgba(148, 163, 184, 0.4);
+			animation: animated-border-glow 8s infinite linear;
+            transform-style: preserve-3d;
+            animation: lat-spin 30s linear infinite;
+        }
+
+        /* Keyframe animation for subtle latitude spin */
+        @keyframes lat-spin {
+            0% { transform: translate(-50%, -50%) rotateY(0deg); }
+            100% { transform: translate(-50%, -50%) rotateY(360deg); }
+        }
+
+        /* The longitude rings */
+        .globe-grid-lon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid rgba(148, 163, 184, 0.4);
+			animation: animated-border-glow 8s infinite linear;
+            transform: translate(-50%, -50%) rotateY(90deg) rotateX(90deg);
+        }
+
+		/* Styling for the menu links */
+		.globe-link {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			color: #AA205C;
+			text-decoration: none;
+			font-size: 1rem;
+			font-weight: 700;
+			padding: 0.5rem 1rem;
+			background: rgba(255, 255, 255, 0.8);
+			backdrop-filter: blur(5px);
+			border-radius: 9999px;
+			white-space: nowrap;
+			border: 1px solid rgba(0, 0, 0, 0);
+			cursor: pointer;
+			transition: transform 0.3s ease-out, box-shadow 0.3s ease-out, background 0.3s ease-out;
+			transform-origin: 0 0;
+		
+			/* * Define a custom property for the 3D depth.
+			* We'll use this in the transform property.
+			*/
+			--link-depth: 250px;
+		
+			/* Use the variable in the transform */
+			transform: translate3d(-50%, -50%, 0) 
+					   rotateY(var(--y-angle, 0)) 
+					   rotateX(var(--x-angle, 0)) 
+					   translateZ(var(--link-depth));
+		}
+		
+		/* Hover and active states */
+		.globe-link:hover {
+			border: 1px solid rgba(0, 0, 0, 0);
+			color: white;
+			box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+			  0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+			  0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+			  0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+			background: rgba(0, 0, 0, 0);
+		}
+		
+		.globe-link:active {
+			transform: translate3d(-50%, -50%, 0) 
+					   rotateY(var(--y-angle, 0)) 
+					   rotateX(var(--x-angle, 0)) 
+					   translateZ(calc(var(--link-depth) - 2px)) /* Sinks by 2px */
+					   scale(0.97); 
+			box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25), 
+						0 1px 3px rgba(0, 0, 0, 0.3);
+			background: rgba(255, 255, 255, 0.75);
+			filter: brightness(0.95);
+		}
+		
+		/* * Adjustments for mobile view.
+		* This media query targets screens up to 768px wide.
+		*/
+		@media (max-width: 768px) {
+			.scene {
+				width: 90vw;
+				height: 90vw;
+			}
+			.globe-link {
+				font-size: 0.875rem;
+				/* * Override the --link-depth variable for mobile.
+				* This pulls the links closer to the viewer on smaller screens.
+				*/
+				--link-depth: 180px; /* A smaller value to prevent links from going off-screen */
+			}
+			
+			body {
+					background: linear-gradient(to bottom right, #f8fafc, #e2e8f0);
+					font-family: 'Inter', sans-serif;
+					display: flex;
+					flex-direction: column;
+					justify-content: center; /* Aligns content to the center */
+					align-items: center;   /* Aligns content to the center */
+					max-width:120vh;
+					/*overflow: hidden;*/
+					touch-action: none; /* Prevents default browser actions like pulling to refresh */
+			}
+			
+		}
+
+		
+      .signup {
+        border: 1px solid rgba(0, 0, 0, 0);
+        background: #FFF;
+        padding-left: 25px;
+        padding-right: 25px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        outline: none;
+        color: white;
+        text-decoration: none;
+        font-family: google;
+        font-size: 18px;
+        transition: all 0.3s ease;
+      }
+
+      .signup:hover {
+        border: 1px solid rgba(0, 0, 0, 0);
+        color: white;
+        box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+          0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+          0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+          0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+        background: rgba(0, 0, 0, 0);
+      }
+   
+      .btn {
+        padding-left: 0;
+        padding-right: 10px;
+        font-size: 17px;
+        background:rgba(0, 0, 0, 0);
+        outline: none;
+        color: rgba(0, 0, 0, 0);
+        border: none;
+        cursor: pointer;
+        border-radius: 20px;
+		font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      }
+
+	       .btnEffect {
+            cursor: pointer;
+            outline: none;
+            transition: 0.2s all;
+        }
+        /* Adding transformation when the button is active */
+          
+        .btnEffect:active {
+            transform: scale(0.98);
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px #AA205c;
+            /* Lowering the shadow */
+        }
+		
+.s-logo {
+	max-height: 90%;
+	
+}
+
+     .imgS {
+        border-radius: 10px;
+        margin: 1.7px;
+        max-width:40px;
+		max-height: 90%;
+		float:left;
+	  }
+	  
+/* Keyframes for the new animated border glow */
+@keyframes animated-border-glow {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue */
+    }
+    25% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 255, 100, 0.7); /* Green */
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 100, 100, 0.7); /* Red */
+    }
+    75% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 255, 100, 0.7); /* Yellow */
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue (back to start) */
+    }
+}
