@@ -13,6 +13,9 @@
             /*overflow: hidden;*/
             /*touch-action: none; /* Prevents default browser actions like pulling to refresh */
 			margin: 0; /* Remove default body margin */
+			/* FIX: Force hardware acceleration on the scene container */
+			-webkit-transform: translateZ(0);
+			transform: translateZ(0);			
 			
         }
 		
@@ -40,6 +43,9 @@
             align-items: center;
             perspective: 1200px; /* Provides the 3D perspective */
             perspective-origin: 50% 50%;
+			/* FIX: Force hardware acceleration on the scene container */
+			-webkit-transform: translateZ(0);
+			transform: translateZ(0);			
         }
 		
 
