@@ -1,0 +1,83 @@
+@charset "utf-8";
+/* CSS Document */
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+
+        .sitemap-tree ul {
+            position: relative;
+            padding-left: 1.5rem;
+            list-style-type: none;
+        }
+        
+        /* Vertical line */
+        .sitemap-tree ul::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0.625rem; /* 10px */
+            bottom: 0;
+            width: 2px;
+            background-color: #d1d5db; /* gray-300 */
+        }
+        
+        /* Horizontal line and dot/icon */
+        .sitemap-tree li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .sitemap-tree li a, .sitemap-tree li span {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .sitemap-tree li a:hover {
+            background-color: #e5e7eb; /* gray-200 */
+            color: #1f2937;
+        }
+
+        .sitemap-tree li::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0.625rem; /* 10px */
+            transform: translateY(-50%);
+            width: 0.5rem;
+            height: 2px;
+            background-color: #d1d5db; /* gray-300 */
+        }
+
+        /* Connecting the lines and icons */
+        .sitemap-tree li > a::before, .sitemap-tree li > span::before {
+            content: '🔗'; /* Link icon for links */
+            font-size: 0.75rem;
+            margin-right: 0.5rem;
+        }
+        .sitemap-tree li > span.folder-name::before {
+            content: '📂'; /* Folder icon for folders */
+            font-size: 1rem;
+            margin-right: 0.5rem;
+        }
+        
+        /* Hide the vertical line for the last list item's child */
+        .sitemap-tree li:last-child > ul::before {
+            height: 1.5rem; /* Stop the line just at the last element */
+        }
+
+
+.imgS {
+        border-radius: 10px;
+        margin: 1.7px;
+        max-width:40px;
+		max-height: 90%;
+		float:left;
+	 }

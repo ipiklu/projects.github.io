@@ -8,8 +8,23 @@
       th, td {
   		border: 1px dotted #AA205C;
   		border-radius: 10px;
+		transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 		}
-
+		th:hover, td:hover {
+		  /* Make the element slightly bigger */
+		  transform: scale(1.05); 
+		  
+		  /* Add a shadow to make it look like it's lifting off the page */
+		  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+		  
+		  /* Change the mouse cursor to a pointer, for better user experience */
+		  cursor: pointer;
+		  
+		  /* Optional: Change the background color to further emphasize the hover state */
+		  background-color: rgba(0, 0, 0, 0.2);
+		  color: #fff;
+		}
+		
       .signup {
         border: 1px solid rgba(0, 0, 0, 0);
         background: #FFF;

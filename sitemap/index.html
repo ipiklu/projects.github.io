@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sitemap Tree</title>
+    <link rel = "icon" href="img/s.gif" type="image/x-icon">
+    <!---Design--->
+    <script src="js/tailwindcss.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/dark.css" />
+    <script src="js/script.js"></script>
+    <link rel="stylesheet" href="../alertify.js-0.3.11/themes/alertify.core.css" />
+	<link rel="stylesheet" href="../alertify.js-0.3.11/themes/alertify.default.css" />
+    <script src="../alertify.js-0.3.11/lib/alertify.min.js"></script>
+    
+<!--SnowFall---20 To 31st December Only-------------------------------------------->
+<!--
+<script src="js/snowstorm-min.js"></script>
+<script>
+snowStorm.snowColor = '#AA205C'; //give the snowflakes another colour
+snowStorm.flakesMaxActive = 96; //the maximum number of active snow flakes on the screen, lowering this may increase performance
+snowStorm.followMouse = true; //the snow will fall in a certain direction based on the position of your mouse
+snowStorm.snowCharacter = '&#x1F385;'; //change the flake to a specific character
+snowStorm.snowStick = true; //if true, the snow will stick to the bottom of the screen
+</script>
+<script>
+snowStorm.animationInterval = 20; //milliseconds per frame, the higher the less CPU load
+snowStorm.flakesMaxActive = 30; //maximum number of active snow flakes, the lower the less CPU/GPU is needed to draw them
+snowStorm.freezeOnBlur = true; //recommended: stops the snow effect when the user switches to another tab or window
+snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affected by the window scroll. Disable to prevent extra CPU load
+</script>
+
+-->
+    
+</head>
+<body class="p-6 md:p-10">
+	<div>
+       <a href="../index.html" title="Home"><img src="img/s.gif" class="imgS"/></a>
+		<div align="right">
+  			<input type="checkbox" id="dark-mode">
+  			<label for="dark-mode"></label>
+  			<div class="background"></div>
+		</div>
+    </div>
+
+
+    <div>
+        <!-- Main title -->
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6 md:mb-8" style="color:#AA205C;">PikLu's Server's Sitemap Tree<span class="loader__dot">.</span><span class="loader__dot">.</span><span class="loader__dot">.</span><span onClick="return(view());" title="About Us" style="cursor: pointer;" ><font style="font-size: 20px;" color="#AA205C"></font><img src="img/LOADING.gif" style="width:50px"></span></button></h1>
+
+        <!-- Sitemap container -->
+        <div class="sitemap-tree pl-4 md:pl-8" style="color:#AA205C; font-weight: bold;"><a href="../index.html" title="Home">Server Index</a>
+            <ul class="tree-list">
+                <!-- Top-level folder -->
+                <li>
+                    <span class="folder-name text-lg font-semibold text-blue-600" style="color:#AA205C;"><a href="../resume/index.html">Resume</a></span>
+                    <ul>
+                        <li><a href="../resume/online/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">Online View</a></li>
+                        <li><a href="../resume/PDF/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">PDF desktop view/ Mobile Download</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Another top-level folder -->
+                <li>
+                 <span class="folder-name text-lg font-semibold text-blue-600" style="color:#AA205C;"><a href="../kaggle/index.html">Analytics Papers</a></span>
+                  <ul>
+                  <li><a href="https://www.kaggle.com/ipiklu/google-data-analytics-capstone-case-study-1" target="_blank" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">Case-study-1 (Cyclistic Tripdata)</a></li>
+                  <li><a href="https://www.kaggle.com/code/ipiklu/google-data-analytics-capstone-case-study-2/notebook" target="_blank" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">case-study-2 (Bellabeat Smartwatch Activity Tracking)</a></li>
+                    </ul>
+                </li>
+
+                <!-- Top-level links -->
+                <li><a href="../Login-v2.0/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">Login-v2.0</a></li>
+                <li><a href="../dashboard-v2.0/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">Dashboard-v2.0</a></li>
+                
+               <!-- Another top-level folder -->
+                <li>
+                 <span class="folder-name text-lg font-semibold text-blue-600" style="color:#AA205C;"><a href="../timepass/server/index.html">Timepass</a></span>
+                  <ul>
+                  	<li><a href="../timepass/build-resume/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">Build-Resume</a></li>
+                  	<li><a href="../timepass/covid-19/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">Covid-19</a></li>
+                    <li><a href="../timepass/calendar/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">Calendar</a></li>
+                    <li><a href="../timepass/texteditor/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">Text-Editor</a></li>
+                    <li><a href="../timepass/textcompare/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">Text-Compare</a></li>
+                    <li><a href="../timepass/plot/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">PLoT</a></li>
+                    <li><a href="../timepass/chatbot/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">AI-CHAT</a></li>
+                    <li><a href="../timepass/terminal/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">Terminal (Command Practice)</a></li>
+                  </ul>
+                </li>
+
+			  <!-- Top-level links -->
+              <li><a href="../notepad/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">Notebook</a>
+              	<!-- Deeper nesting -->
+                  	<ul>
+                      <li><a href="../notepad/sticky-notes/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">Sticky-Notes</a></li>
+                    </ul>
+              </li>
+			  
+			  <!-- Top-level links -->
+              <li><a href="../calculator/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">Calculator</a>
+              	<!-- Deeper nesting -->
+                  	<ul>
+                      <li><a href="../calculator/currencyConvert/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">Currency Converter</a></li>
+                    </ul>
+              </li>
+              
+			  <!-- Top-level links -->
+              <li><a href="../form/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">FormToPDF</a></li>			
+            </ul>
+            <ul><a onClick="return(policy());" style="cursor: pointer; color:#AA205C;" onmouseover="this.style.color='rgba(255, 100, 100, 0.7)'"; onmouseout="this.style.color='#AA205C'"; class="text-gray-700 hover:text-blue-600">Privacy Policy</a></ul>
+        </div>
+    </div>
+	<br />
+
+<!-------DOT style --->        
+<style>    
+@keyframes blink {50% { color: transparent }}
+.loader__dot { animation: 1s blink infinite }
+.loader__dot:nth-child(2) { animation-delay: 250ms }
+.loader__dot:nth-child(3) { animation-delay: 500ms }
+</style> 
+
+<!---------------------------Footer---------------------------------------------------->     
+<footer align="center" style="position:relative; color:#AA205C; bottom: 0; width: 100%;">
+<center> <font color="#AA205C">
+   <p id="date"> </p>
+   <script>
+	document.getElementById("date").innerHTML = Date();
+   </script> </font></center>
+    	<p>|| Copyright protected &copy; <script>document.write(new Date().getFullYear())</script>, All Rights Not Reserved ||</p><p> Design by Sayantan Kundu</p>
+        <br />
+    </footer>
+    <br />
+    
+<!-- Scripts For 20 To 31st December Only--->
+<!--
+			<script src="js/jquery.min.js"></script>
+			<script src="js/skel.min.js"></script>
+			<script src="js/util.js"></script>
+			<script src="js/main.js"></script>
+-->
+
+</body>
+</html>
