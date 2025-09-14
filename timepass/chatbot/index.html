@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <link rel="icon" href="img/s.gif" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+        <!---Alert--->
+	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.core.css" />
+	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.default.css" />
+    <script src="../../alertify.js-0.3.11/lib/alertify.min.js"></script>
+</head>
+<body>
+    <div class="chat-container">
+        <h1 align="center" class="btnEffect" onClick="reloadClear()">AI-CHAT</h1>
+        <div><a href="../../index.html" title="Home"><img src="img/s.gif" class="s-logo"/></a></div>
+        <div class="header-buttons">
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="darkModeCheckbox">
+                    <input type="checkbox" id="darkModeCheckbox" />
+                    <span class="slider round"></span>
+                </label>
+                <div class="theme-text"></div>
+            </div>
+            <button class="btn signup btnEffect" onClick="window.location='../server/index.html'" title="Go back to main library" style="background:#AA205C; color:#EEE;">
+            Exit Chat
+            </button> 
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="spacer"></div>
+        </div>
+        <form id="chat-form" class="chat-input">
+            <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off">
+            <button class="signup btn btnEffect" type="submit">Send</button>
+        </form>
+    </div>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>

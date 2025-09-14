@@ -47,14 +47,16 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
 
     <div>
         <!-- Main title -->
-        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6 md:mb-8" style="color:#AA205C;">PikLu's Server's Sitemap Tree<span class="loader__dot">.</span><span class="loader__dot">.</span><span class="loader__dot">.</span><span onClick="return(view());" title="About Us" style="cursor: pointer;" ><font style="font-size: 20px;" color="#AA205C"></font><img src="img/LOADING.gif" style="width:50px"></span></button></h1>
-
+        <h1 class="text-3xl font-bold text-center" onClick="reloadClear()" title="Reload">PikLu's Server's Sitemap Tree<span class="loader__dot">.</span><span class="loader__dot">.</span><span class="loader__dot">.</span></h1>
+        <div align="left">
+        	<img src="img/LOADING.gif" class="imgS" onClick="return(view());" title="About Us"/>
+		</div>
         <!-- Sitemap container -->
-        <div class="sitemap-tree pl-4 md:pl-8" style="color:#AA205C; font-weight: bold;"><a href="../index.html" title="Home">Server Index</a>
-            <ul class="tree-list">
+        <div class="sitemap-tree pl-4 md:pl-8"><a href="../index.html" class="index" title="Home">Server Index</a>
+            <ul class="tree-list index">
                 <!-- Top-level folder -->
                 <li>
-                    <span class="folder-name text-lg font-semibold text-blue-600" style="color:#AA205C;"><a href="../resume/index.html">Resume</a></span>
+                    <span class="folder-name text-lg font-semibold text-blue-600" style="color:#AA205C;" title="Go to resume listing page"><a href="../resume/index.html">Resume</a></span>
                     <ul>
                         <li><a href="../resume/online/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">Online View</a></li>
                         <li><a href="../resume/PDF/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">PDF desktop view/ Mobile Download</a></li>
@@ -63,7 +65,7 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
                 
                 <!-- Another top-level folder -->
                 <li>
-                 <span class="folder-name text-lg font-semibold text-blue-600" style="color:#AA205C;"><a href="../kaggle/index.html">Analytics Papers</a></span>
+                 <span class="folder-name text-lg font-semibold text-blue-600" style="color:#AA205C;"><a href="../kaggle/index.html" title="Go to kaggle projects listing page">Analytics Papers</a></span>
                   <ul>
                   <li><a href="https://www.kaggle.com/ipiklu/google-data-analytics-capstone-case-study-1" target="_blank" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">Case-study-1 (Cyclistic Tripdata)</a></li>
                   <li><a href="https://www.kaggle.com/code/ipiklu/google-data-analytics-capstone-case-study-2/notebook" target="_blank" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">case-study-2 (Bellabeat Smartwatch Activity Tracking)</a></li>
@@ -76,7 +78,7 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
                 
                <!-- Another top-level folder -->
                 <li>
-                 <span class="folder-name text-lg font-semibold text-blue-600" style="color:#AA205C;"><a href="../timepass/server/index.html">Timepass</a></span>
+                 <span class="folder-name text-lg font-semibold text-blue-600" style="color:#AA205C;"><a href="../timepass/server/index.html" title="Go to Timepass">Timepass</a></span>
                   <ul>
                   	<li><a href="../timepass/build-resume/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">Build-Resume</a></li>
                   	<li><a href="../timepass/covid-19/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">Covid-19</a></li>
@@ -85,6 +87,7 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
                     <li><a href="../timepass/textcompare/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">Text-Compare</a></li>
                     <li><a href="../timepass/plot/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">PLoT</a></li>
                     <li><a href="../timepass/chatbot/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">AI-CHAT</a></li>
+                    <li><a href="../timepass/qabot/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">Q&A-BOT</a></li>
                     <li><a href="../timepass/terminal/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">Terminal (Command Practice)</a></li>
                   </ul>
                 </li>
@@ -108,7 +111,7 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
 			  <!-- Top-level links -->
               <li><a href="../form/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">FormToPDF</a></li>			
             </ul>
-            <ul><a onClick="return(policy());" style="cursor: pointer; color:#AA205C;" onmouseover="this.style.color='rgba(255, 100, 100, 0.7)'"; onmouseout="this.style.color='#AA205C'"; class="text-gray-700 hover:text-blue-600">Privacy Policy</a></ul>
+            <ul><a onClick="return(policy());" style="cursor: pointer; color:#AA205C;" onmouseover="this.style.color='rgba(255, 100, 100, 0.7)'"; onmouseout="this.style.color='#AA205C'"; class="text-gray-700 hover:text-blue-600 index">Privacy Policy</a></ul>
         </div>
     </div>
 	<br />

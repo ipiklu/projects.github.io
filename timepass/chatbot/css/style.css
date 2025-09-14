@@ -1,0 +1,485 @@
+/* CSS Document */
+
+/* Set both html and body to take up the full viewport height */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+/* Define CSS variables for colors (Light Mode) */
+:root {
+	--primary-bg-color: #f0f2f5;
+	--chat-container-bg: #fff;
+	--chat-border-color: #ccc;
+	--user-message-bg: #E4558B;
+	--user-message-text: #fff;
+	--bot-message-bg: #e5e5ea;
+	--bot-message-text: #212121;
+	--input-bg-color: #f0f2f5;
+	--button-bg-color: #AA205c;
+	--button-text-color: #fff;
+	--shadow-color: rgba(0, 0, 0, 0.1);
+	--border-color: #AA205c;
+	--bot-font-family: 'Indie Flower', cursive;
+	--user-font-family: 'Indie Flower', cursive;
+}
+
+/* Dark Mode specific colors. These will override the root variables. */
+body.dark-mode {
+	--primary-bg-color: #121212;
+	--chat-container-bg: #1e1e1e;
+	--chat-border-color: #333;
+	--user-message-bg: #E4558B;
+	--user-message-text: #fff;
+	--bot-message-bg: #333;
+	--bot-message-text: #AA205c;
+	--input-bg-color: #2b2b2b;
+	--button-bg-color: #AA205c;
+	--button-text-color: #fff;
+	--shadow-color: rgba(255, 255, 255, 0.1);
+	--border-color: #AA205c;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--primary-bg-color);
+	
+	/* Dotted body background
+	background-image: radial-gradient(circle, #AA205c 1px, transparent 1px);
+	background-size: 25px 25px;
+	*/
+    
+	display: flex;
+    justify-content: center;
+    align-items: center;
+	transition: background-color 0.5s ease;
+}
+
+	h1 { 
+		font-size: 160%;
+		text-align: center;
+		display:block; /* This makes the border shrink-wrap the content */
+		width: fit-content; /* This is the key addition */
+		margin: 0 auto;
+		color: #1a73e8; /* Set a base color */
+		padding: 5px 15px;
+		box-sizing: border-box;
+		border-radius: 25px;
+		font-family: 'Indie Flower', cursive;
+		/* Key properties for the AI effect */
+  		background-image: linear-gradient(
+    		90deg,
+    		#1a73e8, /* Blue */
+    		#34a853, /* Green */
+    		#000, 	/* black */
+			#B6C511,
+    		#1a73e8, /* Blue again for a smooth loop */
+			#34a853
+  		);
+  		background-size: 400% 100%; /* Make the gradient wider than the text */
+  			-webkit-background-clip: text; /* Clips the background to the text shape */
+  		background-clip: text;
+  		color: transparent; /* Makes the text itself transparent to show the background */
+		
+		animation: animated-border-glow 8s infinite linear,
+        		   animated-text-color 8s infinite linear; /* New text color animation */
+	} 
+
+.chat-container {
+	width: 80%;
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+	background-color: var(--chat-container-bg);
+    padding: 10px;
+    box-sizing: border-box;
+	border-radius: 10px;
+    animation: animated-border-glow 8s infinite linear;
+    overflow: hidden;
+	/*transition: background-color 0.5s ease;*/
+}
+
+/* Media query for larger screens */
+@media (min-width: 640px) {
+    .chat-container {
+        height: 80vh;
+		width: 80%;
+    }
+}
+
+.header-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+/* New CSS for the Dark Mode Switch */
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+    float: left;
+}
+
+.theme-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: 0.2s;
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.slider:hover{
+    transition: 0.2s all;
+	transform: scale(1.1); 
+	animation: animated-border-glow 8s infinite linear;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: 0.2s;
+}
+
+input:checked + .slider {
+    background-color: #242424;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #242424;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+	background: linear-gradient(180deg,#777,#3a3a3a);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.theme-text {
+    color: #555;
+    margin-left: 10px;
+}
+
+body.dark-mode .theme-text {
+    color: #fff;
+}
+
+
+/* Rest of your existing CSS styles for chat messages, input, and animations */
+.chat-messages {
+    flex-grow: 1;
+    padding: 10px;
+    overflow-y: auto;
+    display: flex;
+	flex-direction: column;
+}
+
+.spacer {
+    flex-grow: 1;
+}
+
+/* Styling for the scrollbar track */
+.chat-messages::-webkit-scrollbar {
+    width: 8px; /* Set the width of the scrollbar */
+    height: 8px;
+}
+
+/* Styling for the thumb (the draggable part) */
+.chat-messages::-webkit-scrollbar-thumb {
+    background-color: #E4558B; /* A lighter gray color for the thumb */
+    border-radius: 4px;
+}
+
+/* Styling for the track (the background of the scrollbar) */
+.chat-messages::-webkit-scrollbar-track {
+    background-color: #3e3e3e; /* A darker gray for the track */
+}
+
+.message {
+    padding: 10px 15px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    max-width: 70%;
+    word-wrap: break-word;
+	white-space: pre-wrap;
+}
+
+.user-message {
+    background-color: var(--user-message-bg);
+    color: var(--user-message-text);
+    align-self: flex-end;
+	font-family: var(--user-font-family);
+}
+
+.bot-message {
+    background-color: var(--bot-message-bg);
+    color: var(--bot-message-text);
+    align-self: flex-start;
+	font-family: var(--bot-font-family);
+	animation: animated-border-glow 8s infinite linear;
+}
+
+.chat-input {
+    display: flex;
+    border-top: 1px solid var(--chat-border-color);
+    padding: 10px;
+}
+
+.chat-input input {
+    flex-grow: 1;
+    border: none;
+    padding: 10px;
+    border-radius: 20px;
+    outline: none;
+    background-color: var(--input-bg-color);
+	color: var(--bot-message-text);
+	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.chat-input input:hover {
+	/* Make the element slightly bigger */
+	transform: scale(1.014); 
+		  
+	/* Add a shadow to make it look like it's lifting off the page */
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0); 
+		  
+	/* Change the mouse cursor to a pointer, for better user experience */
+	cursor: pointer;
+		  
+	/* Optional: Change the background color to further emphasize the hover state */
+	background-color: rgba(0, 0, 0, 0);
+	animation: animated-border-glow 8s infinite linear;
+}
+
+.chat-input input::placeholder {
+	color: var(--bot-message-text);
+	opacity: 0.7;
+}
+
+.chat-input button {
+    border: none;
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    padding: 10px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+    flex-shrink: 0;
+}
+
+.signup {
+    border: 1px solid var(--border-color);
+    background: var(--button-bg-color);
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    color: var(--button-text-color);
+    text-decoration: none;
+    font-family: google;
+    font-size: 18px;
+    transition: all 0.3s ease;
+}
+
+.signup:hover {
+    border: 1px solid var(--border-color);
+    color: var(--button-text-color);
+    box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+      0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+      0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+      0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+    background: var(--button-bg-color);
+	animation: animated-border-glow 8s infinite linear;
+	transform: scale(1.03); 
+}
+
+.btn {
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+	font-family: 'Indie Flower', cursive;
+    font-size: 17px;
+    background:#fff;
+    outline: none;
+    color: black;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+.header {
+    z-index: 1;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 0);
+    color: white;
+    background-color: #FFFFFF;
+    padding: 15px;
+    font-family: google;
+    font-size: 25px;
+}
+	
+.btnEffect {
+    cursor: pointer;
+    outline: none;
+    transition: 0.2s all;
+}
+	
+.btnEffect:active {
+    transform: scale(0.98);
+    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+}
+		
+img {
+    border-radius: 10px;
+    margin: 5px;
+    width: 90%;
+}
+
+.s-logo {
+	max-width:40px;
+	max-height: 90%;
+	float:left;
+	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.s-logo:hover {
+	animation: animated-border-glow 8s infinite linear;
+	transition: 0.2s all;
+	transform: scale(1.1); 
+}
+		
+@media print {
+    #printPageButton {
+        display: none;
+    }
+}
+/* Style for the typing indicator container */
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Style for each individual dot */
+.typing-indicator span {
+    width: 8px;
+    height: 8px;
+    background-color: var(--user-message-bg);
+    border-radius: 50%;
+    opacity: 0;
+    animation: typing-pulse 1.2s infinite ease-in-out;
+}
+
+/* Delay the animation for each dot to create the "typing" effect */
+.typing-indicator span:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.typing-cursor::after {
+    content: '|';
+    animation: blink-cursor 0.75s step-end infinite;
+    color: var(--bot-message-text); /* Ensure the cursor color matches the text */
+}
+
+
+@keyframes blink-cursor {
+    from, to {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+/* The keyframes for the pulsing animation */
+@keyframes typing-pulse {
+    0%, 100% {
+        transform: scale(0.6);
+        opacity: 0.4;
+    }
+    50% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Keyframes for the new animated border glow */
+@keyframes animated-border-glow {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue */
+    }
+    25% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 255, 100, 0.7); /* Green */
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 100, 100, 0.7); /* Red */
+    }
+    75% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 255, 100, 0.7); /* Yellow */
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue (back to start) */
+    }
+}
+
+/* Define the keyframes for the text color */
+@keyframes animated-text-color {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}

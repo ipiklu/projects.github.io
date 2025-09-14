@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q&A-BOT</title>
+    <link rel="icon" href="img/s.gif" type="image/x-icon">
+    <script src="js/tailwindcss.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script src="js/mammoth.browser.min.js"></script>
+    <link href="css/fontsGoogleapis.css" rel="stylesheet">
+	<!---Design--->
+	<link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4">
+
+    <div id="messageBox" class="message-box-container">
+        <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+            <h3 class="text-xl font-semibold mb-2" id="messageBoxTitle"></h3>
+            <p class="text-gray-700 mb-4" id="messageBoxContent"></p>
+            <button onclick="hideMessageBox()" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors">OK</button>
+        </div>
+    </div>
+
+    <div class="chat-container bg-white shadow-xl rounded-2xl w-full max-w-3xl flex flex-col overflow-hidden h-[90vh] md:h-[80vh]">
+        <div class="bg-gradient-to-r from-yellow-500 to-pink-600 text-white p-6 rounded-t-2xl">
+        	<div><a href="../../index.html" title="Home"><img src="img/s.gif" class="s-logo"/></a></div>
+            <h1 align="center" class="text-2xl font-bold" onClick="reloadClear()" title="Reload" style="cursor: pointer;">AI-Q&A BOT</h1>
+            <p class="text-sm mt-1 opacity-90">Upload a document and ask me questions about it.</p>
+          <button class="btn signup btnEffect" onclick="return(closeWindow());" title="Exit App" style="background:#AA205C; color:#EEE; font-weight:bolder; float:right">QUIT</button>
+          <a href="../server/index.html" title="Back to Projects"><img src="img/back.gif" class="btn signup btnEffect" style="float:right" /></a>
+        </div>
+
+        <div id="uploadSection" class="p-6 border-b border-gray-200">
+            <label for="fileInput" class="block text-sm font-medium text-gray-700 mb-2">Upload your file (.txt, .pdf, .docx):</label>
+            <div class="flex items-center space-x-2">
+                <input type="file" id="fileInput" accept=".txt,.pdf,.docx" class="chat-container flex-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-pink-50 focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-yellow-100" />
+
+                <div id="loadingIndicator" class="loader hidden"></div>
+            </div>
+            <p id="statusMessage" class="text-sm mt-2 text-green-600"></p>
+        </div>
+
+        <div id="chatContainer" class="flex-1 p-6 overflow-y-auto chat-container flex flex-col">
+            <div id="chatLog" class="space-y-4">
+                <div class="flex justify-start">
+                    <div class="chat-message bot p-4 rounded-2xl max-w-md shadow-sm">
+                        Hello! Please upload a document to get started.
+                    </div>
+                </div>
+                <div id="scrollAnchor" class="h-0 w-0"></div>
+            </div>
+        </div>
+
+        <div class="p-4 border-t border-gray-200">
+            <form id="chatForm" class="flex space-x-2">
+                <input type="text" id="chatInput" autocomplete="off" placeholder="Ask a question..." class="chat-container flex-1 px-4 py-2  rounded-full focus:outline-none focus:ring-2" disabled />
+                <button type="submit" id="sendButton" class="bg-gradient-to-r from-yellow-500 to-pink-600 btn btnEffect text-white p-3 rounded-full hover:bg-blue-600 transition-colors disabled:bg-blue-300 disabled:cursor-not-allowed" disabled>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                        <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.917a.75.75 0 00.926.94L20.895 18.2a.75.75 0 00.926-.94l-2.432-7.917a.75.75 0 00-.926-.94l-14.28 2.112z" />
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </div>
+
+	<script src="js/script.js"></script>
+</body>
+</html>

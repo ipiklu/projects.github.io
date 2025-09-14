@@ -36,7 +36,6 @@ body {
   background-color: var(--primary-color);
   color: var(--secondary-color);
   border: 0;
-  border-radius: 4px;
   padding: 30px 20px;
   position: absolute;
   top: 150px;
@@ -202,12 +201,58 @@ body {
             box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
             /* Lowering the shadow */
         }
+.magic {
+        background: rgba(0, 0, 0, 0);
+        padding-left: 25px;
+        padding-right: 25px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        outline: none;
+        font-family: google;
+        font-size: 18px;
+        transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .magic:hover {
+		animation: animated-border-glow 8s infinite linear;
+		transition: 0.2s all;
+		transform: scale(1.1); 
+      }
+ .magic-btn {
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 17px;
+        background:rgba(0, 0, 0, 0);
+        outline: none;
+        color: black;
+        border: none;
+        cursor: pointer;
+        border-radius: 20px;
+      }
+
+.magic-btnEffect {
+            cursor: pointer;
+            outline: none;
+            transition: 0.2s all;
+        }
+        /* Adding transformation when the button is active */
+          
+        .magic-btnEffect:active {
+            transform: scale(0.98);
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+            /* Lowering the shadow */
+        }	  		
 		
-		img {
-        	border-radius: 10px;
-        	margin: 5px;
-        	width: 90%;
-      	}
+	img {
+        border-radius: 10px;
+        margin: 5px;
+        width: 90%;
+     }
 		
 .s-logo {
 	border-radius: 10px;
@@ -215,5 +260,34 @@ body {
 	max-width:40px;
 	max-height: 90%;
 	float:left;
+	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-		
+	.s-logo:hover {
+			animation: animated-border-glow 8s infinite linear;
+			transition: 0.2s all;
+			transform: scale(1.1); 
+		 }
+		 
+/* Keyframes for the new animated border glow */
+@keyframes animated-border-glow {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue */
+    }
+    25% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 255, 100, 0.7); /* Green */
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 100, 100, 0.7); /* Red */
+    }
+    75% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 255, 100, 0.7); /* Yellow */
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue (back to start) */
+    }
+}		 

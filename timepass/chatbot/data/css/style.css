@@ -1,0 +1,179 @@
+@charset "utf-8";
+/* CSS Document */
+
+        body {
+            background-color: #f0f0f0;
+            font-family: 'Indie Flower', cursive;
+            padding: 1rem; /* Use a relative unit for padding */
+            font-size: 1rem; /* Set a base font size for better readability */
+            max-width: 800px; /* Limit width on large screens */
+            margin: 0 auto; /* Center the content on wider screens */
+        }
+        /* Using a div with specific styles to allow text wrapping */
+        .script-container {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 1rem; /* Use a relative unit for padding */
+            /* This is the key property to make the text wrap */
+            white-space: pre-wrap;
+            word-wrap: break-word; /* Ensure long words break */
+			font-family: 'Indie Flower', cursive;
+			transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+			.script-container:hover {
+					animation: animated-border-glow 8s infinite linear;
+					transition: 0.2s all;
+					transform: scale(1.005); 	
+			}
+			
+		
+		h1 { 
+			font-family: 'Indie Flower', cursive;
+			font-weight: bold;
+			color: #AA205C;
+			transition: color 0.3s ease;
+		}
+			h1:hover { 
+				font-family: 'Indie Flower', cursive;
+				cursor:pointer;
+				font-weight: bold;
+					/* Key properties for the AI effect */
+				background-image: linear-gradient(
+					90deg,
+					#1a73e8, /* Blue */
+					#34a853, /* Green */
+					#000, 	/* black */
+					#B6C511,
+					#1a73e8, /* Blue again for a smooth loop */
+					#34a853
+				);
+				background-size: 400% 100%; /* Make the gradient wider than the text */
+					-webkit-background-clip: text; /* Clips the background to the text shape */
+				background-clip: text;
+				color: transparent; /* Makes the text itself transparent to show the background */
+				animation: animated-text-color 4s infinite linear; /* New text color animation */		
+			}	
+								
+		.s-logo {
+			border-radius: 10px;
+			margin: 5px;
+			max-width:40px;
+			max-height: 90%;
+			float:left;
+			transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		}
+		
+		.s-logo:hover {
+			cursor:pointer;
+			animation: animated-border-glow 8s infinite linear;
+			transition: 0.2s all;
+			transform: scale(1.1); 
+		}
+		
+		.about-logo {
+			border-radius: 10px;
+			margin: 5px;
+			max-width:40px;
+			max-height: 90%;
+			border: none;
+			float:right;
+			transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		}
+		
+		.about-logo:hover {
+			cursor:pointer;
+			animation: animated-border-glow 8s infinite linear;
+			transition: 0.2s all;
+			transform: scale(1.1); 
+		}
+		.closeHide {
+		  position: relative;
+		  float:right;
+		  border:none;
+		  border-radius: 10px;
+		  margin: 5px;
+		  max-width:40px;
+		  max-height: 90%;	
+		  transition: transform 0.015s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              		  box-shadow 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);	  
+		}
+			.closeHide:active {
+			     transform: scale(0.98);
+				/* Scaling button to 0.98 to its original size */
+				box-shadow: 3px 2px 22px 1px #AA205c;
+				/* Lowering the shadow */
+			}
+		
+		.closeHide::after {
+		  content: 'X'; /* Keep the content here so we can transition its opacity */
+		  font-family: 'Indie Flower', cursive;
+		  display: inline-block;
+		  opacity: 0; /* It starts off invisible */
+		  transform: scale(0.5); /* And smaller than its final size */
+		  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out; /* We transition both opacity and transform */
+		  /* add a position and color here to style the 'X' */
+		  position:absolute; /* Example position */
+		  width: 15px;
+		  color: #AA205C;
+		  transform: translate(-50%, -50%) scale(0.5);
+		}
+		
+		.closeHide:hover::after {
+		  opacity: 1; /* On hover, it becomes fully visible */
+		  transition: 0.2s all;
+		  transform: translate(-50%, -50%) scale(1.7); /* And returns to its original size */
+		  border-radius:5px;
+		  cursor:pointer;
+		  animation: animated-border-glow 8s infinite linear;  
+		}		
+
+/* Styling for the scrollbar track */
+body::-webkit-scrollbar {
+    width: 8px; /* Set the width of the scrollbar */
+    height: 8px;
+}
+
+/* Styling for the thumb (the draggable part) */
+body::-webkit-scrollbar-thumb {
+    background-color: #AA205C; /* A lighter gray color for the thumb */
+    border-radius: 4px;
+}
+
+/* Styling for the track (the background of the scrollbar) */
+body::-webkit-scrollbar-track {
+    background-color: #3e3e3e; /* A darker gray for the track */
+}
+
+/* Keyframes for the new animated border glow */
+@keyframes animated-border-glow {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue */
+    }
+    25% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 255, 100, 0.7); /* Green */
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 100, 100, 0.7); /* Red */
+    }
+    75% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 255, 100, 0.7); /* Yellow */
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue (back to start) */
+    }
+}
+
+/* Define the keyframes for the text color */
+@keyframes animated-text-color {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}		

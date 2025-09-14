@@ -39,3 +39,9 @@
 		`);
           return false;
     }
+	
+function reloadClear() {
+    window.localStorage.clear();
+    window.location.reload(true);
+    return false;
+}
