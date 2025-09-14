@@ -21,7 +21,7 @@ html, body {
 	--shadow-color: rgba(0, 0, 0, 0.1);
 	--border-color: #AA205c;
 	--bot-font-family: 'Courier New', monospace;
-	--user-font-family: 'Indie Flower', cursive;
+	--user-font-family: 'Courier New', monospace;
 }
 
 /* Dark Mode specific colors. These will override the root variables. */
