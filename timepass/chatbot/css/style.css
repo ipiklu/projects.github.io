@@ -20,7 +20,7 @@ html, body {
 	--button-text-color: #fff;
 	--shadow-color: rgba(0, 0, 0, 0.1);
 	--border-color: #AA205c;
-	--bot-font-family: 'Indie Flower', cursive;
+	--bot-font-family: 'Courier New', monospace;
 	--user-font-family: 'Indie Flower', cursive;
 }
 
@@ -332,7 +332,7 @@ body.dark-mode .theme-text {
     padding-right: 50px;
     padding-top: 10px;
     padding-bottom: 10px;
-	font-family: 'Indie Flower', cursive;
+	font-family: 'Courier New', monospace;
     font-size: 17px;
     background:#fff;
     outline: none;

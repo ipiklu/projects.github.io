@@ -3,7 +3,7 @@
 
         body {
             background-color: #f0f0f0;
-            font-family: 'Indie Flower', cursive;
+            font-family: 'Courier New', monospace;
             padding: 1rem; /* Use a relative unit for padding */
             font-size: 1rem; /* Set a base font size for better readability */
             max-width: 800px; /* Limit width on large screens */
@@ -17,7 +17,7 @@
             /* This is the key property to make the text wrap */
             white-space: pre-wrap;
             word-wrap: break-word; /* Ensure long words break */
-			font-family: 'Indie Flower', cursive;
+			font-family: 'Courier New', monospace;
 			transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 			.script-container:hover {

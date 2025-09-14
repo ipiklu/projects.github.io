@@ -41,14 +41,14 @@
 		}
 
 		.index { 
-			font-family: 'Indie Flower', cursive;
+			font-family: 'Courier New', monospace;
 			font-weight: bold;
 			color: #AA205C;
 			transition: color 0.3s ease;
 		}
 
 		.index:hover { 
-			font-family: 'Indie Flower', cursive;
+			font-family: 'Courier New', monospace;
 			font-weight: bold;
 				/* Key properties for the AI effect */
 			background-image: linear-gradient(

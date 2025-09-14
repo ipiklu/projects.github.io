@@ -22,7 +22,7 @@
         }
 		
 		.loading {
-			font-family: 'Indie Flower', cursive;
+			font-family: 'Courier New', monospace;
 			font-weight:bolder;
 			/* Key properties for the AI effect */
 			background-image: linear-gradient(

@@ -1,19 +1,21 @@
 @charset "utf-8";
 /* CSS Document */
         body {
-            font-family: 'Indie Flower', cursive;
+            font-family: 'Courier New', monospace;
             background-color: #f3f4f6;
         }
         .chat-message.user {
             background-color: #E4558B;
             color: #f3f4f6;
             border-radius: 1rem 1rem 0.25rem 1rem;
+			font-family: 'Courier New', monospace;
         }
         .chat-message.bot {
             background-color: #DFD950;
             color: #212121;
             border-radius: 1rem 1rem 1rem 0.25rem;
 			animation: animated-border-glow 8s infinite linear;
+			font-family: 'Courier New', monospace;
         }
         .loading-dot {
             animation: bounce 1.4s infinite ease-in-out both;
