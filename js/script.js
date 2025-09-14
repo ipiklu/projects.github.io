@@ -28,5 +28,5 @@ window.onload = function() {
                     loadingOverlay.style.display = 'none';
                     mainContent.style.display = 'block';
                 }, { once: true }); // The { once: true } option ensures this event listener is removed after it fires once
-            }, 1700); // The 1700ms (1.7 second) delay
+            }, 500); // The 500ms (0.5 second) delay
         };	

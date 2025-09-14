@@ -8,7 +8,8 @@ function reloadClear() {
 
 // This function will close the current window or tab
 function closeWindow() {
-  window.close();
+  //window.close();
+  window.open('', '_self').close();
 }
 
  <!---POPUP Coustomization---> 

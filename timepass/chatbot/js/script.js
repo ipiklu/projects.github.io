@@ -464,7 +464,7 @@ document.addEventListener('DOMContentLoaded', () => {
     "what is a paradox": "A paradox is a statement that, despite sound reasoning from acceptable premises, leads to a conclusion that seems senseless, logically unacceptable, or self-contradictory.",
 	"ok": "Hmm..",
 	"okay": "Hmm..",
-	"hello": "Hello there! How can I help you today? ??",
+	"hello": "Hello there! How can I help you today?",
     "hi": "Hi there! What can I do for you?"	
     
 	};
