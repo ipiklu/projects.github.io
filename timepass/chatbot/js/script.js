@@ -364,6 +364,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // General & Fun Questions
         "what is the time": getCurrentTime(),
 		"current time": getCurrentTime(),
+		"time now": getCurrentTime(),
+		"time please": getCurrentTime(),
         "what is the date": getCurrentDate(),
 		"today's date": getCurrentDate(),
 		"current date": getCurrentDate(),
