@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	// New function to generate image
 	const goToGenImg = () => {
 		// Convert the input to lowercase for case-insensitive matching
-  		const imageChoice = prompt("What kind of image would you like to generate? (e.g., cat, dog, bird, dudu, bubu, dudufudu)");
+  		const imageChoice = prompt("What kind of image would you like to generate? (e.g., cat, dog, bird, dudu, bubu, dudufudu,minion)");
 		const input = imageChoice.toLowerCase();
 		
 		if (input.includes('cat')) {
@@ -145,10 +145,13 @@ document.addEventListener('DOMContentLoaded', () => {
   		}
 		else if (input === 'tilu playing holi') {
     		return '<img src="img/tilucolor.jpg" style="max-height: 40vh" alt="creator baby">';
+  		}		
+		else if (input.includes('minion')) {
+    		return '<img src="img/5G7b.gif" style="max-height: 40vh" alt="creator baby">';
   		}																	
 		// A default image for any other input	
 		else {	
-			return `<img src="img/5G7b.gif" alt="Generated image">`;
+			return `<img src="img/cLL.gif" alt="Generated image">`;
 		}
 	};
 	
