@@ -578,7 +578,7 @@ function reloadClear() {
     }
 	
 	function imgView() {
-		alertify.alert("<img src='img/creator.png' style='max-width: 90%; max-height: 90%' /><p style='color:#AA205C; font-style:italic; font-weight:bolder; font-size:25px' /> Sayantan Kundu (PikLu) </p>");
+		alertify.alert("<img src='img/creator.jpg' style='max-width: 90%; max-height: 90%' /><p style='color:#AA205C; font-style:italic; font-weight:bolder; font-size:25px' /> Sayantan Kundu (PikLu) </p>");
           return false;
 	}
 	function tiluView() {
