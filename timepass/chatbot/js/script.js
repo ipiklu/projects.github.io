@@ -134,12 +134,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		else if (input === 'tilu') {
     		return '<img src="img/tilu.jpg" style="max-height: 40vh" alt="creator baby">';
   		}
-		else if (input === 'tilu profile picture') {
+		else if (input.includes('tilu profile pic')) {
     		return '<img src="img/tilufront.jpg" style="max-height: 40vh" alt="creator baby">';
-  		}
-		else if (input === 'tilu profile pic') {
-    		return '<img src="img/tilufront.jpg" style="max-height: 40vh" alt="creator baby">';
-  		}		
+  		}	
 		else if (input === 'tilu colorful') {
     		return '<img src="img/tilucolor.jpg" style="max-height: 40vh" alt="creator baby">';
   		}
