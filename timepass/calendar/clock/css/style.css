@@ -324,6 +324,12 @@ body {
             /* Lowering the shadow */
         }		        
 }
+
+@media print {
+  #printPageButton {
+    display: none;
+  }
+}
 		 
 /* Keyframes for the new animated border glow */
 @keyframes animated-border-glow {
