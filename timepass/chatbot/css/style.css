@@ -87,7 +87,7 @@ body {
 
 .chat-container {
 	width: 97%;
-    height: 98%;
+    height: 97.5%;
     display: flex;
     flex-direction: column;
 	background-color: var(--chat-container-bg);
