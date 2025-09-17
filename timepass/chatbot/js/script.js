@@ -265,6 +265,38 @@ document.addEventListener('DOMContentLoaded', () => {
 			alert("That doesn't look like a valid date. Please use YYYY-MM-DD format.");
 		}
 		
+		// --- Zodiac Sign Identification ---
+		const month = birthDate.getMonth() + 1; // getMonth() is 0-indexed
+		const day = birthDate.getDate();
+		let zodiacSign;
+	
+		if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) {
+			zodiacSign = "Aquarius \u{2652}";
+		} else if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) {
+			zodiacSign = "Pisces \u{2653}";
+		} else if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) {
+			zodiacSign = "Aries \u{2648}";
+		} else if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) {
+			zodiacSign = "Taurus \u{2649}";
+		} else if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) {
+			zodiacSign = "Gemini \u{26A7}";
+		} else if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) {
+			zodiacSign = "Cancer \u{264B}";
+		} else if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) {
+			zodiacSign = "Leo \u{264C}";
+		} else if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) {
+			zodiacSign = "Virgo \u{264D}";
+		} else if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) {
+			zodiacSign = "Libra \u{264E}";
+		} else if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) {
+			zodiacSign = "Scorpio \u{264F}";
+		} else if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) {
+			zodiacSign = "Sagittarius \u{2650}";
+		} else if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) {
+			zodiacSign = "Capricorn \u{2651}";
+		}			
+		
+		
 		const today = new Date();
 	
 		// Handle a birth date in the future.
@@ -275,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		// Check if it's the user's birthday today.
 		if (birthDate.getMonth() === today.getMonth() && birthDate.getDate() === today.getDate()) {
 			const age = today.getFullYear() - birthDate.getFullYear();
-			return `Hey its your birthday today...YAY!!! Happy birthday dear..! \u{1F973} \u{1F921} \n\nYou are now ${age} years old! \u{1F64A}`;
+			return `Hey its your birthday today...YAY!!! Happy birthday dear..! \u{1F973} \u{1F921} \n\nYou are now ${age} years old! \u{1F64A} \n\nYour zodiac sign: ${zodiacSign}`;
 		}
 	
 		let years = today.getFullYear() - birthDate.getFullYear();
@@ -301,8 +333,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		const yearString = years === 1 ? "year" : "years";
 		const monthString = months === 1 ? "month" : "months";
 		const dayString = days === 1 ? "day" : "days";
-	
-		return `You are ${years} ${yearString}, ${months} ${monthString}, and ${days} ${dayString} old.`;
+
+		return `You are ${years} ${yearString}, ${months} ${monthString}, and ${days} ${dayString} old. \n\nYour zodiac sign: ${zodiacSign}`;
 	};
 
     // New predefined answers including time and location.
@@ -387,7 +419,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		"percentage calculator": goToPercentCal,
 		"age calculator": calculateAge,
 		"age calculation": calculateAge,
-		"my age": calculateAge,				
+		"my age": calculateAge,	
+		"zodiac sign": calculateAge,			
 		"calculator": goToSimpleCal,
 		"calculation": goToSimpleCal,
 		"create resume": goToResumeMaker,
