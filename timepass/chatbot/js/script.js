@@ -161,6 +161,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		return "Opening the Q&A bot for you!";	
 	};	
 	
+	// New function to navigate to R&D app
+	const goToRDbot = () => {
+      	window.open("../rdbot/index.html","bfs","fullscreen,scrollbars");
+		return "Opening the read & display bot for you!";	
+	};		
+	
 	// New function to navigate to site map
 	const goToSitemap = () => {
       	window.open("../../sitemap/index.html","bfs","fullscreen,scrollbars");
@@ -444,6 +450,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		"file read": goToQAbot,
 		"read file": goToQAbot,
 		"q&a bot": goToQAbot,
+		"r&d bot": goToRDbot,
+		"phrase search in file": goToRDbot,
 		"maps": goToMaps,
 		"location": locationQuery,
 		"open maps": goToMaps,

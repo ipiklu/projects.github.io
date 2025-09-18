@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R&D BOT</title>
+    <link rel="icon" href="img/s.gif" type="image/x-icon">
+    <script src="js/cdn.tailwindcss.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script src="js/mammoth.browser.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="css/fonts.googleapis.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+            <!---Alert--->
+	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.core.css" />
+	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.default.css" />
+    <script src="../../alertify.js-0.3.11/lib/alertify.min.js"></script>
+</head>
+<body class="bg-gray-100 flex flex-col items-center justify-center max-h-screen p-4">
+
+    <!-- Custom Message Box -->
+    <div id="messageBox" class="message-box-container">
+        <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+            <h3 class="text-xl font-semibold mb-2" id="messageBoxTitle"></h3>
+            <p class="text-gray-700 mb-4" id="messageBoxContent"></p>
+            <button onclick="hideMessageBox()" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors">OK</button>
+        </div>
+    </div>
+
+    <div class="bg-white shadow-xl rounded-2xl w-full max-w-3xl flex flex-col overflow-hidden">
+        <div class="bg-gradient-to-r from-yellow-500 to-pink-600 text-white p-6 rounded-t-2xl">
+        	<div><a href="../../index.html" title="Home"><img src="img/s.gif" class="s-logo"/></a></div>
+            <h1 align="center" class="text-2xl font-bold" onClick="reloadClear()" title="Reload - Read & Display BOT" style="cursor: pointer;">R&D BOT</h1>
+            <p class="text-sm mt-1 opacity-90">Upload a document and find specific phrases within it.</p>
+          	<button class="btn signup btnEffect" onclick="return(closeWindow());" title="Exit App" style="background:#AA205C; color:#EEE; font-weight:bolder; float:right">QUIT</button>
+          	<a href="../server/index.html" title="Back to Projects"><img src="img/back.gif" class="btn signup btnEffect" style="float:right" /></a>            
+        </div>
+
+        <!-- Upload and Search Section -->
+        <div class="p-6 space-y-4">
+            <div class="p-6 border-b border-gray-200">
+                <label for="fileInput" class="block text-sm font-medium text-gray-700 mb-2">Upload your file (.txt, .pdf, .docx):</label>
+                <input type="file" id="fileInput" accept=".txt,.pdf,.docx" class="chat-container block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-yellow-100" />
+            </div>
+
+            <div class="chat-input">
+                <input type="text" id="searchPhrase" placeholder="Enter phrase to find" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-shadow disabled:bg-gray-200" disabled />
+            <button id="searchButton" class="bg-gradient-to-r from-yellow-500 to-pink-600 btn btnEffect text-white p-3 rounded-full hover:bg-blue-600 transition-colors disabled:bg-blue-300 disabled:cursor-not-allowed" disabled>
+            	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                        <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.917a.75.75 0 00.926.94L20.895 18.2a.75.75 0 00.926-.94l-2.432-7.917a.75.75 0 00-.926-.94l-14.28 2.112z" />
+                </svg>
+            </button>
+          </div>
+          
+            <p id="statusMessage" class="text-center text-sm mt-2 text-gray-500"></p>
+        </div>
+
+        <!-- Search Results Section -->
+        <div class="search-result p-6 border-t border-gray-200 flex-1 overflow-y-auto">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Search Results</h2>
+            <div id="resultsContainer" class="space-y-4">
+                <p class="text-gray-500 text-sm">Results will appear here.</p>
+            </div>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+    <br /><br />
+<!-------Footer------------------------------------------>  
+<footer align="center" style="position:relative; color:#AA205C; bottom: 0; width: 100%;">
+<center> <font color="#AA205C">
+   <p id="date"> </p>
+   <script>
+	document.getElementById("date").innerHTML = Date();
+   </script> </font></center>
+    	<p>|| Copyright protected &copy; <script>document.write(new Date().getFullYear())</script>, All Rights Not Reserved ||</p>
+        <p> Design by Sayantan Kundu || <a style="color:#AA205C; font-size:12px; font-weight: bold;" href="../../sitemap/index.html" title="Sitemap">Sitemap </a>||</p>
+    </footer>   
+    <center>
+       <span onClick="return(view());" title="About Us" ><font style="font-size: 20px;" color="#AA205C"></font><img src="img/LOADING.gif" style="width:50px; cursor:pointer;"></span>
+    </center> 
+</body>
+</html>

@@ -1,0 +1,274 @@
+@charset "utf-8";
+/* CSS Document */
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #f3f4f6;
+        }
+		
+/* Define CSS variables for colors (Light Mode) */
+:root {
+	--primary-bg-color: #f0f2f5;
+	--chat-container-bg: #fff;
+	--chat-border-color: #ccc;
+	--user-message-bg: #E4558B;
+	--user-message-text: #fff;
+	--bot-message-bg: #e5e5ea;
+	--bot-message-text: #212121;
+	--input-bg-color: #f0f2f5;
+	--button-bg-color: #AA205c;
+	--button-text-color: #fff;
+	--shadow-color: rgba(0, 0, 0, 0.1);
+	--border-color: #AA205c;
+	--bot-font-family: 'Courier New', monospace;
+	--user-font-family: 'Courier New', monospace;
+}
+
+/* Dark Mode specific colors. These will override the root variables. */
+body.dark-mode {
+	--primary-bg-color: #121212;
+	--chat-container-bg: #1e1e1e;
+	--chat-border-color: #333;
+	--user-message-bg: #E4558B;
+	--user-message-text: #fff;
+	--bot-message-bg: #333;
+	--bot-message-text: #AA205c;
+	--input-bg-color: #2b2b2b;
+	--button-bg-color: #AA205c;
+	--button-text-color: #fff;
+	--shadow-color: rgba(255, 255, 255, 0.1);
+	--border-color: #AA205c;
+}		
+        .highlight {
+            background-color: #fffb8f; /* Tailwind's yellow-100 equivalent */
+            font-weight: 600;
+        }
+		.text-highlight {
+			background-color: #DFD950; /* a soft yellow background */
+			font-weight: 600; /* making the font bold */
+			padding: 2px 4px; /* for better visibility */
+			border-radius: 4px;
+		}		
+        .search-result {
+            padding: 1rem;
+            background-color: #f9fafb;
+            border-radius: 0.5rem;
+            border: 1px solid #e5e7eb;
+			max-height: 700px; /* or a specific height, e.g., height: 300px; */
+    		overflow-y: auto; /* or overflow: auto; to enable both vertical and horizontal scrolling if needed */
+        }
+        .message-box-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .chat-container {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+			animation: animated-border-glow 8s infinite linear;
+        }		
+
+		.typing-indicator span {
+			width: 8px;
+			height: 8px;
+			background-color: var(--user-message-bg);
+			border-radius: 50%;
+			opacity: 0;
+			animation: pulse 1.5s infinite ease-in-out;
+		}
+		
+	h1 { 
+		font-size: 100%;
+		text-align: center;
+		display:block; /* This makes the border shrink-wrap the content */
+		width: fit-content; /* This is the key addition */
+		margin: 0 auto;
+		color: #1a73e8; /* Set a base color */
+		padding: 5px 15px;
+		box-sizing: border-box;
+		border-radius: 25px;
+		
+		/* Key properties for the AI effect */
+  		background-image: linear-gradient(
+    		90deg,
+    		#1a73e8, /* Blue */
+    		#34a853, /* Green */
+    		#000, 	/* black */
+			#B6C511,
+    		#1a73e8, /* Blue again for a smooth loop */
+			#34a853
+  		);
+  		background-size: 400% 100%; /* Make the gradient wider than the text */
+  			-webkit-background-clip: text; /* Clips the background to the text shape */
+  		background-clip: text;
+  		color: transparent; /* Makes the text itself transparent to show the background */
+		
+		animation: animated-border-glow 8s infinite linear,
+        		   animated-text-color 8s infinite linear; /* New text color animation */
+	} 
+		
+	.chat-input {
+		display: flex;
+		border-top: 1px solid var(--chat-border-color);
+		padding: 10px;
+	}
+	
+	.chat-input input {
+		flex-grow: 1;
+		border: none;
+		padding: 10px;
+		border-radius: 20px;
+		outline: none;
+		background-color: var(--input-bg-color);
+		color: var(--bot-message-text);
+		transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+	.chat-input input:hover {
+		/* Make the element slightly bigger */
+		transform: scale(1.014); 
+			  
+		/* Add a shadow to make it look like it's lifting off the page */
+		box-shadow: 0 8px 16px rgba(0, 0, 0, 0); 
+			  
+		/* Change the mouse cursor to a pointer, for better user experience */
+		cursor: pointer;
+			  
+		/* Optional: Change the background color to further emphasize the hover state */
+		background-color: rgba(0, 0, 0, 0);
+		animation: animated-border-glow 8s infinite linear;
+	}	
+		
+	/* Styling for the scrollbar track */
+	.search-result::-webkit-scrollbar {
+		width: 8px; /* Set the width of the scrollbar */
+		height: 8px;
+	}
+	
+	/* Styling for the thumb (the draggable part) */
+	.search-result::-webkit-scrollbar-thumb {
+		background-color: #E4558B; /* A lighter gray color for the thumb */
+		border-radius: 4px;
+	}
+	
+	/* Styling for the track (the background of the scrollbar) */
+	.search-result::-webkit-scrollbar-track {
+		background-color: #3e3e3e; /* A darker gray for the track */
+	}
+      .signup {
+        border: 1px solid rgba(0, 0, 0, 0);
+        background: #FFF;
+        padding-left: 25px;
+        padding-right: 25px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        outline: none;
+        color: white;
+        text-decoration: none;
+        font-family: google;
+        font-size: 18px;
+        transition: all 0.3s ease;
+      }
+
+      .signup:hover {
+        border: 1px solid rgba(0, 0, 0, 0);
+        color: white;
+        box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+          0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+          0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+          0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+        background: rgba(0, 0, 0, 0);
+      }
+   
+      .btn {
+        padding-left: 7px;
+        padding-right: 7px;
+        font-size: 17px;
+        background:rgba(0, 0, 0, 0.1);
+        outline: none;
+        color: rgba(0, 0, 0, 0);
+        border: none;
+        cursor: pointer;
+        border-radius: 22px;
+		font-family:'Indie Flower', cursive;
+      }
+
+	       .btnEffect {
+            cursor: pointer;
+            outline: none;
+            transition: 0.2s all;
+        }
+        /* Adding transformation when the button is active */
+          
+        .btnEffect:active {
+            transform: scale(0.98);
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px #AA205c;
+            /* Lowering the shadow */
+        }
+
+.s-logo {
+	border-radius: 10px;
+	max-width:40px;
+	max-height: 90%;
+	float:left;
+	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+	.s-logo:hover {
+			animation: animated-border-glow 8s infinite linear;
+			transition: 0.2s all;
+			transform: scale(1.1); 
+		 }	
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.5;
+  }
+}
+
+
+/* Keyframes for the new animated border glow */
+@keyframes animated-border-glow {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue */
+    }
+    25% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 255, 100, 0.7); /* Green */
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 100, 100, 0.7); /* Red */
+    }
+    75% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 255, 100, 0.7); /* Yellow */
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue (back to start) */
+    }
+}
+
+/* Define the keyframes for the text color */
+@keyframes animated-text-color {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
