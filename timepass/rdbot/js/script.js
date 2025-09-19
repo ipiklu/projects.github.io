@@ -96,9 +96,9 @@ function showTypingIndicator() {
   const indicator = document.createElement('div');
   indicator.className = 'typing-indicator flex items-center space-x-2 p-4 bg-gray-50 rounded-lg shadow-sm';
   indicator.innerHTML = `
-    <span class="animate-pulse h-2 w-2 bg-blue-500 rounded-full"></span>
-    <span class="animate-pulse h-2 w-2 bg-blue-500 rounded-full" style="animation-delay: 0.2s;"></span>
-    <span class="animate-pulse h-2 w-2 bg-blue-500 rounded-full" style="animation-delay: 0.4s;"></span>
+    <span class="animate-pulse h-2 w-2 rounded-full animated-sparkle"></span>
+    <span class="animate-pulse h-2 w-2 rounded-full animated-sparkle" style="animation-delay: 0.2s;"></span>
+    <span class="animate-pulse h-2 w-2 rounded-full animated-sparkle" style="animation-delay: 0.4s;"></span>
   `;
   resultsContainer.appendChild(indicator);
   return indicator;

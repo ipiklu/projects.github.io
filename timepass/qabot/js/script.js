@@ -50,9 +50,9 @@
                 typingIndicator.innerHTML = `
                     <div class="chat-message bot p-4 rounded-2xl max-w-md shadow-sm">
                         <div class="flex items-center space-x-1">
-                            <span class="loading-dot w-2 h-2 bg-gray-500 rounded-full"></span>
-                            <span class="loading-dot w-2 h-2 bg-gray-500 rounded-full"></span>
-                            <span class="loading-dot w-2 h-2 bg-gray-500 rounded-full"></span>
+                            <span class="loading-dot w-2 h-2 bg-gray-500 rounded-full animated-sparkle"></span>
+                            <span class="loading-dot w-2 h-2 bg-gray-500 rounded-full animated-sparkle"></span>
+                            <span class="loading-dot w-2 h-2 bg-gray-500 rounded-full animated-sparkle"></span>
                         </div>
                     </div>
                 `;
