@@ -71,8 +71,12 @@ body.dark-mode {
         .chat-container {
             -ms-overflow-style: none;  /* IE and Edge */
             scrollbar-width: none;  /* Firefox */
-			animation: animated-border-glow 8s infinite linear;
-        }		
+        }
+			.chat-container:hover {
+				-ms-overflow-style: none;  /* IE and Edge */
+				scrollbar-width: none;  /* Firefox */
+				animation: animated-border-glow 8s infinite linear;
+			}			
 
 		.typing-indicator span {
 			width: 8px;
@@ -112,6 +116,55 @@ body.dark-mode {
 		animation: animated-border-glow 8s infinite linear,
         		   animated-text-color 8s infinite linear; /* New text color animation */
 	} 
+
+		.index { 
+			font-family: 'Courier New', monospace;
+			font-weight: bold;
+			color: #AA205C;
+			transition: color 0.3s ease;
+		}
+
+		.index:hover { 
+			font-family: 'Courier New', monospace;
+			font-weight: bold;
+				/* Key properties for the AI effect */
+			background-image: linear-gradient(
+				90deg,
+				#1a73e8, /* Blue */
+				#34a853, /* Green */
+				#000, 	/* black */
+				#B6C511,
+				#1a73e8, /* Blue again for a smooth loop */
+				#34a853
+			);
+			background-size: 400% 100%; /* Make the gradient wider than the text */
+				-webkit-background-clip: text; /* Clips the background to the text shape */
+			background-clip: text;
+			color: transparent; /* Makes the text itself transparent to show the background */
+			animation: animated-text-color 4s infinite linear; /* New text color animation */		
+		}
+		.index-alert { 
+			color: #AA205C;
+			transition: color 0.3s ease;
+		}
+
+		.index-alert:hover { 
+				/* Key properties for the AI effect */
+			background-image: linear-gradient(
+				90deg,
+				#1a73e8, /* Blue */
+				#34a853, /* Green */
+				#000, 	/* black */
+				#B6C511,
+				#1a73e8, /* Blue again for a smooth loop */
+				#34a853
+			);
+			background-size: 400% 100%; /* Make the gradient wider than the text */
+				-webkit-background-clip: text; /* Clips the background to the text shape */
+			background-clip: text;
+			color: transparent; /* Makes the text itself transparent to show the background */
+			animation: animated-text-color 4s infinite linear; /* New text color animation */		
+		}					
 		
 	.chat-input {
 		display: flex;

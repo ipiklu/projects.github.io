@@ -65,7 +65,29 @@
 			background-clip: text;
 			color: transparent; /* Makes the text itself transparent to show the background */
 			animation: animated-text-color 4s infinite linear; /* New text color animation */		
-		}		
+		}
+		.index-alert { 
+			color: #AA205C;
+			transition: color 0.3s ease;
+		}
+
+		.index-alert:hover { 
+				/* Key properties for the AI effect */
+			background-image: linear-gradient(
+				90deg,
+				#1a73e8, /* Blue */
+				#34a853, /* Green */
+				#000, 	/* black */
+				#B6C511,
+				#1a73e8, /* Blue again for a smooth loop */
+				#34a853
+			);
+			background-size: 400% 100%; /* Make the gradient wider than the text */
+				-webkit-background-clip: text; /* Clips the background to the text shape */
+			background-clip: text;
+			color: transparent; /* Makes the text itself transparent to show the background */
+			animation: animated-text-color 4s infinite linear; /* New text color animation */		
+		}				
 
 
         .sitemap-tree ul {

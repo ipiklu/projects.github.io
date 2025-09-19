@@ -136,8 +136,8 @@ function reloadClear() {
                     <img src="img/instagram.png" style="width: 150px; height: auto;" alt="Instagram"/>
                 </a>
             </div>
-            <p style="color:#AA205C; font-style:italic; font-weight:bolder; font-size:25px;">STAY HOME, STAY SAFE.</p>
-            <p style="color:#AA205C; font-style:italic; font-weight:bolder; font-size:25px;">#Covid-19 #HomeQuarantine</p>
+            <p class="index" style="font-style:italic; font-weight:bolder; font-size:25px;">STAY HOME, STAY SAFE.</p>
+            <p class="index" style="font-style:italic; font-weight:bolder; font-size:25px;">#Covid-19 #HomeQuarantine</p>
         `);
           return false;
     }

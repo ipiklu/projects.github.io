@@ -159,7 +159,7 @@ function displayResults(matches, phrase) {
 
         const resultDiv = document.createElement('div');
         resultDiv.className = 'p-4 bg-gray-50 rounded-lg shadow-sm chat-container';
-        resultDiv.innerHTML = `<p class="text-sm text-gray-700"><span class="font-semibold">Match found:</span> ...${highlightedSnippet}... </p>`;
+        resultDiv.innerHTML = `<p class="text-sm text-gray-700"><span class="font-semibold index">Match found:</span> ...${highlightedSnippet}... </p>`;
         resultsContainer.appendChild(resultDiv);
     });
 }
@@ -204,8 +204,8 @@ function reloadClear() {
                     <img src="img/instagram.png" style="width: 150px; height: auto;" alt="Instagram"/>
                 </a>
             </div>
-            <p style="color:#AA205C; font-style:italic; font-weight:bolder; font-size:25px;">STAY HOME, STAY SAFE.</p>
-            <p style="color:#AA205C; font-style:italic; font-weight:bolder; font-size:25px;">#Covid-19 #HomeQuarantine</p>
+            <p class="index-alert" style="font-style:italic; font-weight:bolder; font-size:25px;">STAY HOME, STAY SAFE.</p>
+            <p class="index-alert" style="font-style:italic; font-weight:bolder; font-size:25px;">#Covid-19 #HomeQuarantine</p>
         `);
           return false;
     }

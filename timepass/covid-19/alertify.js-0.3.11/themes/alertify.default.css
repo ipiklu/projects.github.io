@@ -14,6 +14,7 @@
 	-webkit-background-clip: padding;     /* Safari 4? Chrome 6? */
 	   -moz-background-clip: padding;     /* Firefox 3.6 */
 	        background-clip: padding-box; /* Firefox 4, Safari 5, Opera 10, IE 9 */
+			animation: animated-border-glow 8s infinite linear;
 }
 	.alertify-text {
 		border: 1px solid #CCC;

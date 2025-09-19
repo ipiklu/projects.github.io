@@ -74,6 +74,29 @@
 		  color: #fff;
 		  animation: animated-border-glow 8s infinite linear;
 		}
+		
+		.index { 
+			color: #AA205C;
+			transition: color 0.3s ease;
+		}
+
+		.index:hover { 
+				/* Key properties for the AI effect */
+			background-image: linear-gradient(
+				90deg,
+				#1a73e8, /* Blue */
+				#34a853, /* Green */
+				#000, 	/* black */
+				#B6C511,
+				#1a73e8, /* Blue again for a smooth loop */
+				#34a853
+			);
+			background-size: 400% 100%; /* Make the gradient wider than the text */
+				-webkit-background-clip: text; /* Clips the background to the text shape */
+			background-clip: text;
+			color: transparent; /* Makes the text itself transparent to show the background */
+			animation: animated-text-color 4s infinite linear; /* New text color animation */		
+		}				  
 	  
       .signup {
         border: 1px solid rgba(0, 0, 0, 0);
@@ -155,6 +178,18 @@
   margin-bottom: 12px;
 }
 
+.marquee-container {
+    width: 100%;
+    overflow: hidden; /* This hides the content that is outside the container */
+    white-space: nowrap; /* Prevents the text from wrapping to the next line */
+}
+
+.marquee-content {
+    display: inline-block; /* Makes the content a block-level element that respects width and height, but still flows inline with text */
+    padding-left: 100%; /* Starts the animation with the text off-screen to the right */
+    animation: marquee-animation 15s linear infinite; /* The animation property */
+}
+
 @media screen and (max-width: 600px) { 
 
 }
@@ -191,4 +226,10 @@
   100% {
     background-position: 100% 50%;
   }
+}
+
+/* The keyframes that define the animation */
+@keyframes marquee-animation {
+    0%   { transform: translateX(0); } /* Starting point: right side of the container */
+    100% { transform: translateX(-100%); } /* Ending point: moves to the left by the width of the container */
 }

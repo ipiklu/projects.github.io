@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const showTypingIndicator = () => {
     	const typingIndicator = document.createElement('div');
     	typingIndicator.classList.add('message', 'bot-message', 'typing-indicator');
-    	typingIndicator.innerHTML = '<span>.</span><span>.</span><span>.</span>';
+    	typingIndicator.innerHTML = '<span class="animated-sparkle">.</span><span class="animated-sparkle">.</span><span class="animated-sparkle">.</span>';
     	chatMessages.appendChild(typingIndicator);
     	chatMessages.scrollTop = chatMessages.scrollHeight;
     	return typingIndicator; // Return the element so we can easily remove it later
@@ -616,16 +616,16 @@ function reloadClear() {
 
  <!---POPUP Coustomization---> 
 	  function view() {
-          alertify.alert("<a href='https://www.linkedin.com/in/sayantan-kundu-52650758' target='_blank'><img src='img/linkedin.png' style='max-width: 90%; max-height: 70%'/></a><br/><a href='https://twitter.com/piklu21' target='_blank'><img src='img/twitter.png' style='max-width: 30%; max-height: 30%'/></a><a href='https://www.facebook.com/kundupiklu' target='_blank'><img src='img/facebook.jpg' style='max-width: 30%; max-height: 30%'/> </a><a href='https://www.instagram.com/i_piklu/' target='_blank'><img src='img/instagram.png' style='max-width: 30%; max-height: 30%'/></a><p style='color:#AA205C; font-style:italic; font-weight:bolder; font-size:25px' />STAY HOME, STAY SAFE.</p><p style='color:#AA205C; font-style:italic; font-weight:bolder; font-size:25px' />#Covid-19 #HomeQuarantine</p>");
+          alertify.alert("<a href='https://www.linkedin.com/in/sayantan-kundu-52650758' target='_blank'><img src='img/linkedin.png' style='max-width: 90%; max-height: 70%'/></a><br/><a href='https://twitter.com/piklu21' target='_blank'><img src='img/twitter.png' style='max-width: 30%; max-height: 30%'/></a><a href='https://www.facebook.com/kundupiklu' target='_blank'><img src='img/facebook.jpg' style='max-width: 30%; max-height: 30%'/> </a><a href='https://www.instagram.com/i_piklu/' target='_blank'><img src='img/instagram.png' style='max-width: 30%; max-height: 30%'/></a><p class='index' style='font-style:italic; font-weight:bolder; font-size:25px' />STAY HOME, STAY SAFE.</p><p class='index' style='font-style:italic; font-weight:bolder; font-size:25px' />#Covid-19 #HomeQuarantine</p>");
           return false;
     }
 	
 	function imgView() {
-		alertify.alert("<img src='img/creator.jpg' style='max-width: 90%; max-height: 90%' /><p style='color:#AA205C; font-style:italic; font-weight:bolder; font-size:25px' /> Sayantan Kundu (PikLu) </p>");
+		alertify.alert("<img src='img/creator.jpg' style='max-width: 90%; max-height: 90%' /><p class='index' style='font-style:italic; font-weight:bolder; font-size:25px' /> Sayantan Kundu (PikLu) </p>");
           return false;
 	}
 	function tiluView() {
-		alertify.alert("<img src='img/tilu.jpg' style='max-width: 90%; max-height: 90%' /><p style='color:#AA205C; font-style:italic; font-weight:bolder; font-size:25px' /> TiLu </p>");
+		alertify.alert("<img src='img/tilu.jpg' style='max-width: 90%; max-height: 90%' /><p class='index' style='font-style:italic; font-weight:bolder; font-size:25px' /> TiLu </p>");
           return false;
 	}
 	

@@ -26,6 +26,30 @@ div {
 	text-align: center;
 	box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034);
 }
+
+		.index { 
+			color: #AA205C;
+			transition: color 0.3s ease;
+		}
+
+		.index:hover { 
+				/* Key properties for the AI effect */
+			background-image: linear-gradient(
+				90deg,
+				#1a73e8, /* Blue */
+				#34a853, /* Green */
+				#000, 	/* black */
+				#B6C511,
+				#1a73e8, /* Blue again for a smooth loop */
+				#34a853
+			);
+			background-size: 400% 100%; /* Make the gradient wider than the text */
+				-webkit-background-clip: text; /* Clips the background to the text shape */
+			background-clip: text;
+			color: transparent; /* Makes the text itself transparent to show the background */
+			animation: animated-text-color 4s infinite linear; /* New text color animation */		
+		}
+		
 form {
   justify-content: center;
   color:#AA205c;
@@ -606,4 +630,14 @@ h2{
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
                     0 0 10px rgba(100, 100, 255, 0.7); /* Blue (back to start) */
     }
+}
+
+/* Define the keyframes for the text color */
+@keyframes animated-text-color {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
 }
