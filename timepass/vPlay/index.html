@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  		<title>vPlayer</title>
+        <link rel="icon" href="img/s.gif" type="image/x-icon">
+  		<script src="js/cdn.tailwindcss.js"></script>
+  		<link rel="stylesheet" href="css/style.css" />
+        <!---Alert--->
+        <link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.core.css" />
+        <link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.default.css" />
+        <script src="../../alertify.js-0.3.11/lib/alertify.min.js"></script>        
+</head>
+<body>
+   <div><a href="../../index.html" title="Home"><img src="img/s.gif" class="s-logo"/></a></div>	
+    <a href="../server/index.html" title="Back to Projects"><img src="img/back.gif" class="btn signup btnEffect" style="float:right" /></a>
+    <br /><br /><br />
+  <input align="middle" type="file" id="musicFile" accept="video/*" class="container block w-half text-sm text-pink-800 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-yellow-100">
+  <button onclick="playMusic()" class="btn signup btnEffect index" style="position:relative; bottom: 0; width: 100%;" >Play</button>
+  <div align="center" style="position:relative; bottom: 0; width: 100%;">
+  	<video id="musicPlayer" controls></video>
+  	<script src="js/script.js"></script>
+   </div>
+   <br /><br /><br />
+<!-------Footer------------------------------------------>  
+<footer align="center" style="position:relative; bottom: 0; width: 100%;">
+		<span  class="animated-sparkle btnEffect" onClick="return(view());" title="About Us"></span>
+        <p class="index"> Design by Sayantan Kundu || <a style="color:#AA205C; font-size:12px; font-weight: bold;" href="../../sitemap/index.html" title="Sitemap">Sitemap </a>||</p>
+    </footer>  
+</body>
+</html>

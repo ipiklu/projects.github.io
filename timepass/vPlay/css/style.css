@@ -1,0 +1,195 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+    font-family: 'Courier New', monospace;
+}
+
+		.animated-sparkle {
+		  /* No content property here */
+			display: inline-block;
+			font-size: 25px;
+			border: none;
+			border-radius: 20px;
+			outline: none;
+			transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		}	
+		.animated-sparkle::before {
+		  content: "✨"; /* This is where the content property belongs */
+		  padding-right: 10px;
+		  background-size: 800% auto;
+		  background-image: linear-gradient(
+			  90deg,
+			  #2c67f2 0%,    /* Start with dark blue */
+			  #62cff4 15%,    /* A smoother transition to aqua */
+			  #000 45%,      /* Black now has a more defined position */
+			  #B6C511 60%,    /* The yellow-green emerges */
+			  #1a73e8 80%,    /* Transition to a new blue */
+			  #62cff4 100%,    /* End with aqua to prepare for a smooth loop */
+			  #62cff4 115%,
+			  #000 145%,
+			  #B6C511 160%,
+			  #1a73e8 180%,
+			  #62cff4 200%
+			);
+		  -webkit-background-clip: text;
+		  -webkit-text-fill-color: transparent;
+		  -webkit-animation: animated-text-color 2s linear infinite;
+		  animation: animated-text-color 2s linear infinite;
+		}
+
+.container{
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+#musicPlayer {
+    width: auto;
+	height: 70%;
+    background-color: #000;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    margin-top: 20px;
+	animation: animated-border-glow 8s infinite linear;
+}
+
+#musicFile {
+    padding: 25px;
+    background-color: #333;
+    border: 1px solid #555;
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#musicFile:hover::before {
+    background: linear-gradient(to right, #50e3c2, #4a90e2);
+}
+      .signup {
+        border: 1px solid rgba(0, 0, 0, 0);
+        background: #FFF;
+        padding-left: 25px;
+        padding-right: 25px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        outline: none;
+        color: white;
+        text-decoration: none;
+        font-family: google;
+        font-size: 18px;
+        transition: all 0.3s ease;
+      }
+
+      .signup:hover {
+        border: 1px solid rgba(0, 0, 0, 0);
+        color: white;
+        box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+          0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+          0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+          0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+        background: rgba(0, 0, 0, 0);
+      }
+      .btn {
+        padding-left: 7px;
+        padding-right: 7px;
+        font-size: 17px;
+        background:rgba(0, 0, 0, 0.1);
+        outline: none;
+        color: rgba(0, 0, 0, 0);
+        border: none;
+        cursor: pointer;
+        border-radius: 22px;
+		font-family:'Indie Flower', cursive;
+      }
+
+	       .btnEffect {
+            cursor: pointer;
+            outline: none;
+            transition: 0.2s all;
+        }
+        /* Adding transformation when the button is active */
+          
+        .btnEffect:active {
+            transform: scale(0.98);
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px #AA205c;
+            /* Lowering the shadow */
+        }
+		
+		.index { 
+			color: #AA205C;
+			transition: color 0.3s ease;
+		}
+
+		.index:hover { 
+				/* Key properties for the AI effect */
+			background-image: linear-gradient(
+				90deg,
+				#1a73e8, /* Blue */
+				#34a853, /* Green */
+				#000, 	/* black */
+				#B6C511,
+				#1a73e8, /* Blue again for a smooth loop */
+				#34a853
+			);
+			background-size: 400% 100%; /* Make the gradient wider than the text */
+				-webkit-background-clip: text; /* Clips the background to the text shape */
+			background-clip: text;
+			color: transparent; /* Makes the text itself transparent to show the background */
+			animation: animated-text-color 4s infinite linear; /* New text color animation */		
+		}		
+
+.s-logo {
+	border-radius: 10px;
+	max-width:40px;
+	max-height: 90%;
+	float:left;
+	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+	.s-logo:hover {
+			animation: animated-border-glow 8s infinite linear;
+			transition: 0.2s all;
+			transform: scale(1.1); 
+		 }				
+
+/* Keyframes for the new animated border glow */
+@keyframes animated-border-glow {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue */
+    }
+    25% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 255, 100, 0.7); /* Green */
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 100, 100, 0.7); /* Red */
+    }
+    75% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 255, 100, 0.7); /* Yellow */
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue (back to start) */
+    }
+}
+
+/* Define the keyframes for the text color */
+@keyframes animated-text-color {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
