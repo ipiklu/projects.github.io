@@ -4,6 +4,7 @@
 html, body {
     height: 100%;
     margin: 0;
+	overflow-x: hidden;
 }
 
 /* Define CSS variables for colors (Light Mode) */
@@ -83,14 +84,16 @@ body {
 		
 		animation: animated-border-glow 8s infinite linear,
         		   animated-text-color 8s infinite linear; /* New text color animation */
-	}
-
+	}	
 	.animated-sparkle {
 	  /* No content property here */
-	  display: inline-block;
-	  font-size: 25px;
-	}
-	
+	  	display: inline-block;
+	  	font-size: 25px;
+	 	border: none;
+		border-radius: 20px;
+		outline: none;
+	  	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}	
 	.animated-sparkle::before {
 	  content: "✨"; /* This is where the content property belongs */
 	  padding-right: 10px;
