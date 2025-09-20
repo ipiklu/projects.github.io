@@ -184,7 +184,7 @@ body {
         text-decoration: none;
         font-family: google;
         font-size: 18px;
-        transition: all 0.3s ease;
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       }
 
       .signup:hover {
@@ -195,6 +195,7 @@ body {
           0 22.3px 17.9px rgba(0, 0, 0, 0.072),
           0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
         background:#AA205c;
+		animation: animated-border-glow 8s infinite linear;
       }
 
  .btn {
@@ -306,7 +307,7 @@ body {
         text-decoration: none;
         font-family: google;
         font-size: 8px;
-        transition: all 0.3s ease;
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       }
 
       .signup:hover {
@@ -317,6 +318,7 @@ body {
           0 22.3px 17.9px rgba(0, 0, 0, 0.072),
           0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
         background:#AA205c;
+		animation: animated-border-glow 8s infinite linear;
       }
 
  .btn {
