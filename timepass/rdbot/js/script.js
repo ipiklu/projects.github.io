@@ -140,7 +140,8 @@ function findPhrase() {
 function displayResults(matches, phrase) {
     resultsContainer.innerHTML = '';
     if (matches.length === 0) {
-        resultsContainer.innerHTML = `<p class="text-gray-500 text-sm">No matches found for "${phrase}".</p>`;
+        resultsContainer.innerHTML = `<span class="animated-sparkle btnEffect" style="cursor:pointer" title="No matches found for '${phrase}'"></span>
+										<span class="text-gray-500 text-sm">No matches found for "${phrase}".</span>`;
         return;
     }
 
