@@ -79,7 +79,7 @@ fileInput.addEventListener('change', async (event) => {
         searchPhraseInput.disabled = false;
         searchButton.disabled = false;
         searchPhraseInput.focus();
-        resultsContainer.innerHTML = '<p class="text-gray-500 text-sm">Results will appear here.</p>';
+        resultsContainer.innerHTML = '<p class="animated-sparkle btnEffect" style="cursor:pointer" title="Results will appear here"></p>';
 
     } catch (error) {
         console.error(error);
