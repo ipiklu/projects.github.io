@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const showTypingIndicator = () => {
     	const typingIndicator = document.createElement('div');
     	typingIndicator.classList.add('message', 'bot-message', 'typing-indicator');
-    	typingIndicator.innerHTML = '<span class="animated-sparkle">.</span><span class="animated-sparkle">.</span><span class="animated-sparkle">.</span>';
+    	typingIndicator.innerHTML = '<span class="bot-animated-sparkle">.</span><span class="bot-animated-sparkle">.</span><span class="bot-animated-sparkle">.</span>';
     	chatMessages.appendChild(typingIndicator);
     	chatMessages.scrollTop = chatMessages.scrollHeight;
     	return typingIndicator; // Return the element so we can easily remove it later

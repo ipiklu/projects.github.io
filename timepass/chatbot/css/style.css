@@ -117,6 +117,39 @@ body {
 	  -webkit-animation: animated-text-color 2s linear infinite;
 	  animation: animated-text-color 2s linear infinite;
 	}
+	
+	.bot-animated-sparkle {
+	  /* No content property here */
+	  	display: inline-block;
+	  	font-size: 14px;
+	 	border: none;
+		border-radius: 20px;
+		outline: none;
+	  	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}	
+	.bot-animated-sparkle::before {
+	  content: "✨"; /* This is where the content property belongs */
+	  padding-right: 10px;
+	  background-size: 800% auto;
+	  background-image: linear-gradient(
+		  90deg,
+		  #2c67f2 0%,    /* Start with dark blue */
+		  #62cff4 15%,    /* A smoother transition to aqua */
+		  #000 45%,      /* Black now has a more defined position */
+		  #B6C511 60%,    /* The yellow-green emerges */
+		  #1a73e8 80%,    /* Transition to a new blue */
+		  #62cff4 100%,    /* End with aqua to prepare for a smooth loop */
+		  #62cff4 115%,
+		  #000 145%,
+		  #B6C511 160%,
+		  #1a73e8 180%,
+		  #62cff4 200%
+		);
+	  -webkit-background-clip: text;
+	  -webkit-text-fill-color: transparent;
+	  -webkit-animation: animated-text-color 2s linear infinite;
+	  animation: animated-text-color 2s linear infinite;
+	}	
 
 		.index { 
 			color: #AA205C;
