@@ -1,0 +1,277 @@
+@charset "utf-8";
+/* CSS Document */
+
+		header { 
+			color: #AA205C; 
+			padding: 20px 0; 
+			border-top-left-radius: 10px; 
+			border-top-right-radius: 10px; 
+		} 
+        /* Custom styles for the scroll wheels */
+        .scroll-wheel {
+            /* 5 items visible (2 active + 1 center + 2 active) */
+            height: 240px; /* 5 * h-12 (48px) */
+            overflow-y: scroll;
+            -webkit-overflow-scrolling: touch;
+            /* Hide scrollbar */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+        .scroll-wheel::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        
+        .wheel-container {
+            /* Create the central selection box visual effect */
+            position: relative;
+            padding-top: 96px; /* 2 * 48px to center the selection start point */
+            padding-bottom: 96px; /* 2 * 48px to center the selection end point */
+        }
+
+        .selector-highlight {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            transform: translateY(-50%);
+            height: 48px; /* h-12 */
+            background-color: rgba(170,32,92,0.1);
+            border-top: 1px solid rgba(170,32,92,0.4);
+            border-bottom: 1px solid rgba(170,32,92,0.4);
+            pointer-events: none; /* Ensure clicks go to the wheel, not the highlight */
+            border-radius: 0.5rem;
+        }
+
+        /* Initial/Default state for wheel items */
+        .wheel-item {
+            cursor: pointer;
+            transition: all 150ms ease-out;
+            transform: scale(0.85);
+            opacity: 0.4;
+            font-weight: 300;
+        }
+
+        /* Styles for the selected/centered item, applied dynamically by JS */
+        .wheel-item.selected {
+            transform: scale(1.0);
+            opacity: 1.0;
+            font-weight: 600;
+            color: #AA205C; /* Emerald-500 */
+        }	
+		
+.signup {
+        border: 1px solid #AA205c;
+        background: #AA205c;
+        padding-left: 25px;
+        padding-right: 25px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        outline: none;
+        color: white;
+        text-decoration: none;
+        font-family: google;
+        font-size: 18px;
+        transition: all 0.3s ease;
+      }
+      .signup:hover {
+        border: 1px solid #AA205c;
+        color: white;
+        box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+          0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+          0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+          0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+        background:#AA205c;
+		animation: animated-border-glow 8s infinite linear;
+      }
+
+ .btn {
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 17px;
+        background:#fff;
+        outline: none;
+        color: black;
+        border: none;
+        cursor: pointer;
+        border-radius: 20px;
+      }
+	  
+	       .btnEffect {
+            cursor: pointer;
+            outline: none;
+            transition: 0.2s all;
+        }
+        /* Adding transformation when the button is active */
+          
+        .btnEffect:active {
+            transform: scale(0.98);
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+            /* Lowering the shadow */
+        }	
+		
+		.index { 
+			font-family: 'Courier New', monospace;
+			font-weight: bold;
+			color: #AA205C;
+			transition: color 0.3s ease;
+		}
+
+		.index:hover { 
+			font-family: 'Courier New', monospace;
+			font-weight: bold;
+				/* Key properties for the AI effect */
+			background-image: linear-gradient(
+				90deg,
+				#1a73e8, /* Blue */
+				#34a853, /* Green */
+				#000, 	/* black */
+				#B6C511,
+				#1a73e8, /* Blue again for a smooth loop */
+				#34a853
+			);
+			background-size: 400% 100%; /* Make the gradient wider than the text */
+				-webkit-background-clip: text; /* Clips the background to the text shape */
+			background-clip: text;
+			color: transparent; /* Makes the text itself transparent to show the background */
+			animation: animated-text-color 4s infinite linear; /* New text color animation */		
+		}	
+		.index-alert { 
+			color: #AA205C;
+			transition: color 0.3s ease;
+		}
+
+		.index-alert:hover { 
+				/* Key properties for the AI effect */
+			background-image: linear-gradient(
+				90deg,
+				#1a73e8, /* Blue */
+				#34a853, /* Green */
+				#000, 	/* black */
+				#B6C511,
+				#1a73e8, /* Blue again for a smooth loop */
+				#34a853
+			);
+			background-size: 400% 100%; /* Make the gradient wider than the text */
+				-webkit-background-clip: text; /* Clips the background to the text shape */
+			background-clip: text;
+			color: transparent; /* Makes the text itself transparent to show the background */
+			animation: animated-text-color 4s infinite linear; /* New text color animation */		
+		}				
+
+     .imgS {
+        border-radius: 10px;
+        margin: 1.7px;
+        max-width:40px;
+		max-height: 90%;
+		float:left;
+		transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	  }
+	  
+	.imgS:hover {
+			animation: animated-border-glow 8s infinite linear;
+			transition: 0.2s all;
+			transform: scale(1.1); 
+		 }	
+
+@media screen and (max-width: 640px) {
+	.signup {
+        border: 1px solid #AA205c;
+        background: #AA205c;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 5px;
+        padding-bottom: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        outline: none;
+        color: white;
+        text-decoration: none;
+        font-family: google;
+        font-size: 8px;
+        transition: all 0.3s ease;
+      }
+
+      .signup:hover {
+        border: 1px solid #AA205c;
+        color: white;
+        box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+          0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+          0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+          0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+        background:#AA205c;
+		animation: animated-border-glow 8s infinite linear;
+      }
+
+ .btn {
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        font-size: 8px;
+        background:#fff;
+        outline: none;
+        color: black;
+        border: none;
+        cursor: pointer;
+        border-radius: 10px;
+      }
+	  
+	  .btnEffect {
+            cursor: pointer;
+            outline: none;
+            transition: 0.2s all;
+        }
+        /* Adding transformation when the button is active */
+          
+        .btnEffect:active {
+            transform: scale(0.98);
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+            /* Lowering the shadow */
+        }		        
+}
+
+@media print {
+  #printPageButton {
+    display: none;
+  }
+}
+		 
+/* Keyframes for the new animated border glow */
+@keyframes animated-border-glow {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue */
+    }
+    25% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 255, 100, 0.7); /* Green */
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 100, 100, 0.7); /* Red */
+    }
+    75% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 255, 100, 0.7); /* Yellow */
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue (back to start) */
+    }
+}
+
+/* Define the keyframes for the text color */
+@keyframes animated-text-color {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}			 
