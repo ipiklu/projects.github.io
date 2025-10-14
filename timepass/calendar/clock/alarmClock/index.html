@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!---Alert--->
+	<link rel="stylesheet" href="../../../../alertify.js-0.3.11/themes/alertify.core.css" />
+	<link rel="stylesheet" href="../../../../alertify.js-0.3.11/themes/alertify.default.css" />
+    <script src="../../../../alertify.js-0.3.11/lib/alertify.min.js"></script>    
+    <title>Alarm-Clock</title>
+    <link rel = "icon" href="img/s.gif" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dark.css" />
+</head>
+<body>
+    <div class="clock-container">
+    <!---------------------------------------------------------->
+            <div class="top-lane">
+               <a href="../../../../index.html" title="Home"><img src="img/s.gif" class="imgS"/></a>
+                  <button id="printPageButton" class="btn signup btnEffect" onClick="window.location='../index.html'" title="Go back to Clock" style="background:#AA205C; color:#EEE; float:right">
+                    <img src="img/back.gif" style="max-width:11px" /></button> 
+                  <button id="printPageButton" class="btn signup btnEffect" onClick="return(reloadClear());" title="Reload" style="background:#AA205C; color:#EEE; float:right">
+                    <img src="img/settings.gif" style="max-width:15px" /></button>    
+                     <br /><br /><br />              
+                <div align="right">
+                    <input type="checkbox" id="dark-mode">
+                    <label for="dark-mode"></label>
+                    <div class="background"></div>
+                </div>    
+     		</div> 
+    <!---------------------------------------------------------->             
+        <div id="mainTimeDisplay" class="clock-display" onClick="return(reloadClear());" style="cursor:pointer;">00:00:00 AM</div>
+
+        <div class="selectors-container">
+            <div class="time-column">
+                <legend for="alarmHourSelect" style="color:#D93E9E">Hour</legend>
+                <select id="alarmHourSelect" class="time-select" data-type="hour">
+                    </select>
+            </div>
+
+            <div class="time-column">
+                <legend for="alarmMinuteSelect" style="color:#D93E9E">Minute</legend>
+                <select id="alarmMinuteSelect" class="time-select" data-type="minute">
+                    </select>
+            </div>
+
+            <div class="time-column">
+                <legend for="alarmPeriodSelect" style="color:#ABCC16">AM/PM</legend>
+                <select id="alarmPeriodSelect" class="time-select" data-type="period">
+                    </select>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <button id="setAlarmBtn" class="btn signup btnEffect">Set Alarm</button>
+            <button id="snoozeBtn" class="btn btnEffect" disabled>Snooze (5 min)</button>
+            <button id="stopAlarmBtn" class="btn btnEffect" disabled>STOP</button>
+        </div>
+
+
+    <audio id="alarmAudio" src="audio/military.mp3" preload="auto" loop></audio>
+
+    <script src="js/script.js"></script>
+    <br/><br/><br/>
+ <!-----------------------Footer---------------------------> 
+	<footer align="center" style="position:relative; color:#AA205C; bottom: 0; width: 100%;">
+		<center> 
+        	<font color="#AA205C">
+            	<p id="date"> </p>
+				   <script>
+                    document.getElementById("date").innerHTML = Date();
+                   </script>
+            </font>
+         </center>
+            <p>|| Copyright protected &copy; <script>document.write(new Date().getFullYear())</script>, All Rights Not Reserved ||</p>
+            <p> Design by Sayantan Kundu || <a style="color:#AA205C; font-size:12px; font-weight: bold;" href="../../../../sitemap/index.html" title="Sitemap">Sitemap </a>||</p>
+    </footer>
+    <center>
+       <span onClick="return(view());" title="About Us" ><font style="font-size: 20px;" color="#AA205C"></font><img src="img/LOADING.gif" style="width:50px; cursor:pointer;"></span>
+    </center>  
+ </div>       
+</body>
+</html>

@@ -1,0 +1,304 @@
+/* --- Global Reset and Full Body Setup --- */
+
+body {
+	background: linear-gradient(to bottom right, #f8fafc, #e2e8f0);
+    font-family: 'Inter', sans-serif;
+    
+    /* Center the clock content vertically and horizontally */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.top-lane {
+	margin-bottom: 10vh;
+}
+
+.clock-container {
+    /* Removed card styling (background, padding, shadow) */
+    background: none; 
+    padding: 0; 
+    border-radius: 0;
+    box-shadow: none; 
+    
+    /* Keep centering properties relevant to its content */
+    text-align: center;
+    /* Give it some padding/margin to breathe against the edges on small screens */
+    margin: 20px;
+}
+
+/* --- Main Time Display --- */
+#mainTimeDisplay {
+    font-size: 4.5em; /* Increased size for full-body display */
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #AA205C;
+}
+
+		/* Style for when the alarm is actively ringing */
+		#mainTimeDisplay.alarming {
+			/*color: #FF0000;
+			animation: alarm-pulse 0.5s infinite alternate;*/
+			background-image: linear-gradient(
+				90deg,
+				#1a73e8, /* Blue */
+				#34a853, /* Green */
+				#000, 	/* black */
+				#B6C511,
+				#1a73e8, /* Blue again for a smooth loop */
+				#34a853
+			);
+			background-size: 400% 100%; /* Make the gradient wider than the text */
+				-webkit-background-clip: text; /* Clips the background to the text shape */
+			background-clip: text;
+			color: transparent; /* Makes the text itself transparent to show the background */
+			animation: animated-text-color 4s infinite linear; /* New text color animation */	
+		}
+
+@keyframes alarm-pulse {
+    from { opacity: 1; }
+    to { opacity: 0.5; }
+}
+
+/* --- Selector Container --- */
+.selectors-container {
+    display: flex;
+    justify-content: center;
+    gap: 25px; /* Increased gap for better spacing */
+    margin-bottom: 40px;
+}
+
+.time-column {
+    text-align: center;
+}
+
+.time-column label {
+    font-size: 1em;
+    font-weight: normal;
+    color: #999;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* --- Standard Select Selector Styling --- */
+
+.time-select {
+    appearance: none; 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    
+    /* Used the previous container's dark background color */
+    background: #282828; 
+    color: #AA205c; /* Highlight the text color */
+    border: 1px solid #AA205c;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-size: 1.8em; /* Increased size for full-body display */
+    font-weight: bold;
+    width: 100px;
+    text-align: center;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+/* Fix the color of the dropdown arrow */
+.time-select {
+	    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23FFFFFF" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.019 2.345 4 3.204 4h9.592c.86 0 1.32 1.019.754 1.658l-4.796 5.482c-.173.198-.44.198-.613 0z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    padding-right: 30px;
+}
+
+.time-column.disabled-select .time-select {
+    opacity: 0.5;
+    pointer-events: none;
+    border-color: #555;
+    color: #aaa;
+}
+
+
+/* --- Buttons --- */
+.button-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+button {
+    padding: 12px 25px; /* Slightly larger buttons */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.2s;
+    min-width: 120px;
+}
+
+#setAlarmBtn {
+    background-color: #AA205C;
+    color: white;
+}
+
+#setAlarmBtn:hover:not(:disabled) {
+    background-color: rgba(170,32,92,0.4);
+}
+
+#snoozeBtn {
+    background-color: #ffc107;
+    color: #333;
+}
+
+#snoozeBtn:hover:not(:disabled) {
+    background-color: #e0ac08;
+}
+
+#stopAlarmBtn {
+    background-color: #ff9800;
+    color: #333;
+}
+
+#stopAlarmBtn:hover:not(:disabled) {
+    background-color: #e68900;
+}
+
+button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.signup {
+        border: 1px solid #AA205c;
+        background: #AA205c;
+        padding-left: 25px;
+        padding-right: 25px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        outline: none;
+        color: white;
+        text-decoration: none;
+        font-family: google;
+        font-size: 18px;
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .signup:hover {
+        border: 1px solid #AA205c;
+        color: white;
+        box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+          0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+          0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+          0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+        background:#AA205c;
+		animation: animated-border-glow 8s infinite linear;
+      }
+
+ .btn {
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 17px;
+        background:#fff;
+        outline: none;
+        color: black;
+        border: none;
+        cursor: pointer;
+        border-radius: 20px;
+      }
+
+.btnEffect {
+            cursor: pointer;
+            outline: none;
+            transition: 0.2s all;
+        }
+        /* Adding transformation when the button is active */
+          
+        .btnEffect:active {
+            transform: scale(0.98);
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+            /* Lowering the shadow */
+        }
+		
+		.index { 
+			color: #AA205C;
+			transition: color 0.3s ease;
+		}
+
+		.index:hover { 
+				/* Key properties for the AI effect */
+			background-image: linear-gradient(
+				90deg,
+				#1a73e8, /* Blue */
+				#34a853, /* Green */
+				#000, 	/* black */
+				#B6C511,
+				#1a73e8, /* Blue again for a smooth loop */
+				#34a853
+			);
+			background-size: 400% 100%; /* Make the gradient wider than the text */
+				-webkit-background-clip: text; /* Clips the background to the text shape */
+			background-clip: text;
+			color: transparent; /* Makes the text itself transparent to show the background */
+			animation: animated-text-color 4s infinite linear; /* New text color animation */		
+		}
+			
+
+.imgS {
+        border-radius: 10px;
+        margin: 1.7px;
+        max-width:40px;
+		max-height: 90%;
+		float:left;
+		transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	 }
+
+.imgS:hover {
+		animation: animated-border-glow 8s infinite linear;
+    	transition: 0.2s all;
+		transform: scale(1.1); 
+	 }	
+
+@media print {
+  #printPageButton {
+    display: none;
+  }
+}
+	 
+/* Keyframes for the new animated border glow */
+@keyframes animated-border-glow {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue */
+    }
+    25% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 255, 100, 0.7); /* Green */
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 100, 100, 0.7); /* Red */
+    }
+    75% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 255, 100, 0.7); /* Yellow */
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue (back to start) */
+    }
+}
+
+/* Define the keyframes for the text color */
+@keyframes animated-text-color {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}	 
