@@ -159,7 +159,7 @@ clearEl.addEventListener('click', () => ctx.clearRect(0,0, canvas.width, canvas.
 
 
 // =================================================================
-// 💾 SAVE CANVAS FUNCTIONALITY (CORRECTED FOR ANDROID WEBVIEW/APPLINK)
+// 💾 SAVE CANVAS FUNCTIONALITY (MODIFIED FOR APPLIX/WEBVIEW FALLBACK)
 // =================================================================
 
 saveBtn.addEventListener('click', () => {
@@ -180,42 +180,46 @@ saveBtn.addEventListener('click', () => {
     const filename = `drawing_${day}${month}${year}_${hours}${minutes}${seconds}.png`;
     // ----------------------------------------------
 
-    // --- CRITICAL FIX FOR WEBVIEW/APPLINK ---
+    // --- CRITICAL ATTEMPT #1: NATIVE BRIDGE (BEST SOLUTION) ---
+    // If Appilix provides a global object for native calls, use it immediately.
+    if (window.AppilixBridge && window.AppilixBridge.saveBase64File) {
+        // Pass the data URL and filename to the native layer for saving
+        window.AppilixBridge.saveBase64File(dataURL, filename, 'image/png');
+        console.log("Saving via Appilix Native Bridge.");
+        
+        if (typeof alertify !== 'undefined') {
+            alertify.success("Drawing saved!");
+        }
+        return; // Stop here if native bridge is used
+    }
+    // ---------------------------------------------------------
 
-    // 2. Convert the Data URL to a Blob object
-    // This extracts the raw data and MIME type from the dataURL string.
-    fetch(dataURL)
-        .then(res => res.blob())
-        .then(blob => {
-            // 3. Create a temporary URL for the Blob
-            const blobUrl = URL.createObjectURL(blob);
+    // --- CRITICAL ATTEMPT #2: BLOB METHOD (REVERTED TO DIRECT DATA URL FOR APPILIX HACK) ---
+    // Since the full fetch/blob/revoke process often fails in restricted WebViews,
+    // we use a simplified direct data URL click as the most immediate fallback hack.
+    
+    // Create a temporary anchor (<a>) element
+    const a = document.createElement('a');
+    a.href = dataURL; 
+    a.download = filename;
 
-            // 4. Create a temporary anchor (<a>) element
-            const a = document.createElement('a');
-            a.href = blobUrl; // Link the anchor to the simple Blob URL
-            a.download = filename;
-            
-            // 5. Programmatically 'click' the anchor to trigger the download
-            document.body.appendChild(a); // Append is necessary for some browsers/WebViews
-            a.click();
-            document.body.removeChild(a); // Clean up the temporary element
-            URL.revokeObjectURL(blobUrl); // Release the Blob URL memory
+    // Append to body (required for many environments) and trigger click immediately
+    document.body.appendChild(a); 
+    a.click();
+    
+    // Clean up immediately
+    document.body.removeChild(a); 
+    a.remove();
+    
+    // -------------------------------------------------------------------------------------
 
-            // 6. Success Message
-            if (typeof alertify !== 'undefined') {
-                alertify.success("Drawing saved as PNG!");
-            }
-        })
-        .catch(error => {
-            // Fallback: If fetch fails (e.g., due to CORS or older browser), use the original method
-            console.error("Blob creation failed, falling back to dataURL download:", error);
-            
-            const a = document.createElement('a');
-            a.href = dataURL;
-            a.download = filename;
-            a.click();
-            a.remove();
-        });
+    // Optional: Success Message (Assuming the native wrapper will handle the download in the background)
+    if (typeof alertify !== 'undefined') {
+        alertify.success("Drawing saved! (Check Notifications/Downloads)");
+    } else {
+        console.log("Download command issued. Check your device's downloads.");
+    }
+
 });
 
 <!---Reload --->
