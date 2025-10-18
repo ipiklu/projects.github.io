@@ -37,8 +37,6 @@ body {
 
 		/* Style for when the alarm is actively ringing */
 		#mainTimeDisplay.alarming {
-			/*color: #FF0000;
-			animation: alarm-pulse 0.5s infinite alternate;*/
 			background-image: linear-gradient(
 				90deg,
 				#1a73e8, /* Blue */
