@@ -159,49 +159,63 @@ clearEl.addEventListener('click', () => ctx.clearRect(0,0, canvas.width, canvas.
 
 
 // =================================================================
-// 💾 SAVE CANVAS FUNCTIONALITY (Existing)
+// 💾 SAVE CANVAS FUNCTIONALITY (CORRECTED FOR ANDROID WEBVIEW/APPLINK)
 // =================================================================
 
 saveBtn.addEventListener('click', () => {
-    // 1. Get the canvas data as a data URL
+    // 1. Get the canvas data as a Data URL
     const dataURL = canvas.toDataURL("image/png");
 
-    // 2. Create a temporary anchor (<a>) element
-    const a = document.createElement('a');
-    a.href = dataURL;
-
-    // --- MODIFICATION for Custom Format: drawing_18OCT2025_183500 ---
+    // --- FILENAME GENERATION (REMAINS THE SAME) ---
     const now = new Date();
-    
-    // Array of three-letter month abbreviations
     const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", 
                         "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
-
-    // Function to ensure two digits (e.g., '08' instead of '8')
     const pad = (num) => num.toString().padStart(2, '0');
-
-    // Date components: DD, MON, YYYY
     const day = pad(now.getDate());
     const month = monthNames[now.getMonth()];
     const year = now.getFullYear();
-
-    // Time components: HH, MM, SS
     const hours = pad(now.getHours());
     const minutes = pad(now.getMinutes());
     const seconds = pad(now.getSeconds());
-
-    // Construct the final filename string
     const filename = `drawing_${day}${month}${year}_${hours}${minutes}${seconds}.png`;
-    // Example: drawing_18OCT2025_183533.png
+    // ----------------------------------------------
 
-    a.download = filename;
-    // --- END MODIFICATION ---
+    // --- CRITICAL FIX FOR WEBVIEW/APPLINK ---
 
-    // 3. Programmatically 'click' the anchor to trigger the download
-    a.click();
+    // 2. Convert the Data URL to a Blob object
+    // This extracts the raw data and MIME type from the dataURL string.
+    fetch(dataURL)
+        .then(res => res.blob())
+        .then(blob => {
+            // 3. Create a temporary URL for the Blob
+            const blobUrl = URL.createObjectURL(blob);
 
-    // 4. Clean up the temporary element
-    a.remove();
+            // 4. Create a temporary anchor (<a>) element
+            const a = document.createElement('a');
+            a.href = blobUrl; // Link the anchor to the simple Blob URL
+            a.download = filename;
+            
+            // 5. Programmatically 'click' the anchor to trigger the download
+            document.body.appendChild(a); // Append is necessary for some browsers/WebViews
+            a.click();
+            document.body.removeChild(a); // Clean up the temporary element
+            URL.revokeObjectURL(blobUrl); // Release the Blob URL memory
+
+            // 6. Success Message
+            if (typeof alertify !== 'undefined') {
+                alertify.success("Drawing saved as PNG!");
+            }
+        })
+        .catch(error => {
+            // Fallback: If fetch fails (e.g., due to CORS or older browser), use the original method
+            console.error("Blob creation failed, falling back to dataURL download:", error);
+            
+            const a = document.createElement('a');
+            a.href = dataURL;
+            a.download = filename;
+            a.click();
+            a.remove();
+        });
     
     // Optional: Use the alertify library for a success message
     alertify.success("Drawing saved as PNG!");
