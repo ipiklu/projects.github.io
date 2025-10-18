@@ -69,7 +69,7 @@
 	background: rgba(0,0,0,.9);
 	padding: 15px;
 	border-radius: 4px;
-	color: #FFF;
+	color: #AA205C;
 	text-shadow: -1px -1px 0 rgba(0,0,0,.5);
 }
 	.alertify-log-error {
@@ -77,6 +77,6 @@
 		background: rgba(254,26,0,.9);
 	}
 	.alertify-log-success {
-		background: #5CB811;
-		background: rgba(92,184,17,.9);
+		background: rgba(0,0,0,.5);
+		animation: animated-border-glow 8s infinite linear;
 	}
