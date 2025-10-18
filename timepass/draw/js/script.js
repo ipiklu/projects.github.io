@@ -216,9 +216,6 @@ saveBtn.addEventListener('click', () => {
             a.click();
             a.remove();
         });
-    
-    // Optional: Use the alertify library for a success message
-    alertify.success("Drawing saved as PNG!");
 });
 
 <!---Reload --->
