@@ -51,39 +51,47 @@ canvas.addEventListener('mousemove', (e) => {
 // =================================================================
 // 🖊️ TOUCH/STYLUS EVENT LISTENERS (NEW ADDITION)
 // =================================================================
-
-// Get touch/stylus coordinates relative to the canvas
+// Get touch/stylus coordinates relative to the canvas,
+// with correction for CSS scaling (DPI correction).
 function getTouchPos(canvasDom, touchEvent) {
     const rect = canvasDom.getBoundingClientRect();
-    const touch = touchEvent.touches[0] || touchEvent.changedTouches[0]; // Primary touch point
+    const touch = touchEvent.touches[0] || touchEvent.changedTouches[0]; 
+
+    // CRITICAL CORRECTION: Calculate the ratio between the actual drawing
+    // surface size (canvas.width/height) and the displayed size (rect.width/height)
+    const scaleX = canvasDom.width / rect.width;
+    const scaleY = canvasDom.height / rect.height;
 
     return {
-        x: touch.clientX - rect.left,
-        y: touch.clientY - rect.top
+        // Apply the scale factor to the translated client coordinates
+        x: (touch.clientX - rect.left) * scaleX,
+        y: (touch.clientY - rect.top) * scaleY
     };
 }
 
-// 1. Touch Start (like mousedown)
+// 1. Touch Start (like mousedown) - Logic remains correct
 canvas.addEventListener('touchstart', (e) => {
-    e.preventDefault(); // Prevent scrolling/zooming on the canvas area
+    e.preventDefault(); 
     isPressed = true;
     
-    const pos = getTouchPos(canvas, e);
+    // Uses the corrected getTouchPos
+    const pos = getTouchPos(canvas, e); 
     x = pos.x;
     y = pos.y;
-}, { passive: false }); // Use { passive: false } to allow preventDefault
+}, { passive: false }); 
 
-// 2. Touch End (like mouseup)
+// 2. Touch End (like mouseup) - Logic remains correct
 document.addEventListener('touchend', (e) => {
     isPressed = false;
     x = undefined;
     y = undefined;
 });
 
-// 3. Touch Move (like mousemove)
+// 3. Touch Move (like mousemove) - Logic remains correct
 canvas.addEventListener('touchmove', (e) => {
-    e.preventDefault(); // Prevent scrolling/zooming while drawing
+    e.preventDefault(); 
     if(isPressed) {
+        // Uses the corrected getTouchPos
         const pos = getTouchPos(canvas, e);
         const x2 = pos.x;
         const y2 = pos.y;
@@ -94,7 +102,7 @@ canvas.addEventListener('touchmove', (e) => {
         x = x2;
         y = y2;
     }
-}, { passive: false }); // Use { passive: false } to allow preventDefault
+}, { passive: false });
 
 
 // =================================================================
