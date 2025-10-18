@@ -17,6 +17,10 @@ let color = colorEl.value
 let x
 let y
 
+// =================================================================
+// 🖼️ MOUSE EVENT LISTENERS (Existing)
+// =================================================================
+
 canvas.addEventListener('mousedown', (e) => {
     isPressed = true
 
@@ -44,6 +48,59 @@ canvas.addEventListener('mousemove', (e) => {
     }
 })
 
+// =================================================================
+// 🖊️ TOUCH/STYLUS EVENT LISTENERS (NEW ADDITION)
+// =================================================================
+
+// Get touch/stylus coordinates relative to the canvas
+function getTouchPos(canvasDom, touchEvent) {
+    const rect = canvasDom.getBoundingClientRect();
+    const touch = touchEvent.touches[0] || touchEvent.changedTouches[0]; // Primary touch point
+
+    return {
+        x: touch.clientX - rect.left,
+        y: touch.clientY - rect.top
+    };
+}
+
+// 1. Touch Start (like mousedown)
+canvas.addEventListener('touchstart', (e) => {
+    e.preventDefault(); // Prevent scrolling/zooming on the canvas area
+    isPressed = true;
+    
+    const pos = getTouchPos(canvas, e);
+    x = pos.x;
+    y = pos.y;
+}, { passive: false }); // Use { passive: false } to allow preventDefault
+
+// 2. Touch End (like mouseup)
+document.addEventListener('touchend', (e) => {
+    isPressed = false;
+    x = undefined;
+    y = undefined;
+});
+
+// 3. Touch Move (like mousemove)
+canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault(); // Prevent scrolling/zooming while drawing
+    if(isPressed) {
+        const pos = getTouchPos(canvas, e);
+        const x2 = pos.x;
+        const y2 = pos.y;
+
+        drawCircle(x2, y2);
+        drawLine(x, y, x2, y2);
+
+        x = x2;
+        y = y2;
+    }
+}, { passive: false }); // Use { passive: false } to allow preventDefault
+
+
+// =================================================================
+// 🎨 DRAWING FUNCTIONS (Existing)
+// =================================================================
+
 function drawCircle(x, y) {
     ctx.beginPath();
     ctx.arc(x, y, size, 0, Math.PI * 2)
@@ -59,6 +116,10 @@ function drawLine(x1, y1, x2, y2) {
     ctx.lineWidth = size * 2
     ctx.stroke()
 }
+
+// =================================================================
+// ⚙️ UI LOGIC (Existing)
+// =================================================================
 
 function updateSizeOnScreen() {
     sizeEL.innerText = size
@@ -88,7 +149,11 @@ colorEl.addEventListener('change', (e) => color = e.target.value)
 
 clearEl.addEventListener('click', () => ctx.clearRect(0,0, canvas.width, canvas.height))
 
-<!------ Save Canvas Functionality -------->
+
+// =================================================================
+// 💾 SAVE CANVAS FUNCTIONALITY (Existing)
+// =================================================================
+
 saveBtn.addEventListener('click', () => {
     // 1. Get the canvas data as a data URL
     const dataURL = canvas.toDataURL("image/png");
