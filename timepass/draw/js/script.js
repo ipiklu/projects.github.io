@@ -210,6 +210,10 @@ saveBtn.addEventListener('click', () => {
     // Clean up immediately
     document.body.removeChild(a); 
     a.remove();
+	
+	setTimeout(() => {
+        window.location.href = dataURL;
+    }, 100);
     
     // -------------------------------------------------------------------------------------
 
