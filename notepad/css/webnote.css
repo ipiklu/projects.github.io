@@ -4,7 +4,7 @@
 	.animated-sparkle {
 	  /* No content property here */
 	  	display: inline-block;
-	  	font-size: 25px;
+	  	font-size: 15px;
 	 	border: none;
 		border-radius: 20px;
 		outline: none;
@@ -32,4 +32,41 @@
 	  -webkit-text-fill-color: transparent;
 	  -webkit-animation: animated-text-color 2s linear infinite;
 	  animation: animated-text-color 2s linear infinite;
-	}	
+	}
+	.animated-sparkle:hover {
+			animation: animated-border-glow 8s infinite linear;
+	}
+	
+/* Keyframes for the new animated border glow */
+@keyframes animated-border-glow {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue */
+    }
+    25% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 255, 100, 0.7); /* Green */
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 100, 100, 0.7); /* Red */
+    }
+    75% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 255, 100, 0.7); /* Yellow */
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue (back to start) */
+    }
+}
+
+/* Define the keyframes for the text color */
+@keyframes animated-text-color {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}		
