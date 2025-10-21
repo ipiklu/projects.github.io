@@ -6,7 +6,7 @@ function openEditableTab() {
 	const cssUrl = 'https://ipiklu.github.io/projects.github.io/notepad/css/design.css';
 	
 	  // 1. Define the HTML content
-	  const htmlContent = `<html contenteditable class="animated-sparkle" style="padding-top:10px;padding-left:10px;font-family:'Indie Foower',cursive;">
+	  const htmlContent = `<html contenteditable class="animated-sparkle" style="padding-top:10px;padding-left:10px;font-family:'Indie Flower',cursive;">
 	  		<title>Web-Note</title>
 			<link rel="icon" href="${iconUrl}" type="image/gif">
 			<link rel="stylesheet" href="${cssUrl}" /></html>`;

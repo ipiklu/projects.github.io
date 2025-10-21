@@ -1,7 +1,7 @@
 @charset "utf-8";
 /* CSS Document */
         @font-face {
-            font-family: google;
+            font-family: 'Indie Flower',cursive;
             src: url("fonts/google_sans/GoogleSans-Regular.ttf");
         }	
 	  
@@ -13,7 +13,7 @@
         background-repeat: no-repeat; 
         scroll-behavior: smooth;
         background-attachment: fixed;
-        font-family: google,sans-serif;
+        font-family: 'Indie Flower',cursive;
         background: linear-gradient(#FFFFFF,#FFFFFF);
 		font-size: 1.1em;
 		background-color: #FFFFFF ;
