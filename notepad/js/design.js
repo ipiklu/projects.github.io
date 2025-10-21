@@ -3,7 +3,7 @@
 function openEditableTab() {
 
 	const iconUrl = 'https://ipiklu.github.io/projects.github.io/img/s.gif'; 
-	const cssUrl = 'https://ipiklu.github.io/projects.github.io/notepad/css/design.css';
+	const cssUrl = 'https://ipiklu.github.io/projects.github.io/notepad/css/webnote.css';
 	
 	  // 1. Define the HTML content
 	  const htmlContent = `<html contenteditable class="animated-sparkle" style="padding-top:10px;padding-left:10px;font-family:'Indie Flower',cursive;">
