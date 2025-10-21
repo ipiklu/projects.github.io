@@ -4,7 +4,42 @@
             font-family: google;
             src: url("fonts/google_sans/GoogleSans-Regular.ttf");
         }
-      
+	/*------------Content-Editable-Page----------------------------*/	
+		/* 1. Ensure the html element covers the entire viewport */
+		html {
+			min-height: 100vh;
+			margin: 0;
+			position: relative; /* Needed for positioning the ::before pseudo-element */
+			box-sizing: border-box; 
+			/* The padding is already set inline, but the below helps positioning */
+		}
+		
+		/* 2. Define the placeholder appearance when the 'is-empty' class is present */
+		html.is-empty:before {
+			/* We cannot access the 'placeholder' attribute here, so we hardcode or use a data attribute */
+			content: 'Click-To-Type'; /* <--- Hardcode the text here, or use a data-attribute */
+			
+			/* Apply styling */
+			color: #999; 
+			font-style: italic;
+			
+			/* Positioning the text to respect the padding set inline on the <html> tag */
+			position: absolute;
+			top: 10px; /* Matches the inline padding-top */
+			left: 10px; /* Matches the inline padding-left */
+			
+			/* Ensure the text is above any background content */
+			z-index: 1;
+		}
+		
+		/* 3. Initial State: Assume it's empty until the script runs */
+		html {
+			/* Add this class initially, the JS will remove it if content exists */
+			/* This can be applied to the string itself for better initial rendering: */
+			/* Update the HTML string to include: class="animated-sparkle is-empty" */
+		}		
+   /*------------------End-Content-Editable-Page-----------------------*/		
+	  
       body {
         -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
         margin: 0px;
