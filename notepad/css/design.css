@@ -3,35 +3,7 @@
         @font-face {
             font-family: google;
             src: url("fonts/google_sans/GoogleSans-Regular.ttf");
-        }
-	/*------------Content-Editable-Page----------------------------*/	
-		/* 1. Ensure the html element covers the viewport */
-		html {
-			min-height: 100vh;
-			margin: 0;
-			position: relative; /* Needed for positioning the ::before pseudo-element */
-			box-sizing: border-box; 
-			color: black; /* Default text color for typed content */
-		}
-		
-		/* 2. Define the placeholder appearance when the 'is-empty-placeholder' class is present */
-		html.is-empty-placeholder::before {
-			/* Get text from the custom data attribute */
-			content: attr(data-placeholder);
-			
-			/* Position and style */
-			position: absolute;
-			top: 10px;    /* Matches the inline padding-top */
-			left: 10px;   /* Matches the inline padding-left */
-			color: #999; 
-			font-style: italic;
-			font-family: inherit; /* Inherit the 'Indie Flower' font */
-			
-			/* Ensure the placeholder is visible and doesn't capture mouse events */
-			pointer-events: none;
-			z-index: 10;
-		}	
-   /*------------------End-Content-Editable-Page-----------------------*/		
+        }	
 	  
       body {
         -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
