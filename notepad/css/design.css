@@ -5,39 +5,58 @@
             src: url("fonts/google_sans/GoogleSans-Regular.ttf");
         }
 	/*------------Content-Editable-Page----------------------------*/	
-		/* 1. Ensure the html element covers the entire viewport */
-		html {
+		/* 1. Ensure the html element covers the viewport and is positioned correctly */
+		html[contenteditable] {
+			/* Set a minimum height to ensure the viewport is covered */
 			min-height: 100vh;
 			margin: 0;
-			position: relative; /* Needed for positioning the ::before pseudo-element */
-			box-sizing: border-box; 
-			/* The padding is already set inline, but the below helps positioning */
+			
+			/* Crucial: Set a contrasting background for the element itself. 
+			   This is where the user's actual text will be visible. */
+			background-color: white; /* or whatever background color you want for the content */
+			
+			/* Needed for absolute positioning of the pseudo-element */
+			position: relative; 
+			z-index: 1; /* Keep the html element (where user types) above the pseudo-element */
 		}
 		
-		/* 2. Define the placeholder appearance when the 'is-empty' class is present */
-		html.is-empty:before {
-			/* We cannot access the 'placeholder' attribute here, so we hardcode or use a data attribute */
-			content: 'Click-To-Type'; /* <--- Hardcode the text here, or use a data-attribute */
+		/* 2. Create the placeholder text with a ::before pseudo-element */
+		html[contenteditable]::before {
+			/* Get text from the custom data attribute */
+			content: attr(data-placeholder);
 			
-			/* Apply styling */
-			color: #999; 
+			/* Positioning the text to match the inline padding on the <html> tag */
+			position: absolute;
+			top: 10px;    /* Matches the inline padding-top */
+			left: 10px;   /* Matches the inline padding-left */
+			
+			/* Style the placeholder text */
+			color: #999;
+			font-family: 'Indie Foower', cursive; /* Match the font */
 			font-style: italic;
 			
-			/* Positioning the text to respect the padding set inline on the <html> tag */
-			position: absolute;
-			top: 10px; /* Matches the inline padding-top */
-			left: 10px; /* Matches the inline padding-left */
+			/* Crucial: Place the placeholder text BELOW the contenteditable area (the <html> tag) */
+			z-index: 0; 
 			
-			/* Ensure the text is above any background content */
-			z-index: 1;
+			/* Ensure the placeholder is visible and doesn't interfere with content flow */
+			pointer-events: none;
 		}
 		
-		/* 3. Initial State: Assume it's empty until the script runs */
-		html {
-			/* Add this class initially, the JS will remove it if content exists */
-			/* This can be applied to the string itself for better initial rendering: */
-			/* Update the HTML string to include: class="animated-sparkle is-empty" */
-		}		
+		/* 3. Make the typed content visible on a transparent background */
+		/* This is the key trick: We make the background of the typed content transparent,
+		   but use the `text-shadow` trick to make the text appear only when it has content.
+		   However, since you have `background-color: white;` on html, we use a simpler trick: */
+		
+		/* When the user types, the text will appear white on the white background.
+		   We need to change the *text color* when the user types. */
+		html[contenteditable] {
+			color: black; /* Set the default typed text color */
+		}
+		
+		/* FINAL TRICK: The user content (the <html> text node) has a white background (from html background) 
+		   and black text. The ::before element has a light gray color and z-index: 0. 
+		   When the user types, the new text node appears with z-index: 1, effectively covering 
+		   the placeholder text, which is what we want. */		
    /*------------------End-Content-Editable-Page-----------------------*/		
 	  
       body {
