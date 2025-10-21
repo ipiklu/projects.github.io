@@ -5,58 +5,32 @@
             src: url("fonts/google_sans/GoogleSans-Regular.ttf");
         }
 	/*------------Content-Editable-Page----------------------------*/	
-		/* 1. Ensure the html element covers the viewport and is positioned correctly */
-		html[contenteditable] {
-			/* Set a minimum height to ensure the viewport is covered */
+		/* 1. Ensure the html element covers the viewport */
+		html {
 			min-height: 100vh;
 			margin: 0;
-			
-			/* Crucial: Set a contrasting background for the element itself. 
-			   This is where the user's actual text will be visible. */
-			background-color: white; /* or whatever background color you want for the content */
-			
-			/* Needed for absolute positioning of the pseudo-element */
-			position: relative; 
-			z-index: 1; /* Keep the html element (where user types) above the pseudo-element */
+			position: relative; /* Needed for positioning the ::before pseudo-element */
+			box-sizing: border-box; 
+			color: black; /* Default text color for typed content */
 		}
 		
-		/* 2. Create the placeholder text with a ::before pseudo-element */
-		html[contenteditable]::before {
+		/* 2. Define the placeholder appearance when the 'is-empty-placeholder' class is present */
+		html.is-empty-placeholder::before {
 			/* Get text from the custom data attribute */
 			content: attr(data-placeholder);
 			
-			/* Positioning the text to match the inline padding on the <html> tag */
+			/* Position and style */
 			position: absolute;
 			top: 10px;    /* Matches the inline padding-top */
 			left: 10px;   /* Matches the inline padding-left */
-			
-			/* Style the placeholder text */
-			color: #999;
-			font-family: 'Indie Foower', cursive; /* Match the font */
+			color: #999; 
 			font-style: italic;
+			font-family: inherit; /* Inherit the 'Indie Flower' font */
 			
-			/* Crucial: Place the placeholder text BELOW the contenteditable area (the <html> tag) */
-			z-index: 0; 
-			
-			/* Ensure the placeholder is visible and doesn't interfere with content flow */
+			/* Ensure the placeholder is visible and doesn't capture mouse events */
 			pointer-events: none;
-		}
-		
-		/* 3. Make the typed content visible on a transparent background */
-		/* This is the key trick: We make the background of the typed content transparent,
-		   but use the `text-shadow` trick to make the text appear only when it has content.
-		   However, since you have `background-color: white;` on html, we use a simpler trick: */
-		
-		/* When the user types, the text will appear white on the white background.
-		   We need to change the *text color* when the user types. */
-		html[contenteditable] {
-			color: black; /* Set the default typed text color */
-		}
-		
-		/* FINAL TRICK: The user content (the <html> text node) has a white background (from html background) 
-		   and black text. The ::before element has a light gray color and z-index: 0. 
-		   When the user types, the new text node appears with z-index: 1, effectively covering 
-		   the placeholder text, which is what we want. */		
+			z-index: 10;
+		}	
    /*------------------End-Content-Editable-Page-----------------------*/		
 	  
       body {

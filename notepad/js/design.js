@@ -4,12 +4,16 @@ function openEditableTab() {
 
 	const iconUrl = 'https://ipiklu.github.io/projects.github.io/img/s.gif'; 
 	const cssUrl = 'https://ipiklu.github.io/projects.github.io/notepad/css/design.css';
+	const jsUrl = 'https://ipiklu.github.io/projects.github.io/notepad/js/design.js';
 	
 	  // 1. Define the HTML content
-	  const htmlContent = `<html contenteditable class="animated-sparkle" data-placeholder="Click-To-Type" style="padding-top:10px;padding-left:10px;font-family:'Indie Foower',cursive;">
+	  const htmlContent = `<html contenteditable class="animated-sparkle" data-placeholder="Click-To-Type" 
+                         onfocus="this.classList.remove('is-empty-placeholder');"
+                         onblur="if(this.textContent.trim() === '') {this.classList.add('is-empty-placeholder');}" style="padding-top:10px;padding-left:10px;font-family:'Indie Foower',cursive;">
 	  		<title>Web-Note</title>
 			<link rel="icon" href="${iconUrl}" type="image/gif">
-			<link rel="stylesheet" href="${cssUrl}" /></html>`;
+			<link rel="stylesheet" href="${cssUrl}" />
+			<script src="${jsUrl}"></script></html>`;
 	  
 	  // 2. Create a Blob (Binary Large Object)
 	  const blob = new Blob([htmlContent], { type: 'text/html' });
@@ -23,6 +27,15 @@ function openEditableTab() {
 	  // Clean up the URL once the window is open (optional, but good practice)
 	  // URL.revokeObjectURL(blobUrl); 
 }
+
+// This ensures the placeholder shows immediately if the document is empty on load
+                window.onload = function() {
+                    const htmlEl = document.documentElement;
+                    if (htmlEl.textContent.trim() === '') {
+                        htmlEl.classList.add('is-empty-placeholder');
+                    }
+                };
+
 
  <!---POPUP Coustomization---> 
 	  function view() {
