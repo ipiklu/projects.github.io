@@ -99,7 +99,7 @@
             items.forEach(item => {
                 const div = document.createElement('div');
                 // Removed dark mode text color class
-                div.className = 'wheel-item flex items-center justify-center h-12 text-xl text-gray-700';
+                div.className = 'wheel-item flex items-center justify-center h-12 text-xl text-pink-800';
                 div.textContent = item.label;
                 div.dataset.value = item.value;
                 div.dataset.type = type;
