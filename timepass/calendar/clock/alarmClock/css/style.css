@@ -27,6 +27,46 @@ body {
     margin: 20px;
 }
 
+		.animated-sparkle {
+		  /* No content property here */
+			display: inline-block;
+			font-size: 25px;
+			border: none;
+			border-radius: 20px;
+			outline: none;
+			transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		}	
+		.animated-sparkle::before {
+		  content: "✨"; /* This is where the content property belongs */
+		  padding-right: 10px;
+		  background-size: 800% auto;
+		  background-image: linear-gradient(
+			  90deg,
+			  #2c67f2 0%,    /* Start with dark blue */
+			  #62cff4 15%,    /* A smoother transition to aqua */
+			  #000 45%,      /* Black now has a more defined position */
+			  #B6C511 60%,    /* The yellow-green emerges */
+			  #1a73e8 80%,    /* Transition to a new blue */
+			  #62cff4 100%,    /* End with aqua to prepare for a smooth loop */
+			  #62cff4 115%,
+			  #000 145%,
+			  #B6C511 160%,
+			  #1a73e8 180%,
+			  #62cff4 200%
+			);
+		  -webkit-background-clip: text;
+		  -webkit-text-fill-color: transparent;
+		  -webkit-animation: animated-text-color 2s linear infinite;
+		  animation: animated-text-color 2s linear infinite;
+		}
+		.animated-sparkle:hover {
+			box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+			  0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+			  0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+			  0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+			background:rgba(0, 0, 0, 0.12);
+			animation: animated-border-glow 8s infinite linear;				
+		}
 /* --- Main Time Display --- */
 #mainTimeDisplay {
     font-size: 4.5em; /* Increased size for full-body display */
@@ -211,12 +251,13 @@ button:disabled {
 .btnEffect {
             cursor: pointer;
             outline: none;
-            transition: 0.2s all;
+            transition: 0.2s all cubic-bezier(0.25, 0.46, 0.45, 0.94);
+			transform: scale(1.01); 
         }
         /* Adding transformation when the button is active */
           
         .btnEffect:active {
-            transform: scale(0.98);
+            transform: scale(0.87);
             /* Scaling button to 0.98 to its original size */
             box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
             /* Lowering the shadow */

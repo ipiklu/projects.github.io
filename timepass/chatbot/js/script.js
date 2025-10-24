@@ -159,7 +159,19 @@ document.addEventListener('DOMContentLoaded', () => {
 	const goToQAbot = () => {
       	window.open("../qabot/index.html","bfs","fullscreen,scrollbars");
 		return "Opening the Q&A bot for you!";	
+	};
+	
+	// New function to navigate to stop-watch/ timer app
+	const goToTimerStopwatch = () => {
+      	window.open("../calendar/clock/alarmClock/timer-stopwatch/index.html","bfs","fullscreen,scrollbars");
+		return "Opening the timer & stopwatch app for you!";	
 	};	
+	
+	// New function to navigate to alarm app
+	const goToAlarmClock = () => {
+      	window.open("../calendar/clock/alarmClock/index.html","bfs","fullscreen,scrollbars,width=500px,height=840px");
+		return "Opening the alarm clock app for you!";	
+	};			
 	
 	// New function to navigate to R&D app
 	const goToRDbot = () => {
@@ -476,6 +488,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		"creator's photo": imgProfile,
 		"pop up tilu": imgProfiletilu,
 		"tilu": imgProfiletilu,
+		"stopwatch":goToTimerStopwatch,
+		"timer":goToTimerStopwatch,
+		"alarm":goToAlarmClock,
 		"love you": "I love you Humann... \u{1F600} \n\n \u{1F618}",
         "what is the meaning of life": "That is a complex question! I'm not advanced enough to answer that one. But keep exploring!",
 		"what is your age": "I don't have an age in the way humans do. I was created to help with HTML, CSS, and JavaScript, so you could say my age is defined by the moment my code runs! 🤔",

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer-Stopwatch</title>
+    <link rel = "icon" href="img/s.gif" type="image/x-icon">
+    <!-- Load Tailwind CSS -->
+    <script src="js/tailwindcss.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/dark.css" />
+    <!---Alert--->
+	<link rel="stylesheet" href="../../../../../alertify.js-0.3.11/themes/alertify.core.css" />
+	<link rel="stylesheet" href="../../../../../alertify.js-0.3.11/themes/alertify.default.css" />
+    <script src="../../../../../alertify.js-0.3.11/lib/alertify.min.js"></script>        
+</head>
+<!-- Removed centering classes from body -->
+<body>  
+    <!---------------------------------------------------------->
+            <div class="top-lane">
+               <a href="../../../../../index.html" title="Home"><img src="img/s.gif" class="imgS"/></a>
+                  <button id="printPageButton" class="btn signup btnEffect" onClick="window.location='../index.html'" title="Go back to Alarm-Clock" style="background:#AA205C; color:#EEE; float:right">
+                    <img src="img/back.gif" style="max-width:13px" /></button>    
+                   <button id="printPageButton" class="btn signup btnEffect" onClick="return(reloadClear());" title="Reload" style="background:#AA205C; color:#EEE; float:right">
+                    <img src="img/settings.gif" style="max-width:15px" /></button>
+                   <button id="printPageButton" class="btn signup btnEffect" onClick="window.print()" title="Print this page" style="background:#AA205C; color:#EEE; float:right">
+                    <img src="img/print.gif" style="max-width:20px" /></button>                                              
+     		</div> 
+            <br /> <br /><br />   
+                <div align="right" id="printPageButton">
+                    <input type="checkbox" id="dark-mode">
+                    <label for="dark-mode"></label>
+                    <div class="background"></div>
+                </div>                   
+    <!---------------------------------------------------------->  
+    <!-- Hidden Audio Element for Alarm -->
+    <!-- !! IMPORTANT: REPLACE 'alarm.mp3' with the actual path or URL of your MP3 alarm file !! -->
+    <audio id="alarm-sound" preload="auto">
+        <source src="audio/military.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- New container: Wide, centered, with no card styling (no shadow, no radius, no border) -->
+    <div class="w-full max-w-4xl mx-auto overflow-hidden">
+
+        <!-- Tab Navigation -->
+        <div class="flex border-b border-pink-800">
+            <!-- NOTE: Active class removed here, now set in script -->
+            <button id="tab-stopwatch" title="Stopwatch" onclick="switchView('stopwatch')" class="tab-button w-1/2 py-4 text-center text-gray-600 transition duration-150 ease-in-out">
+                Stopwatch
+            </button>
+            <!-- NOTE: Active class removed here, now set in script -->
+            <button id="tab-timer" title="Timer" onclick="switchView('timer')" class="tab-button w-1/2 py-4 text-center text-gray-600 transition duration-150 ease-in-out">
+                Timer
+            </button>
+        </div>
+
+        <!-- Content Area -->
+        <!-- Start with stopwatch hidden -->
+        <div id="content-stopwatch" class="p-6 hidden">
+            <h2 class="text-xl font-semibold mb-4" align="center" style="color:#AA205C;"><a class="index" onClick="return(reloadClear());" title="Reload">Stop-Watch</a></h2>
+            
+            <!-- Time Display -->
+            <div class="text-center timer-container mb-8">
+                <span id="sw-display" class="display-time index">00:00:00</span>
+                <span id="sw-milliseconds" class="text-2xl font-semibold index text-pink-300">.00</span>
+            </div>
+
+            <!-- Stopwatch Controls -->
+            <div class="flex justify-center space-x-4 mb-8">
+                <button id="sw-reset-btn" onclick="resetStopwatch()" disabled class="btn signup btnEffect rounded-full bg-gray-200 text-gray-700 font-medium transition duration-200 hover:bg-yellow-500 hover:text-white disabled:opacity-50">
+                    Reset
+                </button>
+                <button id="sw-start-pause-btn" onclick="toggleStopwatch()" class="rounded-full bg-pink-800 signup btn btnEffect">
+                    Start
+                </button>
+                <button id="sw-lap-btn" onclick="recordLap()" disabled class="btn signup btnEffect rounded-full bg-yellow-200 text-yellow-800 font-medium transition duration-200 hover:bg-yellow-500 disabled:opacity-50">
+                    Lap
+                </button>
+            </div>
+
+            <!-- Lap List -->
+            <div id="sw-laps-container" class="lap-result mt-4 border-t border-gray-200 pt-4 max-h-64 overflow-y-auto">
+                <p id="no-laps-msg" class="animated-sparkle text-center italic index">Laps will appear here.</p>
+                <ul id="sw-laps-list" class="space-y-2">
+                    <!-- Lap items inserted here -->
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- Start with timer visible, matching the image -->
+        <div id="content-timer" class="p-6">
+            <h2 class="text-xl font-semibold mb-4 text-gray-700" align="center" style="color:#AA205C;"><a class="index" onClick="return(reloadClear());" title="Reload">Timer</a></h2>
+
+            <!-- Time Input Fields -->
+            <div class="flex justify-center space-x-2 sm:space-x-4 mb-6">
+                <div class="flex flex-col items-center">
+                    <input type="number" id="t-hours" min="0" max="99" value="0" placeholder="HH" class="w-16 sm:w-20 p-2 text-center border-2 border-gray-300 rounded-lg text-2xl font-medium focus:border-blue-500 focus:outline-none">
+                    <legend class="text-xs mt-1" style="color:#D93E9E">Hours</legend>
+                </div>
+                <div class="flex flex-col items-center">
+                    <input type="number" id="t-minutes" min="0" max="59" value="0" placeholder="MM" class="w-16 sm:w-20 p-2 text-center border-2 border-gray-300 rounded-lg text-2xl font-medium focus:border-blue-500 focus:outline-none">
+                    <legend class="text-xs mt-1" style="color:#D93E9E">Minutes</legend>
+                </div>
+                <div class="flex flex-col items-center">
+                    <input type="number" id="t-seconds" min="0" max="59" value="0" placeholder="SS" class="w-16 sm:w-20 p-2 text-center border-2 border-gray-300 rounded-lg text-2xl font-medium focus:border-blue-500 focus:outline-none">
+                    <legend class="text-xs mt-1" style="color:#D93E9E">Seconds</legend>
+                </div>
+            </div>
+            
+            <!-- Timer Display -->
+            <div class="text-center timer-container mb-8">
+                <span id="t-display" class="display-time index">00:00:00</span>
+            </div>
+            
+            <!-- Timer Controls -->
+            <div class="flex justify-center space-x-4">
+                <button id="t-reset-btn" onclick="resetTimer()" disabled class="action-button px-6 py-3 rounded-full bg-gray-200 text-gray-700 btnEffect btn font-medium transition duration-200 hover:bg-gray-300 disabled:opacity-50">
+                    Reset
+                </button>
+                <button id="t-start-pause-btn" onclick="toggleTimer()" class="rounded-full bg-pink-800 signup btn btnEffect">
+                    Start
+                </button>
+                <button id="t-set-btn" onclick="setTimerFromInputs()" class="rounded-full bg-pink-800 text-white signup btn btnEffect bg-yellow-500">
+                    Set
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Custom Modal/Alert for both Errors and Timer Finished. Renamed from timer-modal. -->
+    <div id="generic-modal" class="modal fixed flex items-center justify-center p-4 hidden opacity-0 z-50">
+        <div class="rounded-xl p-8 shadow-2xl ease-in-out scale-95">
+            <h3 id="modal-title" class="text-3xl font-bold mb-4 text-center"></h3>
+            <p id="modal-message" class="bg-yellow-200 text-lg index-alert mb-6 text-center"></p>
+            <div class="flex justify-center">
+                <button onclick="closeGenericModal()" class="btnEffect btn px-6 py-3 text-yellow-700 rounded-lg font-semibold hover:bg-pink-100 index">
+                    Acknowledge
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <br /> <br /> <br />
+  <!-----------------------Footer---------------------------> 
+	<footer align="center" style="position:relative; color:#AA205C; bottom: 0; width: 100%;">
+		<center> 
+        	<font color="#AA205C">
+            	<p id="date"> </p>
+				   <script>
+                    document.getElementById("date").innerHTML = Date();
+                   </script>
+            </font>
+         </center>
+            <p>|| Copyright protected &copy; <script>document.write(new Date().getFullYear())</script>, All Rights Not Reserved ||</p>
+            <p> Design by Sayantan Kundu || <a style="color:#AA205C; font-size:12px; font-weight: bold;" href="../../../../../sitemap/index.html" title="Sitemap">Sitemap </a>||</p>
+    </footer>
+    <center>
+       <span onClick="return(view());" title="About Us" ><font style="font-size: 20px;" color="#AA205C"></font><img src="img/LOADING.gif" style="width:50px; cursor:pointer;"></span>
+    </center>    
+    
+</body>
+</html>
