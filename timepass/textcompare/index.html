@@ -1,44 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!---Design--->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text-Compare</title>
+    <link rel = "icon" href="img/s.gif" type="image/x-icon">
 	<link rel="stylesheet" href="css/style.css" />
-	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.core.css" />
+    <link rel="stylesheet" href="css/dark.css" />
+    <!---Alert--->
+    <link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.core.css" />
 	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.default.css" />
-	<script src="../../alertify.js-0.3.11/lib/alertify.min.js"></script>
-    <script src="js/main.js"></script>
-<!---metadata--->    
-<meta charset="utf-8">
-<meta name="theme-color" content="#AA205C" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Text Comparison</title>
-<link rel = "icon" href="img/s.gif" type="image/x-icon">
+    <script src="../../alertify.js-0.3.11/lib/alertify.min.js"></script>    
 </head>
 <body>
-<div class="header" style="background-color:#AA205C">
+
+<div class="top-lane" style="background-color:#AA205C">
        <a href="../../index.html" title="Home"><img src="img/s.gif" class="s-logo"/></a>
        <button id="printPageButton" class="btn signup btnEffect" onClick="window.location='../server/index.html'" title="Go back to main library" style="background:#AA205C; color:#EEE; float:right">
      	<img src="img/back.gif" style="max-width:10px" />Back</button>
        <button id="printPageButton" class="btn signup btnEffect" onClick="window.print()" title="Print this page" style="background:#AA205C; color:#EEE; float:right">
      	<img src="img/print.gif" style="max-width:10px" />Print</button>
-    </div>
-    <br>
-    <br>
-    <br>
-    <a href="index.html" title="Text-Comparison"><h1>Text Comparison</h1></a>
-	<form class="form2">
-    	<div>
-    		<p class="result" id="result"></p>
-    	</div>
-        <label for="text1" class="form2 btn btnEffect signup">Text 1:</label>
-        <textarea id="text1" class="form1 btn signup" title="Click to type"></textarea>
-        <label for="text2" class="form2 btn btnEffect signup">Text 2:</label>
-        <textarea id="text2" class="form1 btn signup" title="Click to type"></textarea>
-        <button type="button" class="btn signup btnEffect" onclick="compare()">COMPARE</button>
-	</form>
+        <button id="printPageButton" class="btn signup btnEffect" onClick="reloadClear()" title="Refresh this page" style="background:#AA205C; color:#EEE; float:right">
+     	<img src="img/settings.gif" style="max-width:10px" />Refresh</button>    
+    </div>    
+    <br /><br /><br><br><br> 
+                <div align="right" id="printPageButton">
+                    <input type="checkbox" id="dark-mode">
+                    <label for="dark-mode"></label>
+                    <div class="background"></div>
+                </div>     
+   <h1 id="diff-report-title" onClick="reloadClear()" title="Refresh this page" class="index">Text-Compare</h1>
+        <div id="difference-output" class="diff-output-area">
+            <p class="initial-message">Start typing to see the line-by-line comparison results.</p>
+        </div>                
+    <p align="center" class="index">Type into the boxes for real-time green/red comparison highlights</p>
     
+        <div class="container">
+            <div class="input-group">
+                <div id="content1" class="content-div input-area"></div>
+                <textarea id="text1" class="input-area" placeholder="Enter the first text here..."></textarea>
+            </div>
+    
+            <div class="input-group">
+                <div id="content2" class="content-div input-area"></div>
+                <textarea id="text2" class="input-area" placeholder="Enter the second text here..."></textarea>
+            </div>
+        </div>
+        
+    <script src="js/script.js"></script>    
 <!---------------------------Footer---------------------------------------------------->     
 
 <footer align="center" style="position:relative; color:#AA205C; bottom: 0; width: 100%;">
@@ -53,5 +62,6 @@
 	<center>
        <span onClick="return(view());" title="About Us" ><font style="font-size: 20px;" color="#AA205C"></font><img src="img/LOADING.gif" style="width:50px; cursor:pointer;"></span>
     </center>
+        
 </body>
 </html>

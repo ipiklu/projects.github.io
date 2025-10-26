@@ -2,6 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 * {box-sizing: border-box;}
 
+/* Add a rule for the HTML element */
+html {
+    min-height: 100%;
+}
+
 body {
         -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
         margin: 0px;
@@ -13,6 +18,9 @@ body {
         background: linear-gradient(#FFFFFF,#FFFFFF);
 		font-size: 1.1em;
 		background-color: #FFFFFF ;
+		/* This is the key change */
+    	position: relative; /* Make the body the positioning context */
+    	min-height: 100%; /* Ensure body is at least 100% of the HTML's height */
         
       }
 
@@ -26,6 +34,12 @@ label{
   cursor: pointer;
   margin: 6px;
   box-shadow: inset 0px 5px 15px rgba(0,0,0,0.3), inset 0px -5px 15px rgba(255,255,255,0.3);
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+label:hover{
+	animation: animated-border-glow 8s infinite linear;
+    transition: 0.2s all;
+	transform: scale(1.1); 	
 }
 label:after{
   content: '';
@@ -48,9 +62,13 @@ input:checked ~ label{
   background: #242424;
 }
 .background{
-  position: absolute;
+  position: fixed; /* Fixes the element to the viewport */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
-  height: 100vh;
+  min-height: 100%;
   background: #fff;
   z-index: -1;
   transition: 0.5s;
@@ -58,6 +76,6 @@ input:checked ~ label{
 input:checked + label + .background{
   background: #242424;
 }
-input{
+input[type="checkbox"]{
   display: none;
 }

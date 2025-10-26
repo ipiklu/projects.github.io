@@ -10,6 +10,7 @@
 		 
 		.input-container{
 			transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+			border-radius: 10.5rem;
 		}
 			.input-container:hover{
 				animation: animated-border-glow 8s infinite linear;
@@ -50,7 +51,7 @@
             border-top: 1px solid rgba(170,32,92,0.4);
             border-bottom: 1px solid rgba(170,32,92,0.4);
             pointer-events: none; /* Ensure clicks go to the wheel, not the highlight */
-            border-radius: 0.5rem;
+            border-radius: 1.2rem;
         }
 
         /* Initial/Default state for wheel items */

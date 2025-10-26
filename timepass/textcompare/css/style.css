@@ -1,31 +1,152 @@
 @charset "utf-8";
 /* CSS Document */
-/* Reset styles for HTML elements */
-        @font-face {
-            font-family: google;
-            src: url("fonts/google_sans/GoogleSans-Regular.ttf");
+
+        body {
+            font-family: Arial, sans-serif;
+			margin: 0px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+			background-color: #ffffff;
         }
-      
-      body {
-        -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-        margin: 0px;
-        background-size: cover;
-        background-repeat: no-repeat; 
-        scroll-behavior: smooth;
-        background-attachment: fixed;
-        font-family: google,sans-serif;
-        background: linear-gradient(#FFFFFF,#FFFFFF);
-		font-size: 1.1em;
-		background-color: #FFFFFF ;
+
+        h1 { color: #333; }
+        p { color: #AA205c; margin-bottom: 10px;}
+
+        .container {
+            display: flex;
+            width: 90%;
+            max-width: 1200px;
+            gap: 20px;
+        }
+
+        .input-group {
+            flex: 1;
+            display: flex;
+			color: #AA205c;
+            flex-direction: column;
+            position: relative; 
+        }
+		
+		.top-lane {
+			margin-bottom: 10vh;
+			z-index: 1;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+			text-align: center;
+			width: 100%;
+			position:fixed;
+			left: 50%;
+			transform: translate(-50%, 0);
+			color: white;
+			background-color: #AA205c;
+			padding: 10px;
+			margin-top: 0;
+			margin-bottom: 10px;
+			font-family: google;
+			font-size: 25px;					
+		}			
+
+        /* Base styling for both the textarea and the overlay div (Crucial for alignment) */
+        .input-area {
+            width: 100%;
+			max-width: 590px;
+            min-height: 600px;
+            padding: 10px;
+            border: 1px dashed rgba(170,32,92,0.4);
+            border-radius: 0.5rem;
+            font-size: 16px;
+            box-sizing: border-box;
+            line-height: 1.5; 
+            font-family: monospace; /* Essential for perfect character alignment */
+            white-space: pre-wrap; 
+            overflow-y: scroll; 
+			cursor:text;
+            outline: none;
+			transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .input-area:hover {
+				transition: 0.2s all;
+				transform: scale(1.01);
+				animation: animated-border-glow 8s infinite linear;
+        }	
+		
+        /* Adding transformation when the input-area is active */
+          
+        .input-area:active {
+            transform: scale(0.98);
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+            /* Lowering the shadow */
+        }	
+		
+
+        .content-div {
+            z-index: 1; 
+            scrollbar-width: thin;
+        }
         
-      }
-	  
+        /* The transparent textarea where the user actually types */
+        textarea {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2; 
+            
+            /* --- THE KEY CHANGES --- */
+            color: transparent;      /* Makes the typed text invisible */
+            caret-color: transparent; /* Makes the cursor invisible */
+            /* ----------------------- */
+            
+            background: transparent;
+            resize: none; 
+            border: none; 
+        }
+		
+	/* Styling for the scrollbar track */
+	textarea::-webkit-scrollbar {
+		width: 8px; /* Set the width of the scrollbar */
+		height: 8px;
+	}
+	
+	/* Styling for the thumb (the draggable part) */
+	textarea::-webkit-scrollbar-thumb {
+		background-color: #E4558B; /* A lighter gray color for the thumb */
+		border-radius: 4px;
+	}
+	
+	/* Styling for the track (the background of the scrollbar) */
+	textareat::-webkit-scrollbar-track {
+		background-color: #3e3e3e; /* A darker gray for the track */
+	}			
+        
+        /* --- Highlighting Styles --- */
+        
+        /* Green: Prefix Match */
+        .prefix-matched {
+            background-color: #d4edda; /* Light green */
+            color: #155724; /* Dark green */
+            font-weight: bold;
+            border-radius: 2px;
+        }
+
+        /* Red: All text AFTER the first mismatch */
+        .mismatched {
+            background-color: #f8d7da; /* Light red */
+            color: #721c24; /* Dark red */
+            text-decoration: underline; 
+            border-radius: 2px;
+        }
 		.index { 
+			font-family: 'Courier New', monospace;
+			font-weight: bold;
 			color: #AA205C;
 			transition: color 0.3s ease;
 		}
 
 		.index:hover { 
+			font-family: 'Courier New', monospace;
+			cursor: pointer;
+			font-weight: bold;
 				/* Key properties for the AI effect */
 			background-image: linear-gradient(
 				90deg,
@@ -41,107 +162,85 @@
 			background-clip: text;
 			color: transparent; /* Makes the text itself transparent to show the background */
 			animation: animated-text-color 4s infinite linear; /* New text color animation */		
-		}		  
-	  
-	  div {
-		width:60%;
-		margin:auto;
-		padding: 12px 20px 12px 40px;
+		}
+
+	#diff-report-title {
+		display: none;
+	}
+	
+	.diff-output-area {
+		width: 90%;
+		max-width: 1200px;
+		margin-bottom: 50px;
+		padding: 20px;
+		border-radius: 0.5rem;
+		font-weight:600;
+		color: #AA205c;
+		font-family: monospace;
+		white-space: pre-wrap;
+		word-break: break-all;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+				
+        /*.diff-output-area:hover {
+				transition: 0.2s all;
+				transform: scale(1.01);
+				animation: animated-border-glow 8s infinite linear;
+        }*/
+	
+	.initial-message {
 		text-align: center;
-		box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034);
-	  }
-        /* Styles for link */
-        a {
-            text-decoration: none;
-        }
+		color: #155724; /* Dark green */
+		background-color: #d4edda; /* Light green */
+		font-style: italic;
+		margin: 0;
+		border-radius: 0.3rem;
+		transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+	
+	   		.initial-message:hover {
+				transition: 0.2s all;
+				transform: scale(1.01);
+				animation: animated-border-glow 8s infinite linear;
+        	}
+			     .initial-message:active {
+					transform: scale(0.98);
+					/* Scaling button to 0.98 to its original size */
+					box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+					/* Lowering the shadow */
+				}
+	
+	.diff-line {
+		border-bottom: 1px solid #ddd;
+		padding: 5px 0;
+		margin: 5px 0;
+	}
+	
+	.line-number {
+		font-weight: bold;
+		color: #AA205c;
+		margin-right: 10px;
+		padding: 2px 5px;
+		background-color: #e9ecef;
+		border-radius: 3px;
+		display: inline-block;
+	}
+	
+	.diff-type-added {
+		color: #155724; /* Dark green */
+		background-color: #d4edda; /* Light green */
+		padding: 2px 4px;
+		border-radius: 3px;
+	}
+	
+	.diff-type-removed {
+		color: #721c24; /* Dark red */
+		background-color: #f8d7da; /* Light red */
+		padding: 2px 4px;
+		border-radius: 3px;
+	}
 
-        /* Styles for page header */
-        h1 {
-            font-size: 36px;
-            text-align: center;
-            margin-bottom: 20px;
-            color: #AA205C;
-        }
-
-        /* Styles for form */
-        .form1 {
-            background-color: #FFF;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-        }
-		
-		.form2 {
-            background-color: #FFF;
-            padding: 20px;
-            border-radius: 5px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* Styles for labels and text fields */
-        label, textarea {
-            display: block;
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: #AA205C;
-        }
-
-        textarea {
-            width: 100%;
-            width: 500px;
-            height: 200px;
-            padding: 10px;
-            border: 1px solid #888;
-            border-radius: 5px;
-            background-color: #555;
-            color: BLACK;
-            resize: none;
-        }
-
-
-        
-        /* Styles for result */
-        .result {
-            font-size: 24px;
-            font-weight: bold;
-            margin-top: 20px;
-            text-align: center;
-            color: #f2f2f2;
-        }
-        .identical {
-            color: #21C934;
-        }
-        .different {
-            color: #C13636;
-        }
- .header {
-        z-index: 1;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        text-align: center;
-
-        width: 100%;
-
-        position: fixed;
-
-        left: 50%;
-
-        transform: translate(-50%, 0);
-
-        color: white;
-
-        background-color: #FFFFFF;
-
-        padding: 10px;
-
-        font-family: google;
-        font-size: 25px;
-      }
-	 
 .signup {
         border: 1px solid #AA205c;
         background: #AA205c;
@@ -156,10 +255,10 @@
         text-decoration: none;
         font-family: google;
         font-size: 18px;
-        transition: all 0.3s ease;
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       }
 
-     .signup:hover {
+      .signup:hover {
         border: 1px solid #AA205c;
         color: white;
         box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
@@ -167,6 +266,7 @@
           0 22.3px 17.9px rgba(0, 0, 0, 0.072),
           0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
         background:#AA205c;
+		animation: animated-border-glow 8s infinite linear;
       }
 
  .btn {
@@ -175,14 +275,13 @@
         padding-top: 10px;
         padding-bottom: 10px;
         font-size: 17px;
-        background:rgba(0, 0, 0, 0.1);
         outline: none;
-        color: #AA205c;
+        color: black;
         border: none;
         cursor: pointer;
         border-radius: 20px;
       }
-	  
+
 .btnEffect {
             cursor: pointer;
             outline: none;
@@ -197,15 +296,105 @@
             /* Lowering the shadow */
         }
 		
-	img {
-        	border-radius: 10px;
-        	margin: 5px;
-        	width: 90%;
-      	}
+        @media (max-width: 640px) {
+			.input-area {
+				width: 100%;
+				max-width: 500px;
+				min-height: 250px;
+				padding: 10px;
+				border: 1px dashed rgba(170,32,92,0.4);
+				border-radius: 0.5rem;
+				font-size: 16px;
+				box-sizing: border-box;
+				line-height: 1.5; 
+				font-family: monospace; /* Essential for perfect character alignment */
+				white-space: pre-wrap; 
+				overflow-y: scroll; 
+				cursor:text;
+				outline: none;
+				transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+			}
+			.input-area:hover {
+					transition: 0.2s all;
+					transform: scale(1.01);
+					animation: animated-border-glow 8s infinite linear;
+			}	
+			
+			/* Adding transformation when the input-area is active */
+			  
+			.input-area:active {
+				transform: scale(0.98);
+				/* Scaling button to 0.98 to its original size */
+				box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+				/* Lowering the shadow */
+			}			
+			
+			.container {
+				display: flex;
+				flex-direction: column;
+				width: 90%;
+				max-width: 1200px;
+				gap: 20px;
+			}			
+			.signup {
+				border: 1px solid #AA205c;
+				background: #AA205c;
+				padding-left: 15px;
+				padding-right: 15px;
+				padding-top: 5px;
+				padding-bottom: 10px;
+				border-radius: 5px;
+				cursor: pointer;
+				outline: none;
+				color: white;
+				text-decoration: none;
+				font-family: google;
+				font-size: 8px;
+				transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+			  }
+		
+			  .signup:hover {
+				border: 1px solid #AA205c;
+				color: white;
+				box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+				  0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+				  0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+				  0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+				background:#AA205c;
+				animation: animated-border-glow 8s infinite linear;
+			  }
+		
+		 .btn {
+				padding-left: 15px;
+				padding-right: 15px;
+				padding-top: 5px;
+				padding-bottom: 5px;
+				font-size: 17px;
+				outline: none;
+				color: black;
+				border: none;
+				cursor: pointer;
+				border-radius: 10px;
+			  }
+			  
+			  .btnEffect {
+					cursor: pointer;
+					outline: none;
+					transition: 0.2s all cubic-bezier(0.25, 0.46, 0.45, 0.94);
+					transform: scale(1.01); 
+				}
+				/* Adding transformation when the button is active */
+				  
+				.btnEffect:active {
+					transform: scale(0.87);
+					/* Scaling button to 0.98 to its original size */
+					box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+					/* Lowering the shadow */
+				}		        
+        }
 		
 .s-logo {
 	border-radius: 10px;
-	margin-top: 10px;
 	max-width:40px;
 	max-height: 90%;
 	float:left;
@@ -217,70 +406,12 @@
 			transform: scale(1.1); 
 		 }	
 
-@media screen and (max-width: 640px) { 
-	
-	.signup {
-        border: 1px solid #AA205c;
-        background: #AA205c;
-        padding-left: 15px;
-        padding-right: 15px;
-        padding-top: 5px;
-        padding-bottom: 10px;
-        border-radius: 5px;
-        cursor: pointer;
-        outline: none;
-        color: white;
-        text-decoration: none;
-        font-family: google;
-        font-size: 8px;
-        transition: all 0.3s ease;
-      }
-
-      .signup:hover {
-        border: 1px solid #AA205c;
-        color: white;
-        box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
-          0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
-          0 22.3px 17.9px rgba(0, 0, 0, 0.072),
-          0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
-        background:#AA205c;
-      }
-
- .btn {
-        padding-left: 15px;
-        padding-right: 15px;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        font-size: 8px;
-        background:#fff;
-        outline: none;
-        color: black;
-        border: none;
-        cursor: pointer;
-        border-radius: 10px;
-      }
-	  
-	  .btnEffect {
-            cursor: pointer;
-            outline: none;
-            transition: 0.2s all;
-        }
-        /* Adding transformation when the button is active */
-          
-        .btnEffect:active {
-            transform: scale(0.98);
-            /* Scaling button to 0.98 to its original size */
-            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
-            /* Lowering the shadow */
-        }
-} 
-		
 @media print {
   #printPageButton {
     display: none;
   }
 }
-
+	 
 /* Keyframes for the new animated border glow */
 @keyframes animated-border-glow {
     0% {
@@ -313,4 +444,5 @@
   100% {
     background-position: 100% 50%;
   }
-}
+}				
+		
