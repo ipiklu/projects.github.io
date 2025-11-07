@@ -262,20 +262,25 @@
 			animation: animated-text-color 4s infinite linear; /* New text color animation */		
 		}
 		
-     .imgS {
-        border-radius: 10px;
-        margin: 1.7px;
-        max-width:40px;
-		max-height: 90%;
-		float:left;
-		transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-	  }
-	  
-	.imgS:hover {
+.s-logo {
+	border-radius: 10px;
+	margin-top: 10px;
+	max-width:40px;
+	max-height: 90%;
+	float:left;
+	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+	.s-logo:hover {
 			animation: animated-border-glow 8s infinite linear;
 			transition: 0.2s all;
 			transform: scale(1.1); 
-		 }		
+		 }	
+	        .s-logo:active {
+				transform: scale(0.98);
+				/* Scaling button to 0.98 to its original size */
+				box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+				/* Lowering the shadow */
+        	}		
 
 @media print {
   #printPageButton {
