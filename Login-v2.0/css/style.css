@@ -1,90 +1,166 @@
-@charset "utf-8";
-/* CSS Document */
+        /*
+        ==================================
+        CSS STYLES
+        ==================================
+        */
+        body {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
 
-body{
-	background-color: #FFFFFF;
-	color: #000000;
-}
+        /* --- Character Area (Left Side) --- */
+        .character-area {
+            background-color: #AA205C;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        /* Base character styles */
+        .character {
+            position: relative;
+            margin: 15px 0;
+            border: 5px solid #333;
+            transition: all 0.3s ease-in-out;
+            box-sizing: border-box;
+        }
+
+        /* --- CHARACTER SHAPES --- */
+        #char1 { width: 100px; height: 100px; background-color: #ffeb3b; border-radius: 50%; }
+        #char2 { width: 90px; height: 90px; background-color: #8bc34a; border-radius: 10px; transform: rotate(-5deg); }
+        #char3 { width: 70px; height: 120px; background-color: #03a9f4; border-radius: 35px / 60px; }
+
+        /* Focus State (.scary) Styles */
+        #char1.scary { background-color: #f44336; border-color: #a00; transform: scale(1.05); }
+        #char2.scary { background-color: #e91e63; border-color: #c2185b; transform: scale(1.05) rotate(5deg); }
+        #char3.scary { background-color: #ff5722; border-color: #e64a19; transform: scale(1.03); }
+
+        /* --- Eyes (Neutral) --- */
+        .eye { position: absolute; top: 25%; width: 25px; height: 25px; background-color: #fff; border: 2px solid #333; border-radius: 50%; overflow: hidden; transition: all 0.2s; }
+        #char1 .eye:nth-child(1) { left: 15px; } #char1 .eye:nth-child(2) { right: 15px; }
+        #char2 .eye { width: 20px; height: 20px; border-radius: 5px; border-color: #1b5e20; top: 20%; } #char2 .eye:nth-child(1) { left: 10px; } #char2 .eye:nth-child(2) { right: 10px; }
+        #char3 .eye { width: 22px; height: 15px; border-radius: 50% / 30%; border-color: #0277bd; top: 20%; } #char3 .eye:nth-child(1) { left: 8px; } #char3 .eye:nth-child(2) { right: 8px; }
+        .pupil { position: absolute; width: 10px; height: 10px; background-color: #333; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); transition: all 0.2s; }
+
+        /* Focus Eye (.scary) */
+        .character.scary .eye { background-color: #ffcdd2; border-color: #d32f2f; }
+        .character.scary .pupil { width: 6px; height: 6px; background-color: #000; }
+        #char2.scary .eye { background-color: #f8bbd0; border-color: #ad1457; transform: translateY(-2px); }
+        #char3.scary .eye { background-color: #ffccbc; border-color: #bf360c; }
 
 
-.loginbox{
-	padding-top: 90px;
-	float: right;
-    width: 100%;
-	max-width: 50%;
-	height:auto;
-}
+        /* --- Mouth Styling (Neutral) --- */
+        .mouth { position: absolute; bottom: 20%; left: 50%; transform: translateX(-50%); width: 50px; height: 12px; background-color: #333; border-radius: 0 0 12px 12px; transition: all 0.2s ease-in-out; border-bottom: 2px solid #333; }
+        #char2 .mouth { width: 40px; height: 5px; border-radius: 0; background-color: #333; border: none; bottom: 25%; }
+        #char3 .mouth { width: 30px; height: 8px; border-radius: 0 0 8px 8px; background-color: #333; border-bottom: 2px solid #333; bottom: 15%; }
 
-h1{
-	padding: 0;
-	font-size:50px;
-	text-align: center;
-	color: #646464;
-	max-width: 100%;
-	height:auto;
-}
+        /* Focus Mouth (.scary) */
+        #char1.scary .mouth { width: 60px; height: 18px; border-radius: 20px / 10px; background-color: #a00; border-bottom: 2px solid #a00; transform: translateX(-50%) rotate(5deg) translateY(5px); box-shadow: inset 0 -4px 0 rgba(0,0,0,0.5); }
+        #char2.scary .mouth { width: 50px; height: 8px; background-color: #ad1457; border-radius: 5px; transform: translateX(-50%) translateY(3px) rotate(-5deg); }
+        #char3.scary .mouth { width: 35px; height: 25px; border-radius: 50%; background-color: #bf360c; border: none; bottom: 10%; transform: translateX(-50%) scaleX(0.8); }
 
-h2{
-	text-align: left;
-	color: #646464;
-	width: 250px;
-	max-width: 100%;
-	height:auto;
-}
-h1, h2, h3, h4, h5, h6 {
- 
-    font-family: "Overlock", Arial, Helvetica, sans-serif;
-}
 
-.img-area{
-	
-	float: left;
-	width: 100%;
-	max-width: 100%;
-	height:auto;	
-}
-input[type=email], input[type=password] {
-  width: 260px;
-  box-sizing: border-box;
-  border: 2px solid #ccc;
-  border-radius: 9px;
-  font-size: 16px;
-  background-color:#F4C1DD;
-  background-position: 20px 20px; 
-  background-repeat: no-repeat;
-  padding: 12px 20px 12px 40px;
-  transition: width 0.4s ease-in-out;
-}
+        /*
+        ==================================
+        HOVER STATE (Wow/Surprised Look)
+        ==================================
+        */
+        .character.hovered { transform: scale(1.08) translateY(-5px); }
+        .character.hovered .eye { transform: scale(1.15); background-color: #fff; }
+        .character.hovered .pupil { width: 4px; height: 4px; background-color: #000; transform: translate(-50%, -50%); }
 
-input[type=email]:focus {
-  width: 270px;
-}
-input[type=password]:focus {
-  width: 270px;
-}
+        /* Hover Mouths */
+        #char1.hovered .mouth { width: 25px; height: 25px; background-color: #333; border-radius: 50%; border: none; bottom: 25%; transform: translateX(-50%); }
+        #char2.hovered .mouth { width: 30px; height: 20px; background-color: #333; border-radius: 50% / 40%; border: none; bottom: 25%; transform: translateX(-50%); }
+        #char3.hovered .mouth { width: 20px; height: 28px; background-color: #333; border-radius: 50%; border: none; bottom: 18%; transform: translateX(-50%); }
 
-.button{
-    background-color: #AA205C; /* toppaneColor */
-    border: none;
-	width: 260px;
-	height: 50px;
-    color: white;
-    text-align: center;
-	font-style:normal;
-    display: inline-block;
-    font-size: 14px;
-    margin: 4px 2px;
-    cursor: pointer;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-	background-image:-webkit-linear-gradient(top, #AA205C, #AD0A36);
-	
-}
 
-.signin {
-        border: 1px solid #AA205C;
-        background:#CC205C;
+        /* --- Login Form Area (Right Side) --- */
+        .login-form {
+            display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 50px; background: #fff;
+        }
+
+        .login-content { width: 80%; max-width: 400px; }
+
+        .login-form h2 { margin-bottom: 35px; color: #AA205c; text-align: center; font-size: 2.2em; }
+
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            padding: 15px; margin-bottom: 25px; border: 1px solid #ccc; outline:none; border-radius: 20px; font-size: 1.1em; width: 100%; box-sizing: border-box;
+			color:#AA205c;
+			transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+		
+		.login-form input[type="text"]:hover {
+            padding: 15px; margin-bottom: 25px; border: 1px solid #ccc; outline:none; border-radius: 20px; font-size: 1.1em; width: 100%; box-sizing: border-box;
+			transform: scale(1.014);
+			box-shadow: 0 8px 16px rgba(0, 0, 0, 0);
+			background-color: rgba(0, 0, 0, 0);
+			animation: animated-border-glow 8s infinite linear;
+        }
+        .login-form input[type="password"]:hover {
+            padding: 15px; margin-bottom: 25px; border: 1px solid #ccc; outline:none; border-radius: 20px; font-size: 1.1em; width: 100%; box-sizing: border-box;
+			transform: scale(1.014);
+			box-shadow: 0 8px 16px rgba(0, 0, 0, 0);
+			background-color: rgba(0, 0, 0, 0);
+			animation: animated-border-glow 8s infinite linear;
+        }
+		input::placeholder {
+			color: #AA205c;	
+		}
+
+        .password-group {
+            position: relative; margin-bottom: 25px;
+        }
+
+        /* 1. CRITICAL CHANGE: Adjust internal padding to prevent text collision */
+        .password-group input {
+             padding-right: 35px; 
+        }
+
+        /*
+        ==================================
+        2. ICON MOVED FLUSH TO THE RIGHT EDGE (Internal)
+        ==================================
+        */
+        #toggle-password {
+            position: absolute;
+            top: 35%; 
+            transform: translateY(-50%); 
+            
+            /* CRITICAL CHANGE: Set to 0px for a flush alignment */
+            right: 10px; 
+            
+            padding: 0; 
+            background-color: transparent;
+            color: #AA205c; 
+            border: none;
+            cursor: pointer;
+            font-size: 1.2em; 
+            transition: color 0.2s;
+            
+            width: 35px; 
+            height: 35px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #toggle-password:hover { color: #121212; }
+        .login-form label { margin-bottom: 30px; font-size: 1em; display: flex; align-items: center; cursor: pointer; color: #AA205c;}
+
+.signup {
+        border: 1px solid #AA205c;
+        background: #AA205c;
         padding-left: 25px;
+		width: 100%;
         padding-right: 25px;
         padding-top: 10px;
         padding-bottom: 10px;
@@ -94,25 +170,150 @@ input[type=password]:focus {
         color: white;
         text-decoration: none;
         font-family: google;
-        font-size: 18px;
+        font-size: 1.2em;
         transition: all 0.3s ease;
       }
-.signin:hover {
+      .signup:hover {
         border: 1px solid #AA205c;
         color: white;
         box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
           0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
           0 22.3px 17.9px rgba(0, 0, 0, 0.072),
           0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
-        background: #AA205c;
+        background:#AA205c;
+		animation: animated-border-glow 8s infinite linear;
       }
 
-.flx{
-	display:flex;
-	}
-	
-footer{
-	text-align: center;
-	color: #646464;
-	font-family: "Overlock", Arial, Helvetica, sans-serif;
+ .btn {
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 17px;
+        background:#AA205c;
+        outline: none;
+        color: black;
+        border: none;
+        cursor: pointer;
+        border-radius: 20px;
+      }
+	  
+	       .btnEffect {
+            cursor: pointer;
+            outline: none;
+            transition: 0.2s all;
+        }
+        /* Adding transformation when the button is active */
+          
+        .btnEffect:active {
+            transform: scale(0.98);
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+            /* Lowering the shadow */
+        }	
+
+
+		.index { 
+			font-family: 'Courier New', monospace;
+			font-weight: bold;
+			color: #AA205C;
+			transition: color 0.3s ease;
+		}
+
+		.index:hover { 
+			font-family: 'Courier New', monospace;
+			font-weight: bold;
+				/* Key properties for the AI effect */
+			background-image: linear-gradient(
+				90deg,
+				#1a73e8, /* Blue */
+				#34a853, /* Green */
+				#000, 	/* black */
+				#B6C511,
+				#1a73e8, /* Blue again for a smooth loop */
+				#34a853
+			);
+			background-size: 400% 100%; /* Make the gradient wider than the text */
+				-webkit-background-clip: text; /* Clips the background to the text shape */
+			background-clip: text;
+			color: transparent; /* Makes the text itself transparent to show the background */
+			animation: animated-text-color 4s infinite linear; /* New text color animation */		
+		}	
+		.index-alert { 
+			color: #AA205C;
+			transition: color 0.3s ease;
+		}
+
+		.index-alert:hover { 
+				/* Key properties for the AI effect */
+			background-image: linear-gradient(
+				90deg,
+				#1a73e8, /* Blue */
+				#34a853, /* Green */
+				#000, 	/* black */
+				#B6C511,
+				#1a73e8, /* Blue again for a smooth loop */
+				#34a853
+			);
+			background-size: 400% 100%; /* Make the gradient wider than the text */
+				-webkit-background-clip: text; /* Clips the background to the text shape */
+			background-clip: text;
+			color: transparent; /* Makes the text itself transparent to show the background */
+			animation: animated-text-color 4s infinite linear; /* New text color animation */		
+		}
+		
+     .imgS {
+        border-radius: 10px;
+        margin: 1.7px;
+        max-width:40px;
+		max-height: 90%;
+		float:left;
+		transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	  }
+	  
+	.imgS:hover {
+			animation: animated-border-glow 8s infinite linear;
+			transition: 0.2s all;
+			transform: scale(1.1); 
+		 }		
+
+@media print {
+  #printPageButton {
+    display: none;
+  }
 }
+		 
+/* Keyframes for the new animated border glow */
+@keyframes animated-border-glow {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue */
+    }
+    25% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 255, 100, 0.7); /* Green */
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 100, 100, 0.7); /* Red */
+    }
+    75% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 255, 100, 0.7); /* Yellow */
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue (back to start) */
+    }
+}
+
+/* Define the keyframes for the text color */
+@keyframes animated-text-color {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}			 	
+		

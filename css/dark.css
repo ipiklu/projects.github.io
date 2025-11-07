@@ -57,6 +57,7 @@ input:checked ~ label:after{
   left: 57px;
   transform: translateX(-100%);
   background: linear-gradient(180deg,#777,#3a3a3a);
+  animation: animated-border-glow 8s infinite linear;
 }
 input:checked ~ label{
   background: #242424;
