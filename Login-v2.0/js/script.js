@@ -1,71 +1,120 @@
-    /*
-    ==================================
-    JAVASCRIPT LOGIC
-    ==================================
-    */
-    const passwordInput = document.getElementById('password');
-    const toggleButton = document.getElementById('toggle-password');
-    const eyeIcon = document.getElementById('eyeIcon');
+/*
+===================================================
+JAVASCRIPT LOGIC (FINAL CORRECTED VERSION)
+===================================================
+*/
+document.addEventListener('DOMContentLoaded', () => {
+
+    const passwordInput = document.querySelector('input[type="password"]');
+    if (!passwordInput) {
+        console.error("CRITICAL: Password input element not found.");
+        return;
+    }
+
     const characters = document.querySelectorAll('.character');
     const pupils = document.querySelectorAll('.pupil');
+    
+    let isPasswordFocused = false; 
+    
+    // 1. Store the last known mouse position globally
+    let lastMouseX = 0; 
+    let lastMouseY = 0;
 
-    // --- 1. Password Show/No-Show Functionality ---
-    toggleButton.addEventListener('click', () => {
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
-        
-        if (type === 'password') {
-            eyeIcon.classList.remove('fa-eye');
-            eyeIcon.classList.add('fa-eye-slash');
-        } else {
-            eyeIcon.classList.remove('fa-eye-slash');
-            eyeIcon.classList.add('fa-eye');
-        }
-        passwordInput.focus();
-    });
 
-    // --- 2. Focus State: Scary Face (Active Input) ---
-    passwordInput.addEventListener('focus', () => {
-        characters.forEach(char => char.classList.remove('hovered')); 
-        characters.forEach(char => char.classList.add('scary'));
-    });
-
-    passwordInput.addEventListener('blur', () => {
-        characters.forEach(char => char.classList.remove('scary'));
-    });
-
-    // --- 3. Hover State: Wow/Surprised Face (Mouse Over Input) ---
-    passwordInput.addEventListener('mouseenter', () => {
-        if (!passwordInput.matches(':focus')) {
-            characters.forEach(char => char.classList.add('hovered'));
-        }
-    });
-
-    passwordInput.addEventListener('mouseleave', () => {
-        characters.forEach(char => char.classList.remove('hovered'));
-    });
-
-    // --- 4. Eye-Following Animation ---
-    document.addEventListener('mousemove', (e) => {
-        const mouseX = e.clientX;
-        const mouseY = e.clientY;
-
+    // 2. Define the core pupil movement function
+    const updatePupilPosition = (mouseX, mouseY, isFocused) => {
         pupils.forEach(pupil => {
             const eye = pupil.parentElement;
-            
             const eyeRect = eye.getBoundingClientRect();
             const eyeX = eyeRect.left + (eyeRect.width / 2);
             const eyeY = eyeRect.top + (eyeRect.height / 2);
 
+            // Calculate the angle
             const angle = Math.atan2(mouseY - eyeY, mouseX - eyeX);
-            const maxRadius = 5;
+            const maxRadius = 5; 
 
-            const offsetX = Math.cos(angle) * maxRadius;
-            const offsetY = Math.sin(angle) * maxRadius;
+            // Calculate standard (mouse-following) offsets
+            let offsetX = Math.cos(angle) * maxRadius;
+            let offsetY = Math.sin(angle) * maxRadius;
 
+            // INVERSION LOGIC (Look away if focused)
+            if (isFocused) {
+                offsetX = -offsetX;
+                offsetY = -offsetY;
+            }
+
+            // Apply the transformation
             pupil.style.transform = `translate(calc(-50% + ${offsetX}px), calc(-50% + ${offsetY}px))`;
         });
+    };
+
+
+    // --- 3. Focus & Hover State Handlers ---
+    
+    const handleFocus = () => {
+        isPasswordFocused = true;
+        characters.forEach(char => char.classList.remove('hovered')); 
+        characters.forEach(char => char.classList.add('scary'));
+        // Eyes look away based on last mouse position (though they typically follow the mouse, 
+        // calling here ensures they flip instantly if the mouse is stationary)
+        updatePupilPosition(lastMouseX, lastMouseY, true); 
+    };
+    
+    const handleBlur = () => {
+        isPasswordFocused = false; 
+        characters.forEach(char => char.classList.remove('scary'));
+        
+        // CRITICAL FIX: Manually trigger the eye update on blur.
+        // This makes the pupils snap directly to the current mouse position.
+        updatePupilPosition(lastMouseX, lastMouseY, false); 
+    };
+
+    passwordInput.addEventListener('focus', handleFocus);
+    passwordInput.addEventListener('blur', handleBlur); 
+    passwordInput.addEventListener('input', handleFocus); 
+
+    // Hover logic remains the same...
+    passwordInput.addEventListener('mouseenter', () => {
+        if (!isPasswordFocused) {
+            characters.forEach(char => char.classList.add('hovered'));
+        }
     });
+    passwordInput.addEventListener('mouseleave', () => {
+        characters.forEach(char => char.classList.remove('hovered'));
+    });
+
+    // --- 4. Continuous Eye-Following Animation Logic ---
+    document.addEventListener('mousemove', (e) => {
+        
+        lastMouseX = e.clientX;
+        lastMouseY = e.clientY;
+        
+        // Continuously update eyes based on current mouse position and focus state
+        updatePupilPosition(e.clientX, e.clientY, isPasswordFocused); 
+    });
+
+    // Toggle button logic
+    const toggleButton = document.getElementById('toggle-password');
+    const eyeIcon = document.getElementById('eyeIcon');
+    if (toggleButton) {
+        toggleButton.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            if (eyeIcon) {
+                // Assumes Font Awesome or similar icon setup
+                if (type === 'password') {
+                    eyeIcon.classList.remove('fa-eye');
+                    eyeIcon.classList.add('fa-eye-slash');
+                } else {
+                    eyeIcon.classList.remove('fa-eye-slash');
+                    eyeIcon.classList.add('fa-eye');
+                }
+            }
+            passwordInput.focus();
+        });
+    }
+
+});
 
 function reloadClear() {
     window.localStorage.clear();
