@@ -85,6 +85,7 @@
         /* --- Login Form Area (Right Side) --- */
         .login-form {
             display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 50px; background: #fff;
+			transition: background 0.5s ease-in-out;
         }
 
         .login-content { width: 80%; max-width: 400px; }
@@ -155,6 +156,14 @@
 
         #toggle-password:hover { color: #121212; }
         .login-form label { margin-bottom: 30px; font-size: 1em; display: flex; align-items: center; cursor: pointer; color: #AA205c;}
+
+		.login-form:has(#remember-me:checked) {
+			background: #1e1e1e;
+		}
+		
+		.login-form:has(#remember-me:checked) input {
+			background: #1e1e1e;
+		}
 
 .signup {
         border: 1px solid #AA205c;
