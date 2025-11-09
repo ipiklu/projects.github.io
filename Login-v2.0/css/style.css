@@ -98,6 +98,15 @@
 			color:#AA205c;
 			transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
+		input[type="checkbox"] {
+			transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		}
+		
+		input[type="checkbox"]:hover {
+			animation: animated-border-glow 8s infinite linear;
+    		transition: 0.2s all;
+			transform: scale(1.1);
+		}
 		
 		.login-form input[type="text"]:hover {
             padding: 15px; margin-bottom: 25px; border: 1px solid #ccc; outline:none; border-radius: 20px; font-size: 1.1em; width: 100%; box-sizing: border-box;
@@ -154,8 +163,26 @@
             justify-content: center;
         }
 
-        #toggle-password:hover { color: #121212; }
-        .login-form label { margin-bottom: 30px; font-size: 1em; display: flex; align-items: center; cursor: pointer; color: #AA205c;}
+        #toggle-password:hover { background-image: linear-gradient(
+				90deg,
+				#000,
+				#B6C511,
+				#1a73e8, /* Blue */
+				#34a853, /* Green */
+				#000, 	/* black */
+				#B6C511,
+				#1a73e8, /* Blue again for a smooth loop */
+				#34a853
+			);
+			background-size: 400% 100%; /* Make the gradient wider than the text */
+				-webkit-background-clip: text; /* Clips the background to the text shape */
+			background-clip: text;
+			color: transparent; /* Makes the text itself transparent to show the background */
+			
+			animation: animated-text-color 8s infinite linear; /* New text color animation */ 
+		}
+		
+        .login-form label { margin-bottom: 30px; font-size: 1em; display: flex; align-items: center; cursor: pointer; color: #AA205c;}		
 
 		.login-form:has(#remember-me:checked) {
 			background: #1e1e1e;
