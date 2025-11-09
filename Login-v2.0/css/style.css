@@ -163,6 +163,7 @@
 		
 		.login-form:has(#remember-me:checked) input {
 			background: #1e1e1e;
+			border: 1px none; outline:none;
 		}
 
 .signup {
