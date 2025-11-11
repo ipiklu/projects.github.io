@@ -10,7 +10,7 @@ const saveBtn = document.getElementById('save');
 
 const ctx = canvas.getContext('2d');
 
-let size = 10
+let size = 1
 let isPressed = false
 colorEl.value = 'black'
 let color = colorEl.value
@@ -134,20 +134,20 @@ function updateSizeOnScreen() {
 }
 
 increaseBtn.addEventListener('click', () => {
-    size += 5
+    size += 1
 
-    if(size > 50) {
-        size = 50
+    if(size > 100) {
+        size = 100
     }
 
     updateSizeOnScreen()
 })
 
 decreaseBtn.addEventListener('click', () => {
-    size -= 5
+    size -= 1
 
-    if(size < 5) {
-        size = 5
+    if(size < 1) {
+        size = 1
     }
 
     updateSizeOnScreen()
