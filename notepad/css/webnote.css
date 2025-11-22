@@ -1,6 +1,23 @@
 @charset "utf-8";
 /* CSS Document */
 
+/* Styling for the scrollbar track */
+body::-webkit-scrollbar {
+    width: 8px; /* Set the width of the scrollbar */
+    height: 8px;
+}
+
+/* Styling for the thumb (the draggable part) */
+body::-webkit-scrollbar-thumb {
+    background-color: #AA205C; /* A lighter gray color for the thumb */
+    border-radius: 4px;
+}
+
+/* Styling for the track (the background of the scrollbar) */
+body::-webkit-scrollbar-track {
+    background-color: #3e3e3e; /* A darker gray for the track */
+}
+
 	.animated-sparkle {
 	  /* No content property here */
 	  	display: inline-block;
