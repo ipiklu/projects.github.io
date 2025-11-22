@@ -23,7 +23,7 @@ body {
     	min-height: 100%; /* Ensure body is at least 100% of the HTML's height */
         
       }
-
+	  
 label{
   position: relative;
   width: 70px;

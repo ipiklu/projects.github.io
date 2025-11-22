@@ -25,6 +25,38 @@ function plotGraph() {
 
 			Plotly.newPlot(graph, [trace], layout); 
 		}
+// Dim screen functionality	----Start	
+ const INACTIVITY_DURATION = 10000; // 10 seconds
+ const body = document.body;
+ let inactivityTimer;
+
+ function activateDarkMode() {
+      body.classList.add('dark-mode');
+      console.log("Dark mode activated due to inactivity.");
+ }
+
+        function resetTimer() {
+            // 1. Clear the previous timer
+            clearTimeout(inactivityTimer);
+
+            // 2. Deactivate dark mode
+            if (body.classList.contains('dark-mode')) {
+                body.classList.remove('dark-mode');
+                console.log("Timer reset, dark mode deactivated.");
+            }
+
+            // 3. Set a new timer
+            inactivityTimer = setTimeout(activateDarkMode, INACTIVITY_DURATION);
+        }
+
+        // Start the initial timer
+        resetTimer();
+
+        // Event listener to reset the timer on mouse movement
+        document.addEventListener('mousemove', resetTimer);
+        // Optional: Also reset on keypress
+        document.addEventListener('keydown', resetTimer);		
+// Dim screen functionality	-----End
 		
 function reloadClear() {
   window.localStorage.clear();

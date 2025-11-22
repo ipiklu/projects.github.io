@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teleprompt</title>
+    <link rel = "icon" href="img/s.gif" type="image/x-icon">
+    <!-- Load Tailwind CSS for modern styling -->
+    <script src="js/cdn.tailwindcss.js"></script>
+	<link rel="stylesheet" href="css/style.css" />
+    <!---Alert--->
+        <link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.core.css" />
+        <link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.default.css" />
+        <script src="../../alertify.js-0.3.11/lib/alertify.min.js"></script>  
+</head>
+<body>
+
+    <!-- Main Full-Screen Video and Teleprompter View -->
+    <div id="video-teleprompter-view">
+        <div id="video-container" class="z-0">
+            <video id="video-preview" autoplay muted playsinline></video>
+            <!-- The temporary message box for success/error alerts -->
+            <div id="message-box" class="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 text-white text-center text-xl hidden z-20">
+                Awaiting camera access...
+            </div>
+        </div>
+
+        <!-- Scroll Wrapper: Now calls handleScrollClick for pause/resume only -->
+        <div id="scroll-wrapper" class="absolute inset-0 z-10" style="background:rgba(0, 0, 0, 0.5);"  onclick="handleScrollClick()">
+            <pre id="teleprompter-content" class="text-gray-200"></pre>
+        </div>
+        <!-- Count down timmer-->
+        <div id="timer-display" class="absolute top-4 left-1/2 transform -translate-x-1/2 text-5xl font-bold z-20 hidden index-alert">
+            5
+        </div>
+
+        <div id="scroll-wrapper" class="absolute inset-0 z-10" style="background:rgba(0, 0, 0, 0.5);"  onclick="handleScrollClick()">
+
+        <!-- PERSISTENT INSTRUCTION OVERLAY -->
+        <div id="instruction-overlay">
+            <p id="instruction-text" class="text-3xl font-bold"></p>
+        </div>
+    </div>
+
+    <!-- Floating Action Buttons (FABs) -->
+    <div class="fab-group">
+        <a href="../../index.html" title="Home"><img src="img/s.gif" class="s-logo"/></a>
+        <!-- 1. Script/Settings Button -->
+        <button id="open-controls-btn" class="fab bg-pink-800 text-white imgS" title="Open Script Editor & Controls">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-pen"><path d="M12 22h6a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v10"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10.4 17.6a2 2 0 0 1 2.8 2.8l-5.6 1.1c-.2.5-.5.9-1 1.1l-.8.8a1 1 0 0 1-1.4 0l-2-2a1 1 0 0 1 0-1.4l.8-.8c.2-.5.6-.8 1.1-1z"/></svg>
+        </button>
+
+        <!-- 2. Record Button -->
+        <button id="record-btn" class="fab bg-red-600 text-white hover:bg-red-700 transition disabled:opacity-50 imgS" disabled title="Start Recording">
+            <svg id="record-icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="8"/></svg>
+        </button>
+
+        <!-- 3. Download Button (Hidden until recording is done) -->
+        <button id="download-fab-btn" class="fab bg-green-600 text-white hover:bg-green-700 transition hidden imgS"  title="Download Video">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+        </button>
+         <img src="img/settings.gif" onClick="return(reloadClear());" title="Reload" class="imgS" style="max-width:40px" />
+         <button class="animated-sparkle imgS" onClick="return(view());" title="About Us"></button>
+        <button><img src="img/back.gif" onClick="window.location='../server/index.html'" title="Back to Projects" class="imgS"/></button>
+
+    </div>
+
+    <!-- Hidden Controls Modal -->
+    <div id="controls-modal" class="hidden">
+        <div class="modal-content" onclick="event.stopPropagation()"> <!-- Stop propagation on content to prevent closing -->
+            <h3 class="text-2xl font-bold text-white mb-4">Script & Settings</h3>
+
+            <!-- Script Editor -->
+            <div class="mb-6">
+                <label for="script-editor" class="block text-sm font-medium text-gray-100 mb-2">Script Editor</label>
+                <textarea id="script-editor" class="w-full h-40 p-3 rounded-lg text-sm text-white" style="background:rgba(0, 0, 0, 0.034);" placeholder="Type your script here. It will appear large and scrollable in the video panel.">
+TYPE YOUR SCRIPT IN THE PROMPT TO UPDATE HERE</textarea>
+                <button id="update-script-btn" class="signup btn btnEffect">
+                    Update Teleprompter Script
+                </button>
+            </div>
+
+            <!-- Scroll Speed Control -->
+            <div class="mb-6">
+                <label for="scroll-speed" class="block text-sm font-medium text-gray-100">Scroll Speed: <span id="speed-value" class="font-semibold">5</span>%</label>
+                <input type="range" id="scroll-speed" min="1" max="20" value="5" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer range-lg">
+            </div>
+
+            <!-- Teleprompter Mode Toggle -->
+            <button id="toggle-mode-btn" class="w-full px-4 py-2 border border-gray-300 text-gray-300 font-semibold rounded-lg shadow-sm hover:bg-pink-300 hover:text-black transition duration-150 mb-6 btn btnEffect">
+                Toggle Camera/Black Background Mode
+            </button>
+            
+            <!-- Close Button -->
+            <button id="close-controls-btn" class="w-full px-4 py-2 bg-gray-200 text-gray-800 font-semibold rounded-lg hover:bg-gray-300 transition duration-150 btn btnEffect">
+                Close Controls
+            </button>
+        </div>
+    </div>
+
+    <!-- Download Modal (for downloading the video file) -->
+    <div id="download-modal" class="hidden">
+        <div class="modal-content" onclick="event.stopPropagation()"> <!-- Stop propagation on content to prevent closing -->
+            <p class="font-semibold text-xl mb-4 text-green-700">Recording Complete! 🎉</p>
+            <p class="mb-4 text-gray-100">Your video is ready for download.</p>
+            <a id="download-link" href="#" download="teleprompter_video.webm" class="signup btn btnEffect">
+                Download Video File
+            </a>
+            <button id="close-download-btn" class="mt-4 w-full px-4 py-2 bg-gray-200 text-gray-800 font-semibold rounded-lg hover:bg-gray-300 transition duration-150 btn btnEffect">
+                Close
+            </button>
+        </div>
+    </div>
+
+
+    <script src="js/script.js"></script>
+</body>
+</html>

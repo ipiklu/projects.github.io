@@ -13,6 +13,40 @@ body {
 	font-family: Arial, Helvetica, sans-serif; 
 } 
 
+/* Styling for the scrollbar track */
+body::-webkit-scrollbar {
+    width: 8px; /* Set the width of the scrollbar */
+    height: 8px;
+}
+
+/* Styling for the thumb (the draggable part) */
+body::-webkit-scrollbar-thumb {
+    background-color: #AA205C; /* A lighter gray color for the thumb */
+    border-radius: 4px;
+}
+
+/* Styling for the track (the background of the scrollbar) */
+body::-webkit-scrollbar-track {
+    background-color: #3e3e3e; /* A darker gray for the track */
+}	
+
+/* Styling for the scrollbar track */
+textarea::-webkit-scrollbar {
+    width: 8px; /* Set the width of the scrollbar */
+    height: 8px;
+}
+
+/* Styling for the thumb (the draggable part) */
+textarea::-webkit-scrollbar-thumb {
+    background-color: #AA205C; /* A lighter gray color for the thumb */
+    border-radius: 4px;
+}
+
+/* Styling for the track (the background of the scrollbar) */
+textarea::-webkit-scrollbar-track {
+    background-color: #3e3e3e; /* A darker gray for the track */
+}
+
 		.index { 
 			color: #AA205C;
 			transition: color 0.3s ease;

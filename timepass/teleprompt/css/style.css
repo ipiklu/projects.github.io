@@ -1,0 +1,369 @@
+@charset "utf-8";
+/* CSS Document */
+
+        /* Custom styles for teleprompter aesthetics */
+        :root {
+            --primary-color: #4f46e5;
+            --primary-dark: #4338ca;
+            --background-color: #f3f4f6;
+        }
+
+        /* Full Screen Setup */
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+/* Styling for the scrollbar track */
+textarea::-webkit-scrollbar {
+    width: 8px; /* Set the width of the scrollbar */
+    height: 8px;
+}
+
+/* Styling for the thumb (the draggable part) */
+textarea::-webkit-scrollbar-thumb {
+    background-color: #AA205C; /* A lighter gray color for the thumb */
+    border-radius: 4px;
+}
+
+/* Styling for the track (the background of the scrollbar) */
+textarea::-webkit-scrollbar-track {
+    background-color: #3e3e3e; /* A darker gray for the track */
+}
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: black; /* Default black background for prompter mode */
+            margin: 0;
+            padding: 0;
+        }
+		
+		textarea {
+			outline:none;
+			animation: animated-border-glow 8s infinite linear;
+		}
+
+        /* Video and Teleprompter Full Screen View */
+        #video-teleprompter-view {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background-color: black;
+            border-radius: 0; /* No rounding in full screen */
+        }
+
+        /* Styling the Teleprompter Text Area (the core scrolling area) */
+        #teleprompter-content {
+            white-space: pre-wrap;
+            line-height: 1.5;
+            font-size: 2.5rem; /* Reduced for better content visibility */
+            color: white;
+            font-weight: 500;
+            /* Padding to set the reading line near the bottom (75vh from top) */
+            padding: 5vh 1.5rem 75vh 1.5rem; 
+            transition: color 0.3s;
+            overflow: hidden; /* Hide scrollbar */
+            cursor: pointer;
+            text-align: center;
+        }
+
+        /* Make the video fit the container and keep aspect ratio */
+        #video-preview {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scaleX(-1); /* Mirror the video preview for a teleprompter effect */
+        }
+
+        #video-container {
+            position: absolute;
+            inset: 0;
+            background-color: #333;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* The scrolling container */
+        #scroll-wrapper {
+            height: 100%;
+            overflow-y: scroll;
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+        #scroll-wrapper::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+
+        /* The floating control buttons (FABs) */
+        .fab-group {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 30;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .fab {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+			cursor: pointer;
+            outline: none;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+        .fab:hover {
+            border: 1px solid rgba(0, 0, 0, 0);
+        	color: white;
+        	box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+          		0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+          		0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+          		0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+        	background: rgba(0, 0, 0, 0);
+        }
+        .fab:active {
+            transform: scale(0.98);
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px #AA205c;
+            /* Lowering the shadow */
+        }
+
+        /* Modal Overlay Styling */
+        #controls-modal, #download-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            justify-content: center;
+            align-items: center;
+			transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+
+        .modal-content {
+            background-color: rgba(0,0,0,0.5); /* Explicitly set card bg */
+            max-width: 90%;
+            max-height: 90vh;
+            width: 500px;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+            z-index: 51; /* Ensure content is above the backdrop */
+			animation: animated-border-glow 8s infinite linear;
+        }
+
+        /* Instruction Overlay Styling */
+        #instruction-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        #instruction-overlay.hidden-overlay {
+            opacity: 0;
+            visibility: hidden;
+        }
+        #instruction-text {
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            opacity: 1;
+            transition: opacity 0.3s;
+        }
+#timer-display {
+    /* Subtle glow for readability */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); 
+    
+    /* Set transition for smooth movement between countdown and duration */
+    transition: all 0.3s ease-in-out; 
+}
+
+/* NEW CLASS: For the large, middle-of-screen countdown */
+.countdown-center {
+    top: 50% !important; /* Force vertical middle */
+    transform: translate(-50%, -50%) !important; /* Center both X and Y */
+}
+	
+.signup {
+        border: 1px solid #AA205c;
+        background: #AA205c;
+        padding-left: 25px;
+		width: 100%;
+        padding-right: 25px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        outline: none;
+        color: white;
+        text-decoration: none;
+        font-family: google;
+        font-size: 1.2em;
+        transition: all 0.3s ease;
+      }
+      .signup:hover {
+        border: 1px solid #AA205c;
+        color: white;
+        box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+          0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+          0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+          0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+        background:#AA205c;
+		animation: animated-border-glow 8s infinite linear;
+      }
+
+ .btn {
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 17px;
+        outline: none;
+        color: black;
+        border: none;
+        cursor: pointer;
+        border-radius: 20px;
+      }
+	  
+	       .btnEffect {
+            cursor: pointer;
+            outline: none;
+            transition: 0.2s all;
+        }
+        /* Adding transformation when the button is active */
+          
+        .btnEffect:active {
+            transform: scale(0.98);
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+            /* Lowering the shadow */
+        }	
+	.animated-sparkle {
+	  /* No content property here */
+	  	display: inline-block;
+	  	font-size: 25px;
+	 	border: none;
+		border-radius: 20px;
+		outline: none;
+	  	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}	
+	.animated-sparkle::before {
+	  content: "✨"; /* This is where the content property belongs */
+	  padding-right: 10px;
+	  background-size: 800% auto;
+	  background-image: linear-gradient(
+		  90deg,
+		  #2c67f2 0%,    /* Start with dark blue */
+		  #62cff4 15%,    /* A smoother transition to aqua */
+		  #000 45%,      /* Black now has a more defined position */
+		  #B6C511 60%,    /* The yellow-green emerges */
+		  #1a73e8 80%,    /* Transition to a new blue */
+		  #62cff4 100%,    /* End with aqua to prepare for a smooth loop */
+		  #62cff4 115%,
+		  #000 145%,
+		  #B6C511 160%,
+		  #1a73e8 180%,
+		  #62cff4 200%
+		);
+	  -webkit-background-clip: text;
+	  -webkit-text-fill-color: transparent;
+	  -webkit-animation: animated-text-color 2s linear infinite;
+	  animation: animated-text-color 2s linear infinite;
+	}	
+		
+		.index-alert { 
+			color: #AA205C;
+			transition: color 0.3s ease;
+		}
+
+		.index-alert:hover { 
+				/* Key properties for the AI effect */
+			background-image: linear-gradient(
+				90deg,
+				#1a73e8, /* Blue */
+				#34a853, /* Green */
+				#000, 	/* black */
+				#B6C511,
+				#1a73e8, /* Blue again for a smooth loop */
+				#34a853
+			);
+			background-size: 400% 100%; /* Make the gradient wider than the text */
+				-webkit-background-clip: text; /* Clips the background to the text shape */
+			background-clip: text;
+			color: transparent; /* Makes the text itself transparent to show the background */
+			animation: animated-text-color 4s infinite linear; /* New text color animation */		
+		}		
+.imgS {
+        border-radius: 50px;
+        margin: 1.7px;
+        max-width:40px;
+		max-height: 90%;
+		float:right;
+		cursor:pointer;
+		transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	 }
+
+.imgS:hover {
+		animation: animated-border-glow 8s infinite linear;
+    	transition: 0.2s all;
+		transform: scale(1.5); 
+	 }
+	 .imgS:active {
+				transform: scale(0.98);
+				/* Scaling button to 0.98 to its original size */
+				box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+				/* Lowering the shadow */
+        	}
+	 		
+.s-logo {
+	border-radius: 10px;
+	margin-top: 10px;
+	max-width:40px;
+	max-height: 90%;
+	float:left;
+	cursor:pointer;
+	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+	.s-logo:hover {
+			animation: animated-border-glow 8s infinite linear;
+			transition: 0.2s all;
+			transform: scale(1.1); 
+		 }	
+	        .s-logo:active {
+				transform: scale(0.98);
+				/* Scaling button to 0.98 to its original size */
+				box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+				/* Lowering the shadow */
+        	}		
+
+/* Keyframes for the new animated border glow */
+@keyframes animated-border-glow {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue */
+    }
+    25% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 255, 100, 0.7); /* Green */
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 100, 100, 0.7); /* Red */
+    }
+    75% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 255, 100, 0.7); /* Yellow */
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue (back to start) */
+    }
+}

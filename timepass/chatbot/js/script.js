@@ -249,6 +249,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	const goToStickyNotes = () => {
       	window.open("../../notepad/sticky-notes/index.html","bfs","fullscreen,scrollbars");
 		return "Opening sticky notes app for you!";		
+	};
+	const goToTeleprompt = () => {
+      	window.open("../../timepass/teleprompt/index.html","bfs","fullscreen,scrollbars");
+		return "Opening teleprompt app for you!";		
 	};	
 
 	// Function to dynamically calculate age in years, months, and days
@@ -491,6 +495,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		"stopwatch":goToTimerStopwatch,
 		"timer":goToTimerStopwatch,
 		"alarm":goToAlarmClock,
+		"teleprompt":goToTeleprompt,
+		"camera":goToTeleprompt,
 		"love you": "I love you Humann... \u{1F600} \n\n \u{1F618}",
         "what is the meaning of life": "That is a complex question! I'm not advanced enough to answer that one. But keep exploring!",
 		"what is your age": "I don't have an age in the way humans do. I was created to help with HTML, CSS, and JavaScript, so you could say my age is defined by the moment my code runs! 🤔",

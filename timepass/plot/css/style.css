@@ -7,7 +7,23 @@ body {
 			display: flex; 
 			justify-content: center; 
 			background-color: white; 
+			transition: background-color 0.5s ease, color 0.5s ease;
 		} 
+
+        /* The dark mode class */
+        .dark-mode {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        .dark-mode a {
+            color: #90caf9;
+        }
+		
+		.dark-mode .container {
+			background-color: #1a1a1a;
+            color: #90caf9;
+        }		
 
 		.index { 
 			color: #AA205C;
@@ -121,8 +137,8 @@ body {
 			height: 400px; 
 			margin: 20px 0; 
 			/* Adjust margin if needed */ 
-			border: 1px solid #ccc; 
-			border-radius: 10px; 
+			border: 1px solid #AA205C; 
+			border-radius: 1.2rem; 
 			transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 		} 
 				.graph:hover { 
