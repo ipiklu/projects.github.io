@@ -47,8 +47,10 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
   			<div class="background"></div>
 		</div>
         	<p align="center"><img src="img/cLL.gif"></p>
-    	<h1 align="center" class="loader" style="color:#AA205C; font-size:36px; font-weight: bold; font-family:'Century Gothic'">Welcome to server maintenance<span class="loader__dot">.</span><span class="loader__dot">.</span><span class="loader__dot">.</span></h1>
-        <font color="#AA205C"><h2 align="center" style="font-weight: bold; font-size:26px; font-family:'Century Gothic'">Server Index:</h2></font>
+    	<h1 align="center" class="loader" style="color:#AA205C; font-size:36px; font-weight: bold; font-family:'Century Gothic'">Welcome to server maintenance<span class="loader__dot">.</span><span class="loader__dot">.</span><span class="loader__dot">.</span>
+        </h1>
+        <font color="#AA205C"><h2 align="center" style="font-weight: bold; font-size:26px; font-family:'Century Gothic'">Server Index:
+        </h2></font>
             <img src="img/settings.gif" onClick="reloadClear()" style="max-width:33px; display: block; margin: 0 auto; cursor: pointer;" title="Click to Hard Refresh"/>
     </div>
 	<br />
@@ -81,8 +83,15 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
             <a href="../vPlay/index.html" title="V-Play" class="globe-link" style="--y-angle: -200deg; --x-angle: -40deg;">V-Play</a>  
             <a onClick="return(view());" title="About Us" class="globe-link" style="--y-angle: -90deg; --x-angle: -15deg;">
             	<img src="img/LOADING.gif" style="width:50px"></a>
-            <a href="data/PeeS.apk" download class="globe-link" style="--y-angle: 150deg; --x-angle: 40deg;">
-            	<img src="img/android-icon.png" class="btn signup btnEffect" title="App Download" style="max-width:48px" ></a>
+             <div class="dropdown globe-link" style="--y-angle: 150deg; --x-angle: 40deg;">
+                <button onclick="appDownload()" class="dropbtn">
+                    <img src="img/android-icon.png" class="btn signup btnEffect" title="App Download" style="max-width:48px;">
+                </button>
+                    <div id="myDropdown" class="dropdown-content">
+                        <a href="data/PeeS_v2.0.apk" download title="Click to download android app">App Version 2.0 (LATEST)</a>
+                        <a href="data/PeeS.apk" download title="Click to download android app">App Version 1.0</a>
+                    </div>
+             </div>
         </div>
     </div>
     <script src="js/script.js"></script>

@@ -78,9 +78,15 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
                                     <span class="loader__dot index">for App Download</span>
                                 </span>
                             </div>
-                    		<a href="data/PeeS.apk" download>
-  								<img src="img/android-icon.png" class="btn signup btnEffect" title="App Download" style="max-width:48px" >
-							</a>
+                                 <div class="dropdown">
+                                  <button onclick="appDownload()" class="dropbtn">
+                                    <img src="img/android-icon.png" class="btn signup btnEffect" title="App Download" style="max-width:48px;">
+                                  </button>
+                                  <div id="myDropdown" class="dropdown-content">
+                                  	<a href="data/PeeS_v2.0.apk" download title="Click to download android app">App Version 2.0 (LATEST)</a>
+                                    <a href="data/PeeS.apk" download title="Click to download android app">App Version 1.0</a>
+                                  </div>
+                                </div>
                          </td>
                     </tr>
                     <tr>
