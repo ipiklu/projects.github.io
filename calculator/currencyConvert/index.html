@@ -6,19 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Currency Converter</title>
     <link rel = "icon" href="img/s.gif" type="image/x-icon">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
      <!---Alert--->
     <link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.core.css" />
 	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.default.css" />
     <script src="../../alertify.js-0.3.11/lib/alertify.min.js"></script>
     
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Lobster&family=Pacifico&display=swap" rel="stylesheet">
+    <link href="css/fonts.googleapis.css" rel="stylesheet">
     <!-- linking style.css file-->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dark.css" />
 </head>
 
 <body>
@@ -32,17 +33,22 @@
      	<img src="img/settings.gif" style="max-width:10px" />Refresh</button>    
     </div>    
     <br /><br /><br>
+    <div id="printPageButton" align="right">
+  			<input type="checkbox" id="dark-mode">
+  			<label for="dark-mode"></label>
+  			<div class="background"></div>
+		</div>
     <!-- Currency Converter -->
-    <h1 class="heading text-center display-2">
+    <h1 class="heading text-center display-2 index">
         Currency Converter
     </h1>
     <hr>
     <div class="container">
         <div class="main">
             <div class="form-group">
-                <label for="oamount">
+                <legend for="oamount" class="index">
                     Amount to Convert :
-                </label>
+                </legend>
                 <input type="number" class="form-control searchBox index" placeholder="0.00" id="oamount">
             </div>
             <div class="row">

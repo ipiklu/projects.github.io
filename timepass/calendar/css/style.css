@@ -39,8 +39,9 @@ body {
 
 /* Calendar container */
 .container-calendar {
-	background: #ffffff;
+	background: rgba(0, 0, 0, 0);
 	padding: 15px;
+	border-radius: 20px;
 	max-width: 900px;
 	margin: 0 auto;
 	overflow: auto;
@@ -49,24 +50,55 @@ body {
 	justify-content: space-between;
 	animation: animated-border-glow 8s infinite linear;
 }
+.index { 
+			font-family: 'Courier New', monospace;
+			font-weight: bold;
+			color: #AA205C;
+			transition: color 0.3s ease;
+		}
+
+		.index:hover { 
+			font-family: 'Courier New', monospace;
+			font-weight: bold;
+				/* Key properties for the AI effect */
+			background-image: linear-gradient(
+				90deg,
+				#1a73e8, /* Blue */
+				#34a853, /* Green */
+				#000, 	/* black */
+				#B6C511,
+				#1a73e8, /* Blue again for a smooth loop */
+				#34a853
+			);
+			background-size: 400% 100%; /* Make the gradient wider than the text */
+				-webkit-background-clip: text; /* Clips the background to the text shape */
+			background-clip: text;
+			color: transparent; /* Makes the text itself transparent to show the background */
+			animation: animated-text-color 4s infinite linear; /* New text color animation */		
+		}
 
 /* Event section styling */
 #event-section {
 	padding: 10px;
-	background: #f5f5f5;
+	background: rgba(0, 0, 0, 0.1);
 	margin: 20px 10px;
-	border: 1px solid #ccc;
+	border: 1px none;
+	border-radius: 20px;
+	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+#event-section:hover {
+	animation: animated-border-glow 8s infinite linear;
+	transition: 0.2s all;
+	transform: scale(1.05);
 }
 
 .container-calendar #left h1 {
-	color: #AA205C;
 	text-align: center;
 	margin: 20px 10px;
 	padding: 10px 0;
 }
 
 #event-section h3 {
-	color: #AA205C;
 	font-size: 18px;
 	margin: 0;
 }
@@ -124,13 +156,18 @@ body {
 /* Reminder section styling */
 #reminder-section {
 	padding: 10px;
-	background: #f5f5f5;
+	background: rgba(0, 0, 0, 0.1);
 	margin: 20px 10px;
-	border: 1px solid #ccc;
+	border: 1px none;
+	border-radius: 20px;
+}
+#reminder-section:hover {
+	animation: animated-border-glow 8s infinite linear;
+	transition: 0.2s all;
+	transform: scale(1.05);
 }
 
 #reminder-section h3 {
-	color: #AA205C;
 	font-size: 18px;
 	margin: 0;
 }
@@ -147,14 +184,33 @@ body {
 
 /* Style for the delete buttons */
 .delete-event {
-	background: rgb(237, 19, 19);
-	color: white;
+	background: rgba(170, 32, 92, 0.5);
+	color: #1e1e1e;
 	border: none;
 	padding: 5px 10px;
 	cursor: pointer;
+	border-radius: 5px;
 	margin-left: 10px;
 	align-items: right;
+    outline: none;
+    transition: 0.2s all;
 }
+	.delete-event:hover {
+		border: 1px none;
+        color: white;
+        box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+          0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+          0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+          0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+        background: rgb(237, 19, 19);
+		animation: animated-border-glow 8s infinite linear;
+	}
+	.delete-event:active {
+			transform: scale(0.92);
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+            /* Lowering the shadow */
+	}
 
 /* Buttons in the calendar */
 .button-container-calendar button {
@@ -168,50 +224,56 @@ body {
 
 /* Calendar table */
 .table-calendar {
-	border-collapse: collapse;
+	border-collapse:collapse;
 	width: 100%;
 }
 
 .table-calendar td,
 .table-calendar th {
 	padding: 5px;
-	border: 1px solid #e2e2e2;
+	border: 1px none;
+	color: #AA205C;
 	text-align: center;
 	vertical-align: top;
+	background: rgba(0, 0, 0, 0);
 }
 
 /* Date picker */
 .date-picker.selected {
-	background-color: #f2f2f2;
-	font-weight: bold;
-	outline: 1px dashed #00BCD4;
+	background-color: rgba(170, 32, 92, 0.5);
+	font-weight:bold;
+	outline: 1px dashed #AA205C;
 }
 
 .date-picker.selected span {
-	border-bottom: 2px solid currentColor;
+	border-bottom: 2px solid #AA205C;
 }
 
 /* Day-specific styling */
-.date-picker:nth-child(1) {
+.date-picker:nth-child(1) > * {
 	color: red;
 	/* Sunday */
 }
 
-.date-picker:nth-child(6) {
+.date-picker > * {
 	color: #AA205C;
+	/* all day */
+}
+.date-picker:nth-child(7) > * {
+	color: red;
 	/* Friday */
 }
 
+
 /* Hover effect for date cells */
 .date-picker:hover {
-	background-color: #AA205C;
+	background-color: rgba(170, 32, 92, 0.5);
 	color: white;
 	cursor: pointer;
 }
 
 /* Header for month and year */
 #monthAndYear {
-	color:#AA205C;
 	text-align: center;
 	margin-top: 0;
 }
@@ -226,48 +288,88 @@ body {
 
 #previous {
 	float: left;
+	transition: 0.2s all;
 }
+	#previous:hover {
+		border: 1px solid #AA205c;
+        color: white;
+        box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+          0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+          0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+          0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+        background:#AA205c;
+		animation: animated-border-glow 8s infinite linear;
+	}
+	#previous:active {
+		transform: scale(0.87);
+        /* Scaling button to 0.98 to its original size */
+        box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+        /* Lowering the shadow */
+	}
 
 #next {
 	float: right;
 }
+	#next:hover {
+		border: 1px solid #AA205c;
+        color: white;
+        box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+          0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+          0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+          0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+        background:#AA205c;
+		animation: animated-border-glow 8s infinite linear;
+	}
+	#next:active {
+		transform: scale(0.87);
+        /* Scaling button to 0.98 to its original size */
+        box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+        /* Lowering the shadow */
+	}
 
 /* Footer styling */
 .footer-container-calendar {
 	margin-top: 1em;
 	border-top: 1px solid #dadada;
 	padding: 10px 0;
+	color: #AA205C;
+	font-weight:bold;
 }
 
 .footer-container-calendar select {
 	cursor: pointer;
-	background: #ffffff;
-	color: #585858;
+	background: rgba(170, 32, 92, 0.5);
+	color: #1e1e1e;
 	border: 1px solid #bfc5c5;
 	border-radius: 3px;
 	padding: 5px 1em;
 }
 
 input[type=text], input[type=date]{
-  width: 200px;
+  width: 140px;
   box-sizing: border-box;
-  border: 2px solid #ccc;
-  border-radius: 9px;
+  border: 2px none;
+  outline:none;
+  border-radius: 20px;
   font-size: 16px;
-  background-color:#F4C1DD;
+  background-color:rgba(170, 32, 92, 0.5);
   background-position: 20px 20px; 
   background-repeat: no-repeat;
   padding: 12px 20px 12px 40px;
   transition: width 0.4s ease-in-out;
 }
 
-input[type=text]:focus {
-  width: 220px;
+input[type=text]:hover,focus {
+  width: 150px;
+  transition: 0.2s all;
+  transform: scale(1.07);
 }
 
 
-input[type=date]:focus {
-  width: 220px;
+input[type=date]:hover {
+  width: 150px;
+  transition: 0.2s all;
+  transform: scale(1.07);
 }
 
     .signup {
@@ -363,20 +465,35 @@ input[type=date]:focus {
 		 }	
 		
 @media screen and (max-width: 640px) {
-		input[type="text"] {
+		input[type=date] {
           font-size: 15px;
           padding: 7px;
-          border-radius: 5px;
-          border: 1px solid silver;
-          width: 70%;
+          border-radius: 20px;
+		  outline:none;
+          border: 1px none;
+          width: 90%;
           text-align: center;
-          outline: none;
+        }
+		input[type="text"] {
+          font-size: 15px;
+          padding: 10px;
+		  margin: 2px;
+          border-radius: 20px;
+		  outline:none;
+          border: 1px none;
+          width: 75%;
+          text-align: center;
+        }
+		input[type="text"], input[type=date]:focus, hover {
+  			transition: 0.2s all;
+  			transform: scale(1.07);
         }
 		
 		.container-calendar {
-			background: #ffffff;
+			background: rgba(0, 0, 0, 0);
 			padding: 15px;
 			max-width: 700px;
+			border-radius: 20px;
 			margin: 0 auto;
 			overflow: auto;
 			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -388,7 +505,18 @@ input[type=date]:focus {
 			max-width: 700px;
 			margin: 15px auto;
 		}
-	
+
+		.table-calendar td,
+		.table-calendar th {
+			padding: 5px;
+			border: 1px none;
+			color: #AA205C;
+			text-align: center;
+			vertical-align: top;
+			font-size:15px;
+			background: rgba(0, 0, 0, 0);
+		}		
+
 	.signup {
         border: 1px solid #AA205c;
         background: #AA205c;

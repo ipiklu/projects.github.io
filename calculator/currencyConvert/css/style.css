@@ -70,7 +70,7 @@ body {
 .container {
     margin-top: 30px;
     padding: 20px;
-    background-color: #ffffff;
+    background-color: rgba(0, 0, 0, 0);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	animation: animated-border-glow 8s infinite linear;
@@ -88,8 +88,11 @@ body {
 
 /* Input field */
 .form-control {
-    border-radius: 5px;
+	background: rgba(0, 0, 0, 0);
+	color: #AA205c;
+    border-radius: 20px;
     border: 1px solid #ccc;
+	outline:none;
     padding: 8px;
     font-size: 16px;
     width: 100%;
@@ -97,12 +100,35 @@ body {
 	transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 	.form-control:hover{
+		outline:none;
+		border-radius: 20px;
+		box-sizing: border-box;
+		box-shadow: 0 8px 16px rgba(0, 0, 0, 0);
+		background-color: rgba(0, 0, 0, 0);
 		animation: animated-border-glow 8s infinite linear;
+		transition: 0.2s all;
+		transform: scale(1.01);
 	}
 
 /* Prevent text wrapping in select options */
 .form-control option {
     white-space: nowrap;
+}
+/* Styling for the scrollbar track */
+.form-control::-webkit-scrollbar {
+    width: 8px; /* Set the width of the scrollbar */
+    height: 8px;
+}
+
+/* Styling for the thumb (the draggable part) */
+.form-control::-webkit-scrollbar-thumb {
+    background-color: #AA205C; /* A lighter gray color for the thumb */
+    border-radius: 4px;
+}
+
+/* Styling for the track (the background of the scrollbar) */
+.form-control::-webkit-scrollbar-track {
+    background-color: #3e3e3e; /* A darker gray for the track */
 }
 
 /* Button styling */
@@ -192,11 +218,6 @@ body {
     margin-top: 20px;
 }
 
-label {
- color: #AA205c;
-	
-}
-
 .finalValue {
     color: green;
     font-weight:bolder;
@@ -234,7 +255,9 @@ label {
 	
 	/* Input field */
 	.form-control {
+		background: rgba(0, 0, 0, 0);
 		border-radius: 5px;
+		color: #AA205c;
 		border: 1px solid #ccc;
 		padding: 5px;
 		font-size: 10px;
@@ -245,7 +268,7 @@ label {
 	.container {
     	margin-top: 15px;
     	padding: 10px;
-    	background-color: #ffffff;
+    	background-color: rgba(0, 0, 0, 0);
     	border-radius: 5px;
     	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	}
