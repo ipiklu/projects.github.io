@@ -418,7 +418,7 @@ input[type="text"]::placeholder {
 table {
 	border-collapse:separate;
 	border-radius: 10px;
-	max-width: 100%;
+	max-width: 90%;
 	margin: 0 auto;
 	text-align: center;
 }
