@@ -1,0 +1,479 @@
+#!/bin/bash
+
+###############################################################################
+#colors
+GREEN="\e[32m"
+RED="\e[31m"
+YELLOW="\e[33m"
+ADVRED="\e[41;1;37m"
+ADVGREEN="\e[48;5;236;32m"
+ADVGREY="\e[48;5;236m"
+BLUE="\e[34m"
+RESET="\e[0m"
+###############################################################################
+
+# A simple conversational bot written in Bash.
+# This script uses a while loop and a case statement to respond to user input.
+
+clear
+
+# Store the initial directory so we can always return to it.
+initial_dir=$(pwd)
+
+# --- Functions ---
+
+# Function to display a welcome message
+function welcome_message() {
+  type_message "Chat Bot v1.0" "\e[5;32m"
+  type_message "Type 'exit' or 'quit' or 'bye' to end our chat." "\e[31m"
+  echo ""
+}
+
+# Function to display help information
+function show_help() {
+  echo -e "${ADVGREEN}---------------------- Available Commands ----------------------${RESET}"
+  echo "  hello, hi        - Greet me."
+  echo "  time             - I will tell you the current time."
+  echo "  date             - I will tell you the current date."
+  echo "  joke             - I will tell you a very bad joke."
+  echo "  exit, quit       - Exit the bot."
+  echo "  help             - Show this help message."
+  echo "  cal              - Open calendar"
+  echo "  calculator       - Open calculator"
+  echo "  age calculator   - Open age calculator"
+  echo "  ping             - Test ping response"
+  echo "  telnet           - Test telnet connectivity on specified port"
+  echo -e "${ADVGREEN}------------------------------------------------------------------${RESET}"
+  echo -e "\e[0m"
+}
+
+# Function to display utilities information
+function show_utility() {
+  echo -e "${ADVGREEN}------------------------------------ AVAILABLE UTILITIES ------------------------------------${RESET}"
+  echo -e "  ${ADVGREY}tpt${RESET} - \e[32mType \e[0;47;30mtpt\e[0;32m for traceroute ping telnet together${RESET}"
+  echo ""
+  echo -e "  ${ADVGREY}ndsinfo${RESET} - \e[32mType \e[0;47;30mndsinfo\e[0;32m for ndswise circle with ip info${RESET}"
+  echo ""
+  echo -e "  ${ADVGREY}con${RESET} - \e[32mType \e[0;47;30mcon\e[0;32m for all applicable network ip telnet connectivity status with pdf artefact${RESET}"
+  echo ""
+  echo -e "  ${ADVGREY}allnwstatus${RESET} - \e[32mType \e[0;47;30mallnwstatus\e[0;32m for all applicable network ip telnet connectivity & ping \n              latency and packet loss status view real-time network status (type q to stop)${RESET}"
+  echo -e "${ADVGREEN}---------------------------------------------------------------------------------------------${RESET}"
+  echo -e "\e[0m"
+}
+
+# Function to print a message character by character to simulate typing.
+# The `sleep` command can be adjusted to change the typing speed.
+function type_message() {
+  local message="$1"
+  local color="$2" # New parameter for color
+  local speed=0.03 # Adjust this value to change the typing speed
+
+  for (( i=0; i<${#message}; i++ )); do
+    printf "${color}%c" "${message:$i:1}"
+    sleep "$speed"
+  done
+  echo -e "\e[0m"
+  printf "\n" # Print a newline at the end
+}
+
+# Get the current hour in 24-hour format
+HOUR=$(date +"%H")
+
+# Determine the appropriate greeting
+if [ "$HOUR" -ge 5 ] && [ "$HOUR" -lt 12 ]; then
+  GREETING="Good morning."
+elif [ "$HOUR" -ge 12 ] && [ "$HOUR" -lt 18 ]; then
+  GREETING="Good afternoon."
+elif [ "$HOUR" -ge 18 ] && [ "$HOUR" -lt 20 ]; then
+  GREETING="Good evening."
+else
+  GREETING="Good Night."
+fi
+
+# --- Main Bot Loop ---
+
+# Display the welcome message when the script starts
+welcome_message
+
+# Start an infinite loop that can be broken by the 'exit' command
+while true; do
+  # Prompt the user for input
+  echo -e "\e[0;36m"
+  read -p "You: " user_input
+  echo -e "\e[0m"
+
+  # Convert the user input to lowercase for easier matching
+  user_input_lower=$(echo "$user_input" | tr '[:upper:]' '[:lower:]')
+
+  # Use a case statement to match the user's input and respond
+  case "$user_input_lower" in
+    # Greetings
+    *"hello"*|*"hi"*)
+      type_message "Bot: Hello there! How can I assist you today?" "\e[32m"
+      ;;
+
+    # general questions
+    *"how are"*|*"how you"*)
+      type_message "Bot: I'm doing great! How about you?" "\e[32m"
+      ;;
+
+    *"thanks"*|*"thank you"*)
+      type_message "Bot: It's my plessure..Is there any thing I can do for you?" "\e[32m"
+      ;;
+
+    *"location"*|*"find location"*)
+                if [[ "$user_input_lower" =~ "location of pizza hut" || "$user_input_lower" =~ "location of dominos"  ]]; then
+                        type_message "Bot: No 01, Green Harvest, 140/11 & 13, Bldg, Magarpatta, Hadapsar, Pune, Maharashtra 411028" "\e[32m"
+                else
+                        type_message "Bot: I do not have access to your real-time location, please consider fetchig it from google maps" "\e[32m"
+                        echo " 😩"
+                fi
+      ;;
+
+    # Introduction
+    *"who are you"*|*"about yourself"*)
+      type_message "Bot: Hi, I'm bot, I was created to execute simple executable tasks and answer simple quistions..." "\e[32m"
+      ;;
+
+    # About the creator
+    *"creator"*|*"who created"*)
+      cd /home/piklu/scripts
+      type_message "Bot: ${PWD##*/} created me for executing simple tasks..." "\e[32m"
+      ;;
+
+    # Time and Date
+    *"time"*)
+      type_message "Bot: The current time is $(date +'%H:%M:%S %p')." "\e[32m"
+      ;;
+    *"date"*)
+      type_message "Bot: Today's date is $(date +'%d-%b-%Y')." "\e[32m"
+      ;;
+    *"day"*)
+      type_message "Bot: Today is $(date +'%A')." "\e[32m"
+      ;;
+
+    # hostname and server ip
+    *"hostname"*|*"server name"*)
+      type_message "Bot: This server's name is `hostname`" "\e[32m"
+      ;;
+
+    *"host ip"*|*"server ip"*|*"sip"*)
+      type_message "Bot: This server's IP is `hostname -i`" "\e[32m"
+      ;;
+
+    # A simple, fun command
+    *"joke"*)
+      type_message "Bot: Why don't scientists trust atoms?" "\e[32m"
+      # Add a short delay for dramatic effect
+      sleep 2
+      type_message "Bot: Because they make up everything!" "\e[32m"
+          echo " 😆"
+      ;;
+
+      # A script execution command
+    *"network status"*|*"allnwstatus"*)
+      type_message "Bot: Opening network status app, please wait!..." "\e[32m"
+      # Add a short delay for dramatic effect
+      sleep 2
+
+      # Navigate to the script's directory
+      cd /home/piklu/scripts
+
+      # Run the script in the foreground and get its process ID
+      bash allnwstatus.sh
+      type_message "Bot: Closing Network status app..." "\e[32m"
+      sleep 3
+      clear
+          ;;
+
+      # A script execution tpt utility
+    *"tpt utility"*|*"tpt"*)
+        clear
+      type_message "Bot: Opening tpt app, please wait!..." "\e[32m"
+      # Add a short delay for dramatic effect
+      sleep 2
+
+      # Navigate to the script's directory
+      cd /home/piklu/scripts
+
+      # Run the script in the background and get its process ID
+      bash tpt.sh
+      type_message "Bot: Closing tpt app, please wait!..." "\e[32m"
+      ;;
+
+      # A script execution con utility
+    *"con utility"*|*"con"*)
+        clear
+      type_message "Bot: Opening con app, please wait!..." "\e[32m"
+      # Add a short delay for dramatic effect
+      sleep 2
+
+      # Navigate to the script's directory
+      cd /home/piklu/scripts
+
+      # Run the script in the background and get its process ID
+      bash con.sh
+      type_message "Bot: Closing con app, please wait!..." "\e[32m"
+      ;;
+
+      # A script execution ndsinfo utility
+    *"ndsinfo utility"*|*"ndsinfo"*|*"nds"*|*"nds circles"*)
+        clear
+      type_message "Bot: Fetching NDS information, please wait!..." "\e[32m"
+      # Add a short delay for dramatic effect
+      sleep 2
+
+      # Navigate to the script's directory
+      cd /home/piklu/scripts
+
+      # Run the script in the background and get its process ID
+      bash ndsinfo.sh
+      type_message "Bot: Above are the NDS information as required, please DO NOT GET CONFUSED WITH CURRENT TRAFFIC (This is NOT CURRENT TRAFFIC)..." "\e[32m"
+      ;;
+
+      # ping execution command
+    *"ping"*)
+        clear
+      type_message "Bot: Please read and answer below questions..." "\e[32m"
+      # Add a short delay for dramatic effect
+      sleep 2
+
+      read -p "Mention DIP ADDRESS for ping : " IP_ADDR
+      printf "\n"
+      read -p "Mention how many packets to test for ping : " PACK
+      echo ""
+      type_message "Bot: Doing ping of $IP_ADDR for $PACK packets, see the below output : " "\e[32m"
+        echo "========================"
+        printf "\e[0;47;30m`date +"%d-%b-%Y %H:%M:%S %p"` \e[0m\n"
+        echo "========================"
+      ping -c $PACK $IP_ADDR
+        echo "========================"
+        printf "\e[0;47;30m`date +"%d-%b-%Y %H:%M:%S %p"` \e[0m\n"
+        echo "========================"
+      printf "\n"
+      type_message "Copy the abobe result by selecting it only (In terminal if you select, it will copy the contents) & paste in email for your refference" "\e[32m"
+      ;;
+
+      # telnet execution command
+    *"telnet"*)
+        clear
+      type_message "Bot: Please read and answer below questions..." "\e[32m"
+      # Add a short delay for dramatic effect
+      sleep 2
+
+      read -p "Mention DIP ADDRESS for Telnet : " IP_ADDR
+      printf "\n"
+
+        echo -e "\e[0;47;30m#############################"
+        echo "#   Network telnet ports    #"
+        echo "#        HLR -> 443         #"
+        echo "#        AIR -> 10011       #"
+        echo "#       INUM -> 8085        #"
+        echo -e "#############################\e[0m"
+        echo ""
+
+      read -p "Mention the PORT to do TELNET connectivity test (Type numbers from above mentioned list only) : " PORT
+      echo ""
+      type_message "Bot: Below is the TELNET connectivity $IP_ADDR for $PORT port, please see the below output : " "\e[32m"
+      echo ""
+      type_message "Telnet for DIP ($IP_ADDR) from SIP (`hostname -i`)" "\e[36m"
+      type_message "----------------------------------------------------" "\e[36m"
+        echo "========================"
+        printf "\e[0;47;30m`date +"%d-%b-%Y %H:%M:%S %p"` \e[0m\n"
+        echo "========================"
+      echo ""
+      type_message "telnet $IP_ADDR $PORT" "\e[32m"
+      {
+        stdbuf -oL timeout 3 telnet "$IP_ADDR" "$PORT" <<EOF
+        exit;
+EOF
+        }
+
+      printf "\n"
+      type_message "Copy the abobe result by selecting it only (In terminal if you select, it will copy the contents) & paste in email for your refference" "\e[32m"
+      ;;
+
+    # Show utilitis
+    *"utilities"*|*"utility"*|*"can you do"*)
+      show_utility
+      printf "\n"
+      type_message "Bot: Apart from the mentioned utilities you can ask me general commands execution of UNIX terminal." "\e[32m"
+      ;;
+
+
+    # Show calender
+    *"calendar"*|"cal")
+      cal
+      printf "\n"
+      ;;
+
+    # calculation
+    *"calculator"*|*"calculation"*)
+      clear
+      type_message "Bot: Opening calculator..." "\e[32m"
+      sleep 1
+
+      while true; do
+              read -p "Type the equation (Type exit/quit to return to Bot): " EQUATION
+        printf "\n"
+
+        # Check if the user wants to exit
+        if [[ "$EQUATION" == "exit" || "$EQUATION" == "quit" ]]; then
+            type_message "Bot: Closing calculator..." "\e[32m"
+            sleep 2
+            break
+        elif [[ -z "$EQUATION" ]]; then
+            type_message "Bot: No equation was provided. Please try again." "\e[31m"
+            continue
+        elif echo "$EQUATION" | grep -q '[^0-9+*/^(). -]'; then
+            type_message "Bot: The equation contains invalid characters. Please use only numbers and operators." "\e[31m"
+            continue
+        else
+            # Execute the calculation and capture both the result and errors
+            # The '2>&1' redirects standard error to standard output
+
+            RESULT=$(echo "$EQUATION" | bc -l 2>&1)
+
+            # Check if the captured result contains the error message
+            if echo "$RESULT" | grep -q "Divide by zero"; then
+                type_message "Bot: Error! Cannot divide by zero. Please enter a different equation." "\e[31m"
+                continue
+            else
+                # If there's no error, print the result
+                type_message "Bot: The answer for the given equation: $RESULT" "\e[32m"
+                continue
+            fi
+        fi
+      done
+
+      printf "\n"
+      ;;
+
+    # calculation of age
+    *"age calculat"*|*"my age"*|*"calculate age"*)
+      clear
+      type_message "Bot: I can calculate your age." "\e[32m"
+      sleep 1
+
+      # Start a loop to handle age calculation until a valid DOB is entered
+      while true; do
+        read -p "Bot: Please enter your date of birth (YYYY-MM-DD): " DOB
+        printf "\n"
+
+        # Check if input is empty
+        if [[ -z "$DOB" ]]; then
+          type_message "Bot: No date provided. Please try again." "\e[31m"
+          continue
+        fi
+
+        # Check if the input strictly matches the YYYY-MM-DD format
+        if ! [[ "$DOB" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
+          type_message "Bot: Invalid date format. Please use YYYY-MM-DD." "\e[31m"
+          continue
+        fi
+
+        # Check if the input is a valid date format.
+        if ! date -d "$DOB" &>/dev/null; then
+          type_message "Bot: Invalid date format. Please use YYYY-MM-DD." "\e[31m"
+          continue
+        fi
+
+        # Get the year, month, and day from the provided date of birth.
+        dob_year=$(date -d "$DOB" +%Y)
+        dob_month=$(date -d "$DOB" +%m)
+        dob_day=$(date -d "$DOB" +%d)
+
+        # Get the current year, month, and day.
+        current_year=$(date +%Y)
+        current_month=$(date +%m)
+        current_day=$(date +%d)
+
+        # Use 10# to force Bash to treat numbers as decimal, preventing octal errors.
+        dob_month_dec=10#$dob_month
+        dob_day_dec=10#$dob_day
+        current_month_dec=10#$current_month
+        current_day_dec=10#$current_day
+
+        # Calculate initial differences.
+        age_years=$((current_year - dob_year))
+        age_months=$((current_month_dec - dob_month_dec))
+        age_days=$((current_day_dec - dob_day_dec))
+
+        # Adjust for negative days.
+        if (( age_days < 0 )); then
+          age_months=$((age_months - 1))
+          # Get the number of days in the previous month.
+          days_in_last_month=$(date -d "$current_year-$current_month-01 -1 day" +%d)
+          age_days=$((age_days + days_in_last_month))
+        fi
+
+        # Adjust for negative months.
+        if (( age_months < 0 )); then
+          age_years=$((age_years - 1))
+          age_months=$((age_months + 12))
+        fi
+
+        type_message "Bot: Based on your date of birth ($DOB), You're : $age_years years, $age_months months, and $age_days days old." "\e[32m"
+        printf "\n"
+
+        # Check if the current day and month match the date of birth
+        if [[ "$current_month" == "$dob_month" ]] && [[ "$current_day" == "$dob_day" ]]; then
+          type_message "Bot: Hey, it's your birthday today.....Yay!!" "\e[32m"
+          sleep 2
+          echo -e "\e[35mHappy Birthday dear!...\e[0m 🎉🥳🎊🎁"
+          printf "\n"
+        fi
+
+        break
+      done
+      ;;
+
+
+    # Bot's age
+    *"your age"*)
+      type_message "Bot: I born every time you type bot... and Die every time you type bye" "\e[32m"
+      echo "  🫣 𐦂𖨆𐀪𖠋"
+      printf "\n"
+      ;;
+
+    # Show help
+    *"help"*)
+      show_help
+      ;;
+
+    # clear screen
+    *"clear"*|*"cls"*)
+      clear
+
+      cd /home/piklu/scripts
+      bash bot.sh
+      ;;
+
+    # Exit commands
+    *"exit"*|*"quit"*|*"bye"*)
+      type_message "Bot: Goodbye! Have a ${GREETING}." "\e[32m"
+      echo "😴"
+      echo ""
+      # Exit the while loop
+      break
+      ;;
+
+    # Default response for unrecognized input
+    *)
+      type_message "Bot: I'm sorry, I did't understand that." "\e[32m"
+      sleep 1.5
+
+      type_message "Bot: But hey, I'm still learnig!!" "\e[32m"
+      echo " 😉"
+      printf "\n"
+      ;;
+  esac
+done
+
+echo -e "  🙋 \e[31msee you soon..\e[0m"
+printf "\n"
+type_message "Bot: Quiting app!!..." "\e[32m"
+
+sleep 3
+
+clear

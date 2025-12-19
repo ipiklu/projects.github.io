@@ -4,7 +4,13 @@
             font-family: google;
             src: url("fonts/google_sans/GoogleSans-Regular.ttf");
         }
-      
+table {
+	border-collapse:separate;
+	border-radius: 10px;
+	max-width: 100%;
+	margin: 0 auto;
+	text-align: left;
+}	      
       th, td {
   		border: 1px dotted #AA205C;
   		border-radius: 10px;
@@ -189,7 +195,7 @@
 		
      .imgS {
         border-radius: 10px;
-        margin: 1.7px;
+        margin-left: 10px;
         max-width:40px;
 		max-height: 90%;
 		float:left;

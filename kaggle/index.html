@@ -38,7 +38,7 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
 
 <body>
 	<div>
-       <a href="../index.html" title="Home"><img src="img/s.gif" class="imgS"/></a>
+       <a href="../index.html" title="Home"><img alt="logo" src="img/s.gif" class="imgS"/></a>
 		<div align="right">
   			<input type="checkbox" id="dark-mode">
   			<label for="dark-mode"></label>
@@ -46,15 +46,15 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
 		</div>
     </div>
 
-	<p align="center"><img src="img/cLL.gif"></p>
-    	<h1 align="center" class="loader" style="color:#AA205C; font-family:'Century Gothic'" >Welcome to server maintenance<span class="loader__dot">.</span><span class="loader__dot">.</span><span class="loader__dot">.</span><span onClick="return(view());" title="About Us" ><font style="font-size: 20px;" color="#AA205C"></font><img src="img/LOADING.gif" style="width:50px; cursor:pointer;"></span></button></h1>
+	<p align="center"><img alt="header-image" src="img/cLL.gif"></p>
+    	<h1 align="center" class="loader" style="color:#AA205C; font-family:'Century Gothic'" >Welcome to server maintenance<span class="loader__dot">.</span><span class="loader__dot">.</span><span class="loader__dot">.</span><span onClick="return(view());" title="About Us" ><font style="font-size: 20px;" color="#AA205C"></font><img alt="about-us-icon" src="img/LOADING.gif" style="width:50px; cursor:pointer;"></span></h1>
         
         <div align="center">
        	  <font color="#AA205C"><h2 align="center">Server Index:</h2></font>
-            <img src="img/settings.gif" onClick="reloadClear()" title="Reload" style="max-width:33px; cursor:pointer;" />
+            <img alt="Loadin-Animation" src="img/settings.gif" onClick="reloadClear()" title="Reload" style="max-width:33px; cursor:pointer;" />
                 <table width="500" border="2" bordercolor="#AA205C" style="max-width:70%">
                 	<tr>
-                    	<td width="44"><img src="img/arrow.gif" width="38" height="38"></td>
+                    	<td width="44"><img alt="arrow-icon" src="img/arrow.gif" width="38" height="38"></td>
                     	<td width="100" align="right">
                         	<marquee behavior="scroll" style="color:#AA205C">
                             	<span class="loader__dot index">Click the </span>
@@ -63,7 +63,7 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
                             </marquee>
                     			<div class="dropdown">
                                   <button onclick="appDownload()" class="dropbtn">
-                                    <img src="img/android-icon.png" class="btn signup btnEffect" title="App Download" style="max-width:48px;">
+                                    <img alt="Android-icon" src="img/android-icon.png" class="btn signup btnEffect" title="App Download" style="max-width:48px;">
                                   </button>
                                   <div id="myDropdown" class="dropdown-content">
                                   	<a href="data/PeeS_v2.0.apk" download title="Click to download android app">App Version 2.0 (LATEST)</a>
@@ -73,24 +73,39 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
                          </td>
                     </tr>
                 	<tr>
-                   		<td width="38"><a href="../index.html" title="Back to Projects"><img src="img/back.gif" class="btn signup btnEffect" style="max-width:27px"/></td>
-                        <td width="507" ><a href="../index.html" title="Back to Projects" class="index"> /.... </a></td>
+                   		<td width="38" align="center">
+                        	<a href="../index.html" title="Back to Projects">
+                            	<img alt="back-icon" src="img/back.gif" class="btn signup btnEffect" style="max-width:27px"/>
+                            </a>
+                        </td>
+                        <td width="507">
+                        	<a href="../index.html" title="Back to Projects" class="index"> /.... </a>
+                        </td>
                 	</tr>
                     <tr>
-                   		<td width="38"><a href="https://www.kaggle.com/ipiklu/google-data-analytics-capstone-case-study-1" target="_blank" title="Go to external Kaggle site">
-                        	<img src="img/folder.png" class="btn signup btnEffect" style="max-width:27px"/></td>
-                        <td width="507" ><a href="https://www.kaggle.com/ipiklu/google-data-analytics-capstone-case-study-1" target="_blank" title="Go to external Kaggle site" class="index"> 
-                        	Case-study-1 (Cyclistic Tripdata) </a></td>
+                   		<td width="38" align="center">
+                        	<a href="https://www.kaggle.com/ipiklu/google-data-analytics-capstone-case-study-1" target="_blank" title="Go to external Kaggle site">
+                        		<img alt="Folder-icon" src="img/folder.png" class="btn signup btnEffect" style="max-width:27px"/>
+                            </a>
+                        </td>
+                        <td width="507">
+                        	<a href="https://www.kaggle.com/ipiklu/google-data-analytics-capstone-case-study-1" target="_blank" title="Go to external Kaggle site" class="index"> 
+                        	Case-study-1 (Cyclistic Tripdata) </a>
+                        </td>
                 	</tr>
                     <tr>
-                   		<td width="38"><a href="https://www.kaggle.com/code/ipiklu/google-data-analytics-capstone-case-study-2/notebook" target="_blank" title="Go to external Kaggle site">
-                        	<img src="img/folder.png" class="btn signup btnEffect" style="max-width:27px"/></td>
-                        <td width="507" ><a href="https://www.kaggle.com/code/ipiklu/google-data-analytics-capstone-case-study-2/notebook" target="_blank" title="Go to external Kaggle site" 
-                        class="index">case-study-2 (Bellabeat Smartwatch Activity Tracking) </a></td>
+                   		<td width="38" align="center">
+                        	<a href="https://www.kaggle.com/code/ipiklu/google-data-analytics-capstone-case-study-2/notebook" target="_blank" title="Go to external Kaggle site">
+                        		<img alt="Folder-icon" src="img/folder.png" class="btn signup btnEffect" style="max-width:27px"/>
+                            </a>
+                        </td>
+                        <td width="507">
+                        	<a href="https://www.kaggle.com/code/ipiklu/google-data-analytics-capstone-case-study-2/notebook" target="_blank" title="Go to external Kaggle site" class="index">
+                            case-study-2 (Bellabeat Smartwatch Activity Tracking)</a>
+                        </td>
                 	</tr>
-                    
                  </table>             
-        </div>
+          </div>
         
      
 <!------------------------DOT style------------------------------->        

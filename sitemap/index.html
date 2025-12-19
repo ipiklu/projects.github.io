@@ -36,7 +36,7 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
 </head>
 <body class="p-6 md:p-10">
 	<div>
-       <a href="../index.html" title="Home"><img src="img/s.gif" class="imgS"/></a>
+       <a href="../index.html" title="Home"><img alt="logo" src="img/s.gif" class="imgS"/></a>
 		<div align="right">
   			<input type="checkbox" id="dark-mode">
   			<label for="dark-mode"></label>
@@ -49,7 +49,7 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
         <!-- Main title -->
         <h1 class="text-3xl font-bold text-center" onClick="reloadClear()" title="Reload">PikLu's Server's Sitemap Tree<span class="loader__dot">.</span><span class="loader__dot">.</span><span class="loader__dot">.</span></h1>
         <div align="left">
-        	<img src="img/LOADING.gif" class="imgS" onClick="return(view());" title="About Us"/>
+        	<img alt="about-us-icon" src="img/LOADING.gif" class="imgS" onClick="return(view());" title="About Us"/>
 		</div>
         <!-- Sitemap container -->
         <div class="sitemap-tree pl-4 md:pl-8"><a href="../index.html" class="index" title="Home">Server Index</a>
@@ -101,6 +101,7 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
                     <li><a href="../timepass/teleprompt/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">Teleprompt</a></li>
                     <li><a href="../timepass/plot/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">PLoT</a></li>
                     <li><a href="../timepass/chatbot/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">AI-CHAT</a></li>
+                    <li><a href="../timepass/scriptopedia/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">ScriptoPedia</a></li>
                     <li><a href="../timepass/qabot/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">Q&A-BOT</a></li>
                     <li><a href="../timepass/rdbot/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">R&D BOT</a></li>
                     <li><a href="../timepass/vPlay/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">V-PLAY</a></li>
@@ -127,7 +128,8 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
 			  <!-- Top-level links -->
               <li><a href="../form/index.html" class="text-gray-700 hover:text-blue-600" style="color:#AA205C;">FormToPDF</a></li>			
             </ul>
-            <ul><a onClick="return(policy());" style="cursor: pointer; color:#AA205C;" onmouseover="this.style.color='rgba(255, 100, 100, 0.7)'"; onmouseout="this.style.color='#AA205C'"; class="text-gray-700 hover:text-blue-600 index">Privacy Policy</a></ul>
+            <ul>
+            	<a onClick="return(policy());" style="cursor: pointer; color:#AA205C;" onmouseover="this.style.color='rgba(255, 100, 100, 0.7)'" onmouseout="this.style.color='#AA205C'" class="text-gray-700 hover:text-blue-600 index">Privacy Policy</a></ul>
         </div>
     </div>
 	<br />

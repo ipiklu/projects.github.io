@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScriptoPedia</title>
+    <link rel = "icon" href="img/s.gif" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dark.css" />
+    <!---Alert--->
+	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.core.css" />
+	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.default.css" />
+    <script src="../../alertify.js-0.3.11/lib/alertify.min.js"></script>    
+</head>
+<body>
+<a href="../../index.html" title="Home"><img alt="logo" src="img/s.gif" class="imgS"/></a>
+    <div id="printPageButton" align="right">
+  			<input type="checkbox" id="dark-mode">
+  			<label for="dark-mode"></label>
+  			<div class="background"></div>
+		</div>
+    <div class="search-container">
+    <p align="center"><img alt="header-image" src="img/cLL.gif"></p>
+        <h1 align="center" class="loader" style="color:#AA205C; font-family:'Century Gothic'" >Welcome to Search ScriptoPedia<span class="loader__dot">.</span><span class="loader__dot">.</span><span class="loader__dot">.</span><span onClick="return(view());" title="About Us" ><font style="font-size: 20px;" color="#AA205C"></font><img alt="about-us-icon" src="img/LOADING.gif" style="width:50px; cursor:pointer;"></span></h1>
+        <div align="center">
+        	<img alt="Loading-Animation" src="img/settings.gif" onClick="reloadClear()" title="Reload" style="max-width:33px; cursor:pointer;" />
+        </div>
+        <div class="input-group">
+            <input type="text" id="searchInput" placeholder="Search keywords..." autocomplete="off">
+            <button id="searchButton" class="btn signup btnEffect" onclick="handleSearch()">Search</button>
+        </div>
+        <div align="center" id="resultsContainer"></div>
+    </div>
+    
+    <script src="js/jsonData/jsonData.js"></script>
+    <script src="js/jsonData/jsonTable.js"></script>
+    <script src="js/script.js"></script>
+    
+ <!-------Footer------------------------------------------>  
+<footer align="center" style="position:relative; color:#AA205C; bottom: 0; width: 100%;">
+<center> <font color="#AA205C">
+   <p id="date"> </p>
+   <script>
+	document.getElementById("date").innerHTML = Date();
+   </script> </font></center>
+    	<p>|| Copyright protected &copy; <script>document.write(new Date().getFullYear())</script>, All Rights Not Reserved ||</p>
+        <p> Design by Sayantan Kundu || <a style="color:#AA205C; font-size:12px; font-weight: bold;" href="../../sitemap/index.html" title="Sitemap">Sitemap </a>||</p>
+    </footer>   
+</body>
+</html>

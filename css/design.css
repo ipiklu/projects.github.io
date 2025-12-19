@@ -156,7 +156,13 @@ body::-webkit-scrollbar-track {
         #main-content {
             display: none; /* Initially hidden */
         }
-		
+table {
+	border-collapse:separate;
+	border-radius: 10px;
+	max-width: 100%;
+	margin: 0 auto;
+	text-align: left;
+}		
       th, td {
   		border: 1px dotted #AA205C;
   		border-radius: 10px;
@@ -257,7 +263,7 @@ body::-webkit-scrollbar-track {
  
 .imgS {
         border-radius: 10px;
-        margin: 1.7px;
+        margin-left: 10px;
         max-width:40px;
 		max-height: 90%;
 		float:left;
