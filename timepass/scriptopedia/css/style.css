@@ -90,11 +90,47 @@ body::-webkit-scrollbar-track {
 }
 
 #searchButton:disabled {
-	animation: animated-border-glow 2s infinite linear;
-	transition: 0.2s all cubic-bezier(0.25, 0.46, 0.45, 0.94);;
-    cursor: wait;
-	color: #fff;
-	background: #AA205C;
+	position: relative; /* Essential for pseudo-element positioning */
+    background: #AA205C;
+    color: #ffffff;
+    border: none;
+    padding: 10px 25px; /* Adjusted to ensure vertical centering */
+    border-radius: 2.5rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#searchButton:disabled::before {
+	content: "";
+    position: absolute;
+    inset: -3px; /* Controls how far the glow spreads outside */
+    padding: 3px; /* Controls border thickness */
+    border-radius: 2.5rem; /* Matches button shape */ 
+    background: conic-gradient(
+        from var(--gradient-angle),
+        #ffcc00,
+        #ff6600,
+        #ff0033,
+        #3045F0,
+        #69EC6F,
+        transparent 100%
+    );
+
+    /* The Masking Magic: Shows only the 'padding' area of this element */
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+
+    animation: rotation 2s linear infinite;
+    filter: drop-shadow(0 0 10px #ff6600);
+    pointer-events: none; /* Prevents the border from blocking clicks */
 }
 
 #resultsContainer {
@@ -526,3 +562,13 @@ table {
         box-shadow: 0 0 10px rgba(66, 133, 244, 0.3);
     }
 }
+/*border rotation*/
+@property --gradient-angle {
+            syntax: "<angle>";
+            initial-value: 0deg;
+            inherits: false;
+        }
+@keyframes rotation {
+            0% { --gradient-angle: 0deg; }
+            100% { --gradient-angle: 360deg; }
+        }				
