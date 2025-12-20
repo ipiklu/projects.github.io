@@ -54,16 +54,26 @@ function handleSearch() {
         const results = JSON_DATA.filter(item => item.title.toLowerCase().includes(query))
                         .concat(JSON_TABLE.filter(item => item.title.toLowerCase().includes(query)));
 
-        if (results.length === 0) {
-            // Updated with backticks to correctly show the query variable
-            container.innerHTML = `<p class="NoMatch">No matches found for "${query}"</p>`;
-            return;
-        }
+		if (results.length === 0) {
+			// 1. Create the paragraph element
+			const noMatchMsg = document.createElement('p');
+			noMatchMsg.className = "typing NoMatch";
+			
+			// 2. Append it to the container first
+			container.innerHTML = ''; // Clear previous content
+			container.appendChild(noMatchMsg);
+			
+			// 3. Trigger the typing effect with your message
+			const message = `No matches found for "${query}"`;
+			typeEffect(noMatchMsg, message);
+			
+			return;
+		}
 
         results.forEach(res => {
             const div = document.createElement('div');
             div.className = 'result-item';
-            div.style.textAlign = 'left'; 
+            div.style.textAlign = 'center'; 
 
             // Simpler check: Does the content string have "<table" in it?
             if (res.content.toLowerCase().includes('<table')) {
