@@ -36,7 +36,10 @@ body::-webkit-scrollbar-track {
     border-radius: 10rem;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     margin-bottom: 20px;
+	width: 80%;
 	max-width: 600px;
+	margin-left: auto;
+	margin-right: auto;
 	justify-content: center;
 	align-self: center;
 }
@@ -44,6 +47,7 @@ body::-webkit-scrollbar-track {
 #searchInput {
     flex: 1;
     border: none;
+	font-size: 20px;
     padding: 15px;
     outline: none;
 	border-radius: 10rem;
@@ -85,7 +89,7 @@ body::-webkit-scrollbar-track {
     
     /* The Animation */
     animation: geminiSweep 2s infinite linear;
-    cursor: wait;
+    cursor: not-allowed;
     transition: all 0.3s ease;
 }
 
@@ -96,7 +100,7 @@ body::-webkit-scrollbar-track {
     border: none;
     padding: 10px 25px; /* Adjusted to ensure vertical centering */
     border-radius: 2.5rem;
-    cursor: pointer;
+    cursor: wait;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -105,16 +109,16 @@ body::-webkit-scrollbar-track {
 #searchButton:disabled::before {
 	content: "";
     position: absolute;
-    inset: -3px; /* Controls how far the glow spreads outside */
+    inset: -1.5px; /* Controls how far the glow spreads outside */
     padding: 3px; /* Controls border thickness */
     border-radius: 2.5rem; /* Matches button shape */ 
     background: conic-gradient(
         from var(--gradient-angle),
-        #ffcc00,
+        #69EC6F,
+		#ffcc00,
         #ff6600,
         #ff0033,
         #3045F0,
-        #69EC6F,
         transparent 100%
     );
 
@@ -562,6 +566,7 @@ table {
         box-shadow: 0 0 10px rgba(66, 133, 244, 0.3);
     }
 }
+
 /*border rotation*/
 @property --gradient-angle {
             syntax: "<angle>";
