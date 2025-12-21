@@ -52,7 +52,15 @@ body::-webkit-scrollbar-track {
 	border-radius: 10rem;
 	color: #AA205C;
 	background: rgba(0,0,0,0);
+	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
+	#searchInput:hover {
+			transform: scale(0.98);
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px #AA205c;
+            /* Lowering the shadow */	
+			animation: animated-border-glow 8s infinite linear;
+	}
 
 #searchButton {
     background: rgba(170, 32, 92, 0.5);

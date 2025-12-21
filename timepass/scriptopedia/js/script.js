@@ -2,6 +2,18 @@ let typingTimers = [];
 
 window.onload = function() {
     const input = document.getElementById("searchInput");
+	
+	// Focus when mouse enters
+    input.addEventListener("mouseenter", function() {
+        input.focus();
+    });
+
+    /* Remove focus when mouse leaves (feature disabled)
+    input.addEventListener("mouseleave", function() {
+        input.blur(); // This removes the cursor and focus state
+    });*/
+	
+	// Enter key press for search
     input.addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
             event.preventDefault();
@@ -14,7 +26,7 @@ function showLoading(show) {
     const container = document.getElementById('resultsContainer');
     const sendButton = document.getElementById('searchButton');
     const chatInput = document.getElementById('searchInput');
-
+	
     if (show) {
         const typingIndicator = document.createElement('div');
         typingIndicator.id = 'typingIndicator';

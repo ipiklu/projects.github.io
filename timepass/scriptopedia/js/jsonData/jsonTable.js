@@ -9,14 +9,54 @@ const JSON_TABLE = [
 				<th class="zone-cell" colspan="3">BOT-BASH-SCRIPT</th>
 			</tr>
 			<tr>
-				<th width="50">FOLDER</th>
-				<th>LINK</th>
+				<th title="\u{1F447}Press below links to open\u{1F447}" width="50">FOLDER</th>
+				<th title="\u{1F447}Press below links to open\u{1F447}">LINK</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td width="38" title="Click-To-Open" onClick="window.open('data/bot.txt','bfs','fullscreen,scrollbars');">📂</td>
-				<td title="Click-To-Open" onClick="window.open('data/bot.txt','bfs','fullscreen,scrollbars');">BotScript</td>
+				<td width="38">
+					<a title="Click-To-Open" onClick="window.open('data/bot.txt','bfs','fullscreen,scrollbars');" class="index-alert">\u{1F4C4}</a>
+				</td>
+				<td>
+					<a title="Click-To-Open" onClick="window.open('data/bot.txt','bfs','fullscreen,scrollbars');" class="index-alert">BotScript</a>
+				</td>
+			</tr>
+		</tbody>
+		</table>`
+	},
+	{ 
+		title: "web links",
+		content: `<table width="220" border="2" bordercolor="#AA205C">
+		<thead> 
+			<tr>
+				<th class="zone-cell" title="\u{1F447}Press below links to open\u{1F447}" colspan="2">WEB-LINKS</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td width="38">
+					<a title="Click-To-Open-Google-Search" onClick="window.open('https://www.google.com','bfs','fullscreen,scrollbars');" class="index-alert">\u{1F310}</a>
+				</td>
+				<td align="left">
+					<a title="Click-To-Open-Google-Search" onClick="window.open('https://www.google.com','bfs','fullscreen,scrollbars');" class="index-alert">Google Search</a>
+				</td>
+			</tr>
+			<tr>
+				<td width="38">
+					<a title="Click-To-Open-Google-Maps" onClick="window.open('https://google.com/maps','bfs','fullscreen,scrollbars');" class="index-alert">\u{1F5FA}</a>
+				</td>
+				<td align="left">
+					<a title="Click-To-Open-Google-Maps" onClick="window.open('https://google.com/maps','bfs','fullscreen,scrollbars');" class="index-alert">Google Maps</a>
+				</td>
+			</tr>
+			<tr>
+				<td width="38">
+					<a title="Click-To-Open-Google-Gemini" onClick="window.open('https://gemini.google.com/','bfs','fullscreen,scrollbars');" class="index-alert">\u{1F916}</a>
+				</td>
+				<td align="left">
+					<a title="Click-To-Open-Google-Maps" onClick="window.open('https://gemini.google.com/','bfs','fullscreen,scrollbars');" class="index-alert">Google Gemini</a>
+				</td>
 			</tr>
 		</tbody>
 		</table>`
