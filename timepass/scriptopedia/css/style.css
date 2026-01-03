@@ -373,6 +373,41 @@ input[type="text"]::placeholder {
 		  animation: animated-text-color 2s linear infinite;
 		}
 		
+		.animated-tick {
+			/* No content property here */
+			display: inline-block;
+			font-size: 25px;
+			color: #888;
+			border: none;
+			border-radius: 20px;
+			outline: none;
+			transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		}
+		
+		.animated-tick::before {
+		  content: "✔️"; /* This is where the content property belongs */
+		  padding-right: 10px;
+		  background-size: 800% auto;
+		  background-image: linear-gradient(
+				90deg,
+				#188038 0%,    /* Google Green (Dark) */
+				#34a853 15%,   /* Google Green (Standard) */
+				#000 45%,      /* Contrast Gap */
+				#8ab4f8 60%,   /* Soft Mint/Cyan */
+				#0d652d 80%,   /* Deep Forest Green */
+				#188038 100%,  /* Loop point */
+				#34a853 115%,
+				#000 145%,
+				#8ab4f8 160%,
+				#0d652d 180%,
+				#188038 200%
+			);
+		  -webkit-background-clip: text;
+		  -webkit-text-fill-color: transparent;
+		  -webkit-animation: animated-text-color 2s linear infinite;
+		  animation: animated-text-color 2s linear infinite;
+		}		
+		
       .signup {
         border: 1px solid rgba(0, 0, 0, 0);
         background: #FFF;

@@ -68,16 +68,22 @@ function handleSearch() {
 
 		if (results.length === 0) {
 			// 1. Create the paragraph element
-			const noMatchMsg = document.createElement('p');
+			const noMatchMsg = document.createElement('div');
+			const helpMsg = document.createElement('div');
 			noMatchMsg.className = "typing NoMatch";
+			helpMsg.className = "typing animated-tick";
 			
 			// 2. Append it to the container first
 			container.innerHTML = ''; // Clear previous content
 			container.appendChild(noMatchMsg);
+			container.appendChild(document.createElement('br'));
+			container.appendChild(helpMsg);
 			
 			// 3. Trigger the typing effect with your message
 			const message = `No matches found for "${query}"`;
+			const help_message = `Type <b><i class="index-alert">help</i></b> for searching keywords`;
 			typeEffect(noMatchMsg, message);
+			typeEffect(helpMsg, help_message);
 			
 			return;
 		}
@@ -114,6 +120,11 @@ function typeEffect(el, text) {
                 el.innerHTML += text[i];
                 i++;
             }
+			
+			// Use .substring(0, i) and replace the whole content
+            // This prevents the browser from getting confused by partial tags
+			el.innerHTML = text.substring(0, i);
+			
             typingTimers.push(setTimeout(type, 30));
         } else {
             el.classList.remove('typing');

@@ -26,6 +26,77 @@ const JSON_TABLE = [
 		</table>`
 	},
 	{ 
+		title: "help",
+		content: `<table width="700" border="2" bordercolor="#AA205C">
+		<thead> 
+			<tr>
+				<th class="zone-cell" colspan="3">
+					<a title="Click-To-View" onClick="window.open('data/help.pdf','bfs','fullscreen,scrollbars');" class="index-alert">HELP-FOR-SEARCH</a>
+				</th>
+			</tr>
+			<tr>
+				<th width="60" style="cursor: not-allowed;">SR</th>
+				<th width="300" style="cursor: not-allowed;">Topics</th>
+				<th width="300" style="cursor: not-allowed;">Search-Keywords</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					<a class="index-alert">1</a>
+				</td>
+				<td align="left">
+					<a class="index-alert">How to search for any full forms</a>
+				</td>
+				<td align="left" style="padding: 2px">
+					<a class="index-alert">Type the <i style="color: rgba(170, 32, 92, 0.5);">keyword <b>full form</b></i>
+						<br><br>
+						<b><u>Example:</u></b>
+						<br>
+						<i style="color: rgba(170, 32, 92, 0.5);">HTML <b>full form</b></i>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a class="index-alert">2</a>
+				</td>
+				<td align="left">
+					<a class="index-alert">How to display homepage index</a>
+				</td>
+				<td align="left" style="padding: 2px">
+					<a class="index-alert">Type <i><b style="color: rgba(170, 32, 92, 0.5);">index</b></i>	
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a class="index-alert">3</a>
+				</td>
+				<td align="left">
+					<a class="index-alert">How to display any external web-links</a>
+				</td>
+				<td align="left" style="padding: 2px">
+					<a class="index-alert">Type <i><b style="color: rgba(170, 32, 92, 0.5);">web links</b></i>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a class="index-alert">4</a>
+				</td>
+				<td align="left">
+					<a class="index-alert">How to navigate to previous page</a>
+				</td>
+				<td align="left" style="padding: 2px">
+					<a class="index-alert">Type <i><b style="color: rgba(170, 32, 92, 0.5);">back</b></i>
+					</a>
+				</td>
+			</tr>
+		</tbody>
+		</table>`
+	},
+	{ 
 		title: "web links",
 		content: `<table width="220" border="2" bordercolor="#AA205C">
 		<thead> 
