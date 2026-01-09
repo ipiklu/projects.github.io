@@ -129,6 +129,14 @@ const JSON_TABLE = [
 					<a title="Click-To-Open-Google-Maps" onClick="window.open('https://gemini.google.com/','bfs','fullscreen,scrollbars');" class="index-alert">Google Gemini</a>
 				</td>
 			</tr>
+			<tr>
+				<td width="38">
+					<a title="Click-To-Open-Meditate" onClick="window.open('../meditate/index.html','bfs','fullscreen,scrollbars');" class="index-alert">\u{1F9D8}</a>
+				</td>
+				<td align="left">
+					<a title="Click-To-Open-Meditate" onClick="window.open('../meditate/index.html','bfs','fullscreen,scrollbars');" class="index-alert">Meditate</a>
+				</td>
+			</tr>
 		</tbody>
 		</table>`
 	},

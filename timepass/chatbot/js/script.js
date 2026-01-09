@@ -177,7 +177,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	const goToRDbot = () => {
       	window.open("../rdbot/index.html","bfs","fullscreen,scrollbars");
 		return "Opening the read & display bot for you!";	
-	};		
+	};
+	
+	// New function to navigate to meditate app
+	const goToMeditate = () => {
+      	window.open("../meditate/index.html","bfs","fullscreen,scrollbars");
+		return "Opening the meditate app for you!";	
+	};			
 	
 	// New function to navigate to site map
 	const goToSitemap = () => {
@@ -497,6 +503,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		"alarm":goToAlarmClock,
 		"teleprompt":goToTeleprompt,
 		"camera":goToTeleprompt,
+		"meditat":goToMeditate,
 		"love you": "I love you Humann... \u{1F600} \n\n \u{1F618}",
         "what is the meaning of life": "That is a complex question! I'm not advanced enough to answer that one. But keep exploring!",
 		"what is your age": "I don't have an age in the way humans do. I was created to help with HTML, CSS, and JavaScript, so you could say my age is defined by the moment my code runs! 🤔",
