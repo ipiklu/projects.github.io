@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCANNER</title>
+    <link rel = "icon" href="img/s.gif" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <!---Alert--->
+	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.core.css" />
+	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.default.css" />
+    <script src="../../alertify.js-0.3.11/lib/alertify.min.js"></script> 
+</head>
+<body>
+<a href="../../index.html" title="Home"><img alt="logo" src="img/s.gif" class="imgS"/></a>
+ <button id="printPageButton" class="upload-btn" onClick="window.location='../server/index.html'" title="Go back to main library" style="background:#AA205C; color:#EEE; float:right">
+     	<img src="img/back.gif" style="max-width:11px" /> Back</button>
+    <div class="container" align="center">
+        <h1 align="center"><a class="index-alert" onClick="reloadClear()" title="Reload">Scan Anything</a></h1>
+        
+        <div id="reader"></div>
+
+        <div class="upload-section">
+            <label for="qr-input-file" class="upload-btn">📁 Upload PDF Files</label>
+            <input type="file" id="qr-input-file" accept="image/*,application/pdf">
+        </div>
+
+        <div id="result-container">
+            <div id="result-content"></div>
+        </div>
+    </div>
+
+    <script src="js/html5-qrcode.js"></script>
+    <script src="js/JsBarcode.all.min.js"></script>
+	<script src="js/pdf.min.js"></script>
+	<script src="js/qrcode.min.js"></script>
+    <script src="js/script.js"></script>
+<!-------Footer------------------------------------------>  
+<footer align="center" style="position:relative; color:#AA205C; bottom: 0; width: 100%; font-weight:400;">
+<center> <font color="#AA205C">
+   <p id="date"> </p>
+   <script>
+	document.getElementById("date").innerHTML = Date();
+   </script> </font></center>
+    	<p>|| Copyright protected &copy; <script>document.write(new Date().getFullYear())</script>, All Rights Not Reserved ||</p>
+        <p> Design by Sayantan Kundu || <a style="color:#AA205C; font-size:12px; font-weight: bold;" href="../../sitemap/index.html" title="Sitemap">Sitemap </a>||</p>
+    </footer>   
+    <center>
+       <img src="img/LOADING.gif" onClick="return(view());" title="About Us" style="width:50px; cursor:pointer;">
+    </center> 
+</body>
+</html>

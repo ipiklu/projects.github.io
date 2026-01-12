@@ -1,0 +1,255 @@
+/* Layout & Page Background */
+body { 
+    font-family: 'Segoe UI', sans-serif;
+    background-color: rgba(0,0,0,0);
+}
+
+/* Styling for the scrollbar track */
+body::-webkit-scrollbar {
+    width: 8px; /* Set the width of the scrollbar */
+    height: 8px;
+}
+
+/* Styling for the thumb (the draggable part) */
+body::-webkit-scrollbar-thumb {
+    background-color: #AA205C; /* A lighter gray color for the thumb */
+    border-radius: 4px;
+}
+
+/* Styling for the track (the background of the scrollbar) */
+body::-webkit-scrollbar-track {
+    background-color: #3e3e3e; /* A darker gray for the track */
+}
+
+a {
+	cursor:pointer;
+	text-decoration:none;
+}
+/* Main App Container */
+.container { 
+	width: 90%;
+	max-width: 500px;
+	margin: 0 auto;
+	justify-content: center;
+	align-self: center;
+	display:flex;
+	flex-direction: column; 
+}
+
+div {
+	color: #AA205C;
+}
+
+/* Scanner Viewport */
+#reader { 
+    width: 100%; 
+    border-radius: 10px; 
+    overflow: hidden; 
+    margin-bottom: 20px; 
+    background: #fff; /* Added for visibility */
+	animation: animated-border-glow 8s infinite linear;
+}
+
+span {
+	background: rgba(170, 32, 92, 0.5);
+    color: #AA205C; 
+    padding: 12px 20px; 
+    border-radius: 2.5rem;
+    cursor: pointer; 
+    display: inline-block; 
+    font-weight: bold;
+	text-decoration:none; 
+	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Upload Interaction */
+.upload-section { 
+    margin-bottom: 20px; 
+}
+
+#qr-input-file { 
+    display: none; 
+}
+
+#html5-qrcode-button-camera-permission, #html5-qrcode-button-file-selection, .upload-btn {
+	background: rgba(170, 32, 92, 0.5);
+    color: #AA205C; 
+    padding: 12px 20px; 
+    border-radius: 2.5rem;
+	border: none;
+	margin: 10px;
+    cursor: pointer; 
+    display: inline-block; 
+    font-weight: bold; 
+	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+	#html5-qrcode-button-camera-permission:hover, #html5-qrcode-button-file-selection:hover, .upload-btn:hover {
+		color: #fff;
+		background: #AA205C;
+		border: 1px solid rgba(0, 0, 0, 0);
+        box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+          0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+          0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+          0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+		animation: animated-border-glow 8s infinite linear;  
+	}
+	
+	#html5-qrcode-button-camera-permission:active, #html5-qrcode-button-file-selection:active, .upload-btn:active {
+            transform: scale(0.98);
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px #AA205c;
+            /* Lowering the shadow */
+        }
+
+.link-card {
+	padding: 20px;
+	border: none;
+	border-radius: 2.5rem;
+	background: #f8fafc;
+	text-align: center;
+	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+	.link-card:hover {
+		transform: scale(1.02);
+		animation: animated-border-glow 8s infinite linear;
+	}
+
+/* Ticket Result Card */
+.pnr-card {
+    background: #fff;
+    border: 2px solid rgba(170, 32, 92, 0.5);
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 10px;
+	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+	.pnr-card:hover {
+		border: none;
+		transform: scale(1.02);
+		animation: animated-border-glow 8s infinite linear;
+	}
+
+.pnr-header { 
+    color: #64748b; 
+    font-size: 12px; 
+    font-weight: bold; 
+    margin: 0; 
+    text-transform: uppercase;
+}
+
+.pnr-value { 
+    font-size: 28px; 
+    color: #1e293b; 
+    margin: 5px 0; 
+    letter-spacing: 3px; 
+    font-family: monospace; 
+}
+
+/* Barcode & QR Code Display */
+#barcode-svg { 
+    width: 100%; 
+    max-width: 300px; 
+    height: auto; 
+}
+
+#pnr-qr-code {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+}
+
+#pnr-qr-code img {
+    border: 10px solid white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.index-alert { 
+			color: #AA205C;
+			transition: color 0.3s ease;
+		}
+
+		.index-alert:hover { 
+				/* Key properties for the AI effect */
+			background-image: linear-gradient(
+				90deg,
+				#1a73e8, /* Blue */
+				#34a853, /* Green */
+				#000, 	/* black */
+				#B6C511,
+				#1a73e8, /* Blue again for a smooth loop */
+				#34a853
+			);
+			background-size: 400% 100%; /* Make the gradient wider than the text */
+				-webkit-background-clip: text; /* Clips the background to the text shape */
+			background-clip: text;
+			color: transparent; /* Makes the text itself transparent to show the background */
+			animation: animated-text-color 4s infinite linear; /* New text color animation */		
+		}
+
+     .imgS {
+        border-radius: 10px;
+        margin-left: 10px;
+        max-width:40px;
+		max-height: 90%;
+		float:left;
+		transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	  }
+	  
+	.imgS:hover {
+			animation: animated-border-glow 8s infinite linear;
+			transition: 0.2s all;
+			transform: scale(1.1); 
+		 }			
+		 
+@media print {
+  #printPageButton {
+    display: none;
+  }
+}
+
+/* Keyframes for the new animated border glow */
+@keyframes animated-border-glow {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue */
+    }
+    25% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 255, 100, 0.7); /* Green */
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 100, 100, 0.7); /* Red */
+    }
+    75% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 255, 100, 0.7); /* Yellow */
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue (back to start) */
+    }
+}
+
+/* Define the keyframes for the text color */
+@keyframes animated-text-color {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+/*New keyframe for image animation*/
+@-webkit-keyframes animated-text-color {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
