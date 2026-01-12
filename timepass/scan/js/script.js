@@ -9,6 +9,7 @@ const scanner = new Html5QrcodeScanner("reader", {
     fps: 15, 
     qrbox: { width: 250, height: 180 },
     rememberLastUsedCamera: true,
+    supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA], // Forces camera only for the UI instance
     formatsToSupport: [ 
         Html5QrcodeSupportedFormats.QR_CODE, 
         Html5QrcodeSupportedFormats.CODE_128,
@@ -16,29 +17,44 @@ const scanner = new Html5QrcodeScanner("reader", {
     ]
 });
 
-// START CAMERA: Pass 'true' because this source is the camera
-scanner.render((text) => handleDecodedText(text, true), (err) => {
-    // Silent failure for camera frame-by-frame scanning
-});
+// Safe Render Function to prevent "removeChild" errors on mobile
+async function startScanner() {
+    try {
+        const readerElement = document.getElementById('reader');
+        if (readerElement) readerElement.innerHTML = ""; // Clear any lingering nodes
+        
+        scanner.render((text) => handleDecodedText(text, true), (err) => {
+            // Frame-by-frame errors are ignored for performance
+        });
+    } catch (err) {
+        console.error("Scanner initialization failed:", err);
+    }
+}
+
+// Start the scanner after a short delay for mobile DOM stability
+setTimeout(startScanner, 500);
 
 // 3. File Upload Listener
 document.getElementById('qr-input-file').addEventListener('change', async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    resultContent.innerHTML = "?? Analyzing document...";
+    resultContent.innerHTML = "\u{23F3} Analyzing document...";
 
     if (file.type === "application/pdf") {
         extractTextFromPDF(file);
     } else {
         // Handle image files (JPG/PNG)
+        // We use a separate instance for file scanning to avoid UI conflicts
         const fileScanner = new Html5Qrcode("reader"); 
         try {
             const result = await fileScanner.scanFileV2(file, true);
-            // FILE UPLOAD: Pass 'false' because this is NOT the camera
             handleDecodedText(result.decodedText, false);
+            // Clean up the file scanner after use
+            fileScanner.clear();
         } catch (err) {
-            resultContent.innerHTML = "? No code found in image.";
+            resultContent.innerHTML = "\u{274C} No code found in image.";
+            console.error(err);
         }
     }
 });
@@ -59,68 +75,59 @@ async function extractTextFromPDF(file) {
                 fullText += pageText + " ";
             }
             
-            // PDF UPLOAD: Pass 'false' because this is NOT the camera
             handleDecodedText(fullText, false);
         } catch (err) {
             console.error(err);
-            resultContent.innerHTML = "? Error reading PDF structure.";
+            resultContent.innerHTML = "\u{26A0} Error reading PDF structure.";
         }
     };
     reader.readAsArrayBuffer(file);
 }
 
 // 5. Unified Detection Logic
-// isFromCamera: boolean flag to determine UI behavior
 function handleDecodedText(text, isFromCamera) {
     const rawValue = text.trim();
-    // 1. CLEANING: Remove pipes and extra spaces from PDF text
+    // CLEANING: Remove pipes and extra spaces
     const cleanText = text.replace(/[|"\r\n]/g, " ").replace(/\s+/g, " ");
 
-    // --- CAMERA RULE ---
+    // --- CAMERA RULE (URLs) ---
     if (isFromCamera && (rawValue.includes("http") || rawValue.includes("www."))) {
         return renderLinkButton(rawValue);
     }
 
     // --- EXTRACTION FILTERS ---
 
-    // 1. SBSTC ELECTRONIC RESERVATION SLIP (Priority 1)
-    // Format: W + 7 digits (e.g., W1341120)
+    // 1. SBSTC Reservation Slip (W + 7 digits)
     const sbstcW = cleanText.match(/\b(W\d{7})\b/i);
     if (sbstcW) return renderPNRWithQR(sbstcW[1].toUpperCase(), "Reservation Slip");
 
-    // 2. redBus TICKET NUMBER (Priority 2)
-    // Format: TUDD + 8 digits (e.g., TUDD34597121)
+    // 2. redBus Ticket (TUDD + 8 digits)
     const redBusT = cleanText.match(/\b(TUDD\d{8})\b/i);
     if (redBusT) return renderPNRWithQR(redBusT[1].toUpperCase(), "Ticket Number");
 
-    // 3. SBSTC TICKET NUMBER (Priority 3)
-    // Format: L + 10-11 digits (e.g., L03230064695)
+    // 3. SBSTC Ticket (L + 10-11 digits)
     const sbstcL = cleanText.match(/\b(L\d{10,11})\b/i);
     if (sbstcL) return renderPNRWithQR(sbstcL[1].toUpperCase(), "Ticket Number");
 
-    // 4. TRAIN PNR (Strict 10-digit block)
-    // FILTER: We check if the 10-digit number is NOT a known mobile number from your files
+    // 4. TRAIN PNR (10-digit block, excluding known mobile prefixes)
     const trainMatch = cleanText.match(/\b\d{10}\b/g);
     if (trainMatch) {
         for (let num of trainMatch) {
-            // IGNORE common mobile prefixes or specific numbers found in your tickets
             if (!num.startsWith("890") && !num.startsWith("994") && !num.startsWith("8900")) {
                 return renderPNRWithQR(num, "Train PNR");
             }
         }
     }
 
-    // 5. KEYWORD FILTER (For PNR / Booking No / Flight)
+    // 5. KEYWORD FILTER
     const keywords = /(?:PNR|Booking No|Booking Ref|Ticket Number)[.\/:\s]*/i;
     if (keywords.test(cleanText)) {
         const parts = cleanText.split(keywords);
         for (let i = 1; i < parts.length; i++) {
             let context = parts[i].trim().substring(0, 15);
-            // Grab alphanumeric code (6-12 chars)
             const codeMatch = context.match(/([A-Z0-9]{6,12})/i);
             if (codeMatch) {
                 const code = codeMatch[1].toUpperCase();
-                // BLOCK: Dates (2025/2026) and Passenger count
                 if (!code.startsWith("202") && code !== "1" && code !== "2") {
                     return renderPNRWithQR(code, "Booking Reference");
                 }
@@ -152,12 +159,14 @@ function renderPNRWithQR(value, label) {
 }
 
 function renderLinkButton(url) {
+    // Ensure URL is clickable
+    const validUrl = url.startsWith('http') ? url : `https://${url}`;
     resultContent.innerHTML = `
         <div class="link-card">
             <p style="margin-bottom: 15px; font-weight: bold; color: #AA205C;">\u{1F517} Digital Link Found</p>
-			<p style="margin: 5px; font-weight: normal; color: #717171;">(${url})
-            	<a href="${url}" target="_blank" title="${url}" class="upload-btn">\u{1F446}\u{1F5B2}</a>
-			</p>
+            <p style="margin: 5px; font-weight: normal; color: #717171;">(${url})
+                <a href="${validUrl}" target="_blank" title="${url}" class="upload-btn">\u{1F446}\u{1F5B2}</a>
+            </p>
         </div>
     `;
 }
