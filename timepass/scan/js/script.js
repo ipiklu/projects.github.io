@@ -26,19 +26,27 @@ document.getElementById('qr-input-file').addEventListener('change', async (e) =>
     const file = e.target.files[0];
     if (!file) return;
 
-    resultContent.innerHTML = "\u{23F3} Analyzing document...";
+    resultContent.innerHTML = "⏳ Analyzing document...";
 
     if (file.type === "application/pdf") {
         extractTextFromPDF(file);
     } else {
         // Handle image files (JPG/PNG)
+        // Note: Use a unique ID or ensure the camera scanner is not conflicting
         const fileScanner = new Html5Qrcode("reader"); 
+        
         try {
+            // We pass an object to specify which formats to look for in the image
             const result = await fileScanner.scanFileV2(file, true);
-            // FILE UPLOAD: Pass 'false' because this is NOT the camera
+            
+            // result.decodedText contains the raw value of the barcode/QR
             handleDecodedText(result.decodedText, false);
+            
+            // Cleanup the file scanner instance after use
+            fileScanner.clear(); 
         } catch (err) {
-            resultContent.innerHTML = "\u{274C} No code found in image.";
+            console.warn("Scan error:", err);
+            resultContent.innerHTML = "❌ No barcode or QR code found in this image.";
         }
     }
 });
@@ -76,6 +84,15 @@ function handleDecodedText(text, isFromCamera) {
     // 1. CLEANING: Remove pipes and extra spaces from PDF text
     const cleanText = text.replace(/[|"\r\n]/g, " ").replace(/\s+/g, " ");
 
+	// --- DIRECT MATCH (For raw Barcodes/QR content) ---
+	if (/^[A-Z0-9]{6,10}$/i.test(rawValue)) {
+        // Exclude common false positives like "SUCCESS" or "CANCEL"
+        const blackList = ["SUCCESS", "CANCEL", "ERROR"];
+        if (!blackList.includes(rawValue.toUpperCase())) {
+            return renderPNRWithQR(rawValue.toUpperCase(), "Booking ID");
+        }
+    }
+	
     // --- CAMERA RULE ---
     if (isFromCamera && (rawValue.includes("http") || rawValue.includes("www."))) {
         return renderLinkButton(rawValue);
@@ -97,7 +114,15 @@ function handleDecodedText(text, isFromCamera) {
     // Format: L + 10-11 digits (e.g., L03230064695)
     const sbstcL = cleanText.match(/\b(L\d{10,11})\b/i);
     if (sbstcL) return renderPNRWithQR(sbstcL[1].toUpperCase(), "Ticket Number");
-
+	
+	// IATA BCBP Standard (For QR Code Scans of boarding passes)
+    if (cleanText.startsWith("M1") && cleanText.length > 60) {
+        const pnrFromBCBP = cleanText.substring(23, 29).trim();
+        if (pnrFromBCBP.length === 6) {
+            return renderPNRWithQR(pnrFromBCBP.toUpperCase(), "Airline PNR (from QR)");
+        }
+    }
+	
     // 4. TRAIN PNR (Strict 10-digit block)
     // FILTER: We check if the 10-digit number is NOT a known mobile number from your files
     const trainMatch = cleanText.match(/\b\d{10}\b/g);
@@ -109,7 +134,7 @@ function handleDecodedText(text, isFromCamera) {
             }
         }
     }
-
+	
     // 5. KEYWORD FILTER (For PNR / Booking No / Flight)
     const keywords = /(?:PNR|Booking No|Booking Ref|Ticket Number)[.\/:\s]*/i;
     if (keywords.test(cleanText)) {
