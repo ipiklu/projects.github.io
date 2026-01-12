@@ -127,7 +127,7 @@ span {
 
 	.pnr-card:hover {
 		border: none;
-		transform: scale(1.02);
+		transform: scale(1.1);
 		animation: animated-border-glow 8s infinite linear;
 	}
 
