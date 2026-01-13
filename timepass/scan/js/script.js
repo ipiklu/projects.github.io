@@ -93,6 +93,11 @@ function handleDecodedText(text, isFromCamera) {
         }
     }
 	
+	//--- Handle UPI QR Codes first------
+	if (rawValue.startsWith("upi://pay")) {
+       return renderLinkButton(rawValue);
+    }
+	
     // --- CAMERA RULE ---
     if (isFromCamera && (rawValue.includes("http") || rawValue.includes("www."))) {
         return renderLinkButton(rawValue);
@@ -177,12 +182,27 @@ function renderPNRWithQR(value, label) {
 }
 
 function renderLinkButton(url) {
+    const isUPI = url.startsWith("upi://");
+    
+    // Clean up the display text
+    const displayTitle = isUPI ? "\u{1F4B3} UPI Payment Detected" : "\u{1F517} Digital Link Found";
+    
+    // If it's UPI, don't show the giant raw URL, show a friendly label
+    const displayUrl = isUPI ? "Tap to open your UPI app" : url;
+
     resultContent.innerHTML = `
         <div class="link-card">
-            <p style="margin-bottom: 15px; font-weight: bold; color: #AA205C;">\u{1F517} Digital Link Found</p>
-			<p style="margin: 5px; font-weight: normal; color: #717171;">(${url})
-            	<a href="${url}" target="_blank" title="${url}" class="upload-btn">\u{1F446}\u{1F5B2}</a>
-			</p>
+            <p style="margin-bottom: 15px; font-weight: bold; color: #AA205C;">${displayTitle}</p>
+            <p style="margin: 5px; font-weight: normal; color: #717171; word-break: break-all;">
+                (${displayUrl})
+                <a href="${url}" 
+                   ${isUPI ? '' : 'target="_blank"'} 
+                   title="${url}" 
+                   class="upload-btn" 
+                   style="display: inline-block; margin-left: 10px; text-decoration: none;">
+                   \u{1F446}\u{1F5B2}
+                </a>
+            </p>
         </div>
     `;
 }
