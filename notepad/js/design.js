@@ -18,7 +18,7 @@ function openEditableTab() {
 	  const blobUrl = URL.createObjectURL(blob);
 	  
 	  // 4. Open the new window/tab using the Blob URL
-	  window.open(blobUrl, '_blank');
+	  window.open(blobUrl, '_blank','fullscreen,scrollbars');
 	  
 	  // Clean up the URL once the window is open (optional, but good practice)
 	  // URL.revokeObjectURL(blobUrl); 

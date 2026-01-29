@@ -86,6 +86,22 @@ body::-webkit-scrollbar-track {
 	  animation: animated-text-color 2s linear infinite;
 	}
 }
+
+/* Styles for Dark Mode */
+@media (prefers-color-scheme: light) {
+	body {
+    		background-color: #fff;
+    		color: #121212;
+	}
+}
+
+/* Styles for Dark Mode */
+@media (prefers-color-scheme: dark) {
+	body {
+    		background-color: #1e1e1e;
+    		color: #fff;
+	}
+}
 	
 /* Keyframes for the new animated border glow */
 @keyframes animated-border-glow {

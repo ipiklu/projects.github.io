@@ -16,10 +16,10 @@ const JSON_TABLE = [
 		<tbody>
 			<tr>
 				<td width="38">
-					<a title="Click-To-Open" onClick="window.open('data/bot.txt','bfs','fullscreen,scrollbars');" class="index-alert">\u{1F4C4}</a>
+					<a title="Click-To-Open" onClick="window.open('data/bot.txt','_blank','fullscreen,scrollbars');" class="index-alert">\u{1F4C4}</a>
 				</td>
 				<td>
-					<a title="Click-To-Open" onClick="window.open('data/bot.txt','bfs','fullscreen,scrollbars');" class="index-alert">BotScript</a>
+					<a title="Click-To-Open" onClick="window.open('data/bot.txt','_blank','fullscreen,scrollbars');" class="index-alert">BotScript</a>
 				</td>
 			</tr>
 		</tbody>
@@ -31,7 +31,7 @@ const JSON_TABLE = [
 		<thead> 
 			<tr>
 				<th class="zone-cell" colspan="3">
-					<a title="Click-To-View" onClick="window.open('data/help.pdf','bfs','fullscreen,scrollbars');" class="index-alert">HELP-FOR-SEARCH</a>
+					<a title="Click-To-View" onClick="window.open('data/help.pdf','_blank','fullscreen,scrollbars');" class="index-alert">HELP-FOR-SEARCH</a>
 				</th>
 			</tr>
 			<tr>
@@ -107,34 +107,34 @@ const JSON_TABLE = [
 		<tbody>
 			<tr>
 				<td width="38">
-					<a title="Click-To-Open-Google-Search" onClick="window.open('https://www.google.com','bfs','fullscreen,scrollbars');" class="index-alert">\u{1F310}</a>
+					<a title="Click-To-Open-Google-Search" onClick="window.open('https://www.google.com','_blank','fullscreen,scrollbars');" class="index-alert">\u{1F310}</a>
 				</td>
 				<td align="left">
-					<a title="Click-To-Open-Google-Search" onClick="window.open('https://www.google.com','bfs','fullscreen,scrollbars');" class="index-alert">Google Search</a>
+					<a title="Click-To-Open-Google-Search" onClick="window.open('https://www.google.com','_blank','fullscreen,scrollbars');" class="index-alert">Google Search</a>
 				</td>
 			</tr>
 			<tr>
 				<td width="38">
-					<a title="Click-To-Open-Google-Maps" onClick="window.open('https://google.com/maps','bfs','fullscreen,scrollbars');" class="index-alert">\u{1F5FA}</a>
+					<a title="Click-To-Open-Google-Maps" onClick="window.open('https://google.com/maps','_blank','fullscreen,scrollbars');" class="index-alert">\u{1F5FA}</a>
 				</td>
 				<td align="left">
-					<a title="Click-To-Open-Google-Maps" onClick="window.open('https://google.com/maps','bfs','fullscreen,scrollbars');" class="index-alert">Google Maps</a>
+					<a title="Click-To-Open-Google-Maps" onClick="window.open('https://google.com/maps','_blank','fullscreen,scrollbars');" class="index-alert">Google Maps</a>
 				</td>
 			</tr>
 			<tr>
 				<td width="38">
-					<a title="Click-To-Open-Google-Gemini" onClick="window.open('https://gemini.google.com/','bfs','fullscreen,scrollbars');" class="index-alert">\u{1F916}</a>
+					<a title="Click-To-Open-Google-Gemini" onClick="window.open('https://gemini.google.com/','_blank','fullscreen,scrollbars');" class="index-alert">\u{1F916}</a>
 				</td>
 				<td align="left">
-					<a title="Click-To-Open-Google-Maps" onClick="window.open('https://gemini.google.com/','bfs','fullscreen,scrollbars');" class="index-alert">Google Gemini</a>
+					<a title="Click-To-Open-Google-Maps" onClick="window.open('https://gemini.google.com/','_blank','fullscreen,scrollbars');" class="index-alert">Google Gemini</a>
 				</td>
 			</tr>
 			<tr>
 				<td width="38">
-					<a title="Click-To-Open-Meditate" onClick="window.open('../meditate/index.html','bfs','fullscreen,scrollbars');" class="index-alert">\u{1F9D8}</a>
+					<a title="Click-To-Open-Meditate" onClick="window.open('../meditate/index.html','_blank','fullscreen,scrollbars');" class="index-alert">\u{1F9D8}</a>
 				</td>
 				<td align="left">
-					<a title="Click-To-Open-Meditate" onClick="window.open('../meditate/index.html','bfs','fullscreen,scrollbars');" class="index-alert">Meditate</a>
+					<a title="Click-To-Open-Meditate" onClick="window.open('../meditate/index.html','_blank','fullscreen,scrollbars');" class="index-alert">Meditate</a>
 				</td>
 			</tr>
 		</tbody>
