@@ -88,7 +88,7 @@ const JSON_TABLE = [
 				<td align="left">
 					<a class="index-alert">How to navigate to previous page</a>
 				</td>
-				<td align="left" style="padding: 2px">
+				<td align="left" style="padding: 2px" onClick="popup_tableView()";>
 					<a class="index-alert">Type <i><b style="color: rgba(170, 32, 92, 0.5);">back</b></i>
 					</a>
 				</td>
@@ -302,3 +302,51 @@ const JSON_TABLE = [
 		</table>`
     }
 ];
+
+
+<!---POPUP Table view---> 
+function popup_tableView() {
+    alertify.alert(`
+        <div style="width: 100%; box-sizing: border-box; border-radius: 10px; overflow: hidden;">
+            <table style="width: 100%; max-width: 450px; border: 2px solid #AA205C; table-layout: fixed;">
+                <thead> 
+                    <tr>
+                        <td style="width: 50px; text-align: center; vertical-align: middle;">
+                            <img src="img/arrow.gif" style="width: 38px; height: 38px;">
+                        </td>
+                        <td align="right" style="padding-right: 5px;">
+                            <div class="marquee-container" style="width: 100%; overflow: hidden;">
+                                <span class="marquee-content">
+                                    <span class="loader__dot index-alert" style="font-size: 12px;">Click </span>
+                                    <span class="loader__dot index-alert" style="font-weight: bolder; font-size: 12px;">Download </span>
+                                </span>
+                            </div>
+                            <div class="dropdown">
+                                <button onclick="appDownload()" class="dropbtn" style="background: none; border: none; padding: 0;">
+                                    <img src="img/android-icon.png" class="btn signup btnEffect" title="App Download" style="width: 40px;">
+                                </button>
+                                <div id="myDropdown" class="dropdown-content">
+                                    <a href="data/PeeS_v2.0.apk" download>App v2.0</a>
+                                    <a href="data/PeeS.apk" download>App v1.0</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align: center;">
+                            <a onClick="return(goBack());">
+                                <img src="img/back.gif" title="Go Back" style="width: 25px;"/>
+                            </a>
+                        </td>
+                        <td align="left" style="padding-left: 10px;">
+                            <a onClick="return(goBack());" class="index-alert" style="text-decoration: none;"> /.... </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    `);
+    return false;
+}
