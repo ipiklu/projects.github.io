@@ -307,22 +307,20 @@ const JSON_TABLE = [
 <!---POPUP Table view--(backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);)-> 
 function popup_tableView() {
     alertify.alert(`
-        <div style="width: 100%; box-sizing: border-box; border-radius: 10px; overflow: hidden;">
-            <table style="width: 100%; max-width: 450px; border: 2px solid #AA205C;">
-                <tbody>
-                    <tr>
-                        <td style="width: 60px; text-align: center;">
-                            <a onClick="return(goBack());">
-                                <img src="img/back.gif" title="Go Back" style="width: 25px;"/>
-                            </a>
-                        </td>
-                        <td align="left" style="padding-left: 10px;">
-                            <a onClick="return(goBack());" class="index-alert" style="text-decoration: none;"> /.... </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <table width="500" border="2" bordercolor="#AA205C" style="backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);">
+		<tbody>
+			<tr>
+				<td width="38">
+					<a onClick="return(goBack());">
+						<img src="img/back.gif" title="Click-To-Go-Back" class="btn signup btnEffect" style="max-width:27px";/>
+					</a>
+				</td>
+				<td width="507" align="left">
+					<a onClick="return(goBack());" title="Click-To-Go-Back" class="index-alert"> /.... </a>
+				</td>
+			</tr>
+		</tbody>
+		</table>
     `);
     return false;
 }
