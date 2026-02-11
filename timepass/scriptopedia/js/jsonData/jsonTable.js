@@ -31,7 +31,7 @@ const JSON_TABLE = [
 		<thead> 
 			<tr>
 				<th class="zone-cell" colspan="3">
-					<img src="img/office.webp" title="Click-Below-To-Open-Application" style="max-width:200px;">
+					<img src="img/Office.webp" title="Click-Below-To-Open-Application" style="max-width:200px;">
 				</th>
 			</tr>
 		</thead>
