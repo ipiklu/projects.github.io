@@ -174,7 +174,7 @@ function openExcel() {
 
 <!---MicroSoft Word function (Open locally)--->
 function openWord() {
-	const fileUrl = "https://ipiklu.github.io/projects.github.io/timepass/scriptopedia/data/blank/word.docx";
+	const fileUrl = "https://ipiklu.github.io/projects.github.io/timepass/scriptopedia/data/blank/blank.docx";
 	//Encode only the file URL part
 	window.location.href = "ms-word:ofe|u|" + encodeURI(fileUrl);
 }
