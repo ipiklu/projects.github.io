@@ -26,6 +26,37 @@ const JSON_TABLE = [
 		</table>`
 	},
 	{ 
+		title: "msoffice links",
+		content: `<table width="500" border="2" bordercolor="#AA205C">
+		<thead> 
+			<tr>
+				<th class="zone-cell" colspan="3">
+					<img src="img/office.webp" title="Click-Below-To-Open-Application" style="max-width:200px;">
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					<a onClick="openExcel()" class="index-alert">
+						<img src="img/excel.webp" title="Click-To-Open-Application" style="max-width: 70px;">
+					</a>
+				</td>
+				<td>
+					<a onClick="openWord()" class="index-alert">
+						<img src="img/word.webp" title="Click-To-Open-Application" style="max-width: 70px;">
+					</a>
+				</td>
+				<td>
+					<a onClick="openPowerPoint()" class="index-alert">
+						<img src="img/pptx.png" title="Click-To-Open-Application" style="max-width: 70px;">
+					</a>
+				</td>
+			</tr>
+		</tbody>
+		</table>`
+	},
+	{ 
 		title: "help",
 		content: `<table width="700" border="2" bordercolor="#AA205C">
 		<thead> 

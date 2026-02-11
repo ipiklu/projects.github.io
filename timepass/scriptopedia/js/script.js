@@ -165,6 +165,28 @@ function reloadClear() {
     return false;
 }
 
+<!---MicroSoft Excel function (Open locally)--->
+function openExcel() {
+	const fileUrl = "https://ipiklu.github.io/projects.github.io/timepass/scriptopedia/data/blank/blank.xlsx";
+	//Encode only the file URL part
+	window.location.href = "ms-excel:ofe|u|" + encodeURI(fileUrl);
+}
+
+<!---MicroSoft Word function (Open locally)--->
+function openWord() {
+	const fileUrl = "https://ipiklu.github.io/projects.github.io/timepass/scriptopedia/data/blank/word.docx";
+	//Encode only the file URL part
+	window.location.href = "ms-word:ofe|u|" + encodeURI(fileUrl);
+}
+
+<!---MicroSoft PowerPoint function (Open locally)--->
+function openPowerPoint() {
+	const fileUrl = "https://ipiklu.github.io/projects.github.io/timepass/scriptopedia/data/blank/blank.pptx";
+	//Encode only the file URL part
+	window.location.href = "ms-powerpoint:ofe|u|" + encodeURI(fileUrl);
+}
+
+
 <!---POPUP Coustomization---> 
 	  function view() {
           alertify.alert(`
