@@ -183,7 +183,10 @@ table {
 		  color: #fff;
 		  animation: animated-border-glow 8s infinite linear;
 		}
-		
+	th:active, td:active {
+		transform: scale(0.98);
+		box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); /*Lowering the shadow*/
+	}
 		.index { 
 			color: #AA205C;
 			transition: color 0.3s ease;
