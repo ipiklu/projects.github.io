@@ -271,12 +271,12 @@ const JSON_TABLE = [
                 	</tr>
                     <tr>
                    		<td width="38">
-							<a onClick="window.open('../../Login-v2.0/index.html','bfs','fullscreen,scrollbars');" title="Login_V2 page design">
+							<a onClick="window.open('../../creatives/index.html','bfs','fullscreen,scrollbars');" title="Creative page designs">
 								<img src="img/folder.png" class="btn signup btnEffect" style="max-width:27px"/>
 							</a>
 						</td>
                         <td width="507" align="left">
-							<a onClick="window.open('../../Login-v2.0/index.html','bfs','fullscreen,scrollbars');" title="Login_V2 page design" class="index-alert" > Login-v2.0 </a>
+							<a onClick="window.open('../../creatives/index.html','bfs','fullscreen,scrollbars');" title="Creative page designs" class="index-alert" > Creatives </a>
 						</td>
                 	</tr>
                     <tr>

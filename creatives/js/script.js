@@ -64,9 +64,9 @@ async function clearAllCaches() {
   
   // Create the new "Cache Busting" URL
   const newUrl = cleanUrl + "?t=" + Date.now();
-
+  
   alert("Refreshing local file with timestamp: " + newUrl);
-
+  
   // 5. Force the jump
   window.location.href = newUrl;
 }
