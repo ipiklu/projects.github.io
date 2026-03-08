@@ -31,43 +31,45 @@ function reloadClear() {
     return false;
 }
 
-// Cache refresh
-async function clearAllCaches() {
-  const userConfirmed = confirm("Clear caches and force reload?");
-  if (!userConfirmed) return;
-
-  // 1. Clear Service Worker Caches (Fails silently on file://)
-  try {
-    if (window.caches) {
-      const names = await caches.keys();
-      await Promise.all(names.map(name => caches.delete(name)));
-    }
-  } catch (e) { console.warn("Cache API blocked on local file."); }
-
-  // 2. Unregister Service Workers (Fails silently on file://)
-  try {
-    if (window.navigator && navigator.serviceWorker) {
-      const regs = await navigator.serviceWorker.getRegistrations();
-      for (let reg of regs) { await reg.unregister(); }
-    }
-  } catch (e) { console.warn("Service Worker API blocked on local file."); }
-
-  // 3. Clear Session Storage (Usually allowed, but we wrap it anyway)
-  try { sessionStorage.clear(); } catch (e) {}
-
-  // 4. THE FIX FOR file:// — Manual URL Reconstruction
-  // We use string manipulation because the URL object can be finicky locally
-  let currentHref = window.location.href;
-  
-  // Remove any existing timestamp to prevent ?t=123?t=456
-  let cleanUrl = currentHref.split('?')[0].split('#')[0]; 
-  
-  // Create the new "Cache Busting" URL
-  const newUrl = cleanUrl + "?t=" + Date.now();
-  
-  alert("Refreshing local file with timestamp: " + newUrl);
-  
-  // 5. Force the jump
-  window.location.href = newUrl;
-}
+// Cache refresh (Local & Server - Neuclear Option)
+	// 1. THE LOCKDOWN (Runs immediately)
+	(function lockAndCleanURL() {
+	  const params = new URLSearchParams(window.location.search);
+	  const currentId = params.get('t');
+	  const savedId = sessionStorage.getItem('valid_t_id');
 	
+	  // If we have a saved ID, we MUST match it exactly
+	  if (savedId) {
+		const expectedQuery = "?t=" + savedId;
+		const currentHref = window.location.href;
+	
+		// Check: Does the URL end with exactly "?t=12345"?
+		if (!currentHref.endsWith(expectedQuery)) {
+		  
+		  // FIX THE LOOP: Use replaceState to overwrite the "bad" URL 
+		  // so the browser 'forgets' the user typed anything extra.
+		  const cleanPath = window.location.pathname + expectedQuery;
+		  window.location.replace(cleanPath); 
+		}
+	  }
+	})();
+	
+	// 2. YOUR REFRESH FUNCTION
+	async function clearAllCaches() {
+	  const userConfirmed = confirm("Clear caches and force reload?");
+	  if (!userConfirmed) return;
+	
+	  // ... (Your Cache/Service Worker clearing code) ...
+	
+	  const newId = Date.now().toString();
+	  
+	  // Save to session memory so the Watchdog knows this is the ONLY allowed ID
+	  sessionStorage.setItem('valid_t_id', newId);
+	
+	  const fileName = window.location.pathname.split('/').pop();
+	  const finalUrl = fileName + "?t=" + newId;
+	  
+	
+	  // Use replace to ensure the "pre-cache" URL isn't in the history
+	  window.location.replace(finalUrl);
+	}
