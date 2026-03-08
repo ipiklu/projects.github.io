@@ -32,44 +32,62 @@ function reloadClear() {
 }
 
 // Cache refresh (Local & Server - Neuclear Option)
-	// 1. THE LOCKDOWN (Runs immediately)
-	(function lockAndCleanURL() {
+	// ==========================================
+	// 1. THE WATCHDOG (Runs immediately)
+	// ==========================================
+	(function singleSessionLock() {
 	  const params = new URLSearchParams(window.location.search);
 	  const currentId = params.get('t');
 	  const savedId = sessionStorage.getItem('valid_t_id');
 	
-	  // If we have a saved ID, we MUST match it exactly
 	  if (savedId) {
 		const expectedQuery = "?t=" + savedId;
 		const currentHref = window.location.href;
 	
-		// Check: Does the URL end with exactly "?t=12345"?
-		if (!currentHref.endsWith(expectedQuery)) {
+		// If the URL text is wrong OR the internal stamp is missing
+		if (!currentHref.endsWith(expectedQuery) || !window.history.state || window.history.state.stamp !== savedId) {
 		  
-		  // FIX THE LOOP: Use replaceState to overwrite the "bad" URL 
-		  // so the browser 'forgets' the user typed anything extra.
-		  const cleanPath = window.location.pathname + expectedQuery;
-		  window.location.replace(cleanPath); 
+		  const cleanUrl = window.location.pathname + expectedQuery;
+	
+		  // FIX: Overwrite the current history slot so the 'junk' or 'old' version is erased
+		  window.history.replaceState({ stamp: savedId }, "", cleanUrl);
+		  
+		  // Force reload to the clean version
+		  window.location.replace(cleanUrl);
 		}
 	  }
 	})();
 	
-	// 2. YOUR REFRESH FUNCTION
+	// ==========================================
+	// 2. THE REFRESH FUNCTION
+	// ==========================================
 	async function clearAllCaches() {
-	  const userConfirmed = confirm("Clear caches and force reload?");
+	  const userConfirmed = confirm("Refresh session and overwrite history?");
 	  if (!userConfirmed) return;
 	
-	  // ... (Your Cache/Service Worker clearing code) ...
+	  // Clear existing caches
+	  try {
+		if (window.caches) {
+		  const names = await caches.keys();
+		  await Promise.all(names.map(name => caches.delete(name)));
+		}
+		sessionStorage.clear();
+	  } catch (e) {}
 	
+	  // Generate the NEW unique ID
 	  const newId = Date.now().toString();
 	  
-	  // Save to session memory so the Watchdog knows this is the ONLY allowed ID
+	  // Save to session memory
 	  sessionStorage.setItem('valid_t_id', newId);
 	
-	  const fileName = window.location.pathname.split('/').pop();
+	  const fileName = window.location.pathname.split('/').pop() || "index.html";
 	  const finalUrl = fileName + "?t=" + newId;
-	  
 	
-	  // Use replace to ensure the "pre-cache" URL isn't in the history
+	  // --- THE MAGIC STEP ---
+	  // Instead of just redirecting, we MANUALLY replace the history state first.
+	  // This tells the browser: "The current history entry is now this NEW URL."
+	  window.history.replaceState({ stamp: newId }, "", finalUrl);
+	
+	  // Then we load the new URL content into that same slot
 	  window.location.replace(finalUrl);
 	}
