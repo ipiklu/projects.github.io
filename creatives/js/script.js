@@ -62,7 +62,7 @@ function reloadClear() {
 	// 2. THE REFRESH FUNCTION
 	// ==========================================
 	async function clearAllCaches() {
-	  const userConfirmed = confirm("Refresh session and overwrite history?");
+	  const userConfirmed = confirm("Cache refresh and overwrite history?");
 	  if (!userConfirmed) return;
 	
 	  // Clear existing caches
