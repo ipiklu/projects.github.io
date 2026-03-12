@@ -73,8 +73,8 @@
 	text-shadow: -1px -1px 0 rgba(0,0,0,.5);
 }
 	.alertify-log-error {
-		background: #FE1A00;
-		background: rgba(254,26,0,.9);
+		color: #FE1A00;
+		background: rgba(0,0,0,.5);
 	}
 	.alertify-log-success {
 		background: rgba(0,0,0,.5);

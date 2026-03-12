@@ -186,6 +186,23 @@ function openPowerPoint() {
 	window.location.href = "ms-powerpoint:ofe|u|" + encodeURI(fileUrl);
 }
 
+<!---DB Query formations--->
+	const DB_InsertQueryFormation = () => {
+		let inputTableName;
+		
+		// Prompt the user
+    	inputTableName = prompt("Please enter table name with schema (ex: admin.tableName): ");
+    
+		// If the user cancels or enters nothing
+		if (!inputTableName) {
+			alertify.error("Operation canceled.");
+			return;
+		}
+		const generatedInsertQuery = `INSERT INTO ${inputTableName} (column1, column2, column3) VALUES ('value1', 'value2', 'value3');`;
+		
+		alertify.alert(`<p class="index-alert" style="backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);">${generatedInsertQuery}</p>`);
+	};
+
 
 <!---POPUP Coustomization---> 
 	  function view() {

@@ -331,7 +331,31 @@ const JSON_TABLE = [
                 	</tr>			
 		</tbody>
 		</table>`
-    }
+    },
+	{ 
+		title: "sample insert sql query formation",
+		content: `<table width="500" border="2" bordercolor="#AA205C">
+		<thead> 
+			<tr>
+				<th class="zone-cell" colspan="3">SQL-Query Formation</th>
+			</tr>
+			<tr>
+				<th title="\u{1F447}Press below links to open\u{1F447}" width="50">SQL</th>
+				<th title="\u{1F447}Press below links to open\u{1F447}">Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td width="38">
+					<a title="Click-To-formation-Query" onClick="return(DB_InsertQueryFormation());" class="index-alert">\u{1F5C4}</a>
+				</td>
+				<td>
+					<a title="Click-To-formation-Query" onClick="return(DB_InsertQueryFormation());" class="index-alert">Insert SQL Query Sample</a>
+				</td>
+			</tr>
+		</tbody>
+		</table>`
+	}
 ];
 
 
