@@ -188,21 +188,60 @@ function openPowerPoint() {
 
 <!---DB Query formations--->
 	const DB_InsertQueryFormation = () => {
-		let inputTableName;
-		
-		// Prompt the user
-    	inputTableName = prompt("Please enter table name with schema (ex: admin.tableName): ");
-    
-		// If the user cancels or enters nothing
+		let inputTableName = prompt("Please enter table name with schema (ex: admin.tableName): ");
+	
 		if (!inputTableName) {
 			alertify.error("Operation canceled.");
 			return;
 		}
-		const generatedInsertQuery = `INSERT INTO ${inputTableName} (column1, column2, column3) VALUES ('value1', 'value2', 'value3');`;
-		
-		alertify.alert(`<p class="index-alert" style="backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);">${generatedInsertQuery}</p>`);
+	
+		let columnCount = parseInt(prompt("How many columns are you inserting?"));
+	
+		if (isNaN(columnCount) || columnCount <= 0) {
+			alertify.error("Please enter a valid number of columns.");
+			return;
+		}
+	
+		let columns = [];
+		let values = [];
+	
+		for (let i = 1; i <= columnCount; i++) {
+			let colName = prompt(`Enter name for column ${i}:`);
+			let colValue = prompt(`Enter value for ${colName}:`);
+	
+			columns.push(colName);
+			values.push(`'${colValue}'`);
+		}
+	
+		const generatedInsertQuery = `INSERT INTO ${inputTableName} (${columns.join(', ')}) VALUES (${values.join(', ')});`;
+	
+		// The logic: Flexbox keeps the text and the icon on the same line.
+		// The icon is a clickable span.
+		const content = `
+			<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); padding: 5px;">
+				<span id="queryText" style="word-break: break-all; font-family: monospace;" class="index-alert">${generatedInsertQuery}</span>
+				<span id="copyIcon" style="cursor: pointer; font-size: 20px; user-select: none;" class="index-alert" title="Copy to clipboard">&#10065;</span>
+			</div>
+		`;
+	
+		alertify.alert(content);
+	
+		// Attach the click event to the icon after Alertify renders it
+		setTimeout(() => {
+			const icon = document.getElementById('copyIcon');
+			if (icon) {
+				icon.onclick = () => {
+					navigator.clipboard.writeText(generatedInsertQuery).then(() => {
+						alertify.success("Copied!");
+						// Visual feedback: briefly change the icon
+						icon.classList.add("index-alert");
+						icon.innerHTML = "&#10004;";  // ✅ sign added
+						setTimeout(() => { icon.innerHTML = "&#10065;"; }, 1000);
+					});
+				};
+			}
+		}, 100);
 	};
-
 
 <!---POPUP Coustomization---> 
 	  function view() {
