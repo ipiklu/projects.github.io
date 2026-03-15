@@ -333,24 +333,54 @@ const JSON_TABLE = [
 		</table>`
     },
 	{ 
-		title: "sample insert sql query formation",
-		content: `<table width="500" border="2" bordercolor="#AA205C">
+		title: "sql query build",
+		content: `<p align="left" class="animated-sql">SQL query build functions : </p>
+		<table width="400" border="2" bordercolor="#AA205C">
 		<thead> 
 			<tr>
-				<th class="zone-cell" colspan="3">SQL-Query Formation</th>
-			</tr>
-			<tr>
 				<th title="\u{1F447}Press below links to open\u{1F447}" width="50">SQL</th>
-				<th title="\u{1F447}Press below links to open\u{1F447}">Description</th>
+				<th title="\u{1F447}Press below links to open\u{1F447}">SQL-Query-Build Description</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
 				<td width="38">
-					<a title="Click-To-formation-Query" onClick="return(DB_InsertQueryFormation());" class="index-alert">\u{1F5C4}</a>
+					<a title="Insert-Query-Build" onClick="return(DB_InsertQueryFormation());" class="index-alert">\u{1F5C4}</a>
 				</td>
-				<td>
-					<a title="Click-To-formation-Query" onClick="return(DB_InsertQueryFormation());" class="index-alert">Insert SQL Query Sample</a>
+				<td align="left">
+					<a title="Insert-Query-Build" onClick="return(DB_InsertQueryFormation());" class="index-alert">Insert SQL Query Build</a>
+				</td>
+			</tr>
+			<tr>
+				<td width="38">
+					<a title="Update-Query-Build" onClick="return(DB_UpdateQueryFormation());" class="index-alert">\u{1F6E0}</a>
+				</td>
+				<td align="left">
+					<a title="Update-Query-Build" onClick="return(DB_UpdateQueryFormation());" class="index-alert">Update SQL Query Build</a>
+				</td>
+			</tr>
+			<tr>
+				<td width="38">
+					<a title="Delete-Query-Build" onClick="return(DB_DeleteQueryFormation());" class="index-alert">\u{274C}</a>
+				</td>
+				<td align="left">
+					<a title="Delete-Query-Build" onClick="return(DB_DeleteQueryFormation());" class="index-alert">Delete SQL Query Build</a>
+				</td>
+			</tr>
+			<tr>
+				<td width="38">
+					<a title="Alter-Query-Build" onClick="return(DB_AlterQueryFormation());" class="index-alert">\u{2699}</a>
+				</td>
+				<td align="left">
+					<a title="Alter-Query-Build" onClick="return(DB_AlterQueryFormation());" class="index-alert">Alter SQL Query Build</a>
+				</td>
+			</tr>
+			<tr>
+				<td width="38">
+					<a title="Indexing-Query-Build" onClick="return(DB_CreateIndexQueryFormation());" class="index-alert">\u{1F4C7}</a>
+				</td>
+				<td align="left">
+					<a title="Indexing-Query-Build" onClick="return(DB_CreateIndexQueryFormation());" class="index-alert">Indexing SQL Query Build</a>
 				</td>
 			</tr>
 		</tbody>
