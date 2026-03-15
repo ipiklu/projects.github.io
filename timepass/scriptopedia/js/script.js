@@ -70,14 +70,24 @@ function handleSearch() {
 			// 1. Create the paragraph element
 			const noMatchMsg = document.createElement('div');
 			const helpMsg = document.createElement('div');
+			const imageContainer = document.createElement('div');
 			noMatchMsg.className = "typing NoMatch";
 			helpMsg.className = "typing animated-tick";
+			
+			// Style the image element separately
+			const imgEl = document.createElement('img');
+			imgEl.src = "img/waiting_room_landscape.avif";
+			imgEl.style.maxWidth = "500px"; // Adjust size as needed
+			imageContainer.appendChild(imgEl);
 			
 			// 2. Append it to the container first
 			container.innerHTML = ''; // Clear previous content
 			container.appendChild(noMatchMsg);
 			container.appendChild(document.createElement('br'));
 			container.appendChild(helpMsg);
+			container.appendChild(document.createElement('br'));
+			container.appendChild(document.createElement('br'));
+			container.appendChild(imageContainer);
 			
 			// 3. Trigger the typing effect with your message
 			const message = `No matches found for "${query}"`;
