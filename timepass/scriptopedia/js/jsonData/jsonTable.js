@@ -124,6 +124,18 @@ const JSON_TABLE = [
 					</a>
 				</td>
 			</tr>
+			<tr>
+				<td>
+					<a class="index-alert">5</a>
+				</td>
+				<td align="left">
+					<a class="index-alert">How to build SQL queries</a>
+				</td>
+				<td align="left" style="padding: 2px">
+					<a class="index-alert">Type <i><b style="color: rgba(170, 32, 92, 0.5);">SQL query build</b></i>
+					</a>
+				</td>
+			</tr>
 		</tbody>
 		</table>`
 	},
