@@ -174,6 +174,14 @@ const JSON_TABLE = [
 			</tr>
 			<tr>
 				<td width="38">
+					<a title="Click-To-Open-Web-URL" onClick="popUrl()" class="index-alert">\u{1F4BB}</a>
+				</td>
+				<td align="left">
+					<a title="Click-To-Open-Web-URL" onClick="popUrl()" class="index-alert">Pop Web-URL</a>
+				</td>
+			</tr>
+			<tr>
+				<td width="38">
 					<a title="Click-To-Open-Meditate" onClick="window.open('../meditate/index.html','_blank','fullscreen,scrollbars');" class="index-alert">\u{1F9D8}</a>
 				</td>
 				<td align="left">
