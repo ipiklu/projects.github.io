@@ -12,7 +12,7 @@ const DB_CreateQueryFormation = () => {
     // 1. Get column count (Strict Integer Validation)
     let columnCount;
     while (true) {
-        let countInput = prompt("How many columns are you defining for this table? (Integer number allowed only");
+        let countInput = prompt("How many columns are you defining for this table? (Integer number allowed only)");
         
         // Handle "Cancel" button
         if (countInput === null) {
