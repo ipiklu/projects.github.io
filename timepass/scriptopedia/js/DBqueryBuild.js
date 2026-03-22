@@ -1,5 +1,95 @@
 <!---DB Query formations--->
 
+//------Create Table Build-----------------
+const DB_CreateQueryFormation = () => {
+    let tableName = prompt("Please enter the table name without schema (ex: tableName): DO NOT TYPE ANY SCHEMA");
+
+    if (!tableName) {
+        alertify.error("Operation canceled.");
+        return;
+    }
+
+    // 1. Get column count
+    let columnCount = parseInt(prompt("How many columns are you defining for this table?"));
+    if (isNaN(columnCount) || columnCount <= 0) {
+        alertify.error("Please enter a valid number of columns.");
+        return;
+    }
+
+    let columnDefinitions = [];
+
+    for (let i = 1; i <= columnCount; i++) {
+        let colName = prompt(`(Column ${i}) Enter name for the column:`);
+        
+        // Detailed Example Prompt for Data Types
+        let colType = prompt(
+            `(Column ${i}: ${colName}) Enter Data Type:\n\n` +
+            `Examples:\n` +
+            `• VARCHAR(255) - For text strings\n` +
+			`• VARCHAR2(255) - For text strings\n` +
+            `• INTEGER or BIGINT - For numbers\n` +
+            `• TEXT - For long descriptions\n` +
+            `• BOOLEAN - For true/false\n` +
+            `• DATE / TIMESTAMP - For time data\n` +
+            `• DECIMAL(10,2) - For currency/exact math`, 
+            "VARCHAR(255)"
+        );
+
+        // Detailed Example Prompt for Constraints
+        let constraints = prompt(
+            `(Column ${i}: ${colName}) Enter Constraints (Leave blank if none):\n\n` +
+            `Examples:\n` +
+            `• PRIMARY KEY\n` +
+            `• NOT NULL\n` +
+            `• UNIQUE\n` +
+            `• DEFAULT CURRENT_TIMESTAMP\n` +
+            `• CHECK (price > 0)\n` +
+            `• REFERENCES other_table(id)`, 
+            ""
+        );
+
+        // Build the definition string
+        let definition = `${colName} ${colType}`;
+        if (constraints && constraints.trim() !== "") {
+            definition += ` ${constraints.trim()}`;
+        }
+        
+        columnDefinitions.push(definition);
+    }
+
+    // 2. Construct the Query with proper SQL formatting
+    // We join with a comma and a newline/indent for a clean look
+    const generatedCreateQuery = `CREATE TABLE ${tableName} (\n    ${columnDefinitions.join(',\n    ')}\n);`;
+
+    // 3. UI Logic - Using a single content string for Alertify compatibility
+    const content = `
+        <div style="text-align: left; padding: 5px;">
+            <p style="margin-bottom: 10px; font-weight: bold;" class="index-alert">Generated CREATE TABLE SQL:</p>
+            <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; background: #1e1e1e; padding: 15px; border-radius: 6px; border: 1px solid #333;">
+                <pre id="createQueryText" style="margin: 0; white-space: pre-wrap; word-break: break-all; font-family: 'Consolas', 'Monaco', monospace; font-size: 13px; color: #dcdcdc; flex-grow: 1;">${generatedCreateQuery}</pre>
+                <span id="createCopyIcon" style="cursor: pointer; font-size: 20px; user-select: none; color: #569cd6;" title="Copy to clipboard">&#10065;</span>
+            </div>
+        </div>
+    `;
+
+    // Passing the content as the single argument to ensure Alertify renders it correctly
+    alertify.alert(content);
+
+    // 4. Copy to Clipboard logic
+    setTimeout(() => {
+        const icon = document.getElementById('createCopyIcon');
+        if (icon) {
+            icon.onclick = () => {
+                navigator.clipboard.writeText(generatedCreateQuery).then(() => {
+                    alertify.success("Copied to clipboard!");
+                    icon.innerHTML = "&#10004;"; 
+                    setTimeout(() => { icon.innerHTML = "&#10065;"; }, 1000);
+                });
+            };
+        }
+    }, 200);
+};
+
 //------Insert Build-----------------
 	const DB_InsertQueryFormation = () => {
 		let insertInputTableName = prompt("Please enter table name with schema (ex: admin.tableName): ");

@@ -365,7 +365,15 @@ const JSON_TABLE = [
 		<tbody>
 			<tr>
 				<td width="38">
-					<a title="Insert-Query-Build" onClick="return(DB_InsertQueryFormation());" class="index-alert">\u{1F5C4}</a>
+					<a title="Create-Query-Build" onClick="return(DB_CreateQueryFormation());" class="index-alert">\u{1F5C4}</a>
+				</td>
+				<td align="left">
+					<a title="Create-Query-Build" onClick="return(DB_CreateQueryFormation());" class="index-alert">Create SQL Query Build</a>
+				</td>
+			</tr>
+			<tr>
+				<td width="38">
+					<a title="Insert-Query-Build" onClick="return(DB_InsertQueryFormation());" class="index-alert">\u{1F489}</a>
 				</td>
 				<td align="left">
 					<a title="Insert-Query-Build" onClick="return(DB_InsertQueryFormation());" class="index-alert">Insert SQL Query Build</a>
