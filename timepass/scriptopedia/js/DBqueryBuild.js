@@ -9,24 +9,41 @@ const DB_CreateQueryFormation = () => {
         return;
     }
 
-    // 1. Get column count
-    let columnCount = parseInt(prompt("How many columns are you defining for this table?"));
-    if (isNaN(columnCount) || columnCount <= 0) {
-        alertify.error("Please enter a valid number of columns.");
-        return;
+    // 1. Get column count (Strict Integer Validation)
+    let columnCount;
+    while (true) {
+        let countInput = prompt("How many columns are you defining for this table? (Integer number allowed only");
+        
+        // Handle "Cancel" button
+        if (countInput === null) {
+            alertify.error("Operation canceled.");
+            return;
+        }
+
+        // Regex /^\d+$/ ensures ONLY digits 0-9 are allowed (no decimals, no letters)
+        if (/^\d+$/.test(countInput.trim())) {
+            columnCount = parseInt(countInput);
+            if (columnCount > 0) break; // Valid positive integer found
+        }
+
+        alertify.error("Please enter a valid whole number (e.g., 5).");
     }
 
     let columnDefinitions = [];
 
     for (let i = 1; i <= columnCount; i++) {
         let colName = prompt(`(Column ${i}) Enter name for the column:`);
+        if (!colName) {
+            alertify.error("Column name required. Operation aborted.");
+            return;
+        }
         
         // Detailed Example Prompt for Data Types
         let colType = prompt(
             `(Column ${i}: ${colName}) Enter Data Type:\n\n` +
             `Examples:\n` +
             `• VARCHAR(255) - For text strings\n` +
-			`• VARCHAR2(255) - For text strings\n` +
+            `• VARCHAR2(255) - For text strings\n` +
             `• INTEGER or BIGINT - For numbers\n` +
             `• TEXT - For long descriptions\n` +
             `• BOOLEAN - For true/false\n` +
@@ -34,6 +51,11 @@ const DB_CreateQueryFormation = () => {
             `• DECIMAL(10,2) - For currency/exact math`, 
             "VARCHAR(255)"
         );
+
+        if (!colType) {
+            alertify.error("Data type required. Operation aborted.");
+            return;
+        }
 
         // Detailed Example Prompt for Constraints
         let constraints = prompt(
@@ -49,7 +71,7 @@ const DB_CreateQueryFormation = () => {
         );
 
         // Build the definition string
-        let definition = `${colName} ${colType}`;
+        let definition = `${colName.trim()} ${colType.trim()}`;
         if (constraints && constraints.trim() !== "") {
             definition += ` ${constraints.trim()}`;
         }
@@ -58,8 +80,7 @@ const DB_CreateQueryFormation = () => {
     }
 
     // 2. Construct the Query with proper SQL formatting
-    // We join with a comma and a newline/indent for a clean look
-    const generatedCreateQuery = `CREATE TABLE ${tableName} (\n    ${columnDefinitions.join(',\n    ')}\n);`;
+    const generatedCreateQuery = `CREATE TABLE ${tableName.trim()} (\n    ${columnDefinitions.join(',\n    ')}\n);`;
 
     // 3. UI Logic - Using a single content string for Alertify compatibility
     const content = `
