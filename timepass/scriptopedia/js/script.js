@@ -196,7 +196,7 @@ function openPowerPoint() {
 	window.location.href = "ms-powerpoint:ofe|u|" + encodeURI(fileUrl);
 }
 
-<!---POPUP URL Coustomization---> 
+<!---POPUP URL Coustomization--(HTTPS)-> 
 function popUrl() {
     let url = prompt('URL (e.g: example.com):');
     
@@ -242,6 +242,55 @@ function popUrl() {
     }
 
     let finalUrl = 'https://' + url.trim() + allParams;
+    window.open(finalUrl, 'bfs', 'fullscreen,scrollbars');
+}
+
+<!---POPUP URL Coustomization---(HTTP)> 
+function popUrl_http() {
+    let url = prompt('URL (e.g: example.com):');
+    
+    if (!url || url.trim() === "") return;
+
+    let input;
+    let paramCount = 0;
+
+    while (true) {
+        input = prompt(`How many extra parameters (Integer number only)?\nLeave it blank and either press ok or cancel (InCase of no parameter)\n\n(e.g: ${url}/parameter1)`);
+        
+        if (input === null || input.trim() === "") {
+            paramCount = 0; 
+            break; 
+        }
+
+        if (/^\d+$/.test(input.trim())) {
+            paramCount = parseInt(input);
+            break; 
+        }
+        alert("Error: Please enter a whole number (no decimals or letters).");
+    }
+
+    let allParams = "";
+    let currentPath = url.trim();
+
+    for (let i = 0; i < paramCount; i++) {
+        // Calculate the label for the current step (e.g., parameter1, parameter2)
+        let paramLabel = `parameter${i + 1}`;
+        
+        // Show the specific parameter number in the example prompt
+        let p = prompt(`Enter ${paramLabel}:\n\n(e.g: ${currentPath}/${paramLabel})`);
+        
+        if (p !== null && p.trim() !== "") {
+            let encodedP = encodeURIComponent(p.trim());
+            allParams += '/' + encodedP;
+            // Update the preview path for the next iteration
+            currentPath += '/' + encodedP;
+        } else {
+            // If the user cancels or leaves blank, stop the loop and open what we have
+            break; 
+        }
+    }
+
+    let finalUrl = 'http://' + url.trim() + allParams;
     window.open(finalUrl, 'bfs', 'fullscreen,scrollbars');
 }
 

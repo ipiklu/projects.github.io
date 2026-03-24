@@ -174,10 +174,10 @@ const JSON_TABLE = [
 			</tr>
 			<tr>
 				<td width="38">
-					<a title="Click-To-Open-Web-URL" onClick="popUrl()" class="index-alert">\u{1F4BB}</a>
+					<a title="Click-To-Open-Web-HTTP-URL" onClick="popUrl_http()" class="index-alert">\u{1F4BB}</a>
 				</td>
 				<td align="left">
-					<a title="Click-To-Open-Web-URL" onClick="popUrl()" class="index-alert">Pop Web-URL</a>
+					<a title="Click-To-Open-Web-HTTPS-URL" onClick="popUrl()" class="index-alert">Pop Web-URL</a>
 				</td>
 			</tr>
 			<tr>
