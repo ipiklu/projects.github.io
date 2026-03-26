@@ -57,6 +57,28 @@ const JSON_TABLE = [
 		</table>`
 	},
 	{ 
+		title: "downloads files",
+		content: `<table width="500" border="2" bordercolor="#AA205C">
+		<thead> 
+			<tr>
+				<th class="zone-cell" colspan="3">ZIP-DOWNLOADS</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td width="38">
+					<a title="Click-To-Download" href="data/allnwstatusDashboard.zip" class="index-alert">
+						<img src="img/zip.png" title="Click-To-Open-Application" style="max-width: 70px;">
+					</a>
+				</td>
+				<td align="left">
+					<a title="Click-To-Download"  href="data/allnwstatusDashboard.zip" class="index-alert">allnwstatusDashboard.zip</a>
+				</td>
+			</tr>
+		</tbody>
+		</table>`
+	},
+	{ 
 		title: "help",
 		content: `<table width="700" border="2" bordercolor="#AA205C">
 		<thead> 
