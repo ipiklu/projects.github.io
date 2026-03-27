@@ -2,29 +2,168 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="5">
+    <meta http-equiv="refresh" content="10">
+    <title>Network Mesh Command</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Ultra Compact Monitor</title>
     <style>
-        @keyframes pulse-soft {{ 0%, 100% {{ opacity: 1; }} 50% {{ opacity: 0.3; }} }}
-        .animate-pulse {{ animation: pulse-soft 2s infinite; }}
+        .hidden-zone {{ display: none !important; }}
+        body {{ 
+            scrollbar-width: none; 
+            background: #05070a; 
+            color: #94a3b8; 
+            font-family: ui-monospace, monospace; 
+            margin: 0;
+            padding: 20px;
+        }}
+        
+        .source-card {{ transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }}
+        .target-box {{ transition: opacity 0.2s ease, filter 0.2s ease; }}
+
+        .big-mode-grid {{
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 30px !important;
+            width: 100% !important;
+        }}
+
+        .big-mode .source-card {{
+            padding: 50px !important;
+            border: 2px solid #1e293b !important;
+            background: rgba(15, 23, 42, 0.6);
+        }}
+
+        .big-mode .node-header-text {{ font-size: 32px !important; }}
+        .big-mode .node-sub-text {{ font-size: 18px !important; }}
+        .big-mode .section-title {{ font-size: 16px !important; padding: 12px 0 !important; margin: 20px 0 !important; }}
+        
+        .big-mode .target-grid {{ 
+            grid-template-columns: repeat(4, minmax(0, 1fr)) !important; 
+            gap: 20px !important; 
+        }}
+        
+        .big-mode .target-box {{
+            height: 80px !important;
+            padding: 15px !important;
+        }}
+
+        .big-mode .target-name {{ font-size: 14px !important; }}
+        .big-mode .target-ip {{ font-size: 12px !important; }}
+        .big-mode .status-dot {{ width: 14px !important; height: 14px !important; }}
+
+        input::placeholder {{ color: #334155; }}
     </style>
 </head>
-<body class="bg-[#0f172a] text-slate-200 font-mono p-2 lg:p-4 overflow-x-hidden">
-    <div class="max-w-full mx-auto">
-        
-        <div class="bg-indigo-950 px-3 py-1 border-b border-yellow-500 flex justify-between items-center mb-2">
-            <h1 class="text-xs font-black uppercase text-white tracking-widest">Network Cluster Status</h1>
-            <span class="text-[9px] text-yellow-500 font-bold">{timestamp}</span>
+<body>
+    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-10 border-b border-slate-900 pb-8 gap-6">
+        <div class="flex-shrink-0">
+            <h1 class="text-[16px] font-black uppercase tracking-[0.5em] text-slate-400">NETWORK <span class="text-yellow-600">COMMAND</span></h1>
+            <div class="flex gap-6 mt-3">
+                <div class="flex items-center gap-2">
+                    <div class="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_12px_#10b981]"></div>
+                    <span id="statUp" class="text-[14px] font-bold text-emerald-500 uppercase tracking-tighter">{total_up} ONLINE</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="w-3 h-3 rounded-full bg-rose-500 shadow-[0_0_12px_#f43f5e]"></div>
+                    <span id="statDown" class="text-[14px] font-bold text-rose-500 uppercase tracking-tighter">{total_down} OFFLINE</span>
+                </div>
+            </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-4">
-            {cards}
+        <div class="relative w-full lg:max-w-2xl">
+            <input type="text" id="searchInput" onkeyup="applyFilter()" placeholder="SEARCH NODE, IP, OR TARGET..." 
+                   class="w-full bg-black border-2 border-slate-900 rounded-lg px-6 py-4 text-[13px] text-yellow-500 outline-none focus:border-yellow-700 transition-all uppercase tracking-widest font-bold">
         </div>
 
-        <div class="mt-4 text-[8px] text-slate-600 text-center uppercase tracking-widest">
-            Node: {hostname}
+        <div class="flex items-center gap-8">
+            <select id="zoneFilter" onchange="applyFilter()" class="bg-black border-2 border-slate-800 text-yellow-500 text-[12px] font-bold rounded-lg px-5 py-3 outline-none focus:border-yellow-600 cursor-pointer uppercase">
+                <option value="ALL">OVERVIEW (COMPACT)</option>
+                <option value="Z1">ZONE 1 - FULLSCREEN</option>
+                <option value="Z2">ZONE 2 - FULLSCREEN</option>
+                <option value="Z3">ZONE 3 - FULLSCREEN</option>
+                <option value="Z4">ZONE 4 - FULLSCREEN</option>
+            </select>
+            <div class="text-right border-l-2 border-slate-900 pl-8 hidden xl:block">
+                <p class="text-yellow-700 text-[18px] font-bold tabular-nums italic leading-none">{timestamp}</p>
+            </div>
         </div>
     </div>
+
+    <div id="cardGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+        {cards}
+    </div>
+
+    <script>
+        function applyFilter() {{
+            const zone = document.getElementById('zoneFilter').value;
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const grid = document.getElementById('cardGrid');
+            const cards = document.querySelectorAll('.source-card');
+            
+            localStorage.setItem('activeZone', zone);
+            
+            if (zone === 'ALL') {{
+                grid.className = "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6";
+                grid.classList.remove('big-mode');
+            }} else {{
+                grid.className = "big-mode-grid";
+                grid.classList.add('big-mode');
+            }}
+
+            cards.forEach(card => {{
+                const cardZone = card.getAttribute('data-zone');
+                const nodeName = card.getAttribute('data-node');
+                const targets = card.querySelectorAll('.target-box');
+                
+                let matchInTargets = false;
+
+                targets.forEach(t => {{
+                    const searchData = t.getAttribute('data-search');
+                    const isTargetMatch = searchData.includes(query);
+                    if (isTargetMatch) matchInTargets = true;
+                    
+                    if (query !== "") {{
+                        t.style.opacity = isTargetMatch ? "1" : "0.15";
+                        t.style.filter = isTargetMatch ? "none" : "grayscale(100%)";
+                    }} else {{
+                        t.style.opacity = "1";
+                        t.style.filter = "none";
+                    }}
+                }});
+
+                const zoneMatch = (zone === 'ALL' || cardZone === zone);
+                const queryMatch = (query === "" || nodeName.includes(query) || matchInTargets);
+
+                card.classList.toggle('hidden-zone', !zoneMatch || !queryMatch);
+            }});
+            
+            calculateLiveStats();
+        }}
+
+        function calculateLiveStats() {{
+            const visibleCards = Array.from(document.querySelectorAll('.source-card:not(.hidden-zone)'));
+            let up = 0, down = 0;
+            
+            visibleCards.forEach(card => {{
+                const targets = card.querySelectorAll('.target-box');
+                targets.forEach(t => {{
+                    if (t.style.opacity !== "0.15") {{
+                        if (t.getAttribute('data-status') === "UP") up++;
+                        else down++;
+                    }}
+                }});
+            }});
+            
+            document.getElementById('statUp').innerText = up + " ONLINE";
+            document.getElementById('statDown').innerText = down + " OFFLINE";
+        }}
+
+        window.onload = () => {{
+            const savedZone = localStorage.getItem('activeZone');
+            if (savedZone) {{
+                document.getElementById('zoneFilter').value = savedZone;
+            }}
+            applyFilter();
+        }};
+    </script>
 </body>
 </html>

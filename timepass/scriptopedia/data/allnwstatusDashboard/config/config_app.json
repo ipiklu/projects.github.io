@@ -1,122 +1,202 @@
 [
-    {
-        "remote_source": {
-            "user": "piklu",
-            "host": "127.0.0.1"
-        },
-        "targets": [
-            {"name": "IP1", "ip": "142.250.70.110", "port": 443},
-            {"name": "IP2", "ip": "57.144.124.1", "port": 443},
-            {"name": "IP3", "ip": "17.253.144.10", "port": 443},
-            {"name": "IP4", "ip": "10.0.0.50", "port": 5432},
-            {"name": "IP5", "ip": "10.0.0.51", "port": 5432},
-            {"name": "IP6", "ip": "10.0.0.50", "port": 5432}
-        ],
-        "check_interval": 5
+  {
+    "remote_source": {
+      "user": "piklu",
+      "host": "127.0.0.1",
+      "hostname": "Z1N1",
+      "zone": "Z1"
     },
-    {
-        "remote_source": {
-            "user": "piklu",
-            "host": "128.0.0.1"
-        },
-        "targets": [
-            {"name": "IP1", "ip": "142.250.74.110", "port": 443},
-            {"name": "IP2", "ip": "57.144.124.2", "port": 443},
-            {"name": "IP3", "ip": "17.253.144.15", "port": 443},
-            {"name": "IP4", "ip": "10.0.0.52", "port": 5432},
-            {"name": "IP5", "ip": "10.0.0.51", "port": 5432},
-            {"name": "IP6", "ip": "10.0.0.54", "port": 5432}
-        ],
-        "check_interval": 5
+    "HLR_targets": [
+      {"name": "PGW1", "ip": "142.250.70.110", "port": 443},
+      {"name": "PGW2", "ip": "57.144.124.1", "port": 443},
+      {"name": "PGW3", "ip": "17.253.144.10", "port": 443},
+      {"name": "PGW4", "ip": "10.0.0.50", "port": 5432},
+      {"name": "PGW5", "ip": "10.0.0.51", "port": 5432},
+      {"name": "PGW6", "ip": "10.0.0.50", "port": 5432}
+    ],
+    "AIR_targets": [
+      {"name": "IP1", "ip": "142.250.70.110", "port": 10011},
+      {"name": "IP2", "ip": "57.144.124.1", "port": 10011},
+      {"name": "IP3", "ip": "17.253.144.10", "port": 10011},
+      {"name": "IP4", "ip": "10.0.0.50", "port": 10011},
+      {"name": "IP5", "ip": "10.0.0.51", "port": 10011},
+      {"name": "IP6", "ip": "10.0.0.50", "port": 10011}
+    ],
+    "check_interval": 5
+  },
+  {
+    "remote_source": {
+      "user": "piklu",
+      "host": "128.0.0.1",
+      "hostname": "Z1N2",
+      "zone": "Z1"
     },
-	{
-        "remote_source": {
-            "user": "piklu",
-            "host": "127.0.0.2"
-        },
-        "targets": [
-            {"name": "IP1", "ip": "142.250.74.110", "port": 443},
-            {"name": "IP2", "ip": "57.144.124.2", "port": 443},
-            {"name": "IP3", "ip": "17.253.144.15", "port": 443},
-            {"name": "IP4", "ip": "10.0.0.52", "port": 5432},
-            {"name": "IP5", "ip": "10.0.0.51", "port": 5432},
-            {"name": "IP6", "ip": "10.0.0.54", "port": 5432}
-        ],
-        "check_interval": 5
+    "HLR_targets": [
+      {"name": "PGW1", "ip": "142.250.74.110", "port": 443},
+      {"name": "PGW2", "ip": "57.144.124.2", "port": 443},
+      {"name": "PGW3", "ip": "17.253.144.15", "port": 443},
+      {"name": "PGW4", "ip": "10.0.0.52", "port": 5432},
+      {"name": "PGW5", "ip": "10.0.0.51", "port": 5432},
+      {"name": "PGW6", "ip": "10.0.0.54", "port": 5432}
+    ],
+    "AIR_targets": [
+      {"name": "IP1", "ip": "142.250.70.110", "port": 10011},
+      {"name": "IP2", "ip": "57.144.124.1", "port": 10011},
+      {"name": "IP3", "ip": "17.253.144.10", "port": 10011},
+      {"name": "IP4", "ip": "10.0.0.50", "port": 10011},
+      {"name": "IP5", "ip": "10.0.0.51", "port": 10011},
+      {"name": "IP6", "ip": "10.0.0.50", "port": 10011}
+    ],
+    "check_interval": 5
+  },
+  {
+    "remote_source": {
+      "user": "piklu",
+      "host": "127.0.0.2",
+      "hostname": "Z2N1",
+      "zone": "Z2"
     },
-	{
-        "remote_source": {
-            "user": "piklu",
-            "host": "128.0.0.2"
-        },
-        "targets": [
-            {"name": "IP1", "ip": "142.250.74.110", "port": 443},
-            {"name": "IP2", "ip": "57.144.124.2", "port": 443},
-            {"name": "IP3", "ip": "17.253.144.15", "port": 443},
-            {"name": "IP4", "ip": "10.0.0.52", "port": 5432},
-            {"name": "IP5", "ip": "10.0.0.51", "port": 5432},
-            {"name": "IP6", "ip": "10.0.0.54", "port": 5432}
-        ],
-        "check_interval": 5
+    "HLR_targets": [
+      {"name": "PGW1", "ip": "142.250.74.110", "port": 443},
+      {"name": "PGW2", "ip": "57.144.124.2", "port": 443},
+      {"name": "PGW3", "ip": "17.253.144.15", "port": 443},
+      {"name": "PGW4", "ip": "10.0.0.52", "port": 5432},
+      {"name": "PGW5", "ip": "10.0.0.51", "port": 5432},
+      {"name": "PGW6", "ip": "10.0.0.54", "port": 5432}
+    ],
+    "AIR_targets": [
+      {"name": "IP1", "ip": "142.250.70.110", "port": 10011},
+      {"name": "IP2", "ip": "57.144.124.1", "port": 10011},
+      {"name": "IP3", "ip": "17.253.144.10", "port": 10011},
+      {"name": "IP4", "ip": "10.0.0.50", "port": 10011},
+      {"name": "IP5", "ip": "10.0.0.51", "port": 10011},
+      {"name": "IP6", "ip": "10.0.0.50", "port": 10011}
+    ],
+    "check_interval": 5
+  },
+  {
+    "remote_source": {
+      "user": "piklu",
+      "host": "128.0.0.2",
+      "hostname": "Z2N2",
+      "zone": "Z2"
     },
-	{
-        "remote_source": {
-            "user": "piklu",
-            "host": "127.0.0.3"
-        },
-        "targets": [
-            {"name": "IP1", "ip": "142.250.74.110", "port": 443},
-            {"name": "IP2", "ip": "57.144.124.2", "port": 443},
-            {"name": "IP3", "ip": "17.253.144.15", "port": 443},
-            {"name": "IP4", "ip": "10.0.0.52", "port": 5432},
-            {"name": "IP5", "ip": "10.0.0.51", "port": 5432},
-            {"name": "IP6", "ip": "10.0.0.54", "port": 5432}
-        ],
-        "check_interval": 5
+    "HLR_targets": [
+      {"name": "PGW1", "ip": "142.250.74.110", "port": 443},
+      {"name": "PGW2", "ip": "57.144.124.2", "port": 443},
+      {"name": "PGW3", "ip": "17.253.144.15", "port": 443},
+      {"name": "PGW4", "ip": "10.0.0.52", "port": 5432},
+      {"name": "PGW5", "ip": "10.0.0.51", "port": 5432},
+      {"name": "PGW6", "ip": "10.0.0.54", "port": 5432}
+    ],
+    "AIR_targets": [
+      {"name": "IP1", "ip": "142.250.70.110", "port": 10011},
+      {"name": "IP2", "ip": "57.144.124.1", "port": 10011},
+      {"name": "IP3", "ip": "17.253.144.10", "port": 10011},
+      {"name": "IP4", "ip": "10.0.0.50", "port": 10011},
+      {"name": "IP5", "ip": "10.0.0.51", "port": 10011},
+      {"name": "IP6", "ip": "10.0.0.50", "port": 10011}
+    ],
+    "check_interval": 5
+  },
+  {
+    "remote_source": {
+      "user": "piklu",
+      "host": "127.0.0.3",
+      "hostname": "Z3N1",
+      "zone": "Z3"
     },
-	{
-        "remote_source": {
-            "user": "piklu",
-            "host": "128.0.0.3"
-        },
-        "targets": [
-            {"name": "IP1", "ip": "142.250.74.110", "port": 443},
-            {"name": "IP2", "ip": "57.144.124.2", "port": 443},
-            {"name": "IP3", "ip": "17.253.144.15", "port": 443},
-            {"name": "IP4", "ip": "10.0.0.52", "port": 5432},
-            {"name": "IP5", "ip": "10.0.0.51", "port": 5432},
-            {"name": "IP6", "ip": "10.0.0.54", "port": 5432}
-        ],
-        "check_interval": 5
+    "HLR_targets": [
+      {"name": "PGW1", "ip": "142.250.74.110", "port": 443},
+      {"name": "PGW2", "ip": "57.144.124.2", "port": 443},
+      {"name": "PGW3", "ip": "17.253.144.15", "port": 443},
+      {"name": "PGW4", "ip": "10.0.0.52", "port": 5432},
+      {"name": "PGW5", "ip": "10.0.0.51", "port": 5432},
+      {"name": "PGW6", "ip": "10.0.0.54", "port": 5432}
+    ],
+    "AIR_targets": [
+      {"name": "IP1", "ip": "142.250.70.110", "port": 10011},
+      {"name": "IP2", "ip": "57.144.124.1", "port": 10011},
+      {"name": "IP3", "ip": "17.253.144.10", "port": 10011},
+      {"name": "IP4", "ip": "10.0.0.50", "port": 10011},
+      {"name": "IP5", "ip": "10.0.0.51", "port": 10011},
+      {"name": "IP6", "ip": "10.0.0.50", "port": 10011}
+    ],
+    "check_interval": 5
+  },
+  {
+    "remote_source": {
+      "user": "piklu",
+      "host": "128.0.0.3",
+      "hostname": "Z3N2",
+      "zone": "Z3"
     },
-	{
-        "remote_source": {
-            "user": "piklu",
-            "host": "127.0.0.4"
-        },
-        "targets": [
-            {"name": "IP1", "ip": "142.250.74.110", "port": 443},
-            {"name": "IP2", "ip": "57.144.124.2", "port": 443},
-            {"name": "IP3", "ip": "17.253.144.15", "port": 443},
-            {"name": "IP4", "ip": "10.0.0.52", "port": 5432},
-            {"name": "IP5", "ip": "10.0.0.51", "port": 5432},
-            {"name": "IP6", "ip": "10.0.0.54", "port": 5432}
-        ],
-        "check_interval": 5
+    "HLR_targets": [
+      {"name": "PGW1", "ip": "142.250.74.110", "port": 443},
+      {"name": "PGW2", "ip": "57.144.124.2", "port": 443},
+      {"name": "PGW3", "ip": "17.253.144.15", "port": 443},
+      {"name": "PGW4", "ip": "10.0.0.52", "port": 5432},
+      {"name": "PGW5", "ip": "10.0.0.51", "port": 5432},
+      {"name": "PGW6", "ip": "10.0.0.54", "port": 5432}
+    ],
+    "AIR_targets": [
+      {"name": "IP1", "ip": "142.250.70.110", "port": 10011},
+      {"name": "IP2", "ip": "57.144.124.1", "port": 10011},
+      {"name": "IP3", "ip": "17.253.144.10", "port": 10011},
+      {"name": "IP4", "ip": "10.0.0.50", "port": 10011},
+      {"name": "IP5", "ip": "10.0.0.51", "port": 10011},
+      {"name": "IP6", "ip": "10.0.0.50", "port": 10011}
+    ],
+    "check_interval": 5
+  },
+  {
+    "remote_source": {
+      "user": "piklu",
+      "host": "127.0.0.4",
+      "hostname": "Z4N1",
+      "zone": "Z4"
     },
-	{
-        "remote_source": {
-            "user": "piklu",
-            "host": "128.0.0.4"
-        },
-        "targets": [
-            {"name": "IP1", "ip": "142.250.74.110", "port": 443},
-            {"name": "IP2", "ip": "57.144.124.2", "port": 443},
-            {"name": "IP3", "ip": "17.253.144.15", "port": 443},
-            {"name": "IP4", "ip": "10.0.0.52", "port": 5432},
-            {"name": "IP5", "ip": "10.0.0.51", "port": 5432},
-            {"name": "IP6", "ip": "10.0.0.54", "port": 5432}
-        ],
-        "check_interval": 5
-    }
+    "HLR_targets": [
+      {"name": "PGW1", "ip": "142.250.74.110", "port": 443},
+      {"name": "PGW2", "ip": "57.144.124.2", "port": 443},
+      {"name": "PGW3", "ip": "17.253.144.15", "port": 443},
+      {"name": "PGW4", "ip": "10.0.0.52", "port": 5432},
+      {"name": "PGW5", "ip": "10.0.0.51", "port": 5432},
+      {"name": "PGW6", "ip": "10.0.0.54", "port": 5432}
+    ],
+    "AIR_targets": [
+      {"name": "IP1", "ip": "142.250.70.110", "port": 10011},
+      {"name": "IP2", "ip": "57.144.124.1", "port": 10011},
+      {"name": "IP3", "ip": "17.253.144.10", "port": 10011},
+      {"name": "IP4", "ip": "10.0.0.50", "port": 10011},
+      {"name": "IP5", "ip": "10.0.0.51", "port": 10011},
+      {"name": "IP6", "ip": "10.0.0.50", "port": 10011}
+    ],
+    "check_interval": 5
+  },
+  {
+    "remote_source": {
+      "user": "piklu",
+      "host": "128.0.0.4",
+      "hostname": "Z4N2",
+      "zone": "Z4"
+    },
+    "HLR_targets": [
+      {"name": "PGW1", "ip": "142.250.74.110", "port": 443},
+      {"name": "PGW2", "ip": "57.144.124.2", "port": 443},
+      {"name": "PGW3", "ip": "17.253.144.15", "port": 443},
+      {"name": "PGW4", "ip": "10.0.0.52", "port": 5432},
+      {"name": "PGW5", "ip": "10.0.0.51", "port": 5432},
+      {"name": "PGW6", "ip": "10.0.0.54", "port": 5432}
+    ],
+    "AIR_targets": [
+      {"name": "IP1", "ip": "142.250.70.110", "port": 10011},
+      {"name": "IP2", "ip": "57.144.124.1", "port": 10011},
+      {"name": "IP3", "ip": "17.253.144.10", "port": 10011},
+      {"name": "IP4", "ip": "10.0.0.50", "port": 10011},
+      {"name": "IP5", "ip": "10.0.0.51", "port": 10011},
+      {"name": "IP6", "ip": "10.0.0.50", "port": 10011}
+    ],
+    "check_interval": 5
+  }
 ]

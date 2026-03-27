@@ -1,87 +1,86 @@
-import subprocess
-import time
-import json
-import socket
-import http.server
-import socketserver
-import threading
+import subprocess, time, json, http.server, socketserver, threading
 from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor
 
 CONFIG_FILE = "config/config_app.json"
 TEMPLATE_FILE = "templates/template.html"
 OUTPUT_FILE = "templates/index.html"
 
-def remote_check(user, host, target_ip, target_port):
-    bash_cmd = f"timeout 0.5 bash -c '</dev/tcp/{target_ip}/{target_port}' && echo 'UP' || echo 'DOWN'"
-    ssh_dest = f"{user}@{host}"
-    cmd = ["ssh", "-o", "ConnectTimeout=1", "-o", "BatchMode=yes", ssh_dest, bash_cmd]
+stats = {"up": 0, "down": 0}
+
+def check_port(user, host, target):
+    global stats
+    t_name, t_ip, t_port = target['name'], target['ip'], target['port']
+    cmd = ["ssh", "-o", "ConnectTimeout=1", "-o", "BatchMode=yes", f"{user}@{host}", 
+           f"timeout 0.5 bash -c '</dev/tcp/{t_ip}/{t_port}' && echo 'UP' || echo 'DOWN'"]
     try:
-        result = subprocess.check_output(cmd, stderr=subprocess.DEVNULL, universal_newlines=True)
-        return "UP" in result
-    except:
-        return False
+        res = subprocess.check_output(cmd, stderr=subprocess.DEVNULL, universal_newlines=True)
+        is_up = "UP" in res
+    except: is_up = False
+    
+    if is_up: stats["up"] += 1 
+    else: stats["down"] += 1
+
+    status_class = "border-emerald-500/20 bg-emerald-900/10" if is_up else "border-rose-500/20 bg-rose-900/10"
+    dot_color = "bg-emerald-500 shadow-[0_0_8px_#10b981]" if is_up else "bg-rose-500 shadow-[0_0_8px_#f43f5e]"
+    
+    return f'''
+    <div class="p-1 rounded border {status_class} h-10 flex flex-col justify-center target-box" 
+         data-status="{"UP" if is_up else "DOWN"}" 
+         data-search="{t_name.lower()} {t_ip}">
+        <div class="flex justify-between items-center px-1">
+            <span class="text-[8px] font-bold text-white truncate target-name">{t_name}</span>
+            <div class="h-2 w-2 rounded-full {dot_color} status-dot"></div>
+        </div>
+        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">{t_ip}:{t_port}</p>
+    </div>'''
+
+def process_node(node):
+    src = node['remote_source']
+    h_ip, h_name, zone = src['host'], src['hostname'], src['zone']
+    
+    with ThreadPoolExecutor(max_workers=20) as executor:
+        hlr_html = "".join(list(executor.map(lambda t: check_port(src['user'], h_ip, t), node['HLR_targets'])))
+        air_html = "".join(list(executor.map(lambda t: check_port(src['user'], h_ip, t), node['AIR_targets'])))
+
+    return f'''
+    <div class="source-card bg-slate-900/40 border border-slate-800 p-4 rounded shadow-2xl" data-zone="{zone}" data-node="{h_name.lower()}">
+        <div class="flex justify-between border-b border-slate-800/50 mb-4 pb-2 items-center">
+            <span class="text-yellow-500 font-bold node-header-text uppercase tracking-tighter text-[12px]">{h_name}</span>
+            <span class="node-sub-text text-slate-600 font-bold uppercase tracking-widest text-[9px]">{zone} | {h_ip}</span>
+        </div>
+        <h3 class="section-title text-[9px] font-black text-slate-500 mb-2 uppercase tracking-widest text-center bg-white/5 py-1 rounded-sm">HLR Network</h3>
+        <div class="grid grid-cols-3 gap-2 mb-4 target-grid">{hlr_html}</div>
+        <h3 class="section-title text-[9px] font-black text-slate-500 mb-2 mt-4 uppercase tracking-widest text-center bg-white/5 py-1 rounded-sm">AIR Network</h3>
+        <div class="grid grid-cols-3 gap-2 target-grid">{air_html}</div>
+    </div>'''
 
 def update_loop():
+    global stats
     while True:
         try:
-            with open(CONFIG_FILE, 'r') as f:
-                config_list = json.load(f)
+            stats = {"up": 0, "down": 0}
+            with open(CONFIG_FILE, 'r') as f: config = json.load(f)
+            with ThreadPoolExecutor(max_workers=8) as executor:
+                all_cards = "".join(list(executor.map(process_node, config)))
             
-            all_content_html = ""
-            for section in config_list:
-                u, h = section['remote_source']['user'], section['remote_source']['host']
-                
-                # Start Source Container (takes 1/2 of the main row)
-                all_content_html += f"""
-                <div class="bg-slate-900/50 p-2 border border-slate-800 rounded">
-                    <div class="border-b border-slate-700 mb-2 pb-1">
-                        <span class="text-yellow-500 font-black text-[9px] uppercase tracking-tighter italic">SRC: {u}@{h}</span>
-                    </div>
-                    <div class="grid grid-cols-3 gap-1">
-                """
-
-                for target in section['targets']:
-                    is_up = remote_check(u, h, target['ip'], target['port'])
-                    color = "emerald" if is_up else "rose"
-                    bg = "bg-emerald-950/20 border-emerald-500/20" if is_up else "bg-rose-950/20 border-rose-500/20"
-                    
-                    all_content_html += f"""
-                    <div class="p-1 rounded border {bg} h-10 flex flex-col justify-center">
-                        <div class="flex justify-between items-center px-0.5">
-                            <h2 class="text-[9px] font-bold text-white truncate">{target['name']}</h2>
-                            <div class="h-1.5 w-1.5 rounded-full bg-{color}-500 {'animate-pulse shadow-[0_0_4px_#10b981]' if is_up else ''}"></div>
-                        </div>
-                        <p class="text-slate-500 text-[7px] leading-none mt-0.5 px-0.5">{target['ip']}</p>
-                    </div>
-                    """
-                
-                # Close the Source Container
-                all_content_html += "</div></div>"
-
-            with open(TEMPLATE_FILE, 'r') as f:
-                template = f.read()
-            
-            final_render = template.format(
-                cards=all_content_html,
-                timestamp=datetime.now().strftime("%H:%M:%S"),
-                hostname=socket.gethostname()
-            )
-
+            with open(TEMPLATE_FILE, 'r') as f: template = f.read()
             with open(OUTPUT_FILE, "w") as f:
-                f.write(final_render)
-            
+                f.write(template.format(
+                    cards=all_cards, 
+                    timestamp=datetime.now().strftime("%H:%M:%S"),
+                    total_up=stats["up"],
+                    total_down=stats["down"]
+                ))
             time.sleep(5)
-        except Exception as e:
-            print(f"Error: {e}")
-            time.sleep(5)
+        except Exception as e: print(f"Error: {e}"); time.sleep(2)
 
-class MyHandler(http.server.SimpleHTTPRequestHandler):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, directory="templates", **kwargs)
+class Handler(http.server.SimpleHTTPRequestHandler):
+    def __init__(self, *args, **kwargs): super().__init__(*args, directory="templates", **kwargs)
 
-threading.Thread(target=update_loop, daemon=True).start()
-PORT = 8000
-socketserver.TCPServer.allow_reuse_address = True
-with socketserver.TCPServer(("", PORT), MyHandler) as httpd:
-    print(f"🚀 Nano-Monitor Live: http://localhost:{PORT}")
-    httpd.serve_forever()
+if __name__ == "__main__":
+    threading.Thread(target=update_loop, daemon=True).start()
+    socketserver.TCPServer.allow_reuse_address = True
+    with socketserver.TCPServer(("", 8000), Handler) as httpd:
+        print("Server at http://localhost:8000")
+        httpd.serve_forever()
