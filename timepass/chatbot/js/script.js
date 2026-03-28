@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	
 	// New function to navigate to Color-Code app
 	const goToColorCode = () => {
-      	window.open("../Color-Code/index.html","bfs","fullscreen,scrollbars");
+      	window.open("../color-code/index.html","bfs","fullscreen,scrollbars");
 		return "Opening the Color-Code app for you!";	
 	};			
 	
