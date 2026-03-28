@@ -86,13 +86,29 @@ rgbaOut.addEventListener('input', () => {
  */
 function copy(id) {
     const input = document.getElementById(id);
-    input.select();
-    navigator.clipboard.writeText(input.value);
     
-    const btn = input.nextElementSibling;
-    const originalText = btn.innerText;
-    btn.innerText = "✓";
-    setTimeout(() => btn.innerText = originalText, 1500);
+    // Select the text for visual feedback
+    input.select();
+    input.setSelectionRange(0, 99999); // For mobile devices
+    
+    // Copy to clipboard
+    navigator.clipboard.writeText(input.value).then(() => {
+        // --- Added Alertify Notification ---
+        if (typeof alertify !== 'undefined') {
+            alertify.success("Copied!");
+        }
+
+        // Button visual feedback (Checkmark)
+        const btn = input.nextElementSibling;
+        const originalText = btn.innerText;
+        btn.innerText = "✓";
+        
+        setTimeout(() => {
+            btn.innerText = originalText;
+        }, 1500);
+    }).catch(err => {
+        console.error('Failed to copy: ', err);
+    });
 }
 
 // Event Listeners

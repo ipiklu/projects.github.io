@@ -189,6 +189,8 @@ input[type="text"] {
 	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 input[type="text"]:hover {
+	background: #AA205C;
+	color: #fff;
 	animation: animated-border-glow 8s infinite linear;
     transition: 0.2s all;
 	transform: scale(1.01);
@@ -202,6 +204,7 @@ input[type="text"]:active {
 input[type="range"] {
     width: 100%;
     accent-color: var(--primary-color);
+	cursor:w-resize;
 }
 
 .output-field {
@@ -272,9 +275,14 @@ button:active {
 }
 
 #dark-mode:checked ~ .container input[type="text"] {
+    background: #121212;
+    border-color: #242424;
+    color: white;
+}
+#dark-mode:checked ~ .container input[type="text"]:hover {
     background: #374151;
     border-color: #4b5563;
-    color: white;
+    color: #AA205C;
 }
 
 #dark-mode:checked ~ .container .divider {
