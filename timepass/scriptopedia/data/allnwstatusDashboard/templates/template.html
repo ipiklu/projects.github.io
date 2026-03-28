@@ -17,8 +17,99 @@
         }}
         
         .source-card {{ transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }}
-        .target-box {{ transition: opacity 0.2s ease, filter 0.2s ease; }}
+        .target-box {{ transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }}
+.target-box:hover {{
+		transform: scale(1.7);
+		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+		cursor: pointer;
+		background-color: rgba(0, 0, 0, 0.2);
+		color: #AA205C;
+		animation: animated-border-glow 8s infinite linear;
+	}}
+	.target-box:active {{
+		transform: scale(0.98);
+		box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); /*Lowering the shadow*/
+	}}
+.dropdown {{
+	color: #e0a419;
+	background: #121212;
+	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}}
+.dropdown:hover {{
+		transform: scale(1.0);
+		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+		cursor: pointer;
+		background-color: rgba(0, 0, 0, 0.2);
+		color: #e0a419;
+		background: #121212;
+		animation: animated-border-glow 8s infinite linear;
+	}}
+	.dropdown:active {{
+		transform: scale(0.98);
+		box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); /*Lowering the shadow*/
+	}}	
 
+		.index {{ 
+			color: #e0a419;
+			background: #fff;
+			transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		}}
+
+		.index:hover {{ 
+			transform: scale(1.01);
+			color: #e0a419;
+			background: #121212;
+			cursor: text;
+			animation: animated-border-glow 8s infinite linear;
+		}}
+		.index:active {{
+                	transform: scale(1.0);
+                	box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); /*Lowering the shadow*/
+        	}}
+
+/* Keyframes for the new animated border glow */
+@keyframes animated-border-glow {{
+    0% {{
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue */
+    }}
+    25% {{
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 255, 100, 0.7); /* Green */
+    }}
+    50% {{
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 100, 100, 0.7); /* Red */
+    }}
+    75% {{
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 255, 100, 0.7); /* Yellow */
+    }}
+    100% {{
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue (back to start) */
+    }}
+}}
+
+/* Define the keyframes for the text color */
+@keyframes animated-text-color {{
+  0% {{
+    background-position: 0% 50%;
+  }}
+  100% {{
+    background-position: 100% 50%;
+  }}
+}}
+
+/*New keyframe for image animation*/
+@-webkit-keyframes animated-text-color {{
+  0% {{
+    background-position: 0% 50%;
+  }}
+  100% {{
+    background-position: 100% 50%;
+  }}
+}}		
         .big-mode-grid {{
             display: flex !important;
             flex-direction: column !important;
@@ -71,11 +162,11 @@
 
         <div class="relative w-full lg:max-w-2xl">
             <input type="text" id="searchInput" onkeyup="applyFilter()" placeholder="SEARCH NODE, IP, OR TARGET..." 
-                   class="w-full bg-black border-2 border-slate-900 rounded-lg px-6 py-4 text-[13px] text-yellow-500 outline-none focus:border-yellow-700 transition-all uppercase tracking-widest font-bold">
+                   class="index w-full bg-white border-2 border-slate-900 rounded-lg px-6 py-4 text-[13px] text-yellow-500 outline-none transition-all uppercase tracking-widest font-bold">
         </div>
 
         <div class="flex items-center gap-8">
-            <select id="zoneFilter" onchange="applyFilter()" class="bg-black border-2 border-slate-800 text-yellow-500 text-[12px] font-bold rounded-lg px-5 py-3 outline-none focus:border-yellow-600 cursor-pointer uppercase">
+            <select id="zoneFilter" onchange="applyFilter()" class="dropdown bg-black border-2 border-slate-800 text-yellow-500 text-[12px] font-bold rounded-lg px-5 py-3 outline-none focus:border-yellow-600 cursor-pointer uppercase">
                 <option value="ALL">OVERVIEW (COMPACT)</option>
                 <option value="Z1">ZONE 1 - FULLSCREEN</option>
                 <option value="Z2">ZONE 2 - FULLSCREEN</option>
@@ -92,7 +183,7 @@
         {cards}
     </div>
 
-    <script>
+    <script> 
         function applyFilter() {{
             const zone = document.getElementById('zoneFilter').value;
             const query = document.getElementById('searchInput').value.toLowerCase();

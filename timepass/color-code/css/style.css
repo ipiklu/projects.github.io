@@ -1,0 +1,388 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* --- 1. VARIABLES & RESET --- */
+:root {
+    --primary-color: #AA205C;
+    --card-bg: #ffffff;
+    --text-main: #1e293b;
+    --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden; 
+    position: relative;
+}
+
+/* --- 2. THE BACKGROUND LAYER --- */
+/* This div must be a sibling AFTER the checkbox in HTML */
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #f8fafc; /* Light Mode Default */
+    z-index: 1; 
+    transition: var(--transition);
+}
+
+/* --- 3. TOP NAVIGATION (Logo & Toggle) --- */
+.top-nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100; 
+    pointer-events: none; 
+}
+
+.top-nav a, 
+.top-nav #printPageButton {
+    pointer-events: auto; 
+}
+
+/* --- 4. THE TOGGLE SWITCH UI --- */
+#printPageButton label {
+  position: relative;
+  width: 70px;
+  height: 40px;
+  display: block;
+  background: #d9d9d9;
+  border-radius: 100px;
+  cursor: pointer;
+  margin: 10px;
+  box-shadow: inset 0px 5px 15px rgba(0,0,0,0.3), inset 0px -5px 15px rgba(255,255,255,0.3);
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+#printPageButton label:after {
+  content: '';
+  position: absolute;
+  height: 20px;
+  width: 25px;
+  background: #f2f2f2;
+  border-radius: 100px;
+  top: 10px;
+  left: 10px;
+  transition: 0.1s;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+label:hover{
+	animation: animated-border-glow 8s infinite linear;
+    transition: 0.2s all;
+	transform: scale(1.1); 	
+}
+
+/* Hide the actual checkbox everywhere */
+input[type="checkbox"]#dark-mode {
+    display: none;
+}
+
+/* --- 5. MAIN CONTAINER --- */
+.container {
+    position: relative;
+    z-index: 10; 
+    background: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 640px;
+    transition: var(--transition);
+	animation: animated-border-glow 8s infinite linear;
+}
+
+h1 {
+    font-size: 1.4rem;
+    color: var(--text-main);
+    margin: 0 0 1.5rem 0;
+    text-align: center;
+}
+
+.preview-pane {
+    width: 100%;
+    height: 140px;
+    border-radius: 1rem;
+    margin-bottom: 1.5rem;
+    border: 1px none;
+	outline: none;
+    overflow: hidden;
+    /* Transparency Checkerboard */
+    background-image: linear-gradient(45deg, #eee 25%, transparent 25%, transparent 75%, #eee 75%, #eee), 
+                      linear-gradient(45deg, #eee 25%, white 25%, white 75%, #eee 75%, #eee);
+    background-size: 15px 15px;
+    background-position: 0 0, 7.5px 7.5px;
+	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.preview-pane:hover {
+	animation: animated-border-glow 8s infinite linear;
+    transition: 0.2s all;
+	transform: scale(1.1); 
+}
+#colorDisplay {
+    width: 100%;
+    height: 100%;
+}
+
+.control-row {
+    margin-bottom: 1.2rem;
+}
+
+legend {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 0.5rem;
+}
+
+input[type="color"] {
+    width: 100%;
+    height: 45px;
+    border:none;
+	outline: none;
+    cursor: pointer;
+    background: rgba(0,0,0,0);
+	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+input[type="color"]:hover {
+	animation: animated-border-glow 8s infinite linear;
+    transition: 0.2s all;
+	transform: scale(1.1);
+}
+input[type="color"]:active {
+	transform: scale(0.98);
+    /* Scaling button to 0.98 to its original size */
+    box-shadow: 3px 2px 22px 1px #AA205c;
+    /* Lowering the shadow */
+}
+input[type="text"] {
+    flex-grow: 1;
+	padding: 0.7rem;
+	border-radius: 0.5rem;
+	border: 1px none;
+	font-size: 0.9rem;
+	color: #AA205C;
+	width: 100%;
+    height: 45px;
+    border:none;
+	outline: none;
+    cursor: text;
+    background: rgba(170, 32, 92, 0.3);
+	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+input[type="text"]:hover {
+	animation: animated-border-glow 8s infinite linear;
+    transition: 0.2s all;
+	transform: scale(1.01);
+}
+input[type="text"]:active {
+	transform: scale(1.0);
+    /* Scaling button to 0.98 to its original size */
+    box-shadow: 3px 2px 22px 1px #AA205c;
+    /* Lowering the shadow */
+}
+input[type="range"] {
+    width: 100%;
+    accent-color: var(--primary-color);
+}
+
+.output-field {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+button {
+    padding: 0.7rem 1.2rem;
+    background: #AA205C;
+    color: #242424;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.1s ease;
+}
+
+button:hover {
+    animation: animated-border-glow 8s infinite linear;
+    transition: 0.2s all;
+	transform: scale(1.1);
+    background: #AA205C;
+	color: #fff;
+}
+
+button:active {
+            transform: scale(0.98);
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px #AA205c;
+            /* Lowering the shadow */
+        }
+
+.divider {
+    border: 0;
+    border-top: 1px solid #e2e8f0;
+    margin: 1.5rem 0;
+}
+
+/* --- 6. DARK MODE LOGIC (The "Magic" Selectors) --- */
+
+/* 6a. Change the Background Color */
+#dark-mode:checked ~ .background {
+    background: #242424;
+}
+
+/* 6b. Move the Toggle Switch Knob */
+#dark-mode:checked ~ .top-nav #printPageButton label {
+    background: linear-gradient(180deg,#777,#3a3a3a);
+}
+
+#dark-mode:checked ~ .top-nav #printPageButton label:after {
+    left: 34px;
+	background: #242424;
+}
+
+/* 6c. Darken the Container */
+#dark-mode:checked ~ .container {
+    background: #242424;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* 6d. Update Text & Inputs inside Dark Container */
+#dark-mode:checked ~ .container h1,
+#dark-mode:checked ~ .container legend {
+    color: #f3f4f6;
+}
+
+#dark-mode:checked ~ .container input[type="text"] {
+    background: #374151;
+    border-color: #4b5563;
+    color: white;
+}
+
+#dark-mode:checked ~ .container .divider {
+    border-top-color: #374151;
+}
+
+/* --- 7. RESPONSIVE --- */
+@media (max-width: 480px) {
+    .top-nav { padding: 15px 20px; }
+    .container { padding: 1.5rem; }
+}
+
+.index-alert { 
+			color: #AA205C;
+			transition: color 0.3s ease;
+		}
+
+		.index-alert:hover { 
+				/* Key properties for the AI effect */
+			cursor: pointer;	
+			background-image: linear-gradient(
+				90deg,
+				#1a73e8, /* Blue */
+				#34a853, /* Green */
+				#000, 	/* black */
+				#B6C511,
+				#1a73e8, /* Blue again for a smooth loop */
+				#34a853
+			);
+			background-size: 400% 100%; /* Make the gradient wider than the text */
+				-webkit-background-clip: text; /* Clips the background to the text shape */
+			background-clip: text;
+			color: transparent; /* Makes the text itself transparent to show the background */
+			animation: animated-text-color 4s infinite linear; /* New text color animation */		
+		}
+		
+.imgS {
+        border-radius: 10px;
+        margin-left: 10px;
+        max-width:40px;
+		max-height: 90%;
+		float:left;
+		transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	  }
+	  
+	.imgS:hover {
+			animation: animated-border-glow 8s infinite linear;
+			transition: 0.2s all;
+			transform: scale(1.1); 
+		 }
+		 .imgS:active {
+            transform: scale(0.98);
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px #AA205c;
+            /* Lowering the shadow */
+        }
+/* Keyframes for the new animated border glow */
+@keyframes animated-border-glow {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue */
+    }
+    25% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 255, 100, 0.7); /* Green */
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 100, 100, 0.7); /* Red */
+    }
+    75% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 255, 100, 0.7); /* Yellow */
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue (back to start) */
+    }
+}
+
+/* Define the keyframes for the text color */
+@keyframes animated-text-color {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+/*New keyframe for image animation*/
+@-webkit-keyframes animated-text-color {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+/* The keyframes that define the animation */
+@keyframes marquee-animation {
+    0%   { transform: translateX(0); } /* Starting point: right side of the container */
+    100% { transform: translateX(-100%); } /* Ending point: moves to the left by the width of the container */
+}
+
+@keyframes blink { 50% { opacity: 0;  color: transparent;} }
+		.loader__dot { animation: 1s blink infinite }
+		.loader__dot:nth-child(2) { animation-delay: 250ms }
+		.loader__dot:nth-child(3) { animation-delay: 500ms }			
+		 

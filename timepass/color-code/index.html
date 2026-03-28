@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color-Code</title>
+    <link rel = "icon" href="img/s.gif" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <!---Alert--->
+	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.core.css" />
+	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.default.css" />
+    <script src="../../alertify.js-0.3.11/lib/alertify.min.js"></script>    
+</head>
+<body>
+    <input type="checkbox" id="dark-mode">
+
+    <div class="background"></div>
+
+    <header class="top-nav">
+        <a href="../../index.html" title="Home">
+            <img alt="logo" src="img/s.gif" class="imgS">
+        </a>
+        
+        <div id="printPageButton">
+            <label for="dark-mode"></label>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1><a class="index-alert" onClick="reloadClear()" title="Reload">Color-Code Generator</a><span class="loader__dot" style="color:#AA205C;">.</span><span class="loader__dot" style="color:#AA205C;">.</span><span class="loader__dot" style="color:#AA205C;">.</span><span onClick="return(view());" title="About Us"><img alt="about-us-icon" src="img/LOADING.gif" style="width:50px; cursor:pointer;"></span>
+     			<img src="img/back.gif" onClick="window.location='../server/index.html'" title="Go back to main library" class="imgS" style="max-width:20px; float:right !important; cursor:pointer;" /></h1>
+        <div class="preview-pane">
+            <div id="colorDisplay"></div>
+        </div>
+
+        <div class="control-row">
+            <legend>Select Color</legend>
+            <input type="color" title="Click-To-Pick-Color-Plate" id="picker" value="#B6C511">
+        </div>
+
+        <div class="control-row">
+            <legend>Opacity (Alpha): <span id="alphaLabel">100%</span></legend>
+            <input type="range" id="alpha" min="0" max="100" value="100">
+        </div>
+
+        <hr class="divider">
+
+        <legend>HEX Code</legend>
+        <div class="output-field">
+            <input type="text" id="hexOut">
+            <button onclick="copy('hexOut')">&#10065;</button>
+        </div>
+
+        <legend>RGBA Value</legend>
+        <div class="output-field">
+            <input type="text" id="rgbaOut">
+            <button onclick="copy('rgbaOut')">&#10065;</button>
+        </div>
+        
+        
+         <!-------Footer------------------------------------------>  
+            <footer align="center" style="position:relative; color:#AA205C; bottom: 0; width: 100%;">
+            <center> <font color="#AA205C">
+               <p id="date"> </p>
+               <script>
+                document.getElementById("date").innerHTML = Date();
+               </script> </font></center>
+                    <p>|| Copyright protected &copy; <script>document.write(new Date().getFullYear())</script>, All Rights Not Reserved ||</p>
+                    <p> Design by Sayantan Kundu || <a style="color:#AA205C; font-size:12px; font-weight: bold;" href="../../sitemap/index.html" title="Sitemap">Sitemap </a>||</p>
+                </footer> 
+        
+    </main>
+
+    <script src="js/script.js"></script>    
+</body>
+</html>

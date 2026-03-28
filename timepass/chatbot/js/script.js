@@ -183,6 +183,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	const goToMeditate = () => {
       	window.open("../meditate/index.html","bfs","fullscreen,scrollbars");
 		return "Opening the meditate app for you!";	
+	};
+	
+	// New function to navigate to Color-Code app
+	const goToColorCode = () => {
+      	window.open("../Color-Code/index.html","bfs","fullscreen,scrollbars");
+		return "Opening the Color-Code app for you!";	
 	};			
 	
 	// New function to navigate to scan app
@@ -512,6 +518,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		"meditat":goToMeditate,
 		"scan":goToScan,
 		"barcode":goToScan,
+		"color code":goToColorCode,
+		"color code generator":goToColorCode,
+		"color generator":goToColorCode,
 		"love you": "I love you Humann... \u{1F600} \n\n \u{1F618}",
         "what is the meaning of life": "That is a complex question! I'm not advanced enough to answer that one. But keep exploring!",
 		"what is your age": "I don't have an age in the way humans do. I was created to help with HTML, CSS, and JavaScript, so you could say my age is defined by the moment my code runs! 🤔",

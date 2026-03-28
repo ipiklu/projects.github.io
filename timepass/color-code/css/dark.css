@@ -1,0 +1,50 @@
+
+
+.background {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: #f8fafc; /* Light default */
+    z-index: 1;
+    transition: 0.5s ease;
+}
+
+/* The Switch Style */
+label {
+    position: relative;
+    width: 60px; height: 30px;
+    background: #d9d9d9;
+    border-radius: 100px;
+    display: block;
+    cursor: pointer;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+}
+
+label:after {
+    content: '';
+    position: absolute;
+    top: 5px; left: 5px;
+    width: 20px; height: 20px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+input[type="checkbox"] { display: none; }
+
+/* Dark Mode Transitions */
+input:checked ~ label { background: #4f46e5; }
+input:checked ~ label:after { left: 35px; }
+
+/* CHANGE BACKGROUND COLOR HERE */
+#dark-mode:checked ~ .background {
+    background: #1a1a1a;
+}
+
+/* Update Container for Dark Mode */
+#dark-mode:checked ~ .container {
+    background: #2d2d2d;
+    color: white;
+}
+
+#dark-mode:checked ~ .container h1 { color: white; }
