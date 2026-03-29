@@ -3,19 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="refresh" content="10">
-    <title>Network Mesh Command</title>
+    <title>Network Control</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* 1. Global Styles */
+        body { background: #05070a; color: #94a3b8; font-family: monospace; padding: 20px; scrollbar-width: none; }
         .hidden-zone { display: none !important; }
-        body { background: #05070a; color: #94a3b8; font-family: ui-monospace, monospace; padding: 20px; scrollbar-width: none; }
-        .source-card { transition: all 0.3s ease; }
-        .target-box { transition: all 0.2s; }
-        .target-box:hover { transform: scale(1.1); background: #000 !important; z-index: 10; border-color: #e0a419 !important; }
-        
-        /* Zone View / Big Mode Layout */
-        .big-mode-grid { display: flex !important; flex-direction: column !important; gap: 40px !important; }
+
+        /* 2. Network Heading Styling (Centered & Highlighted) */
+        .network-heading {
+            font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.4em;
+            text-align: center; color: white; background: rgba(255, 255, 255, 0.08);
+            padding: 8px 0; margin: 15px 0; border-radius: 4px;
+            border-left: 1px solid rgba(255,255,255,0.1); border-right: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* 3. Target Card Base Styling */
+        .target-box {
+            background: #0f172a; border: 1px solid #1e293b; border-radius: 4px;
+            padding: 6px; height: 45px; display: flex; flex-direction: column;
+            justify-content: center; transition: all 0.2s; position: relative;
+        }
+
+        /* 4. Target Card Status Logic */
+        .target-box[data-status="UP"] { border-left: 3px solid #10b981; background: rgba(16, 185, 129, 0.05); }
+        .target-box[data-status="UP"] .status-indicator { background: #10b981; box-shadow: 0 0 8px #10b981; }
+
+        .target-box[data-status="DOWN"] { border-left: 3px solid #f43f5e; background: rgba(244, 63, 94, 0.05); }
+        .target-box[data-status="DOWN"] .status-indicator { background: #f43f5e; box-shadow: 0 0 8px #f43f5e; }
+
+        /* 5. Hover Capabilities */
+        .target-box:hover {
+            transform: scale(1.1); z-index: 50; background: #000;
+            border-color: #e0a419; box-shadow: 0 0 15px rgba(224, 164, 25, 0.4);
+        }
+
+        /* 6. Typography */
+        .target-label { font-size: 9px; font-weight: bold; color: white; display: block; overflow: hidden; text-overflow: ellipsis; }
+        .target-subtext { font-size: 7px; color: #64748b; }
+        .status-indicator { width: 8px; height: 8px; border-radius: 50%; }
+        .target-header { display: flex; justify-content: space-between; align-items: center; }
+
+        /* 7. Source Card Containers */
+        .source-card { background: rgba(15, 23, 42, 0.6); border: 1px solid #1e293b; padding: 15px; border-radius: 8px; }
+        .node-header { display: flex; justify-content: space-between; border-bottom: 1px solid #1e293b; margin-bottom: 15px; padding-bottom: 5px; }
+        .node-title { color: #e0a419; font-weight: bold; font-size: 13px; }
+        .node-meta { font-size: 9px; color: #475569; }
+        .target-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+
+        /* 8. Layout Modes */
+        .big-mode-grid { display: flex !important; flex-direction: column !important; gap: 30px; }
         .big-mode .target-grid { grid-template-columns: repeat(6, 1fr) !important; }
-        .big-mode .source-card { border-width: 2px; border-color: #1e293b; }
     </style>
 </head>
 <body>
@@ -28,24 +66,24 @@
             </div>
         </div>
 
-        <input type="text" id="searchInput" onkeyup="applyFilter()" placeholder="SEARCH IP OR NODE..." 
-               class="bg-white px-4 py-2 rounded text-xs text-black font-bold outline-none w-64 uppercase border-2 border-slate-900 focus:border-yellow-600 transition-colors">
+        <input type="text" id="searchInput" onkeyup="applyFilter()" placeholder="SEARCH..." 
+               class="bg-white px-4 py-2 rounded text-xs text-black font-bold outline-none w-64 uppercase border-2 border-slate-900 focus:border-yellow-600">
 
         <div class="flex gap-2">
-            <select id="typeFilter" onchange="applyFilter()" class="bg-black border border-slate-800 text-yellow-500 text-[10px] p-2 rounded uppercase font-bold outline-none cursor-pointer hover:border-slate-600">
+            <select id="typeFilter" onchange="applyFilter()" class="bg-black border border-slate-800 text-yellow-500 text-[10px] p-2 rounded uppercase font-bold outline-none">
                 <option value="ALL">ALL TYPES</option>
                 <option value="HLR">HLR</option>
                 <option value="AIR">AIR</option>
                 <option value="INUM">INUM</option>
             </select>
-            <select id="zoneFilter" onchange="applyFilter()" class="bg-black border border-slate-800 text-yellow-500 text-[10px] p-2 rounded uppercase font-bold outline-none cursor-pointer hover:border-slate-600">
+            <select id="zoneFilter" onchange="applyFilter()" class="bg-black border border-slate-800 text-yellow-500 text-[10px] p-2 rounded uppercase font-bold outline-none">
                 <option value="ALL">COMPACT VIEW</option>
                 <option value="Z1">ZONE 1</option>
                 <option value="Z2">ZONE 2</option>
                 <option value="Z3">ZONE 3</option>
                 <option value="Z4">ZONE 4</option>
             </select>
-            <div class="text-yellow-700 font-bold text-xs p-2 tabular-nums border-l border-slate-900 ml-2">{timestamp}</div>
+            <div class="text-yellow-700 font-bold text-xs p-2 tabular-nums">{timestamp}</div>
         </div>
     </div>
 
@@ -61,69 +99,37 @@
             const grid = document.getElementById('cardGrid');
             const cards = document.querySelectorAll('.source-card');
 
-            // Save choice so it doesn't reset on refresh
-            localStorage.setItem('activeZone', selectedZone);
-            localStorage.setItem('activeType', selectedType);
-
-            // Change grid layout if a specific Zone is picked
-            if (selectedZone === 'ALL') {
-                grid.className = "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6";
-            } else {
-                grid.className = "big-mode-grid big-mode";
-            }
+            grid.className = selectedZone === 'ALL' ? "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6" : "big-mode-grid big-mode";
 
             cards.forEach(card => {
                 const cardZone = card.getAttribute('data-zone');
                 const nodeName = card.getAttribute('data-node');
-                const sections = card.querySelectorAll('.category-section');
-                
-                // Rule 1: Does the card match the Zone?
                 const isZoneMatch = (selectedZone === 'ALL' || cardZone === selectedZone);
-                
+                const sections = card.querySelectorAll('.category-section');
                 let cardHasVisibleContent = false;
 
                 sections.forEach(sec => {
                     const secCat = sec.getAttribute('data-category');
-                    // Rule 2: Does this section match the Type filter?
                     const isTypeMatch = (selectedType === 'ALL' || secCat === selectedType);
                     
                     if (isTypeMatch) {
                         const targets = sec.querySelectorAll('.target-box');
                         let sectionHasSearchMatch = false;
-
                         targets.forEach(t => {
-                            const searchInfo = t.getAttribute('data-search');
-                            const isSearchMatch = searchInfo.includes(searchQuery) || nodeName.includes(searchQuery);
-                            
-                            // Dim the target if it doesn't match search, but keep it there
-                            t.style.opacity = (searchQuery === "" || isSearchMatch) ? "1" : "0.1";
-                            if (isSearchMatch) sectionHasSearchMatch = true;
+                            const match = t.getAttribute('data-search').includes(searchQuery) || nodeName.includes(searchQuery);
+                            t.style.opacity = (searchQuery === "" || match) ? "1" : "0.1";
+                            if (match) sectionHasSearchMatch = true;
                         });
-
-                        // Show section only if type matches and search matches (or search is empty)
-                        const shouldShowSection = (searchQuery === "" || sectionHasSearchMatch || nodeName.includes(searchQuery));
-                        sec.style.display = shouldShowSection ? "block" : "none";
-                        
-                        if (shouldShowSection) cardHasVisibleContent = true;
+                        const shouldShow = (searchQuery === "" || sectionHasSearchMatch || nodeName.includes(searchQuery));
+                        sec.style.display = shouldShow ? "block" : "none";
+                        if (shouldShow) cardHasVisibleContent = true;
                     } else {
                         sec.style.display = "none";
                     }
                 });
-
-                // Final Card Visibility: Must match Zone AND have content inside
-                const finalVisible = isZoneMatch && cardHasVisibleContent;
-                card.classList.toggle('hidden-zone', !finalVisible);
+                card.classList.toggle('hidden-zone', !isZoneMatch || !cardHasVisibleContent);
             });
         }
-
-        // Restore filters on page load
-        window.onload = () => {
-            const z = localStorage.getItem('activeZone');
-            const t = localStorage.getItem('activeType');
-            if (z) document.getElementById('zoneFilter').value = z;
-            if (t) document.getElementById('typeFilter').value = t;
-            applyFilter();
-        };
     </script>
 </body>
 </html>

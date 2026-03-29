@@ -22,17 +22,16 @@ def check_port(user, host, target):
     if is_up: stats["up"] += 1 
     else: stats["down"] += 1
 
-    status_class = "border-emerald-500/20 bg-emerald-900/10" if is_up else "border-rose-500/20 bg-rose-900/10"
-    dot_color = "bg-emerald-500 shadow-[0_0_8px_#10b981]" if is_up else "bg-rose-500 shadow-[0_0_8px_#f43f5e]"
-    
+    # We only pass the status and basic structure. CSS does the rest.
     return f'''
-    <div class="p-1 rounded border {status_class} h-10 flex flex-col justify-center target-box" 
-         data-status="{"UP" if is_up else "DOWN"}" data-search="{t_name.lower()} {t_ip}">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate">{t_name}</span>
-            <div class="h-2 w-2 rounded-full {dot_color}"></div>
+    <div class="target-box" data-status="{"UP" if is_up else "DOWN"}" data-search="{t_name.lower()} {t_ip}">
+        <div class="target-inner">
+            <div class="target-header">
+                <span class="target-label">{t_name}</span>
+                <div class="status-indicator"></div>
+            </div>
+            <p class="target-subtext">{t_ip}:{t_port}</p>
         </div>
-        <p class="text-[7px] text-slate-500 truncate px-1">{t_ip}:{t_port}</p>
     </div>'''
 
 def process_node(node):
@@ -48,16 +47,16 @@ def process_node(node):
     def make_section(label, content):
         if not content: return ""
         return f'''
-        <div class="category-section mb-6" data-category="{label}">
-            <h3 class="text-[9px] font-black text-white mb-3 uppercase tracking-[0.4em] text-center bg-white/10 py-1.5 rounded-sm shadow-sm border-x border-white/5">{label} Network</h3>
-            <div class="grid grid-cols-3 gap-2 target-grid">{content}</div>
+        <div class="category-section" data-category="{label}">
+            <h3 class="network-heading">{label} Network</h3>
+            <div class="target-grid">{content}</div>
         </div>'''
 
     return f'''
-    <div class="source-card bg-slate-900/40 border border-slate-800 p-4 rounded shadow-2xl" data-zone="{zone}" data-node="{h_name.lower()}">
-        <div class="flex justify-between border-b border-slate-800/50 mb-6 pb-2 items-center">
-            <span class="text-yellow-500 font-bold uppercase tracking-tighter text-[12px]">{h_name}</span>
-            <span class="text-slate-600 font-bold uppercase tracking-widest text-[9px]">{zone} | {h_ip}</span>
+    <div class="source-card" data-zone="{zone}" data-node="{h_name.lower()}">
+        <div class="node-header">
+            <span class="node-title">{h_name}</span>
+            <span class="node-meta">{zone} | {h_ip}</span>
         </div>
         {make_section("HLR", hlr_html)}
         {make_section("AIR", air_html)}
@@ -87,5 +86,5 @@ if __name__ == "__main__":
     threading.Thread(target=update_loop, daemon=True).start()
     socketserver.TCPServer.allow_reuse_address = True
     with socketserver.TCPServer(("", 8000), Handler) as httpd:
-        print("Server running at http://localhost:8000")
+        print("UI Logic Handed to CSS. Server at http://localhost:8000")
         httpd.serve_forever()
