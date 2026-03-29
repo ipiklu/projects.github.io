@@ -6,176 +6,46 @@
     <title>Network Mesh Command</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .hidden-zone {{ display: none !important; }}
-        body {{ 
-            scrollbar-width: none; 
-            background: #05070a; 
-            color: #94a3b8; 
-            font-family: ui-monospace, monospace; 
-            margin: 0;
-            padding: 20px;
-        }}
+        .hidden-zone { display: none !important; }
+        body { background: #05070a; color: #94a3b8; font-family: ui-monospace, monospace; padding: 20px; scrollbar-width: none; }
+        .source-card { transition: all 0.3s ease; }
+        .target-box { transition: all 0.2s; }
+        .target-box:hover { transform: scale(1.1); background: #000 !important; z-index: 10; border-color: #e0a419 !important; }
         
-        .source-card {{ transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }}
-        .target-box {{ transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }}
-.target-box:hover {{
-		transform: scale(1.7);
-		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-		cursor: pointer;
-		background-color: rgba(0, 0, 0, 0.2);
-		color: #AA205C;
-		animation: animated-border-glow 8s infinite linear;
-	}}
-	.target-box:active {{
-		transform: scale(0.98);
-		box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); /*Lowering the shadow*/
-	}}
-.dropdown {{
-	color: #e0a419;
-	background: #121212;
-	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}}
-.dropdown:hover {{
-		transform: scale(1.0);
-		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-		cursor: pointer;
-		background-color: rgba(0, 0, 0, 0.2);
-		color: #e0a419;
-		background: #121212;
-		animation: animated-border-glow 8s infinite linear;
-	}}
-	.dropdown:active {{
-		transform: scale(0.98);
-		box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); /*Lowering the shadow*/
-	}}	
-
-		.index {{ 
-			color: #e0a419;
-			background: #fff;
-			transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-		}}
-
-		.index:hover {{ 
-			transform: scale(1.01);
-			color: #e0a419;
-			background: #121212;
-			cursor: text;
-			animation: animated-border-glow 8s infinite linear;
-		}}
-		.index:active {{
-                	transform: scale(1.0);
-                	box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); /*Lowering the shadow*/
-        	}}
-
-/* Keyframes for the new animated border glow */
-@keyframes animated-border-glow {{
-    0% {{
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
-                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue */
-    }}
-    25% {{
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
-                    0 0 10px rgba(100, 255, 100, 0.7); /* Green */
-    }}
-    50% {{
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
-                    0 0 10px rgba(255, 100, 100, 0.7); /* Red */
-    }}
-    75% {{
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
-                    0 0 10px rgba(255, 255, 100, 0.7); /* Yellow */
-    }}
-    100% {{
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
-                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue (back to start) */
-    }}
-}}
-
-/* Define the keyframes for the text color */
-@keyframes animated-text-color {{
-  0% {{
-    background-position: 0% 50%;
-  }}
-  100% {{
-    background-position: 100% 50%;
-  }}
-}}
-
-/*New keyframe for image animation*/
-@-webkit-keyframes animated-text-color {{
-  0% {{
-    background-position: 0% 50%;
-  }}
-  100% {{
-    background-position: 100% 50%;
-  }}
-}}		
-        .big-mode-grid {{
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 30px !important;
-            width: 100% !important;
-        }}
-
-        .big-mode .source-card {{
-            padding: 50px !important;
-            border: 2px solid #1e293b !important;
-            background: rgba(15, 23, 42, 0.6);
-        }}
-
-        .big-mode .node-header-text {{ font-size: 32px !important; }}
-        .big-mode .node-sub-text {{ font-size: 18px !important; }}
-        .big-mode .section-title {{ font-size: 16px !important; padding: 12px 0 !important; margin: 20px 0 !important; }}
-        
-        .big-mode .target-grid {{ 
-            grid-template-columns: repeat(4, minmax(0, 1fr)) !important; 
-            gap: 20px !important; 
-        }}
-        
-        .big-mode .target-box {{
-            height: 80px !important;
-            padding: 15px !important;
-        }}
-
-        .big-mode .target-name {{ font-size: 14px !important; }}
-        .big-mode .target-ip {{ font-size: 12px !important; }}
-        .big-mode .status-dot {{ width: 14px !important; height: 14px !important; }}
-
-        input::placeholder {{ color: #334155; }}
+        /* Zone View / Big Mode Layout */
+        .big-mode-grid { display: flex !important; flex-direction: column !important; gap: 40px !important; }
+        .big-mode .target-grid { grid-template-columns: repeat(6, 1fr) !important; }
+        .big-mode .source-card { border-width: 2px; border-color: #1e293b; }
     </style>
 </head>
 <body>
-    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-10 border-b border-slate-900 pb-8 gap-6">
-        <div class="flex-shrink-0">
-            <h1 class="text-[16px] font-black uppercase tracking-[0.5em] text-slate-400">NETWORK <span class="text-yellow-600">COMMAND</span></h1>
-            <div class="flex gap-6 mt-3">
-                <div class="flex items-center gap-2">
-                    <div class="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_12px_#10b981]"></div>
-                    <span id="statUp" class="text-[14px] font-bold text-emerald-500 uppercase tracking-tighter">{total_up} ONLINE</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <div class="w-3 h-3 rounded-full bg-rose-500 shadow-[0_0_12px_#f43f5e]"></div>
-                    <span id="statDown" class="text-[14px] font-bold text-rose-500 uppercase tracking-tighter">{total_down} OFFLINE</span>
-                </div>
+    <div class="flex flex-col lg:flex-row justify-between items-center mb-8 pb-6 border-b border-slate-900 gap-4">
+        <div>
+            <h1 class="text-sm font-black tracking-[0.4em] text-slate-500 uppercase">NETWORK <span class="text-yellow-600">COMMAND</span></h1>
+            <div class="text-[10px] mt-1 font-bold">
+                <span class="text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded">{total_up} UP</span>
+                <span class="text-rose-500 bg-rose-500/10 px-2 py-0.5 rounded ml-2">{total_down} DOWN</span>
             </div>
         </div>
 
-        <div class="relative w-full lg:max-w-2xl">
-            <input type="text" id="searchInput" onkeyup="applyFilter()" placeholder="SEARCH NODE, IP, OR TARGET..." 
-                   class="index w-full bg-white border-2 border-slate-900 rounded-lg px-6 py-4 text-[13px] text-yellow-500 outline-none transition-all uppercase tracking-widest font-bold">
-        </div>
+        <input type="text" id="searchInput" onkeyup="applyFilter()" placeholder="SEARCH IP OR NODE..." 
+               class="bg-white px-4 py-2 rounded text-xs text-black font-bold outline-none w-64 uppercase border-2 border-slate-900 focus:border-yellow-600 transition-colors">
 
-        <div class="flex items-center gap-8">
-            <select id="zoneFilter" onchange="applyFilter()" class="dropdown bg-black border-2 border-slate-800 text-yellow-500 text-[12px] font-bold rounded-lg px-5 py-3 outline-none focus:border-yellow-600 cursor-pointer uppercase">
-                <option value="ALL">OVERVIEW (COMPACT)</option>
-                <option value="Z1">ZONE 1 - FULLSCREEN</option>
-                <option value="Z2">ZONE 2 - FULLSCREEN</option>
-                <option value="Z3">ZONE 3 - FULLSCREEN</option>
-                <option value="Z4">ZONE 4 - FULLSCREEN</option>
+        <div class="flex gap-2">
+            <select id="typeFilter" onchange="applyFilter()" class="bg-black border border-slate-800 text-yellow-500 text-[10px] p-2 rounded uppercase font-bold outline-none cursor-pointer hover:border-slate-600">
+                <option value="ALL">ALL TYPES</option>
+                <option value="HLR">HLR</option>
+                <option value="AIR">AIR</option>
+                <option value="INUM">INUM</option>
             </select>
-            <div class="text-right border-l-2 border-slate-900 pl-8 hidden xl:block">
-                <p class="text-yellow-700 text-[18px] font-bold tabular-nums italic leading-none">{timestamp}</p>
-            </div>
+            <select id="zoneFilter" onchange="applyFilter()" class="bg-black border border-slate-800 text-yellow-500 text-[10px] p-2 rounded uppercase font-bold outline-none cursor-pointer hover:border-slate-600">
+                <option value="ALL">COMPACT VIEW</option>
+                <option value="Z1">ZONE 1</option>
+                <option value="Z2">ZONE 2</option>
+                <option value="Z3">ZONE 3</option>
+                <option value="Z4">ZONE 4</option>
+            </select>
+            <div class="text-yellow-700 font-bold text-xs p-2 tabular-nums border-l border-slate-900 ml-2">{timestamp}</div>
         </div>
     </div>
 
@@ -183,78 +53,77 @@
         {cards}
     </div>
 
-    <script> 
-        function applyFilter() {{
-            const zone = document.getElementById('zoneFilter').value;
-            const query = document.getElementById('searchInput').value.toLowerCase();
+    <script>
+        function applyFilter() {
+            const selectedZone = document.getElementById('zoneFilter').value;
+            const selectedType = document.getElementById('typeFilter').value;
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
             const grid = document.getElementById('cardGrid');
             const cards = document.querySelectorAll('.source-card');
-            
-            localStorage.setItem('activeZone', zone);
-            
-            if (zone === 'ALL') {{
-                grid.className = "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6";
-                grid.classList.remove('big-mode');
-            }} else {{
-                grid.className = "big-mode-grid";
-                grid.classList.add('big-mode');
-            }}
 
-            cards.forEach(card => {{
+            // Save choice so it doesn't reset on refresh
+            localStorage.setItem('activeZone', selectedZone);
+            localStorage.setItem('activeType', selectedType);
+
+            // Change grid layout if a specific Zone is picked
+            if (selectedZone === 'ALL') {
+                grid.className = "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6";
+            } else {
+                grid.className = "big-mode-grid big-mode";
+            }
+
+            cards.forEach(card => {
                 const cardZone = card.getAttribute('data-zone');
                 const nodeName = card.getAttribute('data-node');
-                const targets = card.querySelectorAll('.target-box');
+                const sections = card.querySelectorAll('.category-section');
                 
-                let matchInTargets = false;
+                // Rule 1: Does the card match the Zone?
+                const isZoneMatch = (selectedZone === 'ALL' || cardZone === selectedZone);
+                
+                let cardHasVisibleContent = false;
 
-                targets.forEach(t => {{
-                    const searchData = t.getAttribute('data-search');
-                    const isTargetMatch = searchData.includes(query);
-                    if (isTargetMatch) matchInTargets = true;
+                sections.forEach(sec => {
+                    const secCat = sec.getAttribute('data-category');
+                    // Rule 2: Does this section match the Type filter?
+                    const isTypeMatch = (selectedType === 'ALL' || secCat === selectedType);
                     
-                    if (query !== "") {{
-                        t.style.opacity = isTargetMatch ? "1" : "0.15";
-                        t.style.filter = isTargetMatch ? "none" : "grayscale(100%)";
-                    }} else {{
-                        t.style.opacity = "1";
-                        t.style.filter = "none";
-                    }}
-                }});
+                    if (isTypeMatch) {
+                        const targets = sec.querySelectorAll('.target-box');
+                        let sectionHasSearchMatch = false;
 
-                const zoneMatch = (zone === 'ALL' || cardZone === zone);
-                const queryMatch = (query === "" || nodeName.includes(query) || matchInTargets);
+                        targets.forEach(t => {
+                            const searchInfo = t.getAttribute('data-search');
+                            const isSearchMatch = searchInfo.includes(searchQuery) || nodeName.includes(searchQuery);
+                            
+                            // Dim the target if it doesn't match search, but keep it there
+                            t.style.opacity = (searchQuery === "" || isSearchMatch) ? "1" : "0.1";
+                            if (isSearchMatch) sectionHasSearchMatch = true;
+                        });
 
-                card.classList.toggle('hidden-zone', !zoneMatch || !queryMatch);
-            }});
-            
-            calculateLiveStats();
-        }}
+                        // Show section only if type matches and search matches (or search is empty)
+                        const shouldShowSection = (searchQuery === "" || sectionHasSearchMatch || nodeName.includes(searchQuery));
+                        sec.style.display = shouldShowSection ? "block" : "none";
+                        
+                        if (shouldShowSection) cardHasVisibleContent = true;
+                    } else {
+                        sec.style.display = "none";
+                    }
+                });
 
-        function calculateLiveStats() {{
-            const visibleCards = Array.from(document.querySelectorAll('.source-card:not(.hidden-zone)'));
-            let up = 0, down = 0;
-            
-            visibleCards.forEach(card => {{
-                const targets = card.querySelectorAll('.target-box');
-                targets.forEach(t => {{
-                    if (t.style.opacity !== "0.15") {{
-                        if (t.getAttribute('data-status') === "UP") up++;
-                        else down++;
-                    }}
-                }});
-            }});
-            
-            document.getElementById('statUp').innerText = up + " ONLINE";
-            document.getElementById('statDown').innerText = down + " OFFLINE";
-        }}
+                // Final Card Visibility: Must match Zone AND have content inside
+                const finalVisible = isZoneMatch && cardHasVisibleContent;
+                card.classList.toggle('hidden-zone', !finalVisible);
+            });
+        }
 
-        window.onload = () => {{
-            const savedZone = localStorage.getItem('activeZone');
-            if (savedZone) {{
-                document.getElementById('zoneFilter').value = savedZone;
-            }}
+        // Restore filters on page load
+        window.onload = () => {
+            const z = localStorage.getItem('activeZone');
+            const t = localStorage.getItem('activeType');
+            if (z) document.getElementById('zoneFilter').value = z;
+            if (t) document.getElementById('typeFilter').value = t;
             applyFilter();
-        }};
+        };
     </script>
 </body>
 </html>
