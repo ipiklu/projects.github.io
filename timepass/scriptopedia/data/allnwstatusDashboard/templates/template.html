@@ -3,55 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="refresh" content="10">
-    <title>Network Control</title>
+    <title>NOC Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* 1. Global Styles */
-        body { background: #05070a; color: #94a3b8; font-family: monospace; padding: 20px; scrollbar-width: none; }
+        body { background: #05070a; color: #94a3b8; font-family: ui-monospace, monospace; padding: 20px; scrollbar-width: none; }
         .hidden-zone { display: none !important; }
 
-        /* 2. Network Heading Styling (Centered & Highlighted) */
+        /* Network Headings with Counts */
         .network-heading {
-            font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.4em;
-            text-align: center; color: white; background: rgba(255, 255, 255, 0.08);
-            padding: 8px 0; margin: 15px 0; border-radius: 4px;
-            border-left: 1px solid rgba(255,255,255,0.1); border-right: 1px solid rgba(255,255,255,0.1);
+            font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.2em;
+            text-align: center; color: white; background: rgba(255, 255, 255, 0.07);
+            padding: 8px 0; margin: 15px 0; border-radius: 4px; display: flex; justify-content: center; align-items: center;
         }
+        .section-counter { letter-spacing: normal; font-weight: bold; }
 
-        /* 3. Target Card Base Styling */
+        /* Target Cards */
         .target-box {
             background: #0f172a; border: 1px solid #1e293b; border-radius: 4px;
-            padding: 6px; height: 45px; display: flex; flex-direction: column;
+            padding: 6px; height: 46px; display: flex; flex-direction: column;
             justify-content: center; transition: all 0.2s; position: relative;
         }
-
-        /* 4. Target Card Status Logic */
         .target-box[data-status="UP"] { border-left: 3px solid #10b981; background: rgba(16, 185, 129, 0.05); }
         .target-box[data-status="UP"] .status-indicator { background: #10b981; box-shadow: 0 0 8px #10b981; }
-
         .target-box[data-status="DOWN"] { border-left: 3px solid #f43f5e; background: rgba(244, 63, 94, 0.05); }
         .target-box[data-status="DOWN"] .status-indicator { background: #f43f5e; box-shadow: 0 0 8px #f43f5e; }
+        .target-box:hover { transform: scale(1.1); z-index: 50; background: #000 !important; border-color: #e0a419 !important; }
 
-        /* 5. Hover Capabilities */
-        .target-box:hover {
-            transform: scale(1.1); z-index: 50; background: #000;
-            border-color: #e0a419; box-shadow: 0 0 15px rgba(224, 164, 25, 0.4);
-        }
-
-        /* 6. Typography */
         .target-label { font-size: 9px; font-weight: bold; color: white; display: block; overflow: hidden; text-overflow: ellipsis; }
-        .target-subtext { font-size: 7px; color: #64748b; }
-        .status-indicator { width: 8px; height: 8px; border-radius: 50%; }
+        .target-subtext { font-size: 7px; color: #64748b; margin-top: 2px; }
+        .status-indicator { width: 7px; height: 7px; border-radius: 50%; }
         .target-header { display: flex; justify-content: space-between; align-items: center; }
 
-        /* 7. Source Card Containers */
         .source-card { background: rgba(15, 23, 42, 0.6); border: 1px solid #1e293b; padding: 15px; border-radius: 8px; }
         .node-header { display: flex; justify-content: space-between; border-bottom: 1px solid #1e293b; margin-bottom: 15px; padding-bottom: 5px; }
         .node-title { color: #e0a419; font-weight: bold; font-size: 13px; }
-        .node-meta { font-size: 9px; color: #475569; }
+        .node-meta { font-size: 9px; color: #475569; font-weight: bold; }
         .target-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 
-        /* 8. Layout Modes */
         .big-mode-grid { display: flex !important; flex-direction: column !important; gap: 30px; }
         .big-mode .target-grid { grid-template-columns: repeat(6, 1fr) !important; }
     </style>
@@ -61,22 +49,21 @@
         <div>
             <h1 class="text-sm font-black tracking-[0.4em] text-slate-500 uppercase">NETWORK <span class="text-yellow-600">COMMAND</span></h1>
             <div class="text-[10px] mt-1 font-bold">
-                <span class="text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded">{total_up} UP</span>
-                <span class="text-rose-500 bg-rose-500/10 px-2 py-0.5 rounded ml-2">{total_down} DOWN</span>
+                <span id="countUp" class="text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded">0 UP</span>
+                <span id="countDown" class="text-rose-500 bg-rose-500/10 px-2 py-0.5 rounded ml-2">0 DOWN</span>
             </div>
         </div>
 
-        <input type="text" id="searchInput" onkeyup="applyFilter()" placeholder="SEARCH..." 
-               class="bg-white px-4 py-2 rounded text-xs text-black font-bold outline-none w-64 uppercase border-2 border-slate-900 focus:border-yellow-600">
+        <input type="text" id="searchInput" onkeyup="applyFilter()" placeholder="SEARCH..." class="bg-white px-4 py-2 rounded text-xs text-black font-bold outline-none w-64 uppercase border-2 border-slate-900">
 
         <div class="flex gap-2">
-            <select id="typeFilter" onchange="applyFilter()" class="bg-black border border-slate-800 text-yellow-500 text-[10px] p-2 rounded uppercase font-bold outline-none">
+            <select id="typeFilter" onchange="applyFilter()" class="bg-black border border-slate-800 text-yellow-500 text-[10px] p-2 rounded uppercase font-bold outline-none cursor-pointer">
                 <option value="ALL">ALL TYPES</option>
                 <option value="HLR">HLR</option>
                 <option value="AIR">AIR</option>
                 <option value="INUM">INUM</option>
             </select>
-            <select id="zoneFilter" onchange="applyFilter()" class="bg-black border border-slate-800 text-yellow-500 text-[10px] p-2 rounded uppercase font-bold outline-none">
+            <select id="zoneFilter" onchange="applyFilter()" class="bg-black border border-slate-800 text-yellow-500 text-[10px] p-2 rounded uppercase font-bold outline-none cursor-pointer">
                 <option value="ALL">COMPACT VIEW</option>
                 <option value="Z1">ZONE 1</option>
                 <option value="Z2">ZONE 2</option>
@@ -99,12 +86,19 @@
             const grid = document.getElementById('cardGrid');
             const cards = document.querySelectorAll('.source-card');
 
+            let totalVisibleUp = 0;
+            let totalVisibleDown = 0;
+
+            localStorage.setItem('savedZone', selectedZone);
+            localStorage.setItem('savedType', selectedType);
+
             grid.className = selectedZone === 'ALL' ? "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6" : "big-mode-grid big-mode";
 
             cards.forEach(card => {
                 const cardZone = card.getAttribute('data-zone');
                 const nodeName = card.getAttribute('data-node');
                 const isZoneMatch = (selectedZone === 'ALL' || cardZone === selectedZone);
+                
                 const sections = card.querySelectorAll('.category-section');
                 let cardHasVisibleContent = false;
 
@@ -112,24 +106,51 @@
                     const secCat = sec.getAttribute('data-category');
                     const isTypeMatch = (selectedType === 'ALL' || secCat === selectedType);
                     
+                    let secUp = 0, secDown = 0;
+                    
                     if (isTypeMatch) {
                         const targets = sec.querySelectorAll('.target-box');
                         let sectionHasSearchMatch = false;
+
                         targets.forEach(t => {
+                            const status = t.getAttribute('data-status');
                             const match = t.getAttribute('data-search').includes(searchQuery) || nodeName.includes(searchQuery);
                             t.style.opacity = (searchQuery === "" || match) ? "1" : "0.1";
-                            if (match) sectionHasSearchMatch = true;
+                            
+                            if (match && isZoneMatch) {
+                                sectionHasSearchMatch = true;
+                                if (status === "UP") { secUp++; totalVisibleUp++; }
+                                else { secDown++; totalVisibleDown++; }
+                            }
                         });
-                        const shouldShow = (searchQuery === "" || sectionHasSearchMatch || nodeName.includes(searchQuery));
-                        sec.style.display = shouldShow ? "block" : "none";
-                        if (shouldShow) cardHasVisibleContent = true;
+
+                        // Update the network heading text with counts
+                        const counterSpan = sec.querySelector('.section-counter');
+                        if(counterSpan) {
+                            counterSpan.innerHTML = `(<span class="text-emerald-500">${secUp}</span>|<span class="text-rose-500">${secDown}</span>)`;
+                        }
+
+                        const showSec = (searchQuery === "" || sectionHasSearchMatch || nodeName.includes(searchQuery));
+                        sec.style.display = showSec ? "block" : "none";
+                        if (showSec) cardHasVisibleContent = true;
                     } else {
                         sec.style.display = "none";
                     }
                 });
                 card.classList.toggle('hidden-zone', !isZoneMatch || !cardHasVisibleContent);
             });
+
+            document.getElementById('countUp').innerText = `${totalVisibleUp} UP`;
+            document.getElementById('countDown').innerText = `${totalVisibleDown} DOWN`;
         }
+
+        window.onload = function() {
+            const z = localStorage.getItem('savedZone');
+            const t = localStorage.getItem('savedType');
+            if (z) document.getElementById('zoneFilter').value = z;
+            if (t) document.getElementById('typeFilter').value = t;
+            applyFilter();
+        };
     </script>
 </body>
 </html>

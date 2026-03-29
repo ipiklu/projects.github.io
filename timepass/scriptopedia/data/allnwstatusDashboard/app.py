@@ -7,10 +7,7 @@ CONFIG_FILE = os.path.join(BASE_DIR, "config/config_app.json")
 TEMPLATE_FILE = os.path.join(BASE_DIR, "templates/template.html")
 OUTPUT_FILE = os.path.join(BASE_DIR, "templates/index.html")
 
-stats = {"up": 0, "down": 0}
-
 def check_port(user, host, target):
-    global stats
     t_name, t_ip, t_port = target['name'], target['ip'], target['port']
     cmd = ["ssh", "-o", "ConnectTimeout=1", "-o", "BatchMode=yes", "-o", "StrictHostKeyChecking=no", 
            f"{user}@{host}", f"timeout 0.5 bash -c '</dev/tcp/{t_ip}/{t_port}' && echo 'UP' || echo 'DOWN'"]
@@ -19,12 +16,10 @@ def check_port(user, host, target):
         is_up = "UP" in res
     except: is_up = False
     
-    if is_up: stats["up"] += 1 
-    else: stats["down"] += 1
-
-    # We only pass the status and basic structure. CSS does the rest.
+    status_attr = "UP" if is_up else "DOWN"
+    
     return f'''
-    <div class="target-box" data-status="{"UP" if is_up else "DOWN"}" data-search="{t_name.lower()} {t_ip}">
+    <div class="target-box" data-status="{status_attr}" data-search="{t_name.lower()} {t_ip}">
         <div class="target-inner">
             <div class="target-header">
                 <span class="target-label">{t_name}</span>
@@ -46,9 +41,13 @@ def process_node(node):
 
     def make_section(label, content):
         if not content: return ""
+        # Added section-counter span
         return f'''
         <div class="category-section" data-category="{label}">
-            <h3 class="network-heading">{label} Network</h3>
+            <h3 class="network-heading">
+                {label} NETWORK 
+                <span class="section-counter text-[14px] ml-2 opacity-60"></span>
+            </h3>
             <div class="target-grid">{content}</div>
         </div>'''
 
@@ -64,15 +63,13 @@ def process_node(node):
     </div>'''
 
 def update_loop():
-    global stats
     while True:
         try:
-            stats = {"up": 0, "down": 0}
             with open(CONFIG_FILE, 'r') as f: config = json.load(f)
-            with ThreadPoolExecutor(max_workers=8) as executor:
+            with ThreadPoolExecutor(max_workers=10) as executor:
                 all_cards = "".join(list(executor.map(process_node, config)))
             with open(TEMPLATE_FILE, 'r') as f: template = f.read()
-            output = template.replace("{cards}", all_cards).replace("{timestamp}", datetime.now().strftime("%H:%M:%S")).replace("{total_up}", str(stats["up"])).replace("{total_down}", str(stats["down"]))
+            output = template.replace("{cards}", all_cards).replace("{timestamp}", datetime.now().strftime("%H:%M:%S"))
             with open(OUTPUT_FILE, "w") as f: f.write(output)
             time.sleep(5)
         except Exception as e: print(f"Update Error: {e}"); time.sleep(2)
@@ -86,5 +83,5 @@ if __name__ == "__main__":
     threading.Thread(target=update_loop, daemon=True).start()
     socketserver.TCPServer.allow_reuse_address = True
     with socketserver.TCPServer(("", 8000), Handler) as httpd:
-        print("UI Logic Handed to CSS. Server at http://localhost:8000")
+        print("Server at http://localhost:8000")
         httpd.serve_forever()
