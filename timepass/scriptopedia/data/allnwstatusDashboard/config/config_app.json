@@ -2,7 +2,8 @@
     {
         "remote_source": {
             "user": "piklu",
-            "host": "127.0.0.1"
+            "host": "127.0.0.1",
+			"zone": "Z1"
         },
         "HLR_targets": [
             {"name": "PGW1", "ip": "142.250.70.110", "port": 443},
@@ -31,7 +32,8 @@
     {
         "remote_source": {
             "user": "piklu",
-            "host": "128.0.0.1"
+            "host": "128.0.0.1",
+			"zone": "Z1"
         },
         "HLR_targets": [
             {"name": "PGW1", "ip": "142.250.74.110", "port": 443},
@@ -60,7 +62,8 @@
 	{
         "remote_source": {
             "user": "piklu",
-            "host": "127.0.0.2"
+            "host": "127.0.0.2",
+			"zone": "Z2"
         },
         "HLR_targets": [
             {"name": "PGW1", "ip": "142.250.74.110", "port": 443},
@@ -89,7 +92,8 @@
 	{
         "remote_source": {
             "user": "piklu",
-            "host": "128.0.0.2"
+            "host": "128.0.0.2",
+			"zone": "Z2"
         },
         "HLR_targets": [
             {"name": "PGW1", "ip": "142.250.74.110", "port": 443},
@@ -118,7 +122,8 @@
 	{
         "remote_source": {
             "user": "piklu",
-            "host": "127.0.0.3"
+            "host": "127.0.0.3",
+			"zone": "Z3"
         },
         "HLR_targets": [
             {"name": "PGW1", "ip": "142.250.74.110", "port": 443},
@@ -147,7 +152,8 @@
 	{
         "remote_source": {
             "user": "piklu",
-            "host": "128.0.0.3"
+            "host": "128.0.0.3",
+			"zone": "Z3"
         },
         "HLR_targets": [
             {"name": "PGW1", "ip": "142.250.74.110", "port": 443},
@@ -176,7 +182,8 @@
 	{
         "remote_source": {
             "user": "piklu",
-            "host": "127.0.0.4"
+            "host": "127.0.0.4",
+			"zone": "Z4"
         },
         "HLR_targets": [
             {"name": "PGW1", "ip": "142.250.74.110", "port": 443},
@@ -205,7 +212,8 @@
 	{
         "remote_source": {
             "user": "piklu",
-            "host": "128.0.0.4"
+            "host": "128.0.0.4",
+			"zone": "Z4"
         },
         "HLR_targets": [
             {"name": "PGW1", "ip": "142.250.74.110", "port": 443},
