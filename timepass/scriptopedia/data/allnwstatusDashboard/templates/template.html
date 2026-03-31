@@ -19,15 +19,22 @@
 
         /* Target Cards */
         .target-box {
-            background: #0f172a; border: 1px solid #1e293b; border-radius: 4px;
+            background: rgba(0,0,0,0); border: 1px none; border-radius: 4px;
             padding: 6px; height: 46px; display: flex; flex-direction: column;
             justify-content: center; transition: all 0.2s; position: relative;
-        }
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
         .target-box[data-status="UP"] { border-left: 3px solid #10b981; background: rgba(16, 185, 129, 0.05); }
         .target-box[data-status="UP"] .status-indicator { background: #10b981; box-shadow: 0 0 8px #10b981; }
         .target-box[data-status="DOWN"] { border-left: 3px solid #f43f5e; background: rgba(244, 63, 94, 0.05); }
         .target-box[data-status="DOWN"] .status-indicator { background: #f43f5e; box-shadow: 0 0 8px #f43f5e; }
-        .target-box:hover { transform: scale(1.1); z-index: 50; background: #000 !important; border-color: #e0a419 !important; }
+        .target-box:hover { 
+		transform: scale(1.7); z-index: 50; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); cursor: pointer;
+		background-color: rgba(0, 0, 0, 0.2); animation: animated-border-glow 8s infinite linear;
+	}
+	.target-box:active {
+		transform: scale(0.98); box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); /*Lowering the shadow*/
+	}
 
         .target-label { font-size: 9px; font-weight: bold; color: white; display: block; overflow: hidden; text-overflow: ellipsis; }
         .target-subtext { font-size: 7px; color: #64748b; margin-top: 2px; }
@@ -42,6 +49,48 @@
 
         .big-mode-grid { display: flex !important; flex-direction: column !important; gap: 30px; }
         .big-mode .target-grid { grid-template-columns: repeat(6, 1fr) !important; }
+	input[type="text"]{
+		border: 1px none; border-radius: 10px; transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+	input[type="text"]:hover {
+		transform: scale(1.07); box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); color:#E59E11; cursor: text; background-color: rgba(0, 0, 0, 0.2); animation: animated-border-glow 8s infinite linear;
+	}
+	input[type="text"]:active {
+		transform: scale(0.98); box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); /*Lowering the shadow*/
+	}
+	.dropdown {
+		border: 1px none; outline: none; background: #121212; color: #E59E11; border-radius: 5em; transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		
+	}
+	.dropdown:hover {
+		transform: scale(1.01); box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); cursor: pointer; background: #121212; color: #E59E11; animation: animated-border-glow 8s infinite linear;
+	}
+	.dropdown:active {
+		transform: scale(0.98); box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); /*Lowering the shadow*/
+	}
+/* Keyframes for the new animated border glow */
+@keyframes animated-border-glow {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue */
+    }
+    25% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 255, 100, 0.7); /* Green */
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 100, 100, 0.7); /* Red */
+    }
+    75% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 255, 100, 0.7); /* Yellow */
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue (back to start) */
+    }
+}
     </style>
 </head>
 <body>
@@ -54,16 +103,16 @@
             </div>
         </div>
 
-        <input type="text" id="searchInput" onkeyup="applyFilter()" placeholder="SEARCH..." class="bg-white px-4 py-2 rounded text-xs text-black font-bold outline-none w-64 uppercase border-2 border-slate-900">
+        <input type="text" id="searchInput" onkeyup="applyFilter()" placeholder="SEARCH..." class="bg-white px-4 py-2 rounded text-xs text-black font-bold outline-none w-64 uppercase border-2 border-slate-900" autocomplete="off">
 
         <div class="flex gap-2">
-            <select id="typeFilter" onchange="applyFilter()" class="bg-black border border-slate-800 text-yellow-500 text-[10px] p-2 rounded uppercase font-bold outline-none cursor-pointer">
+            <select id="typeFilter" onchange="applyFilter()" class="dropdown bg-black border border-slate-800 text-yellow-500 text-[10px] p-2 rounded uppercase font-bold outline-none cursor-pointer">
                 <option value="ALL">ALL TYPES</option>
                 <option value="HLR">HLR</option>
                 <option value="AIR">AIR</option>
                 <option value="INUM">INUM</option>
             </select>
-            <select id="zoneFilter" onchange="applyFilter()" class="bg-black border border-slate-800 text-yellow-500 text-[10px] p-2 rounded uppercase font-bold outline-none cursor-pointer">
+            <select id="zoneFilter" onchange="applyFilter()" class="dropdown bg-black border border-slate-800 text-yellow-500 text-[10px] p-2 rounded uppercase font-bold outline-none cursor-pointer">
                 <option value="ALL">COMPACT VIEW</option>
                 <option value="Z1">ZONE 1</option>
                 <option value="Z2">ZONE 2</option>
@@ -77,8 +126,10 @@
     <div id="cardGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         {cards}
     </div>
-
-    <script>
+<div align="right" class="text-yellow-700 font-bold text-xs p-2 tabular-nums">{timestamp}</div>
+<hr style="width:100%; height:1px; background-color: #fff; border: none; border-radius:5px;">
+<p align="left">Intelectual Property (IP) Protected &copysr; <script>document.write(new Date().getFullYear())</script>, All Rights Not Reserved</p>
+      <script>
         function applyFilter() {
             const selectedZone = document.getElementById('zoneFilter').value;
             const selectedType = document.getElementById('typeFilter').value;
