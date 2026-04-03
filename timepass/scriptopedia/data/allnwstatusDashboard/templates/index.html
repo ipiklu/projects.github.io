@@ -3,1110 +3,2047 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="refresh" content="10">
-    <title>Network Mesh Command</title>
+    <title>NOC Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        body { background: #05070a; color: #94a3b8; font-family: ui-monospace, monospace; padding: 20px; scrollbar-width: none; }
         .hidden-zone { display: none !important; }
-        body { 
-            scrollbar-width: none; 
-            background: #05070a; 
-            color: #94a3b8; 
-            font-family: ui-monospace, monospace; 
-            margin: 0;
-            padding: 20px;
-        }
-        
-        .source-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .target-box { transition: opacity 0.2s ease, filter 0.2s ease; }
 
-        .big-mode-grid {
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 30px !important;
-            width: 100% !important;
+        /* Network Headings with Counts */
+        .network-heading {
+            font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.2em;
+            text-align: center; color: white; background: rgba(255, 255, 255, 0.07);
+            padding: 8px 0; margin: 15px 0; border-radius: 4px; display: flex; justify-content: center; align-items: center;
         }
+        .section-counter { letter-spacing: normal; font-weight: bold; }
 
-        .big-mode .source-card {
-            padding: 50px !important;
-            border: 2px solid #1e293b !important;
-            background: rgba(15, 23, 42, 0.6);
-        }
+        /* Target Cards */
+        .target-box {
+            background: rgba(0,0,0,0); border: 1px none; border-radius: 4px;
+            padding: 6px; height: 46px; display: flex; flex-direction: column;
+            justify-content: center; transition: all 0.2s; position: relative;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+        .target-box[data-status="UP"] { border-left: 3px solid #10b981; background: rgba(16, 185, 129, 0.05); }
+        .target-box[data-status="UP"] .status-indicator { background: #10b981; box-shadow: 0 0 8px #10b981; }
+        .target-box[data-status="DOWN"] { border-left: 3px solid #f43f5e; background: rgba(244, 63, 94, 0.05); }
+        .target-box[data-status="DOWN"] .status-indicator { background: #f43f5e; box-shadow: 0 0 8px #f43f5e; }
+        .target-box:hover { 
+		transform: scale(1.7); z-index: 50; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); cursor: pointer;
+		background-color: rgba(0, 0, 0, 0.2); animation: animated-border-glow 8s infinite linear;
+	}
+	.target-box:active {
+		transform: scale(0.98); box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); /*Lowering the shadow*/
+	}
 
-        .big-mode .node-header-text { font-size: 32px !important; }
-        .big-mode .node-sub-text { font-size: 18px !important; }
-        .big-mode .section-title { font-size: 16px !important; padding: 12px 0 !important; margin: 20px 0 !important; }
-        
-        .big-mode .target-grid { 
-            grid-template-columns: repeat(4, minmax(0, 1fr)) !important; 
-            gap: 20px !important; 
-        }
-        
-        .big-mode .target-box {
-            height: 80px !important;
-            padding: 15px !important;
-        }
+        .target-label { font-size: 9px; font-weight: bold; color: white; display: block; overflow: hidden; text-overflow: ellipsis; }
+        .target-subtext { font-size: 7px; color: #64748b; margin-top: 2px; }
+        .status-indicator { width: 7px; height: 7px; border-radius: 50%; }
+        .target-header { display: flex; justify-content: space-between; align-items: center; }
 
-        .big-mode .target-name { font-size: 14px !important; }
-        .big-mode .target-ip { font-size: 12px !important; }
-        .big-mode .status-dot { width: 14px !important; height: 14px !important; }
+        .source-card { background: rgba(15, 23, 42, 0.6); border: 1px solid #1e293b; padding: 15px; border-radius: 8px; }
+        .node-header { display: flex; justify-content: space-between; border-bottom: 1px solid #1e293b; margin-bottom: 15px; padding-bottom: 5px; }
+        .node-title { color: #e0a419; font-weight: bold; font-size: 13px; }
+        .node-meta { font-size: 9px; color: #475569; font-weight: bold; }
+        .target-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 
-        input::placeholder { color: #334155; }
+        .big-mode-grid { display: flex !important; flex-direction: column !important; gap: 30px; }
+        .big-mode .target-grid { grid-template-columns: repeat(6, 1fr) !important; }
+	input[type="text"]{
+		border: 1px none; border-radius: 10px; transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+	input[type="text"]:hover {
+		transform: scale(1.07); box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); color:#E59E11; cursor: text; background-color: rgba(0, 0, 0, 0.2); animation: animated-border-glow 8s infinite linear;
+	}
+	input[type="text"]:active {
+		transform: scale(0.98); box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); /*Lowering the shadow*/
+	}
+	.dropdown {
+		border: 1px none; outline: none; background: #121212; color: #E59E11; border-radius: 5em; transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		
+	}
+	.dropdown:hover {
+		transform: scale(1.01); box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); cursor: pointer; background: #121212; color: #E59E11; animation: animated-border-glow 8s infinite linear;
+	}
+	.dropdown:active {
+		transform: scale(0.98); box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); /*Lowering the shadow*/
+	}
+/* Keyframes for the new animated border glow */
+@keyframes animated-border-glow {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue */
+    }
+    25% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 255, 100, 0.7); /* Green */
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 100, 100, 0.7); /* Red */
+    }
+    75% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 255, 100, 0.7); /* Yellow */
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue (back to start) */
+    }
+}
     </style>
 </head>
 <body>
-    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-10 border-b border-slate-900 pb-8 gap-6">
-        <div class="flex-shrink-0">
-            <h1 class="text-[16px] font-black uppercase tracking-[0.5em] text-slate-400">NETWORK <span class="text-yellow-600">COMMAND</span></h1>
-            <div class="flex gap-6 mt-3">
-                <div class="flex items-center gap-2">
-                    <div class="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_12px_#10b981]"></div>
-                    <span id="statUp" class="text-[14px] font-bold text-emerald-500 uppercase tracking-tighter">0 ONLINE</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <div class="w-3 h-3 rounded-full bg-rose-500 shadow-[0_0_12px_#f43f5e]"></div>
-                    <span id="statDown" class="text-[14px] font-bold text-rose-500 uppercase tracking-tighter">96 OFFLINE</span>
-                </div>
+    <div class="flex flex-col lg:flex-row justify-between items-center mb-8 pb-6 border-b border-slate-900 gap-4">
+        <div>
+            <h1 class="text-sm font-black tracking-[0.4em] text-slate-500 uppercase">NETWORK <span class="text-yellow-600">COMMAND</span></h1>
+            <div class="text-[10px] mt-1 font-bold">
+                <span id="countUp" class="text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded">0 UP</span>
+                <span id="countDown" class="text-rose-500 bg-rose-500/10 px-2 py-0.5 rounded ml-2">0 DOWN</span>
             </div>
         </div>
 
-        <div class="relative w-full lg:max-w-2xl">
-            <input type="text" id="searchInput" onkeyup="applyFilter()" placeholder="SEARCH NODE, IP, OR TARGET..." 
-                   class="w-full bg-black border-2 border-slate-900 rounded-lg px-6 py-4 text-[13px] text-yellow-500 outline-none focus:border-yellow-700 transition-all uppercase tracking-widest font-bold">
-        </div>
+        <input type="text" id="searchInput" onkeyup="applyFilter()" placeholder="SEARCH..." class="bg-white px-4 py-2 rounded text-xs text-black font-bold outline-none w-64 uppercase border-2 border-slate-900" autocomplete="off">
 
-        <div class="flex items-center gap-8">
-            <select id="zoneFilter" onchange="applyFilter()" class="bg-black border-2 border-slate-800 text-yellow-500 text-[12px] font-bold rounded-lg px-5 py-3 outline-none focus:border-yellow-600 cursor-pointer uppercase">
-                <option value="ALL">OVERVIEW (COMPACT)</option>
-                <option value="Z1">ZONE 1 - FULLSCREEN</option>
-                <option value="Z2">ZONE 2 - FULLSCREEN</option>
-                <option value="Z3">ZONE 3 - FULLSCREEN</option>
-                <option value="Z4">ZONE 4 - FULLSCREEN</option>
+        <div class="flex gap-2">
+            <select id="typeFilter" onchange="applyFilter()" class="dropdown bg-black border border-slate-800 text-yellow-500 text-[10px] p-2 rounded uppercase font-bold outline-none cursor-pointer">
+                <option value="ALL">ALL TYPES</option>
+                <option value="HLR">HLR</option>
+                <option value="AIR">AIR</option>
+                <option value="INUM">INUM</option>
             </select>
-            <div class="text-right border-l-2 border-slate-900 pl-8 hidden xl:block">
-                <p class="text-yellow-700 text-[18px] font-bold tabular-nums italic leading-none">12:41:10</p>
-            </div>
+            <select id="zoneFilter" onchange="applyFilter()" class="dropdown bg-black border border-slate-800 text-yellow-500 text-[10px] p-2 rounded uppercase font-bold outline-none cursor-pointer">
+                <option value="ALL">COMPACT VIEW</option>
+                <option value="Z1">ZONE 1</option>
+                <option value="Z2">ZONE 2</option>
+                <option value="Z3">ZONE 3</option>
+                <option value="Z4">ZONE 4</option>
+            </select>
+            <div class="text-yellow-700 font-bold text-xs p-2 tabular-nums">23:32:53</div>
         </div>
     </div>
 
     <div id="cardGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         
-    <div class="source-card bg-slate-900/40 border border-slate-800 p-4 rounded shadow-2xl" data-zone="Z1" data-node="z1n1">
-        <div class="flex justify-between border-b border-slate-800/50 mb-4 pb-2 items-center">
-            <span class="text-yellow-500 font-bold node-header-text uppercase tracking-tighter text-[12px]">Z1N1</span>
-            <span class="node-sub-text text-slate-600 font-bold uppercase tracking-widest text-[9px]">Z1 | 127.0.0.1</span>
-        </div>
-        <h3 class="section-title text-[9px] font-black text-slate-500 mb-2 uppercase tracking-widest text-center bg-white/5 py-1 rounded-sm">HLR Network</h3>
-        <div class="grid grid-cols-3 gap-2 mb-4 target-grid">
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw1 142.250.70.110">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW1</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">142.250.70.110:443</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw2 57.144.124.1">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW2</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">57.144.124.1:443</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw3 17.253.144.10">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW3</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">17.253.144.10:443</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw4 10.0.0.50">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW4</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.50:5432</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw5 10.0.0.51">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW5</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.51:5432</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw6 10.0.0.50">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW6</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.50:5432</p>
-    </div></div>
-        <h3 class="section-title text-[9px] font-black text-slate-500 mb-2 mt-4 uppercase tracking-widest text-center bg-white/5 py-1 rounded-sm">AIR Network</h3>
-        <div class="grid grid-cols-3 gap-2 target-grid">
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip1 142.250.70.110">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP1</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">142.250.70.110:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip2 57.144.124.1">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP2</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">57.144.124.1:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip3 17.253.144.10">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP3</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">17.253.144.10:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip4 10.0.0.50">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP4</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.50:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip5 10.0.0.51">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP5</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.51:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip6 10.0.0.50">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP6</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.50:10011</p>
-    </div></div>
-    </div>
-    <div class="source-card bg-slate-900/40 border border-slate-800 p-4 rounded shadow-2xl" data-zone="Z1" data-node="z1n2">
-        <div class="flex justify-between border-b border-slate-800/50 mb-4 pb-2 items-center">
-            <span class="text-yellow-500 font-bold node-header-text uppercase tracking-tighter text-[12px]">Z1N2</span>
-            <span class="node-sub-text text-slate-600 font-bold uppercase tracking-widest text-[9px]">Z1 | 128.0.0.1</span>
-        </div>
-        <h3 class="section-title text-[9px] font-black text-slate-500 mb-2 uppercase tracking-widest text-center bg-white/5 py-1 rounded-sm">HLR Network</h3>
-        <div class="grid grid-cols-3 gap-2 mb-4 target-grid">
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw1 142.250.74.110">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW1</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">142.250.74.110:443</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw2 57.144.124.2">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW2</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">57.144.124.2:443</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw3 17.253.144.15">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW3</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">17.253.144.15:443</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw4 10.0.0.52">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW4</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.52:5432</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw5 10.0.0.51">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW5</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.51:5432</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw6 10.0.0.54">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW6</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.54:5432</p>
-    </div></div>
-        <h3 class="section-title text-[9px] font-black text-slate-500 mb-2 mt-4 uppercase tracking-widest text-center bg-white/5 py-1 rounded-sm">AIR Network</h3>
-        <div class="grid grid-cols-3 gap-2 target-grid">
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip1 142.250.70.110">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP1</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">142.250.70.110:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip2 57.144.124.1">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP2</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">57.144.124.1:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip3 17.253.144.10">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP3</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">17.253.144.10:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip4 10.0.0.50">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP4</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.50:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip5 10.0.0.51">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP5</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.51:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip6 10.0.0.50">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP6</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.50:10011</p>
-    </div></div>
-    </div>
-    <div class="source-card bg-slate-900/40 border border-slate-800 p-4 rounded shadow-2xl" data-zone="Z2" data-node="z2n1">
-        <div class="flex justify-between border-b border-slate-800/50 mb-4 pb-2 items-center">
-            <span class="text-yellow-500 font-bold node-header-text uppercase tracking-tighter text-[12px]">Z2N1</span>
-            <span class="node-sub-text text-slate-600 font-bold uppercase tracking-widest text-[9px]">Z2 | 127.0.0.2</span>
-        </div>
-        <h3 class="section-title text-[9px] font-black text-slate-500 mb-2 uppercase tracking-widest text-center bg-white/5 py-1 rounded-sm">HLR Network</h3>
-        <div class="grid grid-cols-3 gap-2 mb-4 target-grid">
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw1 142.250.74.110">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW1</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">142.250.74.110:443</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw2 57.144.124.2">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW2</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">57.144.124.2:443</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw3 17.253.144.15">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW3</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">17.253.144.15:443</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw4 10.0.0.52">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW4</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.52:5432</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw5 10.0.0.51">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW5</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.51:5432</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw6 10.0.0.54">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW6</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.54:5432</p>
-    </div></div>
-        <h3 class="section-title text-[9px] font-black text-slate-500 mb-2 mt-4 uppercase tracking-widest text-center bg-white/5 py-1 rounded-sm">AIR Network</h3>
-        <div class="grid grid-cols-3 gap-2 target-grid">
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip1 142.250.70.110">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP1</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">142.250.70.110:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip2 57.144.124.1">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP2</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">57.144.124.1:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip3 17.253.144.10">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP3</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">17.253.144.10:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip4 10.0.0.50">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP4</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.50:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip5 10.0.0.51">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP5</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.51:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip6 10.0.0.50">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP6</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.50:10011</p>
-    </div></div>
-    </div>
-    <div class="source-card bg-slate-900/40 border border-slate-800 p-4 rounded shadow-2xl" data-zone="Z2" data-node="z2n2">
-        <div class="flex justify-between border-b border-slate-800/50 mb-4 pb-2 items-center">
-            <span class="text-yellow-500 font-bold node-header-text uppercase tracking-tighter text-[12px]">Z2N2</span>
-            <span class="node-sub-text text-slate-600 font-bold uppercase tracking-widest text-[9px]">Z2 | 128.0.0.2</span>
-        </div>
-        <h3 class="section-title text-[9px] font-black text-slate-500 mb-2 uppercase tracking-widest text-center bg-white/5 py-1 rounded-sm">HLR Network</h3>
-        <div class="grid grid-cols-3 gap-2 mb-4 target-grid">
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw1 142.250.74.110">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW1</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">142.250.74.110:443</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw2 57.144.124.2">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW2</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">57.144.124.2:443</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw3 17.253.144.15">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW3</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">17.253.144.15:443</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw4 10.0.0.52">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW4</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.52:5432</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw5 10.0.0.51">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW5</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.51:5432</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw6 10.0.0.54">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW6</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.54:5432</p>
-    </div></div>
-        <h3 class="section-title text-[9px] font-black text-slate-500 mb-2 mt-4 uppercase tracking-widest text-center bg-white/5 py-1 rounded-sm">AIR Network</h3>
-        <div class="grid grid-cols-3 gap-2 target-grid">
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip1 142.250.70.110">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP1</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">142.250.70.110:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip2 57.144.124.1">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP2</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">57.144.124.1:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip3 17.253.144.10">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP3</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">17.253.144.10:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip4 10.0.0.50">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP4</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.50:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip5 10.0.0.51">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP5</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.51:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip6 10.0.0.50">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP6</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.50:10011</p>
-    </div></div>
-    </div>
-    <div class="source-card bg-slate-900/40 border border-slate-800 p-4 rounded shadow-2xl" data-zone="Z3" data-node="z3n1">
-        <div class="flex justify-between border-b border-slate-800/50 mb-4 pb-2 items-center">
-            <span class="text-yellow-500 font-bold node-header-text uppercase tracking-tighter text-[12px]">Z3N1</span>
-            <span class="node-sub-text text-slate-600 font-bold uppercase tracking-widest text-[9px]">Z3 | 127.0.0.3</span>
-        </div>
-        <h3 class="section-title text-[9px] font-black text-slate-500 mb-2 uppercase tracking-widest text-center bg-white/5 py-1 rounded-sm">HLR Network</h3>
-        <div class="grid grid-cols-3 gap-2 mb-4 target-grid">
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw1 142.250.74.110">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW1</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">142.250.74.110:443</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw2 57.144.124.2">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW2</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">57.144.124.2:443</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw3 17.253.144.15">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW3</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">17.253.144.15:443</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw4 10.0.0.52">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW4</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.52:5432</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw5 10.0.0.51">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW5</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.51:5432</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw6 10.0.0.54">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW6</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.54:5432</p>
-    </div></div>
-        <h3 class="section-title text-[9px] font-black text-slate-500 mb-2 mt-4 uppercase tracking-widest text-center bg-white/5 py-1 rounded-sm">AIR Network</h3>
-        <div class="grid grid-cols-3 gap-2 target-grid">
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip1 142.250.70.110">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP1</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">142.250.70.110:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip2 57.144.124.1">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP2</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">57.144.124.1:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip3 17.253.144.10">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP3</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">17.253.144.10:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip4 10.0.0.50">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP4</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.50:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip5 10.0.0.51">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP5</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.51:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip6 10.0.0.50">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP6</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.50:10011</p>
-    </div></div>
-    </div>
-    <div class="source-card bg-slate-900/40 border border-slate-800 p-4 rounded shadow-2xl" data-zone="Z3" data-node="z3n2">
-        <div class="flex justify-between border-b border-slate-800/50 mb-4 pb-2 items-center">
-            <span class="text-yellow-500 font-bold node-header-text uppercase tracking-tighter text-[12px]">Z3N2</span>
-            <span class="node-sub-text text-slate-600 font-bold uppercase tracking-widest text-[9px]">Z3 | 128.0.0.3</span>
-        </div>
-        <h3 class="section-title text-[9px] font-black text-slate-500 mb-2 uppercase tracking-widest text-center bg-white/5 py-1 rounded-sm">HLR Network</h3>
-        <div class="grid grid-cols-3 gap-2 mb-4 target-grid">
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw1 142.250.74.110">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW1</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">142.250.74.110:443</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw2 57.144.124.2">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW2</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">57.144.124.2:443</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw3 17.253.144.15">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW3</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">17.253.144.15:443</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw4 10.0.0.52">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW4</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.52:5432</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw5 10.0.0.51">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW5</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.51:5432</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw6 10.0.0.54">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW6</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.54:5432</p>
-    </div></div>
-        <h3 class="section-title text-[9px] font-black text-slate-500 mb-2 mt-4 uppercase tracking-widest text-center bg-white/5 py-1 rounded-sm">AIR Network</h3>
-        <div class="grid grid-cols-3 gap-2 target-grid">
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip1 142.250.70.110">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP1</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">142.250.70.110:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip2 57.144.124.1">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP2</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">57.144.124.1:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip3 17.253.144.10">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP3</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">17.253.144.10:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip4 10.0.0.50">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP4</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.50:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip5 10.0.0.51">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP5</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.51:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip6 10.0.0.50">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP6</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.50:10011</p>
-    </div></div>
-    </div>
-    <div class="source-card bg-slate-900/40 border border-slate-800 p-4 rounded shadow-2xl" data-zone="Z4" data-node="z4n1">
-        <div class="flex justify-between border-b border-slate-800/50 mb-4 pb-2 items-center">
-            <span class="text-yellow-500 font-bold node-header-text uppercase tracking-tighter text-[12px]">Z4N1</span>
-            <span class="node-sub-text text-slate-600 font-bold uppercase tracking-widest text-[9px]">Z4 | 127.0.0.4</span>
-        </div>
-        <h3 class="section-title text-[9px] font-black text-slate-500 mb-2 uppercase tracking-widest text-center bg-white/5 py-1 rounded-sm">HLR Network</h3>
-        <div class="grid grid-cols-3 gap-2 mb-4 target-grid">
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw1 142.250.74.110">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW1</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">142.250.74.110:443</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw2 57.144.124.2">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW2</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">57.144.124.2:443</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw3 17.253.144.15">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW3</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">17.253.144.15:443</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw4 10.0.0.52">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW4</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.52:5432</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw5 10.0.0.51">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW5</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.51:5432</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw6 10.0.0.54">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW6</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.54:5432</p>
-    </div></div>
-        <h3 class="section-title text-[9px] font-black text-slate-500 mb-2 mt-4 uppercase tracking-widest text-center bg-white/5 py-1 rounded-sm">AIR Network</h3>
-        <div class="grid grid-cols-3 gap-2 target-grid">
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip1 142.250.70.110">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP1</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">142.250.70.110:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip2 57.144.124.1">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP2</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">57.144.124.1:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip3 17.253.144.10">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP3</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">17.253.144.10:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip4 10.0.0.50">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP4</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.50:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip5 10.0.0.51">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP5</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.51:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip6 10.0.0.50">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP6</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.50:10011</p>
-    </div></div>
-    </div>
-    <div class="source-card bg-slate-900/40 border border-slate-800 p-4 rounded shadow-2xl" data-zone="Z4" data-node="z4n2">
-        <div class="flex justify-between border-b border-slate-800/50 mb-4 pb-2 items-center">
-            <span class="text-yellow-500 font-bold node-header-text uppercase tracking-tighter text-[12px]">Z4N2</span>
-            <span class="node-sub-text text-slate-600 font-bold uppercase tracking-widest text-[9px]">Z4 | 128.0.0.4</span>
-        </div>
-        <h3 class="section-title text-[9px] font-black text-slate-500 mb-2 uppercase tracking-widest text-center bg-white/5 py-1 rounded-sm">HLR Network</h3>
-        <div class="grid grid-cols-3 gap-2 mb-4 target-grid">
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw1 142.250.74.110">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW1</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">142.250.74.110:443</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw2 57.144.124.2">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW2</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">57.144.124.2:443</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw3 17.253.144.15">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW3</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">17.253.144.15:443</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw4 10.0.0.52">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW4</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.52:5432</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw5 10.0.0.51">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW5</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.51:5432</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="pgw6 10.0.0.54">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">PGW6</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.54:5432</p>
-    </div></div>
-        <h3 class="section-title text-[9px] font-black text-slate-500 mb-2 mt-4 uppercase tracking-widest text-center bg-white/5 py-1 rounded-sm">AIR Network</h3>
-        <div class="grid grid-cols-3 gap-2 target-grid">
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip1 142.250.70.110">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP1</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">142.250.70.110:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip2 57.144.124.1">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP2</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">57.144.124.1:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip3 17.253.144.10">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP3</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">17.253.144.10:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip4 10.0.0.50">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP4</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.50:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip5 10.0.0.51">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP5</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.51:10011</p>
-    </div>
-    <div class="p-1 rounded border border-rose-500/20 bg-rose-900/10 h-10 flex flex-col justify-center target-box" 
-         data-status="DOWN" 
-         data-search="ip6 10.0.0.50">
-        <div class="flex justify-between items-center px-1">
-            <span class="text-[8px] font-bold text-white truncate target-name">IP6</span>
-            <div class="h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] status-dot"></div>
-        </div>
-        <p class="text-[7px] text-slate-500 truncate px-1 target-ip">10.0.0.50:10011</p>
-    </div></div>
-    </div>
-    </div>
-
-    <script>
+    <div class="source-card" data-zone="Z1" data-node="127.0.0.1">
+        <div class="node-header">
+            <span class="node-title">127.0.0.1</span>
+            <span class="node-meta">Z1 | 127.0.0.1</span>
+        </div>
+        
+        <div class="category-section" data-category="HLR">
+            <h3 class="network-heading">HLR NETWORK</h3>
+            <div class="target-grid">
+    <a href="/diag?ip=142.250.70.110&port=443&from_host=127.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw1 142.250.70.110">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW1</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">142.250.70.110:443</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=57.144.124.1&port=443&from_host=127.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw2 57.144.124.1">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW2</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">57.144.124.1:443</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=17.253.144.10&port=443&from_host=127.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw3 17.253.144.10">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW3</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">17.253.144.10:443</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.50&port=5432&from_host=127.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw4 10.0.0.50">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW4</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.50:5432</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.51&port=5432&from_host=127.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw5 10.0.0.51">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW5</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.51:5432</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.50&port=5432&from_host=127.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw6 10.0.0.50">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW6</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.50:5432</p>
+            </div>
+        </div>
+    </a></div>
+        </div>
+        
+        <div class="category-section" data-category="AIR">
+            <h3 class="network-heading">AIR NETWORK</h3>
+            <div class="target-grid">
+    <a href="/diag?ip=142.250.70.110&port=10011&from_host=127.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip1 142.250.70.110">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP1</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">142.250.70.110:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=57.144.124.1&port=10011&from_host=127.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip2 57.144.124.1">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP2</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">57.144.124.1:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=17.253.144.10&port=10011&from_host=127.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip3 17.253.144.10">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP3</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">17.253.144.10:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.50&port=10011&from_host=127.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip4 10.0.0.50">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP4</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.50:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.51&port=10011&from_host=127.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip5 10.0.0.51">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP5</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.51:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.50&port=10011&from_host=127.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip6 10.0.0.50">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP6</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.50:10011</p>
+            </div>
+        </div>
+    </a></div>
+        </div>
+        
+        <div class="category-section" data-category="INUM">
+            <h3 class="network-heading">INUM NETWORK</h3>
+            <div class="target-grid">
+    <a href="/diag?ip=142.250.70.110&port=8085&from_host=127.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip1 142.250.70.110">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP1</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">142.250.70.110:8085</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=57.144.124.1&port=8085&from_host=127.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip2 57.144.124.1">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP2</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">57.144.124.1:8085</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=17.253.144.10&port=8085&from_host=127.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip3 17.253.144.10">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP3</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">17.253.144.10:8085</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.50&port=8085&from_host=127.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip4 10.0.0.50">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP4</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.50:8085</p>
+            </div>
+        </div>
+    </a></div>
+        </div>
+    </div>
+    <div class="source-card" data-zone="Z1" data-node="128.0.0.1">
+        <div class="node-header">
+            <span class="node-title">128.0.0.1</span>
+            <span class="node-meta">Z1 | 128.0.0.1</span>
+        </div>
+        
+        <div class="category-section" data-category="HLR">
+            <h3 class="network-heading">HLR NETWORK</h3>
+            <div class="target-grid">
+    <a href="/diag?ip=142.250.74.110&port=443&from_host=128.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw1 142.250.74.110">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW1</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">142.250.74.110:443</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=57.144.124.2&port=443&from_host=128.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw2 57.144.124.2">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW2</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">57.144.124.2:443</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=17.253.144.15&port=443&from_host=128.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw3 17.253.144.15">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW3</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">17.253.144.15:443</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.52&port=5432&from_host=128.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw4 10.0.0.52">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW4</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.52:5432</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.51&port=5432&from_host=128.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw5 10.0.0.51">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW5</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.51:5432</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.54&port=5432&from_host=128.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw6 10.0.0.54">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW6</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.54:5432</p>
+            </div>
+        </div>
+    </a></div>
+        </div>
+        
+        <div class="category-section" data-category="AIR">
+            <h3 class="network-heading">AIR NETWORK</h3>
+            <div class="target-grid">
+    <a href="/diag?ip=142.250.70.110&port=10011&from_host=128.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip1 142.250.70.110">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP1</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">142.250.70.110:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=57.144.124.1&port=10011&from_host=128.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip2 57.144.124.1">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP2</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">57.144.124.1:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=17.253.144.10&port=10011&from_host=128.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip3 17.253.144.10">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP3</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">17.253.144.10:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.50&port=10011&from_host=128.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip4 10.0.0.50">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP4</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.50:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.51&port=10011&from_host=128.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip5 10.0.0.51">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP5</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.51:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.50&port=10011&from_host=128.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip6 10.0.0.50">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP6</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.50:10011</p>
+            </div>
+        </div>
+    </a></div>
+        </div>
+        
+        <div class="category-section" data-category="INUM">
+            <h3 class="network-heading">INUM NETWORK</h3>
+            <div class="target-grid">
+    <a href="/diag?ip=142.250.70.110&port=8085&from_host=128.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip1 142.250.70.110">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP1</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">142.250.70.110:8085</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=57.144.124.1&port=8085&from_host=128.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip2 57.144.124.1">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP2</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">57.144.124.1:8085</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=17.253.144.10&port=8085&from_host=128.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip3 17.253.144.10">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP3</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">17.253.144.10:8085</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.50&port=8085&from_host=128.0.0.1&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip4 10.0.0.50">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP4</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.50:8085</p>
+            </div>
+        </div>
+    </a></div>
+        </div>
+    </div>
+    <div class="source-card" data-zone="Z2" data-node="127.0.0.2">
+        <div class="node-header">
+            <span class="node-title">127.0.0.2</span>
+            <span class="node-meta">Z2 | 127.0.0.2</span>
+        </div>
+        
+        <div class="category-section" data-category="HLR">
+            <h3 class="network-heading">HLR NETWORK</h3>
+            <div class="target-grid">
+    <a href="/diag?ip=142.250.74.110&port=443&from_host=127.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw1 142.250.74.110">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW1</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">142.250.74.110:443</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=57.144.124.2&port=443&from_host=127.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw2 57.144.124.2">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW2</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">57.144.124.2:443</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=17.253.144.15&port=443&from_host=127.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw3 17.253.144.15">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW3</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">17.253.144.15:443</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.52&port=5432&from_host=127.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw4 10.0.0.52">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW4</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.52:5432</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.51&port=5432&from_host=127.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw5 10.0.0.51">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW5</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.51:5432</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.54&port=5432&from_host=127.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw6 10.0.0.54">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW6</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.54:5432</p>
+            </div>
+        </div>
+    </a></div>
+        </div>
+        
+        <div class="category-section" data-category="AIR">
+            <h3 class="network-heading">AIR NETWORK</h3>
+            <div class="target-grid">
+    <a href="/diag?ip=142.250.70.110&port=10011&from_host=127.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip1 142.250.70.110">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP1</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">142.250.70.110:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=57.144.124.1&port=10011&from_host=127.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip2 57.144.124.1">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP2</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">57.144.124.1:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=17.253.144.10&port=10011&from_host=127.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip3 17.253.144.10">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP3</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">17.253.144.10:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.50&port=10011&from_host=127.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip4 10.0.0.50">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP4</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.50:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.51&port=10011&from_host=127.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip5 10.0.0.51">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP5</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.51:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.50&port=10011&from_host=127.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip6 10.0.0.50">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP6</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.50:10011</p>
+            </div>
+        </div>
+    </a></div>
+        </div>
+        
+        <div class="category-section" data-category="INUM">
+            <h3 class="network-heading">INUM NETWORK</h3>
+            <div class="target-grid">
+    <a href="/diag?ip=142.250.70.110&port=8085&from_host=127.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip1 142.250.70.110">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP1</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">142.250.70.110:8085</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=57.144.124.1&port=8085&from_host=127.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip2 57.144.124.1">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP2</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">57.144.124.1:8085</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=17.253.144.10&port=8085&from_host=127.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip3 17.253.144.10">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP3</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">17.253.144.10:8085</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.50&port=8085&from_host=127.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip4 10.0.0.50">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP4</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.50:8085</p>
+            </div>
+        </div>
+    </a></div>
+        </div>
+    </div>
+    <div class="source-card" data-zone="Z2" data-node="128.0.0.2">
+        <div class="node-header">
+            <span class="node-title">128.0.0.2</span>
+            <span class="node-meta">Z2 | 128.0.0.2</span>
+        </div>
+        
+        <div class="category-section" data-category="HLR">
+            <h3 class="network-heading">HLR NETWORK</h3>
+            <div class="target-grid">
+    <a href="/diag?ip=142.250.74.110&port=443&from_host=128.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw1 142.250.74.110">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW1</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">142.250.74.110:443</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=57.144.124.2&port=443&from_host=128.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw2 57.144.124.2">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW2</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">57.144.124.2:443</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=17.253.144.15&port=443&from_host=128.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw3 17.253.144.15">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW3</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">17.253.144.15:443</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.52&port=5432&from_host=128.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw4 10.0.0.52">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW4</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.52:5432</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.51&port=5432&from_host=128.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw5 10.0.0.51">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW5</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.51:5432</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.54&port=5432&from_host=128.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw6 10.0.0.54">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW6</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.54:5432</p>
+            </div>
+        </div>
+    </a></div>
+        </div>
+        
+        <div class="category-section" data-category="AIR">
+            <h3 class="network-heading">AIR NETWORK</h3>
+            <div class="target-grid">
+    <a href="/diag?ip=142.250.70.110&port=10011&from_host=128.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip1 142.250.70.110">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP1</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">142.250.70.110:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=57.144.124.1&port=10011&from_host=128.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip2 57.144.124.1">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP2</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">57.144.124.1:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=17.253.144.10&port=10011&from_host=128.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip3 17.253.144.10">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP3</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">17.253.144.10:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.50&port=10011&from_host=128.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip4 10.0.0.50">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP4</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.50:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.51&port=10011&from_host=128.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip5 10.0.0.51">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP5</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.51:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.50&port=10011&from_host=128.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip6 10.0.0.50">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP6</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.50:10011</p>
+            </div>
+        </div>
+    </a></div>
+        </div>
+        
+        <div class="category-section" data-category="INUM">
+            <h3 class="network-heading">INUM NETWORK</h3>
+            <div class="target-grid">
+    <a href="/diag?ip=142.250.70.110&port=8085&from_host=128.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip1 142.250.70.110">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP1</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">142.250.70.110:8085</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=57.144.124.1&port=8085&from_host=128.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip2 57.144.124.1">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP2</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">57.144.124.1:8085</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=17.253.144.10&port=8085&from_host=128.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip3 17.253.144.10">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP3</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">17.253.144.10:8085</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.50&port=8085&from_host=128.0.0.2&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip4 10.0.0.50">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP4</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.50:8085</p>
+            </div>
+        </div>
+    </a></div>
+        </div>
+    </div>
+    <div class="source-card" data-zone="Z3" data-node="127.0.0.3">
+        <div class="node-header">
+            <span class="node-title">127.0.0.3</span>
+            <span class="node-meta">Z3 | 127.0.0.3</span>
+        </div>
+        
+        <div class="category-section" data-category="HLR">
+            <h3 class="network-heading">HLR NETWORK</h3>
+            <div class="target-grid">
+    <a href="/diag?ip=142.250.74.110&port=443&from_host=127.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw1 142.250.74.110">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW1</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">142.250.74.110:443</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=57.144.124.2&port=443&from_host=127.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw2 57.144.124.2">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW2</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">57.144.124.2:443</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=17.253.144.15&port=443&from_host=127.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw3 17.253.144.15">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW3</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">17.253.144.15:443</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.52&port=5432&from_host=127.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw4 10.0.0.52">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW4</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.52:5432</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.51&port=5432&from_host=127.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw5 10.0.0.51">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW5</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.51:5432</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.54&port=5432&from_host=127.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw6 10.0.0.54">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW6</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.54:5432</p>
+            </div>
+        </div>
+    </a></div>
+        </div>
+        
+        <div class="category-section" data-category="AIR">
+            <h3 class="network-heading">AIR NETWORK</h3>
+            <div class="target-grid">
+    <a href="/diag?ip=142.250.70.110&port=10011&from_host=127.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip1 142.250.70.110">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP1</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">142.250.70.110:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=57.144.124.1&port=10011&from_host=127.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip2 57.144.124.1">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP2</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">57.144.124.1:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=17.253.144.10&port=10011&from_host=127.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip3 17.253.144.10">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP3</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">17.253.144.10:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.50&port=10011&from_host=127.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip4 10.0.0.50">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP4</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.50:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.51&port=10011&from_host=127.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip5 10.0.0.51">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP5</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.51:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.50&port=10011&from_host=127.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip6 10.0.0.50">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP6</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.50:10011</p>
+            </div>
+        </div>
+    </a></div>
+        </div>
+        
+        <div class="category-section" data-category="INUM">
+            <h3 class="network-heading">INUM NETWORK</h3>
+            <div class="target-grid">
+    <a href="/diag?ip=142.250.70.110&port=8085&from_host=127.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip1 142.250.70.110">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP1</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">142.250.70.110:8085</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=57.144.124.1&port=8085&from_host=127.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip2 57.144.124.1">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP2</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">57.144.124.1:8085</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=17.253.144.10&port=8085&from_host=127.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip3 17.253.144.10">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP3</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">17.253.144.10:8085</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.50&port=8085&from_host=127.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip4 10.0.0.50">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP4</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.50:8085</p>
+            </div>
+        </div>
+    </a></div>
+        </div>
+    </div>
+    <div class="source-card" data-zone="Z3" data-node="128.0.0.3">
+        <div class="node-header">
+            <span class="node-title">128.0.0.3</span>
+            <span class="node-meta">Z3 | 128.0.0.3</span>
+        </div>
+        
+        <div class="category-section" data-category="HLR">
+            <h3 class="network-heading">HLR NETWORK</h3>
+            <div class="target-grid">
+    <a href="/diag?ip=142.250.74.110&port=443&from_host=128.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw1 142.250.74.110">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW1</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">142.250.74.110:443</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=57.144.124.2&port=443&from_host=128.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw2 57.144.124.2">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW2</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">57.144.124.2:443</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=17.253.144.15&port=443&from_host=128.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw3 17.253.144.15">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW3</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">17.253.144.15:443</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.52&port=5432&from_host=128.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw4 10.0.0.52">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW4</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.52:5432</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.51&port=5432&from_host=128.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw5 10.0.0.51">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW5</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.51:5432</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.54&port=5432&from_host=128.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw6 10.0.0.54">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW6</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.54:5432</p>
+            </div>
+        </div>
+    </a></div>
+        </div>
+        
+        <div class="category-section" data-category="AIR">
+            <h3 class="network-heading">AIR NETWORK</h3>
+            <div class="target-grid">
+    <a href="/diag?ip=142.250.70.110&port=10011&from_host=128.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip1 142.250.70.110">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP1</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">142.250.70.110:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=57.144.124.1&port=10011&from_host=128.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip2 57.144.124.1">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP2</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">57.144.124.1:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=17.253.144.10&port=10011&from_host=128.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip3 17.253.144.10">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP3</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">17.253.144.10:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.50&port=10011&from_host=128.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip4 10.0.0.50">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP4</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.50:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.51&port=10011&from_host=128.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip5 10.0.0.51">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP5</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.51:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.50&port=10011&from_host=128.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip6 10.0.0.50">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP6</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.50:10011</p>
+            </div>
+        </div>
+    </a></div>
+        </div>
+        
+        <div class="category-section" data-category="INUM">
+            <h3 class="network-heading">INUM NETWORK</h3>
+            <div class="target-grid">
+    <a href="/diag?ip=142.250.70.110&port=8085&from_host=128.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip1 142.250.70.110">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP1</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">142.250.70.110:8085</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=57.144.124.1&port=8085&from_host=128.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip2 57.144.124.1">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP2</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">57.144.124.1:8085</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=17.253.144.10&port=8085&from_host=128.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip3 17.253.144.10">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP3</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">17.253.144.10:8085</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.50&port=8085&from_host=128.0.0.3&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip4 10.0.0.50">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP4</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.50:8085</p>
+            </div>
+        </div>
+    </a></div>
+        </div>
+    </div>
+    <div class="source-card" data-zone="Z4" data-node="127.0.0.4">
+        <div class="node-header">
+            <span class="node-title">127.0.0.4</span>
+            <span class="node-meta">Z4 | 127.0.0.4</span>
+        </div>
+        
+        <div class="category-section" data-category="HLR">
+            <h3 class="network-heading">HLR NETWORK</h3>
+            <div class="target-grid">
+    <a href="/diag?ip=142.250.74.110&port=443&from_host=127.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw1 142.250.74.110">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW1</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">142.250.74.110:443</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=57.144.124.2&port=443&from_host=127.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw2 57.144.124.2">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW2</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">57.144.124.2:443</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=17.253.144.15&port=443&from_host=127.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw3 17.253.144.15">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW3</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">17.253.144.15:443</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.52&port=5432&from_host=127.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw4 10.0.0.52">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW4</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.52:5432</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.51&port=5432&from_host=127.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw5 10.0.0.51">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW5</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.51:5432</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.54&port=5432&from_host=127.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw6 10.0.0.54">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW6</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.54:5432</p>
+            </div>
+        </div>
+    </a></div>
+        </div>
+        
+        <div class="category-section" data-category="AIR">
+            <h3 class="network-heading">AIR NETWORK</h3>
+            <div class="target-grid">
+    <a href="/diag?ip=142.250.70.110&port=10011&from_host=127.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip1 142.250.70.110">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP1</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">142.250.70.110:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=57.144.124.1&port=10011&from_host=127.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip2 57.144.124.1">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP2</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">57.144.124.1:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=17.253.144.10&port=10011&from_host=127.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip3 17.253.144.10">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP3</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">17.253.144.10:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.50&port=10011&from_host=127.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip4 10.0.0.50">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP4</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.50:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.51&port=10011&from_host=127.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip5 10.0.0.51">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP5</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.51:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.50&port=10011&from_host=127.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip6 10.0.0.50">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP6</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.50:10011</p>
+            </div>
+        </div>
+    </a></div>
+        </div>
+        
+        <div class="category-section" data-category="INUM">
+            <h3 class="network-heading">INUM NETWORK</h3>
+            <div class="target-grid">
+    <a href="/diag?ip=142.250.70.110&port=8085&from_host=127.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip1 142.250.70.110">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP1</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">142.250.70.110:8085</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=57.144.124.1&port=8085&from_host=127.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip2 57.144.124.1">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP2</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">57.144.124.1:8085</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=17.253.144.10&port=8085&from_host=127.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip3 17.253.144.10">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP3</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">17.253.144.10:8085</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.50&port=8085&from_host=127.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip4 10.0.0.50">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP4</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.50:8085</p>
+            </div>
+        </div>
+    </a></div>
+        </div>
+    </div>
+    <div class="source-card" data-zone="Z4" data-node="128.0.0.4">
+        <div class="node-header">
+            <span class="node-title">128.0.0.4</span>
+            <span class="node-meta">Z4 | 128.0.0.4</span>
+        </div>
+        
+        <div class="category-section" data-category="HLR">
+            <h3 class="network-heading">HLR NETWORK</h3>
+            <div class="target-grid">
+    <a href="/diag?ip=142.250.74.110&port=443&from_host=128.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw1 142.250.74.110">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW1</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">142.250.74.110:443</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=57.144.124.2&port=443&from_host=128.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw2 57.144.124.2">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW2</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">57.144.124.2:443</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=17.253.144.15&port=443&from_host=128.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw3 17.253.144.15">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW3</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">17.253.144.15:443</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.52&port=5432&from_host=128.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw4 10.0.0.52">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW4</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.52:5432</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.51&port=5432&from_host=128.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw5 10.0.0.51">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW5</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.51:5432</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.54&port=5432&from_host=128.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="pgw6 10.0.0.54">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">PGW6</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.54:5432</p>
+            </div>
+        </div>
+    </a></div>
+        </div>
+        
+        <div class="category-section" data-category="AIR">
+            <h3 class="network-heading">AIR NETWORK</h3>
+            <div class="target-grid">
+    <a href="/diag?ip=142.250.70.110&port=10011&from_host=128.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip1 142.250.70.110">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP1</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">142.250.70.110:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=57.144.124.1&port=10011&from_host=128.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip2 57.144.124.1">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP2</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">57.144.124.1:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=17.253.144.10&port=10011&from_host=128.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip3 17.253.144.10">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP3</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">17.253.144.10:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.50&port=10011&from_host=128.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip4 10.0.0.50">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP4</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.50:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.51&port=10011&from_host=128.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip5 10.0.0.51">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP5</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.51:10011</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.50&port=10011&from_host=128.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip6 10.0.0.50">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP6</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.50:10011</p>
+            </div>
+        </div>
+    </a></div>
+        </div>
+        
+        <div class="category-section" data-category="INUM">
+            <h3 class="network-heading">INUM NETWORK</h3>
+            <div class="target-grid">
+    <a href="/diag?ip=142.250.70.110&port=8085&from_host=128.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip1 142.250.70.110">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP1</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">142.250.70.110:8085</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=57.144.124.1&port=8085&from_host=128.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip2 57.144.124.1">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP2</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">57.144.124.1:8085</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=17.253.144.10&port=8085&from_host=128.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip3 17.253.144.10">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP3</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">17.253.144.10:8085</p>
+            </div>
+        </div>
+    </a>
+    <a href="/diag?ip=10.0.0.50&port=8085&from_host=128.0.0.4&ssh_user=piklu" 
+       onclick="window.open(this.href, '_blank', 'width=950,height=850,scrollbars=yes,resizable=yes'); return false;" 
+       style="text-decoration: none; color: inherit;">
+        <div class="target-box" data-status="DOWN" data-search="ip4 10.0.0.50">
+            <div class="target-inner">
+                <div class="target-header">
+                    <span class="target-label">IP4</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <p class="target-subtext">10.0.0.50:8085</p>
+            </div>
+        </div>
+    </a></div>
+        </div>
+    </div>
+    </div>
+<div align="right" class="text-yellow-700 font-bold text-xs p-2 tabular-nums">23:32:53</div>
+<hr style="width:100%; height:1px; background-color: #fff; border: none; border-radius:5px;">
+<p align="left">Intelectual Property (IP) Protected &copysr; <script>document.write(new Date().getFullYear())</script>, All Rights Not Reserved</p>
+      <script>
         function applyFilter() {
-            const zone = document.getElementById('zoneFilter').value;
-            const query = document.getElementById('searchInput').value.toLowerCase();
+            const searchInput = document.getElementById('searchInput');
+	    const selectedZone = document.getElementById('zoneFilter').value;
+            const selectedType = document.getElementById('typeFilter').value;
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
             const grid = document.getElementById('cardGrid');
             const cards = document.querySelectorAll('.source-card');
-            
-            localStorage.setItem('activeZone', zone);
-            
-            if (zone === 'ALL') {
-                grid.className = "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6";
-                grid.classList.remove('big-mode');
-            } else {
-                grid.className = "big-mode-grid";
-                grid.classList.add('big-mode');
-            }
+
+            let totalVisibleUp = 0;
+            let totalVisibleDown = 0;
+		
+	    localStorage.setItem('savedSearch', searchQuery);
+            localStorage.setItem('savedZone', selectedZone);
+            localStorage.setItem('savedType', selectedType);
+
+            grid.className = selectedZone === 'ALL' ? "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6" : "big-mode-grid big-mode";
 
             cards.forEach(card => {
                 const cardZone = card.getAttribute('data-zone');
                 const nodeName = card.getAttribute('data-node');
-                const targets = card.querySelectorAll('.target-box');
+                const isZoneMatch = (selectedZone === 'ALL' || cardZone === selectedZone);
                 
-                let matchInTargets = false;
+                const sections = card.querySelectorAll('.category-section');
+                let cardHasVisibleContent = false;
 
-                targets.forEach(t => {
-                    const searchData = t.getAttribute('data-search');
-                    const isTargetMatch = searchData.includes(query);
-                    if (isTargetMatch) matchInTargets = true;
+                sections.forEach(sec => {
+                    const secCat = sec.getAttribute('data-category');
+                    const isTypeMatch = (selectedType === 'ALL' || secCat === selectedType);
                     
-                    if (query !== "") {
-                        t.style.opacity = isTargetMatch ? "1" : "0.15";
-                        t.style.filter = isTargetMatch ? "none" : "grayscale(100%)";
+                    let secUp = 0, secDown = 0;
+                    
+                    if (isTypeMatch) {
+                        const targets = sec.querySelectorAll('.target-box');
+                        let sectionHasSearchMatch = false;
+
+                        targets.forEach(t => {
+                            const status = t.getAttribute('data-status');
+                            const match = t.getAttribute('data-search').includes(searchQuery) || nodeName.includes(searchQuery);
+                            t.style.opacity = (searchQuery === "" || match) ? "1" : "0.1";
+                            
+                            if (match && isZoneMatch) {
+                                sectionHasSearchMatch = true;
+                                if (status === "UP") { secUp++; totalVisibleUp++; }
+                                else { secDown++; totalVisibleDown++; }
+                            }
+                        });
+
+                        // Update the network heading text with counts
+                        const counterSpan = sec.querySelector('.section-counter');
+                        if(counterSpan) {
+                            counterSpan.innerHTML = `(<span class="text-emerald-500">${secUp}</span>|<span class="text-rose-500">${secDown}</span>)`;
+                        }
+
+                        const showSec = (searchQuery === "" || sectionHasSearchMatch || nodeName.includes(searchQuery));
+                        sec.style.display = showSec ? "block" : "none";
+                        if (showSec) cardHasVisibleContent = true;
                     } else {
-                        t.style.opacity = "1";
-                        t.style.filter = "none";
+                        sec.style.display = "none";
                     }
                 });
-
-                const zoneMatch = (zone === 'ALL' || cardZone === zone);
-                const queryMatch = (query === "" || nodeName.includes(query) || matchInTargets);
-
-                card.classList.toggle('hidden-zone', !zoneMatch || !queryMatch);
+                card.classList.toggle('hidden-zone', !isZoneMatch || !cardHasVisibleContent);
             });
-            
-            calculateLiveStats();
+
+            document.getElementById('countUp').innerText = `${totalVisibleUp} UP`;
+            document.getElementById('countDown').innerText = `${totalVisibleDown} DOWN`;
         }
 
-        function calculateLiveStats() {
-            const visibleCards = Array.from(document.querySelectorAll('.source-card:not(.hidden-zone)'));
-            let up = 0, down = 0;
-            
-            visibleCards.forEach(card => {
-                const targets = card.querySelectorAll('.target-box');
-                targets.forEach(t => {
-                    if (t.style.opacity !== "0.15") {
-                        if (t.getAttribute('data-status') === "UP") up++;
-                        else down++;
-                    }
-                });
-            });
-            
-            document.getElementById('statUp').innerText = up + " ONLINE";
-            document.getElementById('statDown').innerText = down + " OFFLINE";
-        }
+        window.onload = function() {
+	    const s = localStorage.getItem('savedSearch');
+            const z = localStorage.getItem('savedZone');
+            const t = localStorage.getItem('savedType');
 
-        window.onload = () => {
-            const savedZone = localStorage.getItem('activeZone');
-            if (savedZone) {
-                document.getElementById('zoneFilter').value = savedZone;
-            }
-            applyFilter();
+	    if (s) searchInput.value = s; // Restore text
+            if (z) document.getElementById('zoneFilter').value = z; // Restore dropdown
+            if (t) document.getElementById('typeFilter').value = t; // Restore dropdown 
+            
+	    // 2. NEW FEATURE: Auto-focus when mouse enters the search box
+        	searchInput.addEventListener("mouseenter", function() {
+            		searchInput.focus();
+        	});
+
+	    applyFilter();
         };
     </script>
 </body>

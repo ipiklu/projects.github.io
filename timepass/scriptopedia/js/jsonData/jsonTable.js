@@ -75,6 +75,16 @@ const JSON_TABLE = [
 					<a title="Click-To-Download"  href="data/allnwstatusDashboard.zip" class="index-alert">allnwstatusDashboard.zip</a>
 				</td>
 			</tr>
+			<tr>
+				<td width="38">
+					<a title="Click-To-Download" href="data/nwLocalDashboard.zip" class="index-alert">
+						<img src="img/zip.png" title="Click-To-Open-Application" style="max-width: 70px;">
+					</a>
+				</td>
+				<td align="left">
+					<a title="Click-To-Download"  href="data/nwLocalDashboard.zip" class="index-alert">nwLocalDashboard.zip</a>
+				</td>
+			</tr>
 		</tbody>
 		</table>`
 	},

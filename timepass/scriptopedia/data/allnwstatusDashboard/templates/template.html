@@ -131,7 +131,8 @@
 <p align="left">Intelectual Property (IP) Protected &copysr; <script>document.write(new Date().getFullYear())</script>, All Rights Not Reserved</p>
       <script>
         function applyFilter() {
-            const selectedZone = document.getElementById('zoneFilter').value;
+            const searchInput = document.getElementById('searchInput');
+	    const selectedZone = document.getElementById('zoneFilter').value;
             const selectedType = document.getElementById('typeFilter').value;
             const searchQuery = document.getElementById('searchInput').value.toLowerCase();
             const grid = document.getElementById('cardGrid');
@@ -139,7 +140,8 @@
 
             let totalVisibleUp = 0;
             let totalVisibleDown = 0;
-
+		
+	    localStorage.setItem('savedSearch', searchQuery);
             localStorage.setItem('savedZone', selectedZone);
             localStorage.setItem('savedType', selectedType);
 
@@ -196,11 +198,20 @@
         }
 
         window.onload = function() {
+	    const s = localStorage.getItem('savedSearch');
             const z = localStorage.getItem('savedZone');
             const t = localStorage.getItem('savedType');
-            if (z) document.getElementById('zoneFilter').value = z;
-            if (t) document.getElementById('typeFilter').value = t;
-            applyFilter();
+
+	    if (s) searchInput.value = s; // Restore text
+            if (z) document.getElementById('zoneFilter').value = z; // Restore dropdown
+            if (t) document.getElementById('typeFilter').value = t; // Restore dropdown 
+            
+	    // 2. NEW FEATURE: Auto-focus when mouse enters the search box
+        	searchInput.addEventListener("mouseenter", function() {
+            		searchInput.focus();
+        	});
+
+	    applyFilter();
         };
     </script>
 </body>

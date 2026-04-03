@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="10">
+    <title>NOC Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #05070a; color: #94a3b8; font-family: ui-monospace, monospace; padding: 20px; scrollbar-width: none; }
+        
+        /* SEARCH DIMMING */
+        .dimmed { opacity: 0.1 !important; filter: grayscale(100%); pointer-events: none; transform: scale(0.9); }
+        .hidden-section { display: none !important; }
+
+        .network-heading {
+            font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.2em;
+            text-align: center; color: white; background: rgba(255, 255, 255, 0.07);
+            padding: 8px 0; margin: 15px 0; border-radius: 4px; display: flex; justify-content: center; align-items: center;
+        }
+        
+	.section-counter {
+    		font-size: 10px; font-weight: bold; color: #64748b; margin-left: 10px; letter-spacing: normal;
+	}
+	.cnt-up { color: #10b981; } /* Green */
+	.cnt-down { color: #f43f5e; } /* Red */
+        .target-box {
+            background: rgba(0,0,0,0); border-radius: 4px; padding: 6px; height: 46px; 
+            display: flex; flex-direction: column; justify-content: center; position: relative;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .target-box[data-status="UP"] { border-left: 3px solid #10b981; background: rgba(16, 185, 129, 0.05); }
+        .target-box[data-status="UP"] .status-indicator { background: #10b981; box-shadow: 0 0 8px #10b981; }
+        .target-box[data-status="DOWN"] { border-left: 3px solid #f43f5e; background: rgba(244, 63, 94, 0.05); }
+        .target-box[data-status="DOWN"] .status-indicator { background: #f43f5e; box-shadow: 0 0 8px #f43f5e; }
+        
+        .target-box:hover { 
+		transform: scale(1.2); z-index: 50; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); cursor: pointer;
+		background-color: rgba(0, 0, 0, 0.2); animation: animated-border-glow 8s infinite linear;
+	}
+	.target-box:active {
+		transform: scale(0.98); box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); /*Lowering the shadow*/
+	}
+
+        .target-label { font-size: 14px; font-weight: bold; color: white; }
+        .target-subtext { font-size: 14px; color: #64748b; margin-top: 2px; }
+		.target-subtext:hover {color: #E59E11;}
+        .status-indicator { width: 7px; height: 7px; border-radius: 50%; }
+        .target-header { display: flex; justify-content: space-between; align-items: center; }
+
+        .source-card { background: rgba(15, 23, 42, 0.6); border: 1px solid #1e293b; padding: 15px; border-radius: 8px; }
+        .target-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+
+        input[type="text"]{
+		border: 1px none; border-radius: 10px; transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+	input[type="text"]:hover {
+		transform: scale(1.07); box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); color:#E59E11; cursor: text; background-color: rgba(0, 0, 0, 0.2); animation: animated-border-glow 8s infinite linear;
+	}
+	input[type="text"]:active {
+		transform: scale(0.98); box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); /*Lowering the shadow*/
+	}
+	.dropdown {
+		border: 1px none; outline: none; background: #121212; color: #E59E11; border-radius: 5em; transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		
+	}
+	.dropdown:hover {
+		transform: scale(1.01); box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); cursor: pointer; background: #121212; color: #E59E11; animation: animated-border-glow 8s infinite linear;
+	}
+	.dropdown:active {
+		transform: scale(0.98); box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); /*Lowering the shadow*/
+	}
+/* Keyframes for the new animated border glow */
+@keyframes animated-border-glow {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue */
+    }
+    25% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 255, 100, 0.7); /* Green */
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 100, 100, 0.7); /* Red */
+    }
+    75% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 255, 100, 0.7); /* Yellow */
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue (back to start) */
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="flex flex-col lg:flex-row justify-between items-center mb-8 pb-4 border-b border-slate-900 gap-4">
+        <div>
+            <h1 class="text-sm font-black tracking-[0.4em] text-slate-500 uppercase">SYSTEM <span class="text-yellow-600">COMMAND</span></h1>
+            <div class="text-[10px] mt-1 font-bold">
+                <span id="countUp" class="text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">0 UP</span>
+                <span id="countDown" class="text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded ml-2">0 DOWN</span>
+            </div>
+        </div>
+        <input type="text" id="searchInput" onkeyup="applyFilter()" placeholder="SEARCH IP / NAMES..." class="bg-white px-4 py-2 rounded text-xs text-black font-bold outline-none w-64 uppercase border-2 border-slate-900" autocomplete="off">
+        <div class="flex gap-2 items-center">
+            <select id="typeFilter" onchange="applyFilter()" class="dropdown">
+                <option value="ALL">OVERVIEW</option>
+                <option value="HLR">HLR</option>
+                <option value="AIR">AIR</option>
+                <option value="DNS">DNS</option>
+                <option value="INUM">INUM</option>
+            </select>
+            <div class="text-yellow-700 font-bold text-xs p-2">{timestamp}</div>
+        </div>
+    </div>
+    <div id="cardGrid">{cards}</div>
+    <script>
+    // 1. Function to actually perform the UI filtering
+    function applyFilter() {
+        const searchInput = document.getElementById('searchInput');
+        const typeFilter = document.getElementById('typeFilter');
+        
+        const query = searchInput.value.toLowerCase();
+        const type = typeFilter.value;
+
+        // SAVE to memory every time a key is pressed or dropdown changed
+        localStorage.setItem('noc_query', query);
+        localStorage.setItem('noc_type', type);
+
+        const sections = document.querySelectorAll('.category-section');
+        let u = 0, d = 0;
+
+        sections.forEach(sec => {
+            const cat = sec.getAttribute('data-category');
+            const isTypeMatch = (type === 'ALL' || cat === type);
+            const targets = sec.querySelectorAll('.target-box');
+            let sectionVisible = 0;
+
+            targets.forEach(t => {
+                const matchSearch = t.getAttribute('data-search').includes(query);
+                if (isTypeMatch && matchSearch) {
+                    t.classList.remove('dimmed'); 
+                    sectionVisible++;
+                    if (t.getAttribute('data-status') === "UP") u++; else d++;
+                } else { 
+                    t.classList.add('dimmed'); 
+                }
+            });
+
+            if (sectionVisible > 0) sec.classList.remove('hidden-section');
+            else sec.classList.add('hidden-section');
+        });
+
+        document.getElementById('countUp').innerText = u + " UP";
+        document.getElementById('countDown').innerText = d + " DOWN";
+    }
+
+    // 2. THIS IS THE FIX: Restore values from memory IMMEDIATELY when page loads
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedQuery = localStorage.getItem('noc_query');
+        const savedType = localStorage.getItem('noc_type');
+
+        if (savedQuery !== null) {
+            document.getElementById('searchInput').value = savedQuery;
+        }
+        if (savedType !== null) {
+            document.getElementById('typeFilter').value = savedType;
+        }
+	
+	// 2. NEW FEATURE: Auto-focus when mouse enters the search box
+        searchInput.addEventListener("mouseenter", function() {
+            searchInput.focus();
+        });    
+
+        // Now run the filter once to hide the other sections
+        applyFilter();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+[
+  {
+    "port_to_serve": 7000,
+    "check_interval": 5,
+    "HLR_targets": [
+      {"name": "Google HLR", "ip": "142.250.70.110", "port": 443},
+      {"name": "Facebook HLR", "ip": "57.144.124.1", "port": 443},
+      {"name": "Apple HLR", "ip": "17.253.144.10", "port": 443}
+    ]
+  },
+  {
+    "AIR_targets": [
+      {"name": "Google AIR", "ip": "142.250.70.110", "port": 10011},
+      {"name": "Facebook AIR", "ip": "57.144.124.1", "port": 10011},
+      {"name": "Apple AIR", "ip": "17.253.144.10", "port": 10011}
+    ]
+  },
+  {
+    "DNS_targets": [
+      {"name": "Google DNS", "ip": "8.8.8.8", "port": 53},
+      {"name": "Cloudflare DNS", "ip": "1.1.1.1", "port": 53},
+      {"name": "Facebook DNS", "ip": "57.144.124.1", "port": 53}
+    ]
+  },
+  {
+    "INUM_targets": [
+      {"name": "Google INUM", "ip": "142.250.70.110", "port": 80},
+      {"name": "Facebook INUM", "ip": "57.144.124.1", "port": 80},
+      {"name": "Apple INUM", "ip": "17.253.144.10", "port": 80}
+    ]
+  }
+]
