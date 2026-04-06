@@ -89,6 +89,27 @@ const JSON_TABLE = [
 		</table>`
 	},
 	{ 
+		title: "url links opener",
+		content: `<table width="500" border="2" bordercolor="#AA205C">
+		<thead> 
+			<tr>
+				<th class="zone-cell" colspan="3">Web-Browse</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td width="400" title="Type-any-URL">
+						<input type="URL" id="popWindowUrl" onkeydown="if(event.key==='Enter') window.open(popWindowUrl.value.startsWith('http') ?popWindowUrl.value:'http://'+popWindowUrl.value, '_blank', 'fullscreen,scrollbars');" placeholder="Type any URL" onmouseenter="this.focus()" onmouseleave="this.blur()">
+					</a>
+				</td>
+				<td align="center" title="Click-To-Open">
+					<a class="index-alert" onClick="window.open(popWindowUrl.value.startsWith('http') ?popWindowUrl.value:'http://'+popWindowUrl.value, '_blank', 'fullscreen,scrollbars');">&#127760;</a>
+				</td>
+			</tr>
+		</tbody>
+		</table>`
+	},
+	{ 
 		title: "help",
 		content: `<table width="700" border="2" bordercolor="#AA205C">
 		<thead> 
@@ -165,6 +186,18 @@ const JSON_TABLE = [
 				</td>
 				<td align="left" style="padding: 2px">
 					<a class="index-alert">Type <i><b style="color: rgba(170, 32, 92, 0.5);">SQL query build</b></i>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a class="index-alert">5</a>
+				</td>
+				<td align="left">
+					<a class="index-alert">How to get an URL opener</a>
+				</td>
+				<td align="left" style="padding: 2px">
+					<a class="index-alert">Type <i><b style="color: rgba(170, 32, 92, 0.5);">URL links opener</b></i>
 					</a>
 				</td>
 			</tr>
