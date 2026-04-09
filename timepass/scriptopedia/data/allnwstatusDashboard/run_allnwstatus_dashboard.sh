@@ -12,12 +12,16 @@ ADVGREEN="\e[48;5;236;32m"
 ADVGREY="\e[48;5;236;1m"
 ADVYELLOW="\e[48;5;236;33m"
 BLACKYELLOW="\e[0;4;30;46;44;43m"
-ADVBLINKGREEN="\e[48;5;236;32;1m"
+ADVBLINKGREEN="\e[48;5;236;32;5m"
 ADVBLUE="\e[0;33;1;44m"
 BLUE="\e[34m"
 RESET="\e[0m"
 
-LIVE_EMOJI="⬤"
+LIVE_EMOJI="\U2B24"
+DASH_EMOJI="\U2699"
+START_EMOJI="\U1F680"
+
+TIMESTAMP=$(date "+%d-%b-%Y %H:%M:%S %p")
 
 # Navigate to the project directory
 cd /home/piklu/scripts/webDev
@@ -28,11 +32,13 @@ then
     # It is running from the correct path, do nothing
     clear
     printf "\n"
-    printf "\e[48;5;236;32;5m $LIVE_EMOJI Script already running (on PID below)\e[0m\n" 
-    printf " \u2193\n"
-
+    printf "$ADVGREY$DASH_EMOJI  SERVER-SIDE-DASHBOARD $RESET\n"
+    printf " $ADVRED(ALREADY RUNNING)$RESET\n"
+    printf "$ADVBLINKGREEN $LIVE_EMOJI$RESET$ADVGREEN Script already running (on PID below)$RESET\n" 
+    printf " $ADVYELLOW\u2193$RESET\n"
+    printf "$ADVBLUE"
     pgrep -af "/home/piklu/scripts/webDev/app.py"
-    printf "\n"
+    printf "$RESET\n"
     exit 0
 else
     # It is NOT running from that path, start it
@@ -41,7 +47,9 @@ else
     printf "\n"
     python3 -u /home/piklu/scripts/webDev/app.py > /dev/null 2>&1 &
     #pgrep -af "/home/piklu/scripts/webDev/app.py"
-
-    printf "\e${ADVBLUE}Check Browser with URL : ${RESET} \U27A1 ${ADVGREEN} http://127.0.0.1:8000 ${RESET}\n"
+    
+    printf "$ADVGREY$START_EMOJI SERVER-SIDE-DASHBOARD $RESET\n"
+    printf " $ADVGREEN[STARTED @ $TIMESTAMP]$RESET\n"
+    printf "$ADVBLUE Check Browser with URL : $RESET \U27A1 $ADVGREEN http://127.0.0.1:8000 $RESET\n"
     printf "\n"
 fi
