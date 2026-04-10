@@ -138,7 +138,12 @@ a { cursor: pointer; }
 /* Custom Button variations for inside cards */
 .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-main); }
 .btn-danger { background: #ef4444; color: white; }
-
+mark {
+    background-color: #ffeb3b; /* Bright Yellow */
+    color: black;
+    padding: 0;
+    border-radius: 2px;
+}
 .imgS {
         border-radius: 10px;
         margin-left: 10px;
