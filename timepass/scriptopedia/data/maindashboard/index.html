@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPSS-Dashboard</title>
+    <link rel = "icon" href="img/s.gif" type="image/x-icon">
+    <link rel="stylesheet" href="css/googleapi.css">
+    <script src="js/lucide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <img alt="logo" src="img/s.gif" class="imgS"/>
+                    <span>UPSS-Dash</span>
+                </div>
+                <button id="sidebar-toggle" class="icon-btn">
+                    <i data-lucide="menu"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-link active" data-page="Overview">
+                    <i data-lucide="layout-grid"></i><span>Overview</span>
+                </a>
+                <a href="#" class="nav-link" data-page="Provisioning">
+                    <i data-lucide="folder-kanban"></i><span>Provisioning</span>
+                </a>
+                <a href="#" class="nav-link" data-page="IR">
+                    <i data-lucide="folder-kanban"></i><span>IR</span>
+                </a>
+                <a href="#" class="nav-link" data-page="Config">
+                    <i data-lucide="folder-kanban"></i><span>Config</span>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="main-wrapper">
+            <header class="top-bar">
+                <div class="header-left">
+                    <div class="search-container">
+                        <input type="text" id="global-search" placeholder="&#x1F50D; Search components...">
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <nav class="top-nav">
+                        <a href="#">Docs</a>
+                        <a href="#">Support</a>
+                        <a href="#">Changelog</a>
+                    </nav>
+                    <button class="btn btn-primary capture-btn" onClick="downloadScreenshot()">Screeshot</button>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <header class="page-title">
+                    <h1 id="dynamic-title">Overview</h1>
+                </header>
+
+                <div class="grid-layout" id="main-grid">
+                    </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
