@@ -115,16 +115,17 @@ async function downloadScreenshot() {
     try {
         const canvas = await html2canvas(dashboard, {
             scale: 2,
-            useCORS: true,      // Essential for Server/Web
-            allowTaint: false,   // Must be false if useCORS is true
+            useCORS: true,      
+            allowTaint: false,  
             logging: true,
             backgroundColor: "#f8fafc",
-            // This flag helps with local images that might be causing the taint
-            proxy: null,
-            ignoreElements: (element) => {
-                // If a specific image keeps failing, you can ignore it here
-                // return element.tagName === 'IMG'; 
-                return false;
+            // CRITICAL: This allows html2canvas to attempt to render iframes
+            onclone: (clonedDoc) => {
+                const iframes = clonedDoc.getElementsByTagName('iframe');
+                for (let i = 0; i < iframes.length; i++) {
+                    // Ensure the iframe is visible during the clone process
+                    iframes[i].style.display = 'block';
+                }
             }
         });
 
@@ -132,11 +133,15 @@ async function downloadScreenshot() {
         const link = document.createElement('a');
         link.download = `UPSS-Dash-${Date.now()}.png`;
         link.href = image;
+        
+        // Use document append for better browser compatibility
+        document.body.appendChild(link);
         link.click();
+        document.body.removeChild(link);
 
     } catch (err) {
         console.error("Capture Error:", err);
-        alert("Security Error: Try running this through a 'Live Server' or web host.");
+        alert("Capture failed. If you have an external iframe, browser security prevents capturing it.");
     } finally {
         btn.innerText = originalText;
     }
