@@ -31,25 +31,40 @@ const pageContent = {
     ],
     'Config': [
         { title: 'Account Settings', desc: 'Update your global profile.', html: '<button class="btn btn-primary">Save Settings</button>' }
+    ],
+	'SME': [
+		{ isHeader: true, html: '<iframe src="http://127.0.0.1:7000" width="100%" height="840px"><p>Your browser does not support iframes.</p></iframe>' }
+    ],
+	'NCC': [
+		{ isHeader: true, html: '<iframe src="http://127.0.0.1:8000" width="100%" height="840px"><p>Your browser does not support iframes.</p></iframe>' }
     ]
 };
 
 function loadPage(pageName) {
     dynamicTitle.innerText = pageName;
-    mainGrid.innerHTML = '';
-    
-    if(!pageContent[pageName]) return;
+    mainGrid.innerHTML = ''; 
 
     pageContent[pageName].forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.setAttribute('data-title', item.title);
-        card.innerHTML = `
-            <h3>${item.title}</h3>
-            <p>${item.desc}</p>
-            <div class="card-footer">${item.html}</div>
-        `;
-        mainGrid.appendChild(card);
+        if (item.isHeader) {
+            const headerDiv = document.createElement('div');
+            headerDiv.innerHTML = item.html;
+            headerDiv.style.gridColumn = "1 / -1";
+            mainGrid.appendChild(headerDiv);
+        } else {
+			const card = document.createElement('div');
+			card.className = 'card';
+			
+			// 1. ADD THIS LINE:
+			card.setAttribute('data-title', item.title);
+			card.setAttribute('data-desc', item.desc); // This "pins" the text to the card
+			
+			card.innerHTML = `
+				<h3>${item.title}</h3>
+				<p>${item.desc}</p>
+				<div class="card-footer">${item.html}</div>
+			`;
+			mainGrid.appendChild(card);
+		}
     });
 }
 
@@ -65,9 +80,19 @@ navLinks.forEach(link => {
 
 searchInput.addEventListener('input', (e) => {
     const query = e.target.value.toLowerCase();
-    document.querySelectorAll('.card').forEach(card => {
-        const title = card.getAttribute('data-title').toLowerCase();
-        card.style.display = title.includes(query) ? 'block' : 'none';
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach(card => {
+        // 2. FETCH BOTH ATTRIBUTES:
+        const title = (card.getAttribute('data-title') || "").toLowerCase();
+        const desc = (card.getAttribute('data-desc') || "").toLowerCase();
+
+        // 3. CHECK BOTH:
+        if (title.includes(query) || desc.includes(query)) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
     });
 });
 

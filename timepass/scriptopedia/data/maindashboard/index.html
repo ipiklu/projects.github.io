@@ -7,7 +7,7 @@
     <link rel = "icon" href="img/s.gif" type="image/x-icon">
     <link rel="stylesheet" href="css/googleapi.css">
     <script src="js/lucide.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="js/html2canvas.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -25,17 +25,23 @@
             </div>
             
             <nav class="sidebar-nav">
-                <a href="#" class="nav-link active" data-page="Overview">
+                <a href="#" class="nav-link active" data-page="Overview" title="Overview">
                     <i data-lucide="layout-grid"></i><span>Overview</span>
                 </a>
-                <a href="#" class="nav-link" data-page="Provisioning">
-                    <i data-lucide="folder-kanban"></i><span>Provisioning</span>
+                <a href="#" class="nav-link" data-page="Provisioning" title="Provisioning">
+                    <i data-lucide="folder-open"></i><span>Provisioning</span>
                 </a>
-                <a href="#" class="nav-link" data-page="IR">
+                <a href="#" class="nav-link" data-page="IR" title="IR">
                     <i data-lucide="folder-kanban"></i><span>IR</span>
                 </a>
-                <a href="#" class="nav-link" data-page="Config">
-                    <i data-lucide="folder-kanban"></i><span>Config</span>
+                <a href="#" class="nav-link" data-page="Config" title="Config">
+                    <i data-lucide="settings"></i><span>Config</span>
+                </a>
+                <a href="#" class="nav-link" data-page="SME" title="SME">
+                    <i data-lucide="settings-2"></i><span>SME</span>
+                </a>
+                <a href="#" class="nav-link" data-page="NCC" title="NCC">
+                    <i data-lucide="activity"></i><span>NCC</span>
                 </a>
             </nav>
         </aside>
@@ -50,9 +56,9 @@
 
                 <div class="header-right">
                     <nav class="top-nav">
-                        <a href="#">Docs</a>
-                        <a href="#">Support</a>
-                        <a href="#">Changelog</a>
+                        <a title="Open-Documents-Page" onClick="window.open('topbarlinks/docs.html', target='_blank', 'fullscreen, scrollbar');">Docs</a>
+                        <a title="Open-Support-Page" onClick="window.open('topbarlinks/support.html', target='_blank', 'fullscreen, scrollbar');">Support</a>
+                        <a title="Open-Changelog-Page" onClick="window.open('topbarlinks/changelog.html', target='_blank', 'fullscreen, scrollbar');">Changelog</a>
                     </nav>
                     <button class="btn btn-primary capture-btn" onClick="downloadScreenshot()">Screeshot</button>
                 </div>

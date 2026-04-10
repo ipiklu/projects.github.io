@@ -12,7 +12,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 body { background: var(--bg-main); color: var(--text-main); overflow: hidden; }
-
+a { cursor: pointer; }
 .app-container { display: flex; height: 100vh; width: 100vw; }
 
 /* --- SIDEBAR --- */

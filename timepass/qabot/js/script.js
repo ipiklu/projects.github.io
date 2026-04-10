@@ -10,7 +10,8 @@
 
         let documentContent = null;
         // IMPORTANT: Replace the empty string below with your actual API key
-        const apiKey = "AIzaSyC1v5siNaYiwV5H8xgRq13cIbIP6KKxf0o";
+        const apiKey = "AIzaSyAYMMlWZz8Tw95G4oT7K4919YYasKmtb_I";
+		//Expired key//"AIzaSyC1v5siNaYiwV5H8xgRq13cIbIP6KKxf0o";
         const apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=" + apiKey;
 
         const MAX_DOCUMENT_LENGTH = 90000; // An approximate token limit for the model
