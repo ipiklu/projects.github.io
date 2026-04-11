@@ -9,61 +9,63 @@ const navLinks = document.querySelectorAll('.nav-link');
 const searchInput = document.getElementById('global-search');
 const contentArea = document.querySelector('.content-area');
 
-// --- 2. Unified Interaction Logic (Mouse + Touch + Wheel) ---
+// --- 2. Unified Interaction Logic (Fixed for Desktop Click-Through) ---
 let startX = 0;
 let isDragging = false;
 let lastScrollTop = 0;
-let moveDetected = false; // New flag to distinguish tap vs swipe
 
 // A. Manual Toggle
-toggleBtn.addEventListener('click', () => {
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation(); // Prevent the sidebar drag logic from interfering
     sidebar.classList.toggle('collapsed');
 });
 
-// B. Mouse Wheel Logic
-window.addEventListener('wheel', (e) => {
-    if (Math.abs(e.deltaY) < 5) return; 
-    if (e.deltaY > 0) sidebar.classList.add('collapsed');
-    else sidebar.classList.remove('collapsed');
-}, { passive: true });
-
-// C. Unified Drag/Swipe Logic (Sidebar Restricted)
+// B. Drag/Swipe Logic (Desktop Friendly)
 sidebar.addEventListener('pointerdown', (e) => {
-    if (e.target.closest('button') || e.target.closest('input')) return;
+    // 1. Ignore if clicking interactive elements
+    if (e.target.closest('button') || e.target.closest('input') || e.target.closest('.nav-link')) {
+        isDragging = false;
+        return; 
+    }
 
     startX = e.pageX;
     isDragging = true;
-    moveDetected = false; 
-    
-    // Capture pointer so swipe works even if finger leaves sidebar area
-    sidebar.setPointerCapture(e.pointerId);
 });
 
-sidebar.addEventListener('pointermove', (e) => {
+// We listen for movement on the window to decide when to "capture" the drag
+window.addEventListener('pointermove', (e) => {
     if (!isDragging) return;
-    // If movement is more than 10px, we flag it as a swipe (not a click)
-    if (Math.abs(e.pageX - startX) > 10) {
-        moveDetected = true;
+
+    const currentX = e.pageX;
+    const diffX = currentX - startX;
+
+    // 2. Only "Capture" the pointer if the user has moved more than 10px
+    // This allows short clicks/taps to reach the links!
+    if (Math.abs(diffX) > 10) {
+        sidebar.setPointerCapture(e.pointerId);
     }
 });
 
-sidebar.addEventListener('pointerup', (e) => {
+window.addEventListener('pointerup', (e) => {
     if (!isDragging) return;
     
     const diffX = e.pageX - startX;
-    const threshold = 50; 
+    const threshold = 60; 
 
-    // Only collapse/expand if significant movement was detected
-    if (moveDetected && Math.abs(diffX) > threshold) {
-        if (diffX < -threshold) sidebar.classList.add('collapsed');
-        else sidebar.classList.remove('collapsed');
+    if (diffX < -threshold) {
+        sidebar.classList.add('collapsed');
+    } else if (diffX > threshold) {
+        sidebar.classList.remove('collapsed');
     }
 
     isDragging = false;
-    sidebar.releasePointerCapture(e.pointerId);
+    // Release capture if it was ever set
+    if (sidebar.hasPointerCapture(e.pointerId)) {
+        sidebar.releasePointerCapture(e.pointerId);
+    }
 });
 
-// D. Internal Content Scroll Logic
+// C. Internal Content Scroll Logic
 contentArea.addEventListener('scroll', () => {
     let st = contentArea.scrollTop;
     if (st > lastScrollTop && st > 30) sidebar.classList.add('collapsed');

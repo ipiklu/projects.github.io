@@ -63,8 +63,10 @@ a { cursor: pointer; }
     display: flex; align-items: center; padding: 12px;
     text-decoration: none; color: var(--text-muted);
     border-radius: 8px; margin-bottom: 4px; transition: 0.2s;
-	touch-action: auto;
-	pointer-events: auto;
+	position: relative;
+    z-index: 10;
+    pointer-events: auto !important;
+    cursor: pointer;
 }
 .nav-link i { min-width: 24px; margin-right: 12px; }
 .nav-link.active, .nav-link:hover { background: #f1f5f9; color: var(--primary); }
