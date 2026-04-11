@@ -28,8 +28,15 @@ window.addEventListener('wheel', (e) => {
 
 // C. Unified Drag/Swipe Logic (Mouse + Touch)
 window.addEventListener('pointerdown', (e) => {
-    // Prevent drag trigger on interactive elements
+    // 1. Ignore if clicking buttons, inputs, or iframes
     if (e.target.closest('button') || e.target.closest('input') || e.target.closest('iframe')) return;
+    
+    // 2. Capture the pointer (Critical for Mobile)
+    // This ensures the move/up events keep firing even if the finger wanders
+    if (e.target.setPointerCapture) {
+        e.target.setPointerCapture(e.pointerId);
+    }
+
     startX = e.pageX;
     isDragging = true;
 });
@@ -46,13 +53,22 @@ window.addEventListener('pointermove', (e) => {
 
 window.addEventListener('pointerup', (e) => {
     if (!isDragging) return;
+    
     const diffX = e.pageX - startX;
-    const threshold = 60;
+    const threshold = 50; // Reduced slightly for better mobile feel
 
-    if (diffX < -threshold) sidebar.classList.add('collapsed'); // Swipe Left
-    else if (diffX > threshold) sidebar.classList.remove('collapsed'); // Swipe Right
+    if (diffX < -threshold) {
+        sidebar.classList.add('collapsed'); // Swipe Left
+    } else if (diffX > threshold) {
+        sidebar.classList.remove('collapsed'); // Swipe Right
+    }
 
     isDragging = false;
+    
+    // Release the pointer capture
+    if (e.target.releasePointerCapture) {
+        e.target.releasePointerCapture(e.pointerId);
+    }
 });
 
 // D. Internal Content Scroll Logic
