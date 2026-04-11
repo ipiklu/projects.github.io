@@ -13,76 +13,61 @@ const contentArea = document.querySelector('.content-area');
 let startX = 0;
 let isDragging = false;
 let lastScrollTop = 0;
+let moveDetected = false; // New flag to distinguish tap vs swipe
 
 // A. Manual Toggle
 toggleBtn.addEventListener('click', () => {
     sidebar.classList.toggle('collapsed');
 });
 
-// B. Mouse Wheel Logic (Global)
+// B. Mouse Wheel Logic
 window.addEventListener('wheel', (e) => {
-    if (Math.abs(e.deltaY) < 5) return; // Ignore accidental micro-scrolls
+    if (Math.abs(e.deltaY) < 5) return; 
     if (e.deltaY > 0) sidebar.classList.add('collapsed');
     else sidebar.classList.remove('collapsed');
 }, { passive: true });
 
-// C. Unified Drag/Swipe Logic (Mouse + Touch)
-let dragStartTime = 0;
-const moveThreshold = 10; // Pixels moved before we consider it a "drag"
+// C. Unified Drag/Swipe Logic (Sidebar Restricted)
+sidebar.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('button') || e.target.closest('input')) return;
 
-window.addEventListener('pointerdown', (e) => {
-    // 1. Ignore if clicking buttons, inputs, or iframes
-    if (e.target.closest('button') || e.target.closest('input') || e.target.closest('iframe')) return;
-    
     startX = e.pageX;
-    dragStartTime = Date.now();
     isDragging = true;
+    moveDetected = false; 
     
-    // We DON'T capture the pointer yet to allow the link to register a click
+    // Capture pointer so swipe works even if finger leaves sidebar area
+    sidebar.setPointerCapture(e.pointerId);
 });
 
-// Optional: Prevent default browser behavior ONLY while dragging
-window.addEventListener('pointermove', (e) => {
+sidebar.addEventListener('pointermove', (e) => {
     if (!isDragging) return;
-    
-    // Prevent default scroll behavior if we are swiping sideways
-    const currentX = e.pageX;
-    if (Math.abs(currentX - startX) > 10) {
-        // This is only allowed if touch-action is handled in CSS
+    // If movement is more than 10px, we flag it as a swipe (not a click)
+    if (Math.abs(e.pageX - startX) > 10) {
+        moveDetected = true;
     }
 });
 
-window.addEventListener('pointerup', (e) => {
+sidebar.addEventListener('pointerup', (e) => {
     if (!isDragging) return;
     
     const diffX = e.pageX - startX;
-    const dragDuration = Date.now() - dragStartTime;
     const threshold = 50; 
 
-    // Logic: Only toggle if the movement was significant OR lasted long enough
-    // This prevents "taps" on sidebar links from being ignored
-    if (Math.abs(diffX) > threshold && dragDuration > 100) {
-        if (diffX < -threshold) {
-            sidebar.classList.add('collapsed');
-        } else if (diffX > threshold) {
-            sidebar.classList.remove('collapsed');
-        }
-        
-        // If it was a real drag, prevent the click from firing on a link
-        e.preventDefault();
+    // Only collapse/expand if significant movement was detected
+    if (moveDetected && Math.abs(diffX) > threshold) {
+        if (diffX < -threshold) sidebar.classList.add('collapsed');
+        else sidebar.classList.remove('collapsed');
     }
 
     isDragging = false;
+    sidebar.releasePointerCapture(e.pointerId);
 });
 
 // D. Internal Content Scroll Logic
 contentArea.addEventListener('scroll', () => {
     let st = contentArea.scrollTop;
-    if (st > lastScrollTop && st > 30) {
-        sidebar.classList.add('collapsed');
-    } else if (st < lastScrollTop) {
-        sidebar.classList.remove('collapsed');
-    }
+    if (st > lastScrollTop && st > 30) sidebar.classList.add('collapsed');
+    else if (st < lastScrollTop) sidebar.classList.remove('collapsed');
     lastScrollTop = st <= 0 ? 0 : st;
 }, { passive: true });
 
