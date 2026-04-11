@@ -131,44 +131,18 @@ const pageContent = {
     ]
 };
 
-// --- 5. Core Loader & Helpers ---
-function loadPage(pageName) {
-    if (!pageContent[pageName]) return;
-    dynamicTitle.innerText = pageName;
-    mainGrid.innerHTML = ''; 
-
-    pageContent[pageName].forEach(item => {
-        const element = document.createElement('div');
-        element.className = item.isHeader ? 'section-header' : 'card';
-        if (item.isHeader) element.style.gridColumn = "1 / -1";
-        
-        element.innerHTML = `
-            ${item.isHeader ? '' : `<h3>${item.title}</h3><p>${item.desc}</p>`}
-            <div class="${item.isHeader ? 'header-content' : 'card-footer'}">${item.html}</div>
-            <div class="hidden-search-bank" style="display:none;"></div>
-        `;
-        
-        mainGrid.appendChild(element);
-
-        const iframe = element.querySelector('iframe');
-        if (iframe) {
-            iframe.onload = function() {
-                try {
-                    const doc = iframe.contentDocument || iframe.contentWindow.document;
-                    element.querySelector('.hidden-search-bank').innerText = doc.body.innerText;
-                } catch (e) {}
-            };
-        }
-    });
-}
-
+// --- Helper: Highlight text in any document (Main or Iframe) ---
 function applyHighlight(rootElement, query) {
+    // 1. Reset: Remove existing marks
     rootElement.querySelectorAll('mark').forEach(m => {
+        const parent = m.parentNode;
         m.replaceWith(document.createTextNode(m.textContent));
+        parent.normalize(); // Cleans up text nodes
     });
 
     if (!query) return;
 
+    // 2. Find and Highlight
     const walker = document.createTreeWalker(rootElement, NodeFilter.SHOW_TEXT, null, false);
     const nodes = [];
     let node;
@@ -185,13 +159,86 @@ function applyHighlight(rootElement, query) {
     });
 }
 
-// --- 6. Event Listeners Init ---
+// --- Core Page Loader ---
+function loadPage(pageName) {
+    if (!pageContent[pageName]) return;
+    dynamicTitle.innerText = pageName;
+    mainGrid.innerHTML = ''; 
+
+    pageContent[pageName].forEach(item => {
+        const element = document.createElement('div');
+        
+        if (item.isHeader) {
+            element.className = 'section-header';
+            element.style.gridColumn = "1 / -1"; // Full width
+            element.innerHTML = `
+                <div class="header-content">${item.html}</div>
+                <div class="hidden-search-bank" style="display:none;"></div>
+            `;
+        } else {
+            element.className = 'card';
+            element.innerHTML = `
+                <h3>${item.title}</h3>
+                <p>${item.desc}</p>
+                <div class="card-footer">${item.html}</div>
+                <div class="hidden-search-bank" style="display:none;"></div>
+            `;
+        }
+        
+        mainGrid.appendChild(element);
+
+        // --- Iframe Indexing (Server only) ---
+        const iframe = element.querySelector('iframe');
+        if (iframe) {
+            iframe.onload = function() {
+                try {
+                    const doc = iframe.contentDocument || iframe.contentWindow.document;
+                    if (doc && doc.body) {
+                        element.querySelector('.hidden-search-bank').innerText = doc.body.innerText;
+                    }
+                } catch (e) { /* Cross-origin block for Wikipedia/SME */ }
+            };
+        }
+    });
+}
+
+// --- Navigation ---
 navLinks.forEach(link => {
     link.addEventListener('click', (e) => {
         e.preventDefault();
         navLinks.forEach(l => l.classList.remove('active'));
         link.classList.add('active');
         loadPage(link.getAttribute('data-page'));
+    });
+});
+
+// --- Combined Search & Deep Highlight ---
+searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase();
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach(card => {
+        const mainText = card.innerText.toLowerCase();
+        const hiddenBank = card.querySelector('.hidden-search-bank').innerText.toLowerCase();
+        
+        if (mainText.includes(query) || hiddenBank.includes(query)) {
+            card.style.display = 'block';
+            
+            // Highlight Main Card
+            applyHighlight(card.querySelector('h3'), query);
+            applyHighlight(card.querySelector('p'), query);
+
+            // Highlight INSIDE Iframe (External injection)
+            const iframe = card.querySelector('iframe');
+            if (iframe) {
+                try {
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    applyHighlight(iframeDoc.body, query);
+                } catch (e) { /* Cross-origin block */ }
+            }
+        } else {
+            card.style.display = 'none';
+        }
     });
 });
 
