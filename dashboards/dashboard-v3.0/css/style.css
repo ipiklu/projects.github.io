@@ -144,7 +144,10 @@ mark {
     padding: 0;
     border-radius: 2px;
 }
-
+/* Ensure the main content still scrolls normally */
+.content-area {
+    touch-action: pan-y; /* Allows vertical scrolling but lets us catch horizontal swipes */
+}
 .index-alert { 
 			color: #AA205C;
 			transition: color 0.3s ease;

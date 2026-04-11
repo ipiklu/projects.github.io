@@ -1,23 +1,108 @@
 lucide.createIcons();
 
-// --- Elements ---
+// --- 1. Elements ---
 const sidebar = document.getElementById('sidebar');
 const toggleBtn = document.getElementById('sidebar-toggle');
 const dynamicTitle = document.getElementById('dynamic-title');
 const mainGrid = document.getElementById('main-grid');
 const navLinks = document.querySelectorAll('.nav-link');
 const searchInput = document.getElementById('global-search');
+const contentArea = document.querySelector('.content-area');
 
-// --- Search Focus Logic ---
-searchInput.addEventListener("mouseenter", () => searchInput.focus());
-searchInput.addEventListener("mouseleave", () => searchInput.blur());
+// --- 2. Unified Interaction Logic (Mouse + Touch + Wheel) ---
+let startX = 0;
+let isDragging = false;
+let lastScrollTop = 0;
 
-// --- Toggle Sidebar ---
+// A. Manual Toggle
 toggleBtn.addEventListener('click', () => {
     sidebar.classList.toggle('collapsed');
 });
 
-// --- Page Content Data ---
+// B. Mouse Wheel Logic (Global)
+window.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaY) < 5) return; // Ignore accidental micro-scrolls
+    if (e.deltaY > 0) sidebar.classList.add('collapsed');
+    else sidebar.classList.remove('collapsed');
+}, { passive: true });
+
+// C. Unified Drag/Swipe Logic (Mouse + Touch)
+window.addEventListener('pointerdown', (e) => {
+    // Prevent drag trigger on interactive elements
+    if (e.target.closest('button') || e.target.closest('input') || e.target.closest('iframe')) return;
+    startX = e.pageX;
+    isDragging = true;
+});
+
+// Optional: Prevent default browser behavior ONLY while dragging
+window.addEventListener('pointermove', (e) => {
+    if (isDragging) {
+        const currentX = e.pageX;
+        if (Math.abs(currentX - startX) > 10) {
+            e.preventDefault(); // Stop accidental page navigation/refresh
+        }
+    }
+}, { passive: false });
+
+window.addEventListener('pointerup', (e) => {
+    if (!isDragging) return;
+    const diffX = e.pageX - startX;
+    const threshold = 60;
+
+    if (diffX < -threshold) sidebar.classList.add('collapsed'); // Swipe Left
+    else if (diffX > threshold) sidebar.classList.remove('collapsed'); // Swipe Right
+
+    isDragging = false;
+});
+
+// D. Internal Content Scroll Logic
+contentArea.addEventListener('scroll', () => {
+    let st = contentArea.scrollTop;
+    if (st > lastScrollTop && st > 30) {
+        sidebar.classList.add('collapsed');
+    } else if (st < lastScrollTop) {
+        sidebar.classList.remove('collapsed');
+    }
+    lastScrollTop = st <= 0 ? 0 : st;
+}, { passive: true });
+
+// --- 3. Search & Focus Logic ---
+searchInput.addEventListener("mouseenter", () => searchInput.focus());
+searchInput.addEventListener("mouseleave", () => searchInput.blur());
+
+searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase();
+    // Select both .card and .section-header so SME/NCC pages aren't filtered out
+    const allSearchable = document.querySelectorAll('.card, .section-header');
+
+    allSearchable.forEach(el => {
+        const mainText = el.innerText.toLowerCase();
+        const hiddenBank = el.querySelector('.hidden-search-bank').innerText.toLowerCase();
+        
+        if (mainText.includes(query) || hiddenBank.includes(query)) {
+            el.style.display = 'block';
+            
+            // Highlight text if elements exist
+            const h3 = el.querySelector('h3');
+            const p = el.querySelector('p');
+            if (h3) applyHighlight(h3, query);
+            if (p) applyHighlight(p, query);
+
+            // Deep highlight inside iframes
+            const iframe = el.querySelector('iframe');
+            if (iframe) {
+                try {
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    applyHighlight(iframeDoc.body, query);
+                } catch (err) { /* Cross-origin security block */ }
+            }
+        } else {
+            el.style.display = 'none';
+        }
+    });
+});
+
+// --- 4. Page Content Data ---
 const pageContent = {
     'Overview': [
         { title: 'Primary Actions', desc: 'Main user interactions.', html: '<button class="btn btn-primary" onClick="window.open(\'https://google.com\', \'_blank\');">Submit</button>' },
@@ -41,18 +126,44 @@ const pageContent = {
     ]
 };
 
-// --- Helper: Highlight text in any document (Main or Iframe) ---
+// --- 5. Core Loader & Helpers ---
+function loadPage(pageName) {
+    if (!pageContent[pageName]) return;
+    dynamicTitle.innerText = pageName;
+    mainGrid.innerHTML = ''; 
+
+    pageContent[pageName].forEach(item => {
+        const element = document.createElement('div');
+        element.className = item.isHeader ? 'section-header' : 'card';
+        if (item.isHeader) element.style.gridColumn = "1 / -1";
+        
+        element.innerHTML = `
+            ${item.isHeader ? '' : `<h3>${item.title}</h3><p>${item.desc}</p>`}
+            <div class="${item.isHeader ? 'header-content' : 'card-footer'}">${item.html}</div>
+            <div class="hidden-search-bank" style="display:none;"></div>
+        `;
+        
+        mainGrid.appendChild(element);
+
+        const iframe = element.querySelector('iframe');
+        if (iframe) {
+            iframe.onload = function() {
+                try {
+                    const doc = iframe.contentDocument || iframe.contentWindow.document;
+                    element.querySelector('.hidden-search-bank').innerText = doc.body.innerText;
+                } catch (e) {}
+            };
+        }
+    });
+}
+
 function applyHighlight(rootElement, query) {
-    // 1. Reset: Remove existing marks
     rootElement.querySelectorAll('mark').forEach(m => {
-        const parent = m.parentNode;
         m.replaceWith(document.createTextNode(m.textContent));
-        parent.normalize(); // Cleans up text nodes
     });
 
     if (!query) return;
 
-    // 2. Find and Highlight
     const walker = document.createTreeWalker(rootElement, NodeFilter.SHOW_TEXT, null, false);
     const nodes = [];
     let node;
@@ -69,86 +180,13 @@ function applyHighlight(rootElement, query) {
     });
 }
 
-// --- Core Page Loader ---
-function loadPage(pageName) {
-    if (!pageContent[pageName]) return;
-    dynamicTitle.innerText = pageName;
-    mainGrid.innerHTML = ''; 
-
-    pageContent[pageName].forEach(item => {
-        const element = document.createElement('div');
-        
-        if (item.isHeader) {
-            element.className = 'section-header';
-            element.style.gridColumn = "1 / -1"; // Full width
-            element.innerHTML = `
-                <div class="header-content">${item.html}</div>
-                <div class="hidden-search-bank" style="display:none;"></div>
-            `;
-        } else {
-            element.className = 'card';
-            element.innerHTML = `
-                <h3>${item.title}</h3>
-                <p>${item.desc}</p>
-                <div class="card-footer">${item.html}</div>
-                <div class="hidden-search-bank" style="display:none;"></div>
-            `;
-        }
-        
-        mainGrid.appendChild(element);
-
-        // --- Iframe Indexing (Server only) ---
-        const iframe = element.querySelector('iframe');
-        if (iframe) {
-            iframe.onload = function() {
-                try {
-                    const doc = iframe.contentDocument || iframe.contentWindow.document;
-                    if (doc && doc.body) {
-                        element.querySelector('.hidden-search-bank').innerText = doc.body.innerText;
-                    }
-                } catch (e) { /* Cross-origin block for Wikipedia/SME */ }
-            };
-        }
-    });
-}
-
-// --- Navigation ---
+// --- 6. Event Listeners Init ---
 navLinks.forEach(link => {
     link.addEventListener('click', (e) => {
         e.preventDefault();
         navLinks.forEach(l => l.classList.remove('active'));
         link.classList.add('active');
         loadPage(link.getAttribute('data-page'));
-    });
-});
-
-// --- Combined Search & Deep Highlight ---
-searchInput.addEventListener('input', (e) => {
-    const query = e.target.value.toLowerCase();
-    const cards = document.querySelectorAll('.card');
-
-    cards.forEach(card => {
-        const mainText = card.innerText.toLowerCase();
-        const hiddenBank = card.querySelector('.hidden-search-bank').innerText.toLowerCase();
-        
-        if (mainText.includes(query) || hiddenBank.includes(query)) {
-            card.style.display = 'block';
-            
-            // Highlight Main Card
-            applyHighlight(card.querySelector('h3'), query);
-            applyHighlight(card.querySelector('p'), query);
-
-            // Highlight INSIDE Iframe (External injection)
-            const iframe = card.querySelector('iframe');
-            if (iframe) {
-                try {
-                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                    applyHighlight(iframeDoc.body, query);
-                } catch (e) { /* Cross-origin block */ }
-            }
-        } else {
-            card.style.display = 'none';
-        }
     });
 });
 
@@ -196,12 +234,9 @@ async function downloadScreenshot() {
     }
 }
 
-// --- Initialize ---
-loadPage('Overview');
-
-// --- Reload ---
 function reloadClear() {
     window.localStorage.clear();
     window.location.reload(true);
-    return false;
 }
+
+loadPage('Overview');
