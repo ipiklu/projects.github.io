@@ -27,48 +27,52 @@ window.addEventListener('wheel', (e) => {
 }, { passive: true });
 
 // C. Unified Drag/Swipe Logic (Mouse + Touch)
+let dragStartTime = 0;
+const moveThreshold = 10; // Pixels moved before we consider it a "drag"
+
 window.addEventListener('pointerdown', (e) => {
     // 1. Ignore if clicking buttons, inputs, or iframes
     if (e.target.closest('button') || e.target.closest('input') || e.target.closest('iframe')) return;
     
-    // 2. Capture the pointer (Critical for Mobile)
-    // This ensures the move/up events keep firing even if the finger wanders
-    if (e.target.setPointerCapture) {
-        e.target.setPointerCapture(e.pointerId);
-    }
-
     startX = e.pageX;
+    dragStartTime = Date.now();
     isDragging = true;
+    
+    // We DON'T capture the pointer yet to allow the link to register a click
 });
 
 // Optional: Prevent default browser behavior ONLY while dragging
 window.addEventListener('pointermove', (e) => {
-    if (isDragging) {
-        const currentX = e.pageX;
-        if (Math.abs(currentX - startX) > 10) {
-            e.preventDefault(); // Stop accidental page navigation/refresh
-        }
+    if (!isDragging) return;
+    
+    // Prevent default scroll behavior if we are swiping sideways
+    const currentX = e.pageX;
+    if (Math.abs(currentX - startX) > 10) {
+        // This is only allowed if touch-action is handled in CSS
     }
-}, { passive: false });
+});
 
 window.addEventListener('pointerup', (e) => {
     if (!isDragging) return;
     
     const diffX = e.pageX - startX;
-    const threshold = 50; // Reduced slightly for better mobile feel
+    const dragDuration = Date.now() - dragStartTime;
+    const threshold = 50; 
 
-    if (diffX < -threshold) {
-        sidebar.classList.add('collapsed'); // Swipe Left
-    } else if (diffX > threshold) {
-        sidebar.classList.remove('collapsed'); // Swipe Right
+    // Logic: Only toggle if the movement was significant OR lasted long enough
+    // This prevents "taps" on sidebar links from being ignored
+    if (Math.abs(diffX) > threshold && dragDuration > 100) {
+        if (diffX < -threshold) {
+            sidebar.classList.add('collapsed');
+        } else if (diffX > threshold) {
+            sidebar.classList.remove('collapsed');
+        }
+        
+        // If it was a real drag, prevent the click from firing on a link
+        e.preventDefault();
     }
 
     isDragging = false;
-    
-    // Release the pointer capture
-    if (e.target.releasePointerCapture) {
-        e.target.releasePointerCapture(e.pointerId);
-    }
 });
 
 // D. Internal Content Scroll Logic
