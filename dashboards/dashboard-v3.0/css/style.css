@@ -136,7 +136,7 @@ a { cursor: pointer; }
 .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
 
 /* --- CONTENT AREA --- */
-.content-area { padding: 40px; overflow-y: auto; }
+.content-area { padding: 40px; overflow-y: auto; overflow-x: auto; touch-action: auto !important; -webkit-overflow-scrolling: touch; }
 .page-title { margin-bottom: 30px; }
 .grid-layout { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
 
@@ -158,10 +158,6 @@ mark {
     color: black;
     padding: 0;
     border-radius: 2px;
-}
-/* Ensure the main content still scrolls normally */
-.content-area {
-    touch-action: pan-y; /* Allows vertical scrolling but lets us catch horizontal swipes */
 }
 .index-alert { 
 			color: #AA205C;
