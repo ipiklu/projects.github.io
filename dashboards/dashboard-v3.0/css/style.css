@@ -10,7 +10,7 @@
     --transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; touch-action: pan-y; -webkit-tap-highlight-color: transparent; user-select: none;}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent;}
 body { background: var(--bg-main); color: var(--text-main); overflow: hidden; touch-action: pan-y; -webkit-tap-highlight-color: transparent; user-select: none;}
 a { cursor: pointer; }
 .app-container { display: flex; height: 100vh; width: 100vw; touch-action: pan-y; -webkit-tap-highlight-color: transparent; user-select: none;}
