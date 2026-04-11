@@ -69,6 +69,38 @@
 	.dropdown:active {
 		transform: scale(0.98); box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); /*Lowering the shadow*/
 	}
+/* MOBILE OPTIMIZATION MEDIA QUERY */
+@media screen and (max-width: 768px) {
+    /* Stack grid to 1 column for better touch targets */
+    .target-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    /* Prevent scale from overlapping nearby elements on touch */
+    .target-box:hover {
+        transform: scale(1.02);
+    }
+
+    /* Increase hit area for inputs and prevent iOS auto-zoom */
+    input[type="text"], .dropdown {
+        font-size: 16px !important;
+        padding: 12px;
+        width: 100%;
+    }
+
+    /* Ensure background containers have enough breathing room */
+    body {
+        padding: 15px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Adjust box height for better readability on narrow screens */
+    .target-box {
+        height: auto;
+        padding: 12px 10px;
+    }
+}	
 /* Keyframes for the new animated border glow */
 @keyframes animated-border-glow {
     0% {
