@@ -65,13 +65,13 @@ window.addEventListener('pointerup', (e) => {
     }
 });
 
-// C. Internal Content Scroll Logic
-contentArea.addEventListener('scroll', () => {
+// C. Internal Content Scroll Logic  (To enable mouse scroll collapse the side bar)
+/*contentArea.addEventListener('scroll', () => {
     let st = contentArea.scrollTop;
     if (st > lastScrollTop && st > 30) sidebar.classList.add('collapsed');
     else if (st < lastScrollTop) sidebar.classList.remove('collapsed');
     lastScrollTop = st <= 0 ? 0 : st;
-}, { passive: true });
+}, { passive: true });*/
 
 // --- 3. Search & Focus Logic ---
 searchInput.addEventListener("mouseenter", () => searchInput.focus());

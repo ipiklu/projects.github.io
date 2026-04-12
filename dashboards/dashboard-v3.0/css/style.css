@@ -11,7 +11,7 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent;}
-body { background: var(--bg-main); color: var(--text-main); overflow: hidden; touch-action: pan-y; -webkit-tap-highlight-color: transparent; user-select: none;}
+body { background: var(--bg-main); color: var(--text-main); overflow: hidden; touch-action: pan-y; -webkit-tap-highlight-color: transparent; user-select: none; overflow-y: auto;}
 a { cursor: pointer; }
 .app-container { display: flex; height: 100vh; width: 100vw; touch-action: pan-y; -webkit-tap-highlight-color: transparent; user-select: none;}
 
