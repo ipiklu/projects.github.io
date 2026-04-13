@@ -23,6 +23,8 @@ a { cursor: pointer; }
     display: flex;
     flex-direction: column;
     transition: var(--transition);
+	white-space: nowrap; /* Prevents text from wrapping to a second line during squeeze */
+	overflow-x: hidden; /* Vital: crops the text as the bar shrinks */
 	touch-action: pan-y;
 }
 
@@ -68,12 +70,32 @@ a { cursor: pointer; }
     pointer-events: auto !important;
     cursor: pointer;
 }
-.nav-link i { min-width: 24px; margin-right: 12px; }
+.nav-link i { min-width: 24px; margin-right: 12px; flex-shrink: 0;}
 .nav-link.active, .nav-link:hover { background: #f1f5f9; color: var(--primary); }
 
 .sidebar.collapsed .nav-link { justify-content: center; }
 .sidebar.collapsed .nav-link i { margin-right: 0; }
-.sidebar.collapsed .nav-link span { display: none; }
+.sidebar.collapsed .nav-link span { 
+	width: 0;      /* Squeezes the width to zero */
+    opacity: 1;    /* Fades out simultaneously */
+    margin: 0;     /* Removes extra spacing */
+    pointer-events: none; 
+}
+
+/* --- The Nav Link Text Squeeze --- */
+.nav-link span {
+    display: inline-block;
+    vertical-align: middle;
+    transition: width 0.5s ease, opacity 0.3s ease, margin 0.5s ease;
+    width: 150px; /* Approximate width of your text area */
+    opacity: 1;
+    overflow: hidden;
+}
+
+/* --- State when Collapsed --- */
+.sidebar.collapsed {
+    width: var(--sidebar-collapsed);
+}
 
 /* --- MAIN WRAPPER --- */
 .main-wrapper { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
