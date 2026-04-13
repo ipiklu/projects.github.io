@@ -48,8 +48,33 @@ a { cursor: pointer; }
     user-select: none;
     -webkit-user-select: none;
 }
+/* --- Base Logo Text Style --- */
+.logo span {
+    display: inline-block;
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    /* We use max-width because you can't animate 'width: auto' */
+    max-width: 200px; 
+    opacity: 1;
+    letter-spacing: normal;
+    /* Use a custom transition for a 'heavy' physical feel */
+    transition: 
+        max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.4s ease,
+        letter-spacing 0.5s ease,
+        margin 0.5s ease;
+}
 
-.sidebar.collapsed .logo span { display: none; }
+/* --- The Real Merging Effect --- */
+.sidebar.collapsed .logo span {
+    max-width: 13px;
+    opacity: 0;
+    /* This makes the letters 'crunch' together as they vanish */
+    letter-spacing: -5px; 
+    margin: -12px;
+    /* No scaleX(0) - we want them to slide, not flatten */
+}
 .sidebar.collapsed .sidebar-header { justify-content: center; padding: 0; }
 .sidebar.collapsed .sidebar-toggle { margin: 0; }
 
