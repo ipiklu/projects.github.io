@@ -136,14 +136,15 @@ a { cursor: pointer; }
 .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
 
 /* --- CONTENT AREA --- */
-.content-area { padding: 40px; overflow-y: auto; overflow-x: auto; touch-action: auto !important; -webkit-overflow-scrolling: touch; }
+.content-area { padding: 40px; overflow-y: auto; overflow-x: auto; touch-action: auto !important; -webkit-overflow-scrolling: touch; user-select: text !important; -webkit-user-select: text !important; }
 .page-title { margin-bottom: 30px; }
 .grid-layout { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
 
 .card { 
     background: white; border: 1px solid var(--border); 
-    padding: 24px; border-radius: 12px; transition: var(--transition); cursor:pointer;
-	 
+    padding: 24px; border-radius: 12px; transition: var(--transition); cursor:pointer; 
+	user-select: text !important;
+    -webkit-user-select: text !important; 
 }
 .card:hover { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); animation: animated-border-glow 8s infinite linear;}
 .card:active { transform: scale(0.98); box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); }
@@ -158,6 +159,11 @@ mark {
     color: black;
     padding: 0;
     border-radius: 2px;
+}
+
+iframe {
+    user-select: text !important;
+    -webkit-user-select: text !important;
 }
 .index-alert { 
 			color: #AA205C;

@@ -23,7 +23,7 @@ toggleBtn.addEventListener('click', (e) => {
 // B. Drag/Swipe Logic (Desktop Friendly)
 sidebar.addEventListener('pointerdown', (e) => {
     // 1. Ignore if clicking interactive elements
-    if (e.target.closest('button') || e.target.closest('input') || e.target.closest('.nav-link')) {
+    if (e.target.closest('button') || e.target.closest('input') || e.target.closest('.nav-link') || e.target.tagName === 'IFRAME') {
         isDragging = false;
         return; 
     }
