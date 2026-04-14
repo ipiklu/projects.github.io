@@ -7,6 +7,7 @@
     <link rel = "icon" href="img/s.gif" type="image/x-icon">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/dark.css" />
+    <script src="js/script.js" defer></script>
     <!---Alert--->
 	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.core.css" />
 	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.default.css" />
@@ -19,6 +20,16 @@
   			<label for="dark-mode"></label>
   			<div class="background"></div>
 		</div>
+<!---Menu Button--->
+    <button id="menuBtn" class="menu-btn" title="Open Menu">
+        <span class="icon icon-open">&#9776;</span>
+        <span class="icon icon-close">&#10006;</span>
+    </button>
+    
+    <!---Menu Icons--->
+    <img class="terminalImg menu-item" src="img/terminal.png" onClick="window.open('./data/allnwstatusDashboard/templates/index.html', '_blank', 'fullscreen scrollbar');" title="Open NCC Web Dashboard" />
+    <img class="dashImg menu-item" src="img/monitor.png" onClick="window.open('./data/nwLocalDashboard/templates/index.html', '_blank', 'fullscreen scrollbar');" title="Open NCC Local Dashboard" />
+          
     <div class="search-container">
     <p align="center"><img alt="header-image" src="img/cLL.gif"></p>
         <h1 align="center" class="loader" style="color:#AA205C; font-family:'Century Gothic'" >Welcome to Search ScriptoPedia<span class="loader__dot">.</span><span class="loader__dot">.</span><span class="loader__dot">.</span><span onClick="return(view());" title="About Us" ><font style="font-size: 20px;" color="#AA205C"></font><img alt="about-us-icon" src="img/LOADING.gif" style="width:50px; cursor:pointer;"></span></h1>
@@ -34,7 +45,6 @@
     
     <script src="js/jsonData/jsonData.js"></script>
     <script src="js/jsonData/jsonTable.js"></script>
-    <script src="js/script.js"></script>
     <script src="js/DBqueryBuild.js"></script>
     
  <!-------Footer------------------------------------------>  

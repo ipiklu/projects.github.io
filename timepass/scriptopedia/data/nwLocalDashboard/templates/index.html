@@ -69,6 +69,39 @@
 	.dropdown:active {
 		transform: scale(0.98); box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); /*Lowering the shadow*/
 	}
+
+/* MOBILE OPTIMIZATION MEDIA QUERY */
+@media screen and (max-width: 768px) {
+    /* Stack grid to 1 column for better touch targets */
+    .target-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    /* Prevent scale from overlapping nearby elements on touch */
+    .target-box:hover {
+        transform: scale(1.02);
+    }
+
+    /* Increase hit area for inputs and prevent iOS auto-zoom */
+    input[type="text"], .dropdown {
+        font-size: 16px !important;
+        padding: 12px;
+        width: 100%;
+    }
+
+    /* Ensure background containers have enough breathing room */
+    body {
+        padding: 15px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Adjust box height for better readability on narrow screens */
+    .target-box {
+        height: auto;
+        padding: 12px 10px;
+    }
+}	
 /* Keyframes for the new animated border glow */
 @keyframes animated-border-glow {
     0% {
@@ -104,7 +137,7 @@
             </div>
         </div>
         <input type="text" id="searchInput" onkeyup="applyFilter()" placeholder="SEARCH IP / NAMES..." class="bg-white px-4 py-2 rounded text-xs text-black font-bold outline-none w-64 uppercase border-2 border-slate-900" autocomplete="off">
-        <div class="flex gap-2 items-center">
+	<div class="flex gap-2 items-center">
             <select id="typeFilter" onchange="applyFilter()" class="dropdown">
                 <option value="ALL">OVERVIEW</option>
                 <option value="HLR">HLR</option>
@@ -112,7 +145,7 @@
                 <option value="DNS">DNS</option>
                 <option value="INUM">INUM</option>
             </select>
-            <div class="text-yellow-700 font-bold text-xs p-2">23:32:41</div>
+            <div class="text-yellow-700 font-bold text-xs p-2">01:07:36</div>
         </div>
     </div>
     <div id="cardGrid"><div class="source-card">
@@ -211,7 +244,7 @@
                         </div>
                         <p class="target-subtext">142.250.70.110:80</p>
                     </div>
-                    <div class="target-box" data-status="DOWN" data-search="facebook inum 57.144.124.1" 
+                    <div class="target-box" data-status="UP" data-search="facebook inum 57.144.124.1" 
                          onclick="window.open('/diag?ip=57.144.124.1&port=80&name=Facebook INUM&f_host=172.29.162.177', '_blank', 'width=950,height=950,scrollbars=yes');">
                         <div class="target-header">
                             <span class="target-label">Facebook INUM</span>
@@ -219,7 +252,7 @@
                         </div>
                         <p class="target-subtext">57.144.124.1:80</p>
                     </div>
-                    <div class="target-box" data-status="UP" data-search="apple inum 17.253.144.10" 
+                    <div class="target-box" data-status="DOWN" data-search="apple inum 17.253.144.10" 
                          onclick="window.open('/diag?ip=17.253.144.10&port=80&name=Apple INUM&f_host=172.29.162.177', '_blank', 'width=950,height=950,scrollbars=yes');">
                         <div class="target-header">
                             <span class="target-label">Apple INUM</span>

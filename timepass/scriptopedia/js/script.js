@@ -168,6 +168,41 @@ window.onclick = function(event) {
 }	
 <!---App download Dropdown--->
 
+<!---Menu button extender--->
+console.log("script.js loaded")
+
+const menuBtn = document.getElementById("menuBtn");
+const menuItems = document.querySelectorAll(".menu-item");
+
+menuBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    
+    // Toggle the class
+    const isOpen = menuBtn.classList.toggle("open");
+    
+    // Update the title attribute based on the state
+    menuBtn.title = isOpen ? "Close Menu" : "Open Menu";
+    
+    // Toggle items
+    menuItems.forEach(item => {
+        item.classList.toggle("show");
+    });
+});
+
+// Update the "click outside" logic to also reset the title
+document.addEventListener("click", (e) => {
+    if (!menuBtn.contains(e.target)) {
+        menuBtn.classList.remove("open");
+        menuBtn.title = "Open Menu"; // Reset title
+        menuItems.forEach(item => item.classList.remove("show"));
+    }
+});
+
+//Prevent clicks on menu items for bubbling */ 
+menuItems.forEach(item => {
+	item.addEventListener("click", e => e.stopPropagation());
+});
+
 <!---Reload function--->
 function reloadClear() {
     window.localStorage.clear();
