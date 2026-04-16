@@ -1,0 +1,20 @@
+Run commands
+-------------------
+
+pip install --user streamlit yfinance plotly pandas nsepython
+
+Alternative:-
+-------------------
+pip install streamlit yfinance plotly pandas pandas_ta --break-system-packages
+
+
+python3 -m streamlit run stock_app.py --server.port 7010
+
+
+In live Linux server
+----------------------
+ 
+python3 -m pip install pandas-ta-classic --user
+
+
+in app.py --> import pandas_ta_classic as ta

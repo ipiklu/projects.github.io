@@ -97,6 +97,16 @@ const JSON_TABLE = [
 			</tr>
 			<tr>
 				<td width="38">
+					<a title="Click-To-Download" href="data/stockMarket.zip" class="index-alert">
+						<img src="img/zip.png" title="Click-To-Open-Application" style="max-width: 70px;">
+					</a>
+				</td>
+				<td align="left">
+					<a title="Click-To-Download"  href="data/stockMarket.zip" class="index-alert">stockMarket.zip</a>
+				</td>
+			</tr>
+			<tr>
+				<td width="38">
 					<a title="Click-To-Download" href="data/upssDashboard.zip" class="index-alert">
 						<img src="img/zip.png" title="Click-To-Open-Application" style="max-width: 70px;">
 					</a>
