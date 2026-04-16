@@ -1,0 +1,44 @@
+[
+  {
+    "port_to_serve": 7000,
+    "check_interval": 5,
+    "HLR_targets": [
+      {"imgIcon": "icons/google.png", "name": "Google HLR", "ip": "142.250.70.110", "port": 443},
+      {"imgIcon": "icons/facebook.png", "name": "Facebook HLR", "ip": "57.144.124.1", "port": 443},
+      {"imgIcon": "icons/apple.png", "name": "Apple HLR", "ip": "17.253.144.10", "port": 443},
+      {"imgIcon": "icons/oracle.png", "name": "ORACLE HLR", "ip": "23.222.30.91", "port": 443},
+      {"imgIcon": "icons/amazon.png", "name": "Amazon HLR", "ip": "13.227.254.140", "port": 443},
+      {"imgIcon": "icons/netflix.png", "name": "Netflix HLR", "ip": "52.12.247.40", "port": 443}
+    ]
+  },
+  {
+    "AIR_targets": [
+      {"imgIcon": "icons/google.png", "name": "Google AIR", "ip": "142.250.70.110", "port": 10011},
+      {"imgIcon": "icons/facebook.png", "name": "Facebook AIR", "ip": "57.144.124.1", "port": 10011},
+      {"imgIcon": "icons/apple.png", "name": "Apple AIR", "ip": "17.253.144.10", "port": 10011},
+      {"imgIcon": "icons/oracle.png", "name": "ORACLE AIR", "ip": "23.222.30.91", "port": 10011},
+      {"imgIcon": "icons/amazon.png", "name": "Amazon HLR", "ip": "13.227.254.140", "port": 10011},
+      {"imgIcon": "icons/netflix.png", "name": "Netflix HLR", "ip": "52.12.247.40", "port": 10011}
+    ]
+  },
+  {
+    "DNS_targets": [
+      {"imgIcon": "icons/google.png", "name": "Google DNS", "ip": "8.8.8.8", "port": 53},
+      {"imgIcon": "icons/cloudflare.png", "name": "Cloudflare DNS", "ip": "1.1.1.1", "port": 53},
+      {"imgIcon": "icons/facebook.png", "name": "Facebook DNS", "ip": "57.144.124.1", "port": 53},
+      {"imgIcon": "icons/oracle.png", "name": "ORACLE DNS", "ip": "23.222.30.91", "port": 53},
+      {"imgIcon": "icons/amazon.png", "name": "Amazon HLR", "ip": "13.227.254.140", "port": 53},
+      {"imgIcon": "icons/netflix.png", "name": "Netflix HLR", "ip": "52.12.247.40", "port": 53}
+    ]
+  },
+  {
+    "INUM_targets": [
+      {"imgIcon": "icons/google.png", "name": "Google INUM", "ip": "142.250.70.110", "port": 80},
+      {"imgIcon": "icons/facebook.png", "name": "Facebook INUM", "ip": "57.144.124.1", "port": 80},
+      {"imgIcon": "icons/apple.png", "name": "Apple INUM", "ip": "17.253.144.10", "port": 80},
+      {"imgIcon": "icons/oracle.png", "name": "ORACLE INUM", "ip": "23.222.30.91", "port": 80},
+      {"imgIcon": "icons/amazon.png", "name": "Amazon HLR", "ip": "13.227.254.140", "port": 80},
+      {"imgIcon": "icons/netflix.png", "name": "Netflix HLR", "ip": "44.245.172.95", "port": 80}
+    ]
+  }
+]
