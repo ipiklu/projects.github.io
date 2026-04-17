@@ -44,7 +44,7 @@ then
     exit 0
 else
     # It is NOT running from that path, start it
-    python3 -m streamlit run /home/piklu/scripts/stockMarket/stock_app.py --server.port 7010 --client.toolbarMode=developer > /dev/null 2>&1 &
+    python3 -m streamlit run /home/piklu/scripts/stockMarket/stock_app.py --server.port 7010 > /dev/null 2>&1 &
     #pgrep -af "/home/piklu/scripts/webLocal/appLocal.py"
 
     clear
