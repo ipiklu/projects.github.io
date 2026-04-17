@@ -18,9 +18,9 @@ const pageContent = {
         { isHeader: true, html: '<span style="display:none">SME</span><iframe src="https://wikipedia.org" width="100%" height="840px"></iframe>' }
     ],
     'NCC': [
-        { isHeader: true, html: '<span style="display:none">NCC</span><iframe src="http://161.118.185.109:8080" referrerpolicy="no-referrer" width="100%" height="840px"></iframe>' }
+        { isHeader: true, html: '<span style="cursor:pointer; font-weight:bolder;" class="index-alert" title="Open-new-window" onClick="window.open(\'http://161.118.185.109:8080\', \'_blank\', \'fullscreen scrollbar\');">[Open-Window]</span><iframe src="http://161.118.185.109:8080" referrerpolicy="no-referrer" width="100%" height="840px"></iframe>' }
     ],
 	'NSE': [
-        { isHeader: true, html: '<span style="display:none">NSE</span><iframe src="http://161.118.185.109:7010" referrerpolicy="no-referrer" width="100%" height="840px"></iframe>' }
+        { isHeader: true, html: '<span style="cursor:pointer; font-weight:bolder;" class="index-alert" title="Open-new-window" onClick="window.open(\'http://161.118.185.109:7010\', \'_blank\', \'fullscreen scrollbar\');">[Open-Window]</span><iframe src="http://161.118.185.109:7010" referrerpolicy="no-referrer" width="100%" height="840px"></iframe>' }
     ]
 };
