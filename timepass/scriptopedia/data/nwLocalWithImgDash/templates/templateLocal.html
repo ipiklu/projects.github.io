@@ -4,8 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="refresh" content="10">
     <title>NOC Dashboard</title>
-	<link rel="icon" href="s.gif" type="image/x-icon">
+	<link rel="icon" href="templates/img/s.gif" type="image/x-icon">
+	<!---Alert--->
+	<link rel="stylesheet" href="https://ipiklu.github.io/projects.github.io/alertify.js-0.3.11/themes/alertify.core.css" />
+	<link rel="stylesheet" href="https://ipiklu.github.io/projects.github.io/alertify.js-0.3.11/themes/alertify.default.css" />
+    <script src="https://ipiklu.github.io/projects.github.io/alertify.js-0.3.11/lib/alertify.min.js"></script>
+	<script src="templates/js/script.js" defer></script>
     <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
         body { background: #05070a; color: #94a3b8; font-family: ui-monospace, monospace; padding: 20px; scrollbar-width: none; }
         
@@ -70,6 +76,44 @@
 	.dropdown:active {
 		transform: scale(0.98); box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); /*Lowering the shadow*/
 	}
+.index-alert { 
+	color: #AA205C;
+	transition: color 0.3s ease;
+}
+	.index-alert:hover { 
+		/* Key properties for the AI effect */
+		background-image: linear-gradient(
+		  90deg,
+		  #1a73e8,  /* Blue */
+		  #34a853, /* Green */
+		  #000,   /* black */
+		  #B6C511,
+		  #1a73e8, /* Blue again for a smooth loop */
+		  #34a853
+		);
+		background-size: 400% 100%; /* Make the gradient wider than the text */
+		-webkit-background-clip: text; /* Clips the background to the text shape */
+		background-clip: text;
+		color: transparent; /* Makes the text itself transparent to show the background */
+		animation: animated-text-color 4s infinite linear; /* New text color animation */		
+	}
+.imgS {
+        border-radius: 10px;
+        margin-left: 10px;
+        max-width:40px;
+	max-height: 90%;
+	float:left;
+	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+	.imgS:hover {
+		animation: animated-border-glow 8s infinite linear;
+		transition: 0.2s all;
+		transform: scale(1.1); 
+	}
+	.imgS:active {
+		transform: scale(0.98);
+		box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+	}
 /* MOBILE OPTIMIZATION MEDIA QUERY */
 @media screen and (max-width: 768px) {
     /* Stack grid to 1 column for better touch targets */
@@ -130,7 +174,7 @@
 <body>
     <div class="flex flex-col lg:flex-row justify-between items-center mb-8 pb-4 border-b border-slate-900 gap-4">
         <div>
-            <h1 class="text-sm font-black tracking-[0.4em] text-slate-500 uppercase">Network <span class="text-yellow-600">COMMAND-CENTER</span></h1>
+            <h1 class="text-sm font-black tracking-[0.4em] text-slate-500 uppercase"><img src="templates/img/LOADING.gif" class="imgS" onClick="return(view());" title="About Us"/>Network <span class="text-yellow-600">COMMAND-CENTER</span></h1>
             <div class="text-[10px] mt-1 font-bold">
                 <span id="countUp" class="text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">0 UP</span>
                 <span id="countDown" class="text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded ml-2">0 DOWN</span>
