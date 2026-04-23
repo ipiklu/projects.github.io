@@ -56,7 +56,7 @@ function show_utility() {
   echo ""
   echo -e "  ${ADVGREY}con${RESET} - \e[32mType \e[0;47;30mcon\e[0;32m for all applicable network ip telnet connectivity status with pdf artefact${RESET}"
   echo ""
-  echo -e "  ${ADVGREY}allnwstatus${RESET} - \e[32mType \e[0;47;30mallnwstatus\e[0;32m for all applicable network ip telnet connectivity & ping \n              latency and packet loss status view real-time network status (type q to stop)${RESET}"
+  echo -e "  ${ADVGREY}allnwstatus${RESET} - \e[32mType \e[0;47;30mallnwstatus\e[0;32m for all applicable network ip telnet connectivity & ping \n		latency and packet loss status view real-time network status (type q to stop)${RESET}"
   echo -e "${ADVGREEN}---------------------------------------------------------------------------------------------${RESET}"
   echo -e "\e[0m"
 }
@@ -122,13 +122,13 @@ while true; do
       ;;
 
     *"location"*|*"find location"*)
-                if [[ "$user_input_lower" =~ "location of pizza hut" || "$user_input_lower" =~ "location of dominos"  ]]; then
-                        type_message "Bot: No 01, Green Harvest, 140/11 & 13, Bldg, Magarpatta, Hadapsar, Pune, Maharashtra 411028" "\e[32m"
-                else
-                        type_message "Bot: I do not have access to your real-time location, please consider fetchig it from google maps" "\e[32m"
-                        echo " 😩"
+		if [[ "$user_input_lower" =~ "location of pizza hut" || "$user_input_lower" =~ "location of dominos"  ]]; then
+			type_message "Bot: No 01, Green Harvest, 140/11 & 13, Bldg, Magarpatta, Hadapsar, Pune, Maharashtra 411028" "\e[32m"
+		else
+			type_message "Bot: I do not have access to your real-time location, please consider fetchig it from google maps" "\e[32m"
+			echo " 😩"
                 fi
-      ;;
+      ;;      
 
     # Introduction
     *"who are you"*|*"about yourself"*)
@@ -180,11 +180,11 @@ while true; do
       cd /home/piklu/scripts
 
       # Run the script in the foreground and get its process ID
-      bash allnwstatus.sh
+      bash allnwstatus.sh	
       type_message "Bot: Closing Network status app..." "\e[32m"
       sleep 3
       clear
-          ;;
+	  ;;
 
       # A script execution tpt utility
     *"tpt utility"*|*"tpt"*)
@@ -428,6 +428,34 @@ EOF
       done
       ;;
 
+    # UNIX Command line itteration 
+    *"unix cmd"*|*"command line"*)
+      clear
+      type_message "Bot: Starting UNIX Command line itterations...Please wait" "\e[32m"
+      sleep 1
+	  clear
+      while true; do
+		printf "\n$YELLOW"
+              read -p "`whoami`@`hostname`:~`pwd`$ " CMD
+        printf "\n"
+
+        # Check if the user wants to exit
+        if [[ "$CMD" == "exit" || "$CMD" == "quit" ]]; then
+            type_message "Bot: Stopping UNIX Command line itterations..." "\e[32m"
+            sleep 2
+	    clear
+            break
+        elif [[ -z "$CMD" ]]; then
+            type_message "Bot: No Command was provided. Please try again." "\e[31m"
+            continue
+        else
+            # Execute the command and capture both the result and errors
+            $CMD
+        fi
+      done
+
+      printf "\n"
+      ;;      
 
     # Bot's age
     *"your age"*)
