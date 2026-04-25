@@ -6,6 +6,7 @@ import urllib.parse
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from socketserver import ThreadingTCPServer
 import socket
+import signal
 
 # Configuration
 PORT = 8020
@@ -17,23 +18,32 @@ BOT_SCRIPT_PATH = os.path.abspath(os.path.join(BASE_DIR, '..', FILENAME))
 
 output_buffer = ""
 master_fd = None
+current_pid = None
 
 def run_bot_thread():
-    global output_buffer, master_fd
-    output_buffer = ""
+    global output_buffer, master_fd, current_pid
+    output_buffer = ""  # <--- THIS IS KEY: It wipes the server's memory of the old run
 
-    # pty.fork() creates a master/slave terminal pair
+    # 1. Kill the old process if it is still running
+    if current_pid:
+        try:
+            os.kill(current_pid, signal.SIGTERM)
+            os.waitpid(current_pid, os.WNOHANG) # Clean up zombie process
+        except:
+            pass
+
+    output_buffer = "" # Clear previous logs for the new hit
+    
+    # 2. Create the terminal pair
     pid, fd = pty.fork()
-
+    
     if pid == 0:  # Child process
-        # Disable bash history expansion for this session only
-        # This fixes the "event not found" error without touching bot.sh
         os.execvpe("bash", ["bash", "--noediting", "-c", f"set +H; source {BOT_SCRIPT_PATH}"], os.environ)
     else:  # Parent process
+        current_pid = pid
         master_fd = fd
         while True:
             try:
-                # Read from the pty master file descriptor
                 data = os.read(master_fd, 1024).decode('utf-8', errors='ignore')
                 if not data:
                     break
@@ -233,7 +243,20 @@ class FinalSmoothHandler(BaseHTTPRequestHandler):
                     }});
                 }}, 500);
 
-                window.onload = () => fetch('/run', {{method:'POST'}});
+		window.onload = () => {{
+			const term = document.getElementById('terminal');
+				
+			// 1. Visually reset the terminal immediately
+			term.innerHTML = '<span style="color: cyan;">[SYSTEM]: Initializing fresh session...</span>';
+				
+			// 2. Tell Python to kill the old process and start a new one
+			fetch('/run', {{method:'POST'}})
+				.then(response => {{
+					if(response.ok) {{
+						console.log("Server confirmed: Bot Restarted");
+					}}
+				}});
+			}}
         </script>
         </body>
         </html>
