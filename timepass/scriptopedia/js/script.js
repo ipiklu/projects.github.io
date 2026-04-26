@@ -329,6 +329,31 @@ function popUrl_http() {
     window.open(finalUrl, 'bfs', 'fullscreen,scrollbars');
 }
 
+<!---URL Hide logic---> 
+function BotHiddenUrl() {
+	// 1. Open a blank window first
+    // This window will inherit the origin of your current site
+	const newWin = window.open('about:blank', '_blank', 'fullscreen,scrollbars');
+
+    if (!newWin) {
+        alert("Please allow popups for this site!");
+        return;
+    }
+	  // 2. Define the HTML content
+	  const htmlContent = `<html>
+	  		<title>Bot-Terminal</title>
+			<body style="background: #000;">
+				<iframe src="http://161.118.185.109:8020" id="botFrame" referrerpolicy="no-referrer" width="100%" height="100%" style="border: none; outline: none;"></iframe>
+			</body>
+			</html>`;
+	  
+	// 3. Write the content into the new window
+		// This "activates" the window while keeping the valid origin
+		newWin.document.open();
+		newWin.document.write(htmlContent);
+		newWin.document.close();
+}
+
 <!---POPUP Coustomization---> 
 	  function view() {
           alertify.alert(`

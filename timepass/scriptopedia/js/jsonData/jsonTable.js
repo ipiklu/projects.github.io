@@ -22,6 +22,14 @@ const JSON_TABLE = [
 					<a title="Click-To-Open" onClick="window.open('data/bot.txt','_blank','fullscreen,scrollbars');" class="index-alert">BotScript</a>
 				</td>
 			</tr>
+			<tr>
+				<td width="38">
+					<a title="Click-To-Open" onClick="return(BotHiddenUrl());" class="index-alert">\u{1F916}</a>
+				</td>
+				<td>
+					<a title="Click-To-Open" onClick="return(BotHiddenUrl());" class="index-alert">Bot-Terminal_URL-Hidden</a>
+				</td>
+			</tr>
 		</tbody>
 		</table>`
 	},
