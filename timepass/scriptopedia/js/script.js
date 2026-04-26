@@ -331,14 +331,7 @@ function popUrl_http() {
 
 <!---URL Hide logic---> 
 function BotHiddenUrl() {
-	// 1. Open a blank window first
-    // This window will inherit the origin of your current site
-	const newWin = window.open('about:blank', '_blank', 'fullscreen,scrollbars');
 
-    if (!newWin) {
-        alert("Please allow popups for this site!");
-        return;
-    }
 	  // 2. Define the HTML content
 	  const htmlContent = `<html>
 	  		<title>Bot-Terminal</title>
@@ -347,11 +340,17 @@ function BotHiddenUrl() {
 			</body>
 			</html>`;
 	  
-	// 3. Write the content into the new window
-		// This "activates" the window while keeping the valid origin
-		newWin.document.open();
-		newWin.document.write(htmlContent);
-		newWin.document.close();
+// 1. We use a Blob but we don't open the URL directly to avoid the blocker
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const blobUrl = URL.createObjectURL(blob);
+
+    // 2. Open the window with the Blob URL
+    const newWin = window.open(blobUrl, '_blank', 'height=800,width=1200,scrollbars=yes');
+
+    // 3. Safety Check: If it still won't open, the browser is blocking the popup
+    if (!newWin || newWin.closed || typeof newWin.closed == 'undefined') { 
+        alert("Pop-up Blocked! Please click the 'Pop-up blocked' icon in your address bar and 'Always allow'.");
+    }
 }
 
 <!---POPUP Coustomization---> 
