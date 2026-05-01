@@ -681,7 +681,6 @@ input[type="URL"]:hover {
 	font-family: google;
 	font-size: 10px;
 	border-radius: 10px;
-	transform: translateX(0) translateY(0);
 	transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 	.celebrateImg:hover{
