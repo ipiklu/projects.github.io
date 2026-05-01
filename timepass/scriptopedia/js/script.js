@@ -354,6 +354,55 @@ function BotHiddenUrl() {
 		newWin.document.close();
 }
 
+<!---Celebrations---> 
+let isAnimating = false; // Guard variable
+
+function spreadCelebration() {
+    // If already running, don't start another loop
+    if (isAnimating) return; 
+    
+    isAnimating = true;
+    const duration = 2 * 1000;
+    const animationEnd = Date.now() + duration;
+
+    const randomColor = () => {
+        return '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+    };
+
+    (function frame() {
+        const timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+            isAnimating = false; // Reset so the button works again
+            return;
+        }
+
+        confetti({
+            particleCount: 2, // Low count per frame keeps it smooth
+            angle: 60,
+            spread: 55,
+            origin: { x: 0, y: 0.6 },
+            colors: [randomColor(), randomColor()],
+            gravity: 0.9,
+            ticks: 200, // Reduced lifetime to clear memory faster
+            scalar: 1.1
+        });
+
+        confetti({
+            particleCount: 2,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1, y: 0.6 },
+            colors: [randomColor(), randomColor()],
+            gravity: 0.9,
+            ticks: 200,
+            scalar: 1.1
+        });
+
+        requestAnimationFrame(frame);
+    }());
+}
+
 <!---POPUP Coustomization---> 
 	  function view() {
           alertify.alert(`
