@@ -76,7 +76,7 @@ const JSON_TABLE = [
 			<tr>
 				<td width="38">
 					<a title="Click-To-Download" href="data/allnwstatusDashboard.zip" class="index-alert">
-						<img src="img/zip.png" title="Click-To-Open-Application" style="max-width: 70px;">
+						<img src="img/zip.png" title="Click-To-Download" style="max-width: 70px;">
 					</a>
 				</td>
 				<td align="left">
@@ -86,7 +86,7 @@ const JSON_TABLE = [
 			<tr>
 				<td width="38">
 					<a title="Click-To-Download" href="data/nwLocalDashboard.zip" class="index-alert">
-						<img src="img/zip.png" title="Click-To-Open-Application" style="max-width: 70px;">
+						<img src="img/zip.png" title="Click-To-Download" style="max-width: 70px;">
 					</a>
 				</td>
 				<td align="left">
@@ -96,7 +96,7 @@ const JSON_TABLE = [
 			<tr>
 				<td width="38">
 					<a title="Click-To-Download" href="data/nwLocalWithImgDash.zip" class="index-alert">
-						<img src="img/zip.png" title="Click-To-Open-Application" style="max-width: 70px;">
+						<img src="img/zip.png" title="Click-To-Download" style="max-width: 70px;">
 					</a>
 				</td>
 				<td align="left">
@@ -106,7 +106,7 @@ const JSON_TABLE = [
 			<tr>
 				<td width="38">
 					<a title="Click-To-Download" href="data/stockMarket.zip" class="index-alert">
-						<img src="img/zip.png" title="Click-To-Open-Application" style="max-width: 70px;">
+						<img src="img/zip.png" title="Click-To-Download" style="max-width: 70px;">
 					</a>
 				</td>
 				<td align="left">
@@ -116,7 +116,7 @@ const JSON_TABLE = [
 			<tr>
 				<td width="38">
 					<a title="Click-To-Download" href="data/botweb.zip" class="index-alert">
-						<img src="img/zip.png" title="Click-To-Open-Application" style="max-width: 70px;">
+						<img src="img/zip.png" title="Click-To-Download" style="max-width: 70px;">
 					</a>
 				</td>
 				<td align="left">
@@ -126,11 +126,21 @@ const JSON_TABLE = [
 			<tr>
 				<td width="38">
 					<a title="Click-To-Download" href="data/upssDashboard.zip" class="index-alert">
-						<img src="img/zip.png" title="Click-To-Open-Application" style="max-width: 70px;">
+						<img src="img/zip.png" title="Click-To-Download" style="max-width: 70px;">
 					</a>
 				</td>
 				<td align="left">
 					<a title="Click-To-Download"  href="data/upssDashboard.zip" class="index-alert">upssDashboard.zip</a>
+				</td>
+			</tr>
+			<tr>
+				<td width="38">
+					<a title="Click-To-Open" onClick="window.open('data/borderDesign/index.html','_blank');" class="index-alert">
+						<img src="img/glow3.gif" title="Click-To-Open-Application" style="max-width: 70px;">
+					</a>
+				</td>
+				<td align="left">
+					<a title="Click-To-Download"  href="data/borderDesign.zip" class="index-alert">borderDesign.zip</a>
 				</td>
 			</tr>
 		</tbody>

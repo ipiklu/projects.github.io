@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Glowing Border Effect</title>
+    <link rel = "icon" href="img/s.gif" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+	<!---Design--->
+	<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+    <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+            CSS Glowing Borders
+        </h1>
+        <p class="text-gray-400 mt-2">Pure CSS with conic-gradient & mask-composite</p>
+    </div>
+
+    <div class="flex flex-wrap justify-center gap-20 p-8">
+        
+        <!-- Circle Variant -->
+        <div class="flex flex-col items-center">
+            <div class="glow-circle">
+                <span class="icon">✦</span>
+            </div>
+            <p class="label">Circular Glow</p>
+        </div>
+
+        <!-- Card Variant -->
+        <div class="flex flex-col items-center">
+            <div class="glow-card">
+                <h2 class="text-2xl font-bold mb-2">Magic Card</h2>
+                <p class="text-gray-400 text-sm px-4">This uses two layers: one for the sharp border and one blurred for the radiance.</p>
+            </div>
+            <p class="label">Full Card Glow</p>
+        </div>
+
+    </div>
+
+    <div class="max-w-md bg-white/5 border border-white/10 p-6 rounded-xl text-sm leading-relaxed mx-4">
+        <h3 class="font-bold text-blue-400 mb-2">How it works:</h3>
+        <ul class="list-disc list-inside space-y-1 text-gray-300">
+            <li><strong>Conic-Gradient:</strong> Creates the color sweep around the center.</li>
+            <li><strong>@property:</strong> Allows the browser to animate the angle variable smoothly.</li>
+            <li><strong>Mask-Composite:</strong> Removes the center of the element so the background doesn't cover the content.</li>
+            <li><strong>Drop-Shadow:</strong> Adds the actual neon light "spill".</li>
+        </ul>
+    </div>
+
+</body>
+</html>
