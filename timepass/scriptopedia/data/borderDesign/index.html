@@ -6,8 +6,13 @@
     <title>CSS Glowing Border Effect</title>
     <link rel = "icon" href="img/s.gif" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
+    <!---Alert--->
+	<link rel="stylesheet" href="../../../../alertify.js-0.3.11/themes/alertify.core.css" />
+	<link rel="stylesheet" href="../../../../alertify.js-0.3.11/themes/alertify.default.css" />
+    <script src="../../../../alertify.js-0.3.11/lib/alertify.min.js"></script>
 	<!---Design--->
 	<link rel="stylesheet" href="css/style.css" />
+    <script src="js/script.js"></script>
 </head>
 <body>
 
@@ -22,7 +27,7 @@
         
         <!-- Circle Variant -->
         <div class="flex flex-col items-center">
-            <div class="glow-circle">
+            <div class="glow-circle" onClick="circleCardView()" title="View-CSS">
                 <span class="icon">✦</span>
             </div>
             <p class="label">Circular Glow</p>
@@ -30,7 +35,7 @@
 
         <!-- Card Variant -->
         <div class="flex flex-col items-center">
-            <div class="glow-card">
+            <div class="glow-card" onClick="rectangleCardView()" title="View-CSS">
                 <h2 class="text-2xl font-bold mb-2">Magic Card</h2>
                 <p class="text-gray-400 text-sm px-4">This uses two layers: one for the sharp border and one blurred for the radiance.</p>
             </div>

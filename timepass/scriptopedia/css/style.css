@@ -854,7 +854,11 @@ table {
 			transition: 0.2s all;
 			transform: scale(1.1); 
 		 }			
-
+		.imgS:active {
+			animation: animated-border-glow 8s infinite linear;
+			transition: 0.2s all;
+			transform: scale(0.94); 
+		 }			
 @media print {
   #printPageButton {
     display: none;

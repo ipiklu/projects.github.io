@@ -403,6 +403,30 @@ function spreadCelebration() {
     }());
 }
 
+function openEditableTab() {
+
+	const iconUrl = 'https://ipiklu.github.io/projects.github.io/img/s.gif'; 
+	const cssUrl = 'https://ipiklu.github.io/projects.github.io/notepad/css/webnote.css';
+	
+	  // 1. Define the HTML content
+	  const htmlContent = `<html contenteditable class="animated-sparkle" style="padding-top:10px;padding-left:10px;font-family:'Indie Flower',cursive;">
+	  		<title>Web-Note</title>
+			<link rel="icon" href="${iconUrl}" type="image/gif">
+			<link rel="stylesheet" href="${cssUrl}" /></html>`;
+	  
+	  // 2. Create a Blob (Binary Large Object)
+	  const blob = new Blob([htmlContent], { type: 'text/html' });
+	  
+	  // 3. Create a temporary URL for the Blob
+	  const blobUrl = URL.createObjectURL(blob);
+	  
+	  // 4. Open the new window/tab using the Blob URL
+	  window.open(blobUrl, '_blank','fullscreen,scrollbars');
+	  
+	  // Clean up the URL once the window is open (optional, but good practice)
+	  // URL.revokeObjectURL(blobUrl); 
+}
+
 <!---POPUP Coustomization---> 
 	  function view() {
           alertify.alert(`

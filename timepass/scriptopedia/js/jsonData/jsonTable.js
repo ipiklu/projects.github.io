@@ -65,6 +65,32 @@ const JSON_TABLE = [
 		</table>`
 	},
 	{ 
+		title: "notepad wordpad",
+		content: `<table width="500" height="50" border="2" bordercolor="#AA205C">
+		<tbody>
+			<tr>
+				<td width="40">
+					<img src="img/notepad.png" title="Click-To-Open" onClick="openEditableTab();" class="imgS" />
+				</td>
+				<td colspan="2">
+					<a title="Click-To-Open" onClick="openEditableTab();" class="index-alert">WEB-NOTEPAD</a>
+				</td>
+			</tr>
+			<tr>
+				<td width="40">
+					<img src="img/wordpad.webp" title="Click-To-Open" onClick="window.open('data/wordpad/index.html','_blank','fullscreen,scrollbars');" class="imgS" />
+				</td>
+				<td>
+					<a title="Click-To-Open" onClick="window.open('data/wordpad/index.html','_blank','fullscreen,scrollbars');" class="index-alert">WEB-WORDPAD</a>
+				</td>
+				<td width="40">
+					<span title="Click-To-Download" onClick="window.location.href = 'data/wordpad.zip';" class="index-alert">\u{1F4E5}</span>
+				</td>
+			</tr>
+		</tbody>
+		</table>`
+	},
+	{ 
 		title: "downloads files",
 		content: `<table width="500" border="2" bordercolor="#AA205C">
 		<thead> 

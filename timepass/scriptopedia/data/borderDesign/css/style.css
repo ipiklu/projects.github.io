@@ -42,10 +42,12 @@
             justify-content: center;
             text-align: center;
             padding: 20px;
+			transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         /* The animated border layer */
         .glow-card::before, .glow-card::after {
+			/*opacity: 0; ##border hide if required*/
             content: "";
             position: absolute;
             inset: -4px; /* Thickness of the border */
@@ -67,7 +69,23 @@
             filter: blur(25px);
             opacity: 0.6;
         }
-
+		
+		.glow-card:hover {
+			transform: scale(1.07);
+			background: rgba(5, 5, 5, 0.8) !important;
+			backdrop-filter: blur(10px);
+    		-webkit-backdrop-filter: blur(10px);
+			cursor: pointer;
+			animation: animated-border-glow 8s infinite linear;
+			transition: transform 0.3s ease, background 0.3s ease;
+		}
+		.glow-card:active {
+			transform: scale(0.98);
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px #AA205c;
+            /* Lowering the shadow */
+		}
+			
         /* --- CIRCLE VARIANT (Like your reference) --- */
         .glow-circle {
             position: relative;
@@ -81,6 +99,7 @@
         }
 
         .glow-circle::before {
+			/*opacity: 0; ##border hide if required*/
             content: "";
             position: absolute;
             inset: -3px;
@@ -109,7 +128,21 @@
             animation: rotation 2s linear infinite;
             filter: drop-shadow(0 0 10px #ff6600);
         }
-
+		.glow-circle:hover {
+			transform: scale(1.07);
+			background: rgba(5, 5, 5, 0.8) !important;
+			backdrop-filter: blur(10px);
+    		-webkit-backdrop-filter: blur(10px);
+			cursor: pointer;
+			animation: animated-border-glow 8s infinite linear;
+			transition: transform 0.3s ease, background 0.3s ease;
+		}
+		.glow-circle:active {
+			transform: scale(0.98);
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px #AA205c;
+            /* Lowering the shadow */
+		}
         @keyframes rotation {
             0% { --gradient-angle: 0deg; }
             100% { --gradient-angle: 360deg; }
@@ -127,3 +160,113 @@
             letter-spacing: 2px;
             opacity: 0.6;
         }
+.index-alert { 
+			background: linear-gradient(to right, #B6C511, #AA205C);
+			-webkit-background-clip: text;
+    		background-clip: text;
+			-webkit-text-fill-color: transparent;
+			transition: color 0.3s ease;
+		}
+
+		.index-alert:hover { 
+				/* Key properties for the AI effect */
+			background-image: linear-gradient(
+				90deg,
+				#1a73e8, /* Blue */
+				#34a853, /* Green */
+				#000, 	/* black */
+				#B6C511,
+				#1a73e8, /* Blue again for a smooth loop */
+				#34a853
+			);
+			background-size: 400% 100%; /* Make the gradient wider than the text */
+				-webkit-background-clip: text; /* Clips the background to the text shape */
+			background-clip: text;
+			color: transparent; /* Makes the text itself transparent to show the background */
+			animation: animated-text-color 4s infinite linear; /* New text color animation */		
+		}		
+/* This targets the container holding your code */
+.code-scroll-container {
+    width: 100%;
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: auto;      /* Allows horizontal scroll if lines are too long */
+    padding: 25px;
+    border-radius: 15px;
+    /* THE CRITICAL FIXES */
+    display: block;        /* Ensures it's not a flexbox */
+    text-align: left;      /* Forces text to the left */
+/* --- THE GLASS EFFECT --- */
+    background: rgba(255, 255, 255, 0.05); /* Very light transparent white */
+    backdrop-filter: blur(10px);           /* Increased blur for better readability */
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border to define the edges */
+    /* Optional: Ensure text stands out against background */
+    color: #ffffff;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);}
+
+/* This targets the formatting of the text itself */
+.code-scroll-container pre {
+    margin: 0;
+    text-align: left;      /* Extra insurance */
+    white-space: pre;      /* STOPS the text from wrapping/breaking mid-word */
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #efefef;
+}
+.copy-btn:hover {
+    background: rgba(0, 0, 0, 0.3) !important;
+	backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+}
+/* Optional: Custom Scrollbar Styling */
+.code-scroll-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.code-scroll-container::-webkit-scrollbar-track {
+    background: #111;
+}
+
+.code-scroll-container::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 4px;
+}
+
+.code-scroll-container::-webkit-scrollbar-thumb:hover {
+    background: #AA205C;
+}
+
+/* Keyframes for the new animated border glow */
+@keyframes animated-border-glow {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue */
+    }
+    25% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 255, 100, 0.7); /* Green */
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 100, 100, 0.7); /* Red */
+    }
+    75% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 255, 100, 0.7); /* Yellow */
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue (back to start) */
+    }
+}
+
+/* Define the keyframes for the text color */
+@keyframes animated-text-color {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
