@@ -9,7 +9,30 @@
   		border: 1px dotted #AA205C;
   		border-radius: 10px;
 		}
+/* Default: Hide both or set a base style */
+    .desktop-pdf, .mobile-pdf {
+        width: 100%;
+    }
 
+    /* If screen is 768px or wider (Desktop/Tablet) */
+    @media screen and (min-width: 768px) {
+        .mobile-pdf {
+            display: none; /* Hide the iframe */
+        }
+        .desktop-pdf {
+            display: block; /* Show the object */
+        }
+    }
+
+    /* If screen is smaller than 768px (Mobile) */
+    @media screen and (max-width: 767px) {
+        .desktop-pdf {
+            display: none; /* Hide the object */
+        }
+        .mobile-pdf {
+            display: block; /* Show the iframe */
+        }
+    }
       .signup {
         border: 1px solid #FFF;
         background: #FFF;
