@@ -1,0 +1,25 @@
+body { 
+    margin: 0; 
+    background: #000; 
+    overflow: hidden; 
+    touch-action: none; 
+    cursor: none; /* Hides the default cursor */
+}
+
+canvas { 
+    display: block; 
+}
+
+/* The Circle Cursor */
+#custom-cursor {
+    width: 5px;
+    height: 5px;
+    border: 2px solid #AA205C;
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none; /* Makes sure the cursor doesn't block mouse clicks */
+    z-index: 9999;
+    transform: translate(-50%, -50%); /* Centers the circle on the mouse tip */
+    transition: transform 0.05s ease-out; /* Adds a tiny bit of smooth "lag" */
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5); /* Subtle glow */
+}

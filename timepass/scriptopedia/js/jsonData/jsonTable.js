@@ -337,6 +337,14 @@ const JSON_TABLE = [
 					<a title="Click-To-Open-Meditate" onClick="window.open('../meditate/index.html','_blank','fullscreen,scrollbars');" class="index-alert">Meditate</a>
 				</td>
 			</tr>
+			<tr>
+				<td width="38">
+					<a title="Click-To-Open-Gargantua" onClick="window.open('../gargantua/index.html','_blank','fullscreen,scrollbars');" class="index-alert">\u{1FA90}</a>
+				</td>
+				<td align="left">
+					<a title="Click-To-Open-Gargantua" onClick="window.open('../gargantua/index.html','_blank','fullscreen,scrollbars');" class="index-alert">Gargantua</a>
+				</td>
+			</tr>
 		</tbody>
 		</table>`
 	},

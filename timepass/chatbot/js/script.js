@@ -185,6 +185,24 @@ document.addEventListener('DOMContentLoaded', () => {
 		return "Opening the meditate app for you!";	
 	};
 	
+	// New function to navigate to Gargantua app
+	const goToGargantua = () => {
+      	window.open("../gargantua/index.html","bfs","fullscreen,scrollbars");
+		return "Opening the gargantua app for you!";	
+	};
+	
+	// New function to navigate to glowing border css app
+	const goToGlowingBorder = () => {
+      	window.open("../scriptopedia/data/borderDesign/index.html","bfs","fullscreen,scrollbars");
+		return "Opening the border design sample for you!";	
+	};
+	
+	// New function to navigate to Scriptopedia app
+	const goToScriptopedia = () => {
+      	window.open("../scriptopedia/index.html","bfs","fullscreen,scrollbars");
+		return "Opening the scriptopedia app for you!";	
+	};
+	
 	// New function to navigate to Color-Code app
 	const goToColorCode = () => {
       	window.open("../color-code/index.html","bfs","fullscreen,scrollbars");
@@ -521,9 +539,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		"color code":goToColorCode,
 		"color code generator":goToColorCode,
 		"color generator":goToColorCode,
+		"gargantua":goToGargantua,
+		"glowing border":goToGlowingBorder,
+		"scriptopedia":goToScriptopedia,
 		"love you": "I love you Humann... \u{1F600} \n\n \u{1F618}",
         "what is the meaning of life": "That is a complex question! I'm not advanced enough to answer that one. But keep exploring!",
-		"what is your age": "I don't have an age in the way humans do. I was created to help with HTML, CSS, and JavaScript, so you could say my age is defined by the moment my code runs! 🤔",
+		"what is your age": "I don't have an age in the way humans do. I was created to help with HTML, CSS, and JavaScript, so you could say my age is defined by the moment my code runs! ðŸ¤”",
     	"how old are you": "Time is an abstract concept for me, but I'm always learning and growing with every conversation!",
         "weather": "I am unable to provide real-time weather information. Try searching online for a weather report for your area!",
 		"how to solve a problem": "When facing a problem, I suggest breaking it down into smaller, manageable parts. Start with the most basic step and work your way up.",
