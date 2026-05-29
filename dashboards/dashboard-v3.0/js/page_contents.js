@@ -42,15 +42,11 @@ function changeIframe() {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
                 
-                // Create a zoom bounding box window around the coordinates
-                const offset = 0.01; 
-                const minLon = lon - offset;
-                const minLat = lat - offset;
-                const maxLon = lon + offset;
-                const maxLat = lat + offset;
-
-                // Build the responsive, embeddable OpenStreetMap link
-                const generatedMapUrl = `https://maps.google.com/maps?q=${lat},${lon}&z=15&output=embed`;
+                // CRITICAL FIX: URL-encode the coordinates so Google Maps displays the text numbers
+                const label = encodeURIComponent(`${lat}, ${lon}`);
+                
+                // Passing the formatted label to 'q' forces the numbers to display on the pointer
+                const generatedMapUrl = `https://maps.google.com/maps?q=${label}&ll=${lat},${lon}&z=15&output=embed`;
                 
                 // Set the iframe src dynamically
                 iframe.src = generatedMapUrl;
@@ -62,7 +58,7 @@ function changeIframe() {
             alert("Geolocation is not supported by your browser.");
         }
     } else {
-        // Change the iframe source to the selected URL (Your Original Line)
+        // Change the iframe source to the selected URL
         iframe.src = selectedUrl;
     }
 }
