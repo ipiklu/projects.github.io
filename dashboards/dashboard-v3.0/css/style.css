@@ -235,7 +235,37 @@ iframe {
 			color: transparent; /* Makes the text itself transparent to show the background */
 			animation: animated-text-color 4s infinite linear; /* New text color animation */		
 		}
-
+.dropdown_color{
+	border: 1px none;
+	outline: none;
+	background: linear-gradient(135deg, #AA205C, #B6C511);
+	color: #242424;
+	border-radius: 10px;
+	min-width: auto;
+	font-size: 13px;
+	font-weight: bolder;
+	padding: 4px 8px;
+	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);	
+}
+.dropdown_color option {
+    /* Gradients do not work on native <option> tags, so we must fall back 
+       to a solid dark/light color for readability against your main button */
+    background-color: #121212; 
+    color: #ffffff; 
+    font-weight: normal;
+}
+	.dropdown_color:hover{
+		transform: scale(1.07);
+		background: linear-gradient(135deg, #B6C511, #AA205C);
+		outline: none;
+		animation: animated-border-glow 8s infinite linear;
+		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+		cursor: pointer;
+	}
+		.dropdown_color:active {
+			transform: scale(1.0);
+			box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+		}
 .imgS {
         border-radius: 10px;
         margin-left: 10px;

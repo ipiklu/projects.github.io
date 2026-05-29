@@ -15,7 +15,7 @@ const pageContent = {
         { title: 'Account Settings', desc: 'Update your global profile.', html: '<button class="btn btn-primary">Save Settings</button>' }
     ],
     'SME': [
-        { isHeader: true, html: '<span style="display:none">SME</span><iframe src="https://wikipedia.org" width="100%" height="840px"></iframe>' }
+        { isHeader: true, html: '<select id="siteSelector" class="dropdown_color" onchange="changeIframe()"><option value="" selected disabled>WEB-APPLICATIONS</option><option value="">&#x23FB; PowerOff</option><option value="../../timepass/scriptopedia/index.html">&#x1F4DA;&#x1F50D; ScriptoPedia</option><option value="https://www.wikipedia.org">&#x1F166; Wikipedia</option><option value="https://jsfiddle.net/">&#x1F393; Code Editor</option><option value="https://jsitor.com/">&#x1FAB2; Snippet Editor</option><option value="https://maps.google.com/maps?q=India&t=&z=5&ie=UTF8&iwloc=&output=embed" allowfullscreen loading="lazy">&#x1F5FA; World-Map</option></select><br/><br/><iframe id="myIframe" src="" title="Content Window" width="100%" height="840px"></iframe>' }
     ],
     'NCC': [
         { isHeader: true, html: '<span style="cursor:pointer; font-weight:bolder;" class="index-alert" title="Open-new-window" onClick="window.open(\'http://161.118.185.109:8080\', \'_blank\', \'fullscreen scrollbar\');">[Open-Window]</span><iframe src="http://161.118.185.109:8080" referrerpolicy="no-referrer" width="100%" height="840px"></iframe>' }
@@ -24,3 +24,16 @@ const pageContent = {
         { isHeader: true, html: '<span style="cursor:pointer; font-weight:bolder;" class="index-alert" title="Open-new-window" onClick="window.open(\'http://161.118.185.109:7010\', \'_blank\', \'fullscreen scrollbar\');">[Open-Window]</span><iframe src="http://161.118.185.109:7010" referrerpolicy="no-referrer" width="100%" height="840px"></iframe>' }
     ]
 };
+
+
+function changeIframe() {
+        // Get the dropdown element
+        const dropdown = document.getElementById("siteSelector");
+        // Get the selected value (URL)
+        const selectedUrl = dropdown.value;
+        // Get the iframe element
+        const iframe = document.getElementById("myIframe");
+        
+        // Change the iframe source to the selected URL
+        iframe.src = selectedUrl;
+    }
