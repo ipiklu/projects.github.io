@@ -15,7 +15,7 @@ const pageContent = {
         { title: 'Account Settings', desc: 'Update your global profile.', html: '<button class="btn btn-primary">Save Settings</button>' }
     ],
     'SME': [
-        { isHeader: true, html: '<select id="siteSelector" class="dropdown_color" onchange="changeIframe()"><option value="" selected disabled>WEB-APPLICATIONS</option><option value="">&#x23FB; PowerOff</option><option value="../../timepass/scriptopedia/index.html">&#x1F4DA;&#x1F50D; ScriptoPedia</option><option value="https://www.wikipedia.org">&#x1F166; Wikipedia</option><option value="https://jsfiddle.net/">&#x1F393; Code Editor</option><option value="https://jsitor.com/">&#x1FAB2; Snippet Editor</option><option value="https://maps.google.com/maps?q=India&t=&z=5&ie=UTF8&iwloc=&output=embed" allowfullscreen loading="lazy">&#x1F5FA; World-Map</option></select><br/><br/><iframe id="myIframe" src="" title="Content Window" width="100%" height="840px"></iframe>' }
+        { isHeader: true, html: '<select id="siteSelector" class="dropdown_color" onchange="changeIframe()"><option value="" selected disabled>WEB-APPLICATIONS</option><option value="">&#x23FB; PowerOff</option><option value="../../timepass/scriptopedia/index.html">&#x1F4DA;&#x1F50D; ScriptoPedia</option><option value="https://www.wikipedia.org">&#x1F166; Wikipedia</option><option value="https://jsfiddle.net/">&#x1F393; Code Editor</option><option value="https://jsitor.com/">&#x1FAB2; Snippet Editor</option><option value="LOCAL_MAP" allowfullscreen loading="lazy">&#x1F5FA; World-Map (GeoL)</option></select><br/><br/><iframe id="myIframe" src="" title="Content Window" width="100%" height="840px"></iframe>' }
     ],
     'NCC': [
         { isHeader: true, html: '<span style="cursor:pointer; font-weight:bolder;" class="index-alert" title="Open-new-window" onClick="window.open(\'http://161.118.185.109:8080\', \'_blank\', \'fullscreen scrollbar\');">[Open-Window]</span><iframe src="http://161.118.185.109:8080" referrerpolicy="no-referrer" width="100%" height="840px"></iframe>' }
@@ -27,13 +27,42 @@ const pageContent = {
 
 
 function changeIframe() {
-        // Get the dropdown element
-        const dropdown = document.getElementById("siteSelector");
-        // Get the selected value (URL)
-        const selectedUrl = dropdown.value;
-        // Get the iframe element
-        const iframe = document.getElementById("myIframe");
-        
-        // Change the iframe source to the selected URL
+    // Get the dropdown element
+    const dropdown = document.getElementById("siteSelector");
+    // Get the selected value (URL)
+    const selectedUrl = dropdown.value;
+    // Get the iframe element
+    const iframe = document.getElementById("myIframe");
+    
+    // Check if the user selected the local map option
+    if (selectedUrl === "LOCAL_MAP") {
+        if (navigator.geolocation) {
+            // Request the real-time device coordinates
+            navigator.geolocation.getCurrentPosition(function (position) {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                
+                // Create a zoom bounding box window around the coordinates
+                const offset = 0.01; 
+                const minLon = lon - offset;
+                const minLat = lat - offset;
+                const maxLon = lon + offset;
+                const maxLat = lat + offset;
+
+                // Build the responsive, embeddable OpenStreetMap link
+                const generatedMapUrl = `https://maps.google.com/maps?q=${lat},${lon}&z=15&output=embed`;
+                
+                // Set the iframe src dynamically
+                iframe.src = generatedMapUrl;
+            }, function (error) {
+                alert("Location permission denied. Please allow location access to load the map.");
+                dropdown.value = ""; // Reset dropdown if blocked
+            });
+        } else {
+            alert("Geolocation is not supported by your browser.");
+        }
+    } else {
+        // Change the iframe source to the selected URL (Your Original Line)
         iframe.src = selectedUrl;
     }
+}
