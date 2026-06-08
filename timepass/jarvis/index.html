@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J.A.R.V.I.S</title>
+    <link rel = "icon" href="img/s.gif" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Load Chrono Natural Language Date Parser Engine -->
+	<script src="js/bundle.js"></script>
+    <script src="js/math.js"></script>
+    <!---Alert--->
+	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.core.css" />
+	<link rel="stylesheet" href="../../alertify.js-0.3.11/themes/alertify.default.css" />
+    <script src="../../alertify.js-0.3.11/lib/alertify.min.js"></script> 
+</head>
+<body>
+
+    <div class="gps-telemetry" id="gpsTelemetry">
+        SYS_LOC_TRACKING:<br>
+        LAT: <span id="telemetryLat">0.0000</span><br>
+        LON: <span id="telemetryLon">0.0000</span>
+    </div>
+
+    <div class="hud-wrapper" id="mainHud">
+        <div class="arc-hologram" id="arcCore">
+            <div class="ring outer-tracking"></div>
+            <div class="ring rim-segmented"></div>
+            <div class="ring blades-frequency"></div>
+            <div class="ring singularity-core"></div>
+        </div>
+
+        <div class="terminal-display">
+            <div class="system-title">J.A.R.V.I.S</div>
+            <div class="status-text" id="statusMessage">Click central core array to initialize diagnostics...</div>
+        </div>
+    </div>
+
+    <div class="map-overlay-panel" id="mapDisplayPanel">
+        <iframe id="mapFrame" src=""></iframe>
+    </div>
+<script src="js/script.js"></script>
+<script src="js/popupCusomiztion.js"></script>
+</body>
+</html>
