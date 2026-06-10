@@ -417,20 +417,24 @@ function launchVoiceUrlRouter(spokenCommand) {
         cleanText = cleanText.replace(regex, textToDigits[word]);
     });
 
-    // 3. Map spoken port descriptions before processing formatting structures
+    // 3. Map spoken port and path descriptions before processing formatting structures
     cleanText = cleanText.replace(/\s*colon\s*/g, ':')   
-                         .replace(/\s*port\s*/g, ':');   
+                         .replace(/\s*port\s*/g, ':')
+                         .replace(/\s*(forward\s+)?slash\s*/g, '/'); // FIX: Converts "slash" or "forward slash" to "/"
 
     // 4. Clean up browser voice anomalies, commas, and dots
     let sanitizedUrl = cleanText
-        .replace(/\s*dot\s*/g, '.')        // Fixes spaced out dots
+        .replace(/\s*dot\s*/g, '.')        // Fixes verbal spaced out dots
+        .replace(/\s*\.\s*/g, '.')         // FIX: Cleans up loose spaces around literal periods (e.g., "192 . 168")
         .replace(/comma/g, '.')            // Captures engine verbal pauses
         .replace(/,\s*/g, '.')             
         .replace(/\s+/g, '')               // Slams all remaining spaces shut
         .trim();
 
-    // 5. Fallback: If it doesn't have an extension AND doesn't have a port/localhost setup, append .com
-    if (!sanitizedUrl.includes('.') && !sanitizedUrl.includes(':') && !sanitizedUrl.startsWith('localhost')) {
+    // 5. Fallback: Append .com ONLY if it isn't an IP address, doesn't have an extension, a port, or localhost
+    const isIpAddress = /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}/.test(sanitizedUrl);
+    
+    if (!sanitizedUrl.includes('.') && !sanitizedUrl.includes(':') && !sanitizedUrl.startsWith('localhost') && !isIpAddress) {
         sanitizedUrl += '.com';
     }
 
