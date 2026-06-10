@@ -24,14 +24,25 @@ if (!SpeechRecognition) {
     let isLocationAuthorized = false;
 
     // Unified Core Activation Sequence
-    arcCore.addEventListener('click', async () => {
-        if (!isJarvisActive) {
-            statusMessage.innerHTML = "<span class='highlight'>REQUESTING MAIN INFRASTRUCTURE PERMISSIONS...</span>";
-            await initializeFullSystemAccess();
-        } else {
-            turnOffJarvis();
-        }
-    });
+	arcCore.addEventListener('click', async () => {
+		// 1. MOBILE WEBVIEW AUDIO UNLOCK: Force-prime the engine on user tap
+		try {
+			const webViewAudioUnlock = new SpeechSynthesisUtterance("");
+			webViewAudioUnlock.volume = 0; // Silent but initialized
+			window.speechSynthesis.speak(webViewAudioUnlock);
+			console.log("In-app audio container primed successfully.");
+		} catch (audioError) {
+			console.warn("Audio engine priming bypassed:", audioError);
+		}
+	
+		// 2. Your original activation logic continues cleanly below
+		if (!isJarvisActive) {
+			statusMessage.innerHTML = "<span class='highlight'>REQUESTING MAIN INFRASTRUCTURE PERMISSIONS...</span>";
+			await initializeFullSystemAccess();
+		} else {
+			turnOffJarvis();
+		}
+	});
 
     // Master Authorization Handshake
     async function initializeFullSystemAccess() {
@@ -441,8 +452,7 @@ function launchLocalSystemApplication(spokenCommand) {
     // 1. Scrub off vocal initiation verbs
     appName = appName.replace(/^launch\s+/, '')
                      .replace(/^run\s+/, '')
-                     .replace(/^start\s+/, '')
-                     .replace(/^open\s+/, '');
+                     .replace(/^start\s+/, '');
 	
     // 2. Local OS Universal URI App Protocol Schema Grid
     const systemAppRegistry = {
