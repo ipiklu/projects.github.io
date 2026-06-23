@@ -1,6 +1,6 @@
 {
   "name": "PikLu's Server",
-  "short_name": "PikLu Server",
+  "short_name": "PeeS",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#fff",
