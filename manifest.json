@@ -1,0 +1,20 @@
+{
+  "name": "PikLu's Server",
+  "short_name": "PeeS",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#fff",
+  "theme_color": "#AA205C",
+  "icons": [
+    {
+      "src": "img/s.gif",
+      "sizes": "192x192",
+      "type": "image/gif"
+    },
+    {
+      "src": "img/bigS.gif",
+      "sizes": "512x512",
+      "type": "image/gif"
+    }
+  ]
+}
