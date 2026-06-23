@@ -1,25 +1,20 @@
 {
   "name": "PikLu's Server",
-  "short_name": "PeeS",
+  "short_name": "PikLu Server",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#fff",
-  "theme_color": "#AA205C",
+  "theme_color": "#242424",
   "icons": [
     {
-      "src": "img/s.png",
-      "sizes": "192x192",
+      "src": "./img/s.png",
+      "sizes": "64x64",
       "type": "image/png"
     },
     {
-      "src": "img/s.gif",
-      "sizes": "192x192",
-      "type": "image/gif"
-    },
-    {
-      "src": "img/bigS.gif",
+      "src": "./img/bigS.png",
       "sizes": "512x512",
-      "type": "image/gif"
+      "type": "image/png"
     }
   ]
 }

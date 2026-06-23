@@ -2,41 +2,18 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<!---Design--->
-	<link rel="stylesheet" href="css/design.css" />
+<link rel="stylesheet" href="css/design.css" />
     <link rel="stylesheet" href="css/dark.css" />
 	<link rel="stylesheet" href="alertify.js-0.3.11/themes/alertify.core.css" />
 	<link rel="stylesheet" href="alertify.js-0.3.11/themes/alertify.default.css" />
     <script src="alertify.js-0.3.11/lib/alertify.min.js"></script>
-<!---metadata--->    
 <meta charset="utf-8">
 <meta name="theme-color" content="#AA205C" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <link rel="manifest" href="manifest.json">
 <title>PikLu's Server</title>
 <link rel = "icon" href="img/s.gif" type="image/x-icon">
-
-<!--SnowFall---20 To 31st December Only-------------------------------------------->
-<!--
-<script src="js/snowstorm-min.js"></script>
-<script>
-snowStorm.snowColor = '#AA205C'; //give the snowflakes another colour
-snowStorm.flakesMaxActive = 96; //the maximum number of active snow flakes on the screen, lowering this may increase performance
-snowStorm.followMouse = true; //the snow will fall in a certain direction based on the position of your mouse
-snowStorm.snowCharacter = '&#x1F385;'; //change the flake to a specific character
-snowStorm.snowStick = true; //if true, the snow will stick to the bottom of the screen
-</script>
-<script>
-snowStorm.animationInterval = 20; //milliseconds per frame, the higher the less CPU load
-snowStorm.flakesMaxActive = 30; //maximum number of active snow flakes, the lower the less CPU/GPU is needed to draw them
-snowStorm.freezeOnBlur = true; //recommended: stops the snow effect when the user switches to another tab or window
-snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affected by the window scroll. Disable to prevent extra CPU load
-</script>
-
--->
-
 </head>
-<!---PageContent--->
 <body>
     <div id="loading-overlay">
         <img src="img/settings.gif" alt="Loading...">
@@ -54,12 +31,18 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
         </p>
     </div>
  <div id="main-content">   
+    <div id="pwa-banner" style="display: none; background: #AA205C; color: white; padding: 12px; text-align: center; font-family: 'Century Gothic', sans-serif; position: sticky; top: 0; z-index: 9999; box-shadow: 0px 4px 10px rgba(0,0,0,0.2);">
+      <span>Install <strong>PikLu's Server</strong> on your device for a better experience!</span>
+      <button id="pwa-install-btn" style="background: white; color: #AA205C; border: none; padding: 6px 15px; margin-left: 15px; font-weight: bold; border-radius: 4px; cursor: pointer;">Install App</button>
+      <button id="pwa-close-btn" style="background: transparent; color: white; border: none; margin-left: 10px; font-size: 16px; cursor: pointer; font-weight: bold;">✕</button>
+    </div>
+
 	<div>
        <a href="index.html" title="Home"><img alt="logo" src="img/s.gif" class="imgS"/></a>
 		<div align="right">
-  			<input type="checkbox" id="dark-mode">
-  			<label for="dark-mode"></label>
-  			<div class="background"></div>
+ 			<input type="checkbox" id="dark-mode">
+ 			<label for="dark-mode"></label>
+ 			<div class="background"></div>
 		</div>
     </div>
 	<p align="center"><img alt="header-image" src="img/cLL.gif"></p>
@@ -90,8 +73,8 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
                                   </div>
                                 </div>
                          </td>
-                    </tr>
-                    <tr>
+                    	</tr>
+                    	<tr>
                    		<td width="38" align="center">
                         	<a href="resume/index.html" title="Click to view resume">
                             	<img alt="Folder-icon" src="img/folder.png" class="btn signup btnEffect" style="max-width:27px"/>
@@ -174,18 +157,15 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
                  </table>             
         </div>
         
-     
-<!-------DOT style --->        
 <style>    
 @keyframes blink {50% { color: transparent }}
 .loader__dot { animation: 1s blink infinite }
 .loader__dot:nth-child(2) { animation-delay: 250ms }
 .loader__dot:nth-child(3) { animation-delay: 500ms }
 </style> 
-<!-------Hover Only---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
 <script src="js/script.js"></script>
 
-<!-------Footer------------------------------------------>  
 <footer align="center" style="position:relative; color:#AA205C; bottom: 0; width: 100%;">
 <center> <font color="#AA205C">
    <p id="date"> </p>
@@ -195,15 +175,6 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
     	<p>|| Copyright protected &copy; <script>document.write(new Date().getFullYear())</script>, All Rights Not Reserved ||</p>
         <p> Design by Sayantan Kundu || <a style="color:#AA205C; font-size:12px; font-weight: bold;" href="sitemap/index.html" title="Sitemap">Sitemap </a>||</p>
     </footer>
-    
-<!-- Scripts For 20 To 31st December Only--->
-<!--
-			<script src="js/jquery.min.js"></script>
-			<script src="js/skel.min.js"></script>
-			<script src="js/util.js"></script>
-			<script src="js/main.js"></script>
--->
 </div>
-<script src="js/app.js"></script>
 </body>
 </html>

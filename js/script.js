@@ -1,5 +1,62 @@
 // JavaScript Document
 
+// --- PWA Service Worker Logic ---
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js', { scope: './' })
+      .then(reg => console.log('PWA Ready! Scope is:', reg.scope))
+      .catch(err => console.log('PWA Registration Failed:', err));
+  });
+}
+
+let deferredPrompt;
+
+// Catch the install capability if Chrome fires it natively
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  console.log("Chrome engine native PWA prompt captured.");
+});
+
+// Setup UI events once the DOM layout structures are ready
+document.addEventListener('DOMContentLoaded', () => {
+  const installBtn = document.getElementById('pwa-install-btn');
+  const closeBtn = document.getElementById('pwa-close-btn');
+  const pwaBanner = document.getElementById('pwa-banner');
+
+  // FORCE SHOW: Force the banner visible immediately for testing/bypass
+  if (pwaBanner) {
+    pwaBanner.style.display = 'block';
+  }
+
+  if (installBtn) {
+    installBtn.addEventListener('click', () => {
+      // If Chrome allowed the PWA engine event, trigger the slick native pop-up window
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User installed the PWA successfully');
+          }
+          if (pwaBanner) pwaBanner.style.display = 'none';
+          deferredPrompt = null;
+        });
+      } else {
+        // FALLBACK: If Chrome blocked the hook, seamlessly open your APK Dropdown instead
+        if (pwaBanner) pwaBanner.style.display = 'none';
+        appDownload(); 
+        alertify.log("PWA browser install restricted. Opening direct APK downloads instead!", "error", 5000);
+      }
+    });
+  }
+
+  if (closeBtn && pwaBanner) {
+    closeBtn.addEventListener('click', () => {
+      pwaBanner.style.display = 'none';
+    });
+  }
+});
+
 <!---POPUP Coustomization---> 
 	  function view() {
           alertify.alert("<a href='https://www.linkedin.com/in/sayantan-kundu-52650758' target='_blank'><img src='img/linkedin.png' style='max-width: 90%; max-height: 70%'/></a><br/><a href='https://twitter.com/piklu21' target='_blank'><img src='img/twitter.png' style='max-width: 30%; max-height: 30%'/></a><a href='https://www.facebook.com/kundupiklu' target='_blank'><img src='img/facebook.jpg' style='max-width: 30%; max-height: 30%'/> </a><a href='https://www.instagram.com/i_piklu/' target='_blank'><img src='img/instagram.png' style='max-width: 30%; max-height: 30%'/></a><p class='index' style='font-style:italic; font-weight:bolder; font-size:25px' />STAY HOME, STAY SAFE.</p><p class='index' style='font-style:italic; font-weight:bolder; font-size:25px' />#Covid-19 #HomeQuarantine</p>");

@@ -1,45 +1,46 @@
-const CACHE_NAME = 'piklu-server-v1';
-const ASSETS_TO_CACHE = [
+const CACHE_NAME = 'piklu-server-v3'; // Incremented version to break old cache structures
+const ASSETS = [
   './',
   './index.html',
   './css/design.css',
   './css/dark.css',
   './js/script.js',
-  './js/app.js'
+  './manifest.json',
+  './img/s.png',
+  './img/bigS.png'
 ];
 
-// 1. Install Event - Caches the essential layout files
-self.addEventListener('install', (event) => {
-  event.waitUntil(
+// Force immediate activation when installing the updated service worker file
+self.addEventListener('install', (e) => {
+  e.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('Caching core assets...');
-      return cache.addAll(ASSETS_TO_CACHE);
-    }).then(() => self.skipWaiting())
+      console.log('Caching fresh system layout assets.');
+      return cache.addAll(ASSETS);
+    }).then(() => self.skipWaiting()) // Instantly boots the worker out of waiting phase
   );
 });
 
-// 2. Activate Event - Cleans up old caches if you update the app
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
+// Clean out any old legacy cache storage buckets immediately
+self.addEventListener('activate', (e) => {
+  e.waitUntil(
+    caches.keys().then((keys) => {
       return Promise.all(
-        cacheNames.map((cache) => {
-          if (cache !== CACHE_NAME) {
-            console.log('Clearing old cache...');
-            return caches.delete(cache);
+        keys.map((key) => {
+          if (key !== CACHE_NAME) {
+            console.log('Clearing old cache instance:', key);
+            return caches.delete(key);
           }
         })
       );
-    }).then(() => self.clients.claim())
+    }).then(() => self.clients.claim()) // CRUCIAL: Forces the active worker to take immediate control of the page layout
   );
 });
 
-// 3. Fetch Event - CRITICAL FOR INSTALL FEATURE
-// This intercepts network requests and serves cached files offline
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      return cachedResponse || fetch(event.request);
+// Fetch interception strategy
+self.addEventListener('fetch', (e) => {
+  e.respondWith(
+    caches.match(e.request).then((cachedResponse) => {
+      return cachedResponse || fetch(e.request);
     })
   );
 });
