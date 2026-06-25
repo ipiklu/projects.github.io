@@ -1,5 +1,5 @@
 /* Import Google font - Poppins */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght=200;300;400;500;600;700&display=swap');
 * {box-sizing: border-box;}
 
 /* Add a rule for the HTML element */
@@ -8,74 +8,260 @@ html {
 }
 
 body {
-        -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-        margin: 0px;
-        background-size: cover;
-        background-repeat: no-repeat; 
-        scroll-behavior: smooth;
-        background-attachment: fixed;
-        font-family: google,sans-serif;
-        background: linear-gradient(#FFFFFF,#FFFFFF);
-		font-size: 1.1em;
-		background-color: #FFFFFF ;
-		/* This is the key change */
-    	position: relative; /* Make the body the positioning context */
-    	min-height: 100%; /* Ensure body is at least 100% of the HTML's height */
-        
-      }
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    margin: 0px;
+    background-size: cover;
+    background-repeat: no-repeat; 
+    scroll-behavior: smooth;
+    background-attachment: fixed;
+    font-family: google,sans-serif;
+    background: #FFFFFF;
+    font-size: 1.1em;
+    position: relative; /* Make the body the positioning context */
+    min-height: 100%; /* Ensure body is at least 100% of the HTML's height */
+    transition: background 0.5s ease;
+}
 
-label{
-  position: relative;
-  width: 70px;
-  height: 40px;
-  display: block;
-  background: #d9d9d9;
-  border-radius: 100px;
-  cursor: pointer;
-  margin: 6px;
-  box-shadow: inset 0px 5px 15px rgba(0,0,0,0.3), inset 0px -5px 15px rgba(255,255,255,0.3);
-  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+/* --- Global Content Layer Settings for Glassmorphism --- */
+#main-content {
+    position: relative;
+    z-index: 2;
 }
-label:hover{
+
+.background {
+    position: fixed; /* Fixes the element to the viewport */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    min-height: 100%;
+    background: #ffffff;
+    z-index: -1;
+    transition: 0.5s ease;
+}
+
+/* --- Core Dark Theme Switch States (Using Body Class) --- */
+body.dark-theme {
+    background: #242424;
+}
+
+body.dark-theme .background {
+    background: #242424;
+}
+
+
+/* ==========================================================================
+   iOS HIGH-GLOSS LIQUID GEL ENGINE (CRYSTAL CLEAR REFRACTION)
+   ========================================================================== */
+
+/* Slider Wrapper */
+.ios-glass-slider-wrapper {
+    display: inline-block;
+    margin: 10px 15px;
+    vertical-align: middle;
+}
+
+/* Hide Native Checkbox Control */
+.ios-slider-input {
+    display: none !important;
+}
+
+/* The Gel Base Track - REMOVED HEAVY BLUR & RESTORED RICH COLOR SATURATION */
+.ios-glass-slider {
+    position: relative;
+    display: block;
+    width: 76px;
+    height: 40px;
+    
+    /* Reduced opacity/blur to strip haziness; boosted saturation for water-clear look */
+    background: rgba(230, 230, 230, 0.4);
+    backdrop-filter: blur(4px) saturate(200%);
+    -webkit-backdrop-filter: blur(4px) saturate(200%);
+    
+    border-radius: 100px;
+    border: none;
+	outline: none;
+    
+    /* Replaced dark sludge shadows with high-contrast ambient fluid rim lighting */
+    box-shadow: inset 0px 4px 10px rgba(0,0,0,0.2), inset 0px -4px 10px rgba(255,255,255,0.2);
+    cursor: pointer;
+    overflow: visible; 
+    
+    /* Smooth liquid-gel elastic rebound spline */
+    transition: transform 0.6s cubic-bezier(0.25, 1.1, 0.4, 1.15), 
+                background 0.4s ease, 
+                box-shadow 0.4s ease;
+}
+
+/* --- THE SPECULAR CLEAR LIQUID GEL LENS MANTLE --- */
+.ios-glass-slider::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 100px;
+    
+    /* High-intensity specular reflection profile that looks like wet resin or gel syrup */
+    background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.85) 0%, 
+        rgba(255, 255, 255, 0.4) 25%, 
+        rgba(255, 255, 255, 0) 65%,
+        rgba(255, 255, 255, 0.2) 100%
+    );
+    
+    /* Crisp polished edge sheet boundary */
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    
+    /* Deep external shadow cast to isolate the bulging gel bead from the canvas */
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1), 
+                inset 0 1px 3px rgba(255, 255, 255, 0.9);
+                
+    opacity: 0;
+    pointer-events: none;
+    z-index: 3; 
+    
+    /* Elastic expansion curves for the fluid perimeter shell */
+    transform: scale(0.94);
+    transition: transform 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.4), 
+                top 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.4),
+                left 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.4),
+                right 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.4),
+                bottom 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.4),
+                opacity 0.2s ease;
+}
+
+/* Track Hover Interaction - Wet Drop Volume Expansion */
+.ios-glass-slider:hover {
+    transform: scale(1.15, 1.07); 
+    box-shadow: inset 0px 4px 10px rgba(0,0,0,0.2), inset 0px -4px 10px rgba(255,255,255,0.2);
 	animation: animated-border-glow 8s infinite linear;
-    transition: 0.2s all;
-	transform: scale(1.1); 	
 }
-label:after{
-  content: '';
-  position: absolute;
-  height: 20px;
-  width: 25px;
-  background: #f2f2f2;
-  border-radius: 100px;
-  top: 10px;
-  left: 10px;
-  transition: 0.1s;
-  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+
+/* Clear viscous envelope breaks cleanly past the structural boundary coordinates */
+.ios-glass-slider:hover::after {
+    opacity: 1;
+    top: -3px; 
+    left: -4px; 
+    right: -4px; 
+    bottom: -3px;
+    transform: scale(1.02);
 }
-input:checked ~ label:after{
-  left: 57px;
-  transform: translateX(-100%);
-  background: linear-gradient(180deg,#777,#3a3a3a);
+
+/* Extreme pill-stretching of the inner mercurial element on hover */
+.ios-glass-slider:hover .slider-knob {
+    width: 48px; 
+    border-radius: 20px; 
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
 }
-input:checked ~ label{
-  background: #242424;
+
+/* Active Pressed Squish Dynamics */
+.ios-glass-slider:active {
+    transform: scale(1.1, 1.1); 
 }
-.background{
-  position: fixed; /* Fixes the element to the viewport */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  min-height: 100%;
-  background: #fff;
-  z-index: -1;
-  transition: 0.5s;
+
+.ios-glass-slider:active::after {
+    opacity: 0.3;
+    top: 0; left: 0; right: 0; bottom: 0;
+    transform: scale(1);
 }
-input:checked + label + .background{
-  background: #242424;
+
+.ios-glass-slider:active .slider-knob {
+    width: 40px; 
 }
-input{
-  display: none;
+
+/* High Refraction Fluid Core Knob -lit Orb Profile */
+.slider-knob {
+    position: absolute;
+    top: 3px;
+    left: 4px;
+    width: 34px;
+    height: 34px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(245, 245, 250, 0.96) 100%);
+    border-radius: 50%;
+    border: none;
+	outline: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08), 
+                0 1px 2px rgba(0, 0, 0, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2; 
+    
+    /* High inertia timing to pull the inner mass cleanly along behind the gel skin */
+    transition: transform 0.55s cubic-bezier(0.25, 1.1, 0.4, 1.1), 
+                width 0.45s cubic-bezier(0.25, 1.1, 0.4, 1.1),
+                border-radius 0.3s ease,
+                background 0.3s ease,
+                box-shadow 0.3s ease;
+}
+
+/* Internal Dynamic Emoji Elements */
+.slider-knob .icon {
+    position: absolute;
+    font-size: 18px;
+    user-select: none;
+    transition: opacity 0.25s ease, transform 0.55s cubic-bezier(0.25, 1.1, 0.4, 1.1);
+}
+
+/* Light Mode Defaults for Icons */
+.sun-icon { 
+    opacity: 1; 
+    transform: rotate(0deg) scale(1); 
+}
+.moon-icon { 
+    opacity: 0; 
+    transform: rotate(-45deg) scale(0.5); 
+    filter: brightness(0) invert(1);
+}
+
+
+/* --- Slider Elements Inside Active Dark Theme Context --- */
+
+/* Track morphs to your original custom dark presentation panel */
+body.dark-theme .ios-glass-slider {
+    background: #242424;
+    border: none;
+	outline: none;
+    box-shadow: inset 0px 4px 12px rgba(0,0,0,0.65), 
+                inset 0px -2px 6px rgba(255,255,255,0.05);
+}
+
+/* Highly glossy obsidian gel surface highlight configuration */
+body.dark-theme .ios-glass-slider::after {
+    background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.35) 0%, 
+        rgba(255, 255, 255, 0.1) 30%, 
+        rgba(0, 0, 0, 0) 70%,
+        rgba(255, 255, 255, 0.05) 100%
+    );
+    border-color: rgba(255, 255, 255, 0.28);
+}
+
+/* Shift knob positions forward */
+body.dark-theme .ios-glass-slider .slider-knob {
+    transform: translateX(34px); 
+    background: rgba(35, 35, 40, 0.95);
+    border-color: #242424;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+}
+
+/* Balance alignment parameters dynamically during active gel pulls on dark screens */
+body.dark-theme .ios-glass-slider:hover .slider-knob {
+    transform: translateX(20px);
+}
+
+body.dark-theme .ios-glass-slider:active .slider-knob {
+    transform: translateX(24px); /* 34px base - 18px active growth = 16px */
+}
+
+/* Cross-fade icons gracefully to Moon configuration */
+body.dark-theme .ios-glass-slider .sun-icon {
+    opacity: 0;
+    transform: rotate(45deg) scale(0.5);
+}
+
+body.dark-theme .ios-glass-slider .moon-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+    filter: brightness(0) invert(1) drop-shadow(0 0 4px rgba(255, 255, 255, 0.6));
 }

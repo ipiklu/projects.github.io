@@ -88,7 +88,7 @@ textarea::-webkit-scrollbar-track {
 	background-color: #AA205C; 
 	padding: 15px; 
 	color: white; 
-	margin-bottom: 20px; 
+	margin-bottom: 10px; 
 } 
 
 .resume_container{
@@ -324,7 +324,7 @@ a:hover {
 	} 
 
 	h1 { 
-		font-size: 160%; 
+		font-size: 100%; 
 	} 
 
 	.info { 
@@ -346,7 +346,75 @@ a:hover {
 		display: flex; 
 		flex-direction: column; 
 		justify-content: space-evenly;  
-	} 
+	}
+	.signup {
+        border: 1px solid #AA205c;
+        background: #AA205c;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 5px;
+        padding-bottom: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        outline: none;
+        color: white;
+        text-decoration: none;
+        font-family: google;
+        font-size: 8px;
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .signup:hover {
+        border: 1px solid #AA205c;
+        color: white;
+        box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+          0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+          0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+          0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+        background:#AA205c;
+		animation: animated-border-glow 8s infinite linear;
+      }
+
+ .btn {
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        font-size: 8px;
+        background:#AA205c;
+        outline: none;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 10px;
+      }
+	  
+	  .btnEffect {
+            cursor: pointer;
+            outline: none;
+            transition: 0.2s all;
+        }
+        /* Adding transformation when the button is active */
+          
+        .btnEffect:active {
+            transform: scale(0.98);
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+            /* Lowering the shadow */
+        } 
+.s-logo {
+	border-radius: 10px;
+	margin-top: 5px;
+	max-width:40px;
+	max-height: 90%;
+	float:left;
+	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+	.s-logo:hover {
+			animation: animated-border-glow 8s infinite linear;
+			transition: 0.2s all;
+			transform: scale(1.1); 
+		 }			
 } 
 
 @media print {

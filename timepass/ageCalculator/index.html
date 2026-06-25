@@ -18,13 +18,19 @@
     <script src="../../alertify.js-0.3.11/lib/alertify.min.js"></script>    
 </head>
 <!-- Removed dark mode classes from body -->
-<body class="bg-gray-50 text-gray-800 min-h-screen p-4 md:p-12 font-sans transition-colors duration-300">
+<body class="text-gray-800 min-h-screen p-4 md:p-12 font-sans transition-colors duration-300">
        <a href="../../index.html" title="Home"><img src="img/s.gif" class="imgS"/></a>
 		<div align="right">
-  			<input type="checkbox" id="dark-mode">
-  			<label for="dark-mode"></label>
-  			<div class="background"></div>
-		</div>
+            <div class="ios-glass-slider-wrapper">
+                <input type="checkbox" id="dark-mode" class="ios-slider-input">
+                <label for="dark-mode" class="ios-glass-slider">
+                    <span class="slider-knob">
+                        <span class="icon sun-icon">☀️</span>
+                        <span class="icon moon-icon">🌙</span>
+                    </span>
+                </label>
+            </div>
+        </div>
     <div class="w-full max-w-2xl mx-auto">
         <header class="mb-8 flex justify-between items-start">
             <div class="text-left">

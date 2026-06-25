@@ -104,7 +104,7 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
 <body>
 <div id="printPageButton" class="header" style="background-color:#AA205C">
    <a href="../../index.html" title="Home"><img src="img/s.gif" class="s-logo"/></a>
-   <center>Covid-19 Status Bankura</center>
+   <center onClick="reloadClear()" title="Refresh this page" style="cursor: pointer;">Covid-19 Status Bankura</center>
    <button id="printPageButton" class="btn signup btnEffect" onClick="window.location='../server/index.html'" title="Go back to Timepass-project library" style="background:#AA205C; color:#EEE; float:right">
      <img src="img/back.gif" style="max-width:10px" />Back</button>
    <button id="printPageButton" class="btn signup btnEffect" onClick="window.location='../server/data/index.htm'" title="View Data-Source" style="background:#AA205C; color:#EEE; float:right">
@@ -115,11 +115,17 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
     <br /><br /><br><br>
     
    <center> <font color="#AA205C"><ul>Last Updated on 17th November 2020</ul>
-   <div align="right" id="printPageButton">
-  		<input type="checkbox" id="dark-mode">
-  		<label for="dark-mode"></label>
-  		<div class="background"></div>
-	</div>
+   <div id="printPageButton" align="right">
+            <div class="ios-glass-slider-wrapper">
+                <input type="checkbox" id="dark-mode" class="ios-slider-input">
+                <label for="dark-mode" class="ios-glass-slider">
+                    <span class="slider-knob">
+                        <span class="icon sun-icon">☀️</span>
+                        <span class="icon moon-icon">🌙</span>
+                    </span>
+                </label>
+            </div>
+        </div> 
    </center>
     <br /><br />
     
@@ -412,6 +418,6 @@ airline_seat_flat
 			<script src="js/util.js"></script>
 			<script src="js/main.js"></script>
 -->
-    
+<script src="js/script.js"></script>    
 </body>
 </html>

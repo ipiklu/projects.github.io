@@ -89,7 +89,7 @@ body {
 /* Input field */
 .form-control {
 	background: rgba(0, 0, 0, 0);
-	color: #AA205c;
+	color: #AA205C;
     border-radius: 20px;
     border: 1px solid #ccc;
 	outline:none;
@@ -130,6 +130,31 @@ body {
 .form-control::-webkit-scrollbar-track {
     background-color: #3e3e3e; /* A darker gray for the track */
 }
+
+.dropdown_color{
+	color: #AA205C;
+	font-weight: bolder;
+	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);	
+}
+.dropdown_color option {
+    /* Gradients do not work on native <option> tags, so we must fall back 
+       to a solid dark/light color for readability against your main button */
+    background-color: #121212; 
+    color: #AA205C; 
+    font-weight: bold;
+}
+	.dropdown_color:hover{
+		color: #AA205C;
+		transform: scale(1.03);
+		outline: none;
+		animation: animated-border-glow 8s infinite linear;
+		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+		cursor: pointer;
+	}
+		.dropdown_color:active {
+			transform: scale(1.0);
+			box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+		}
 
 /* Button styling */
 .signup {

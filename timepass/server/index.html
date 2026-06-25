@@ -38,14 +38,20 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
 -->
     
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+<body class="flex items-center justify-center min-h-screen">
 	<div>
        <a href="../../index.html" title="Home"><img src="img/s.gif" class="s-logo imgS"/></a>
 		<div align="right">
-  			<input type="checkbox" id="dark-mode">
-  			<label for="dark-mode"></label>
-  			<div class="background"></div>
-		</div>
+            <div class="ios-glass-slider-wrapper">
+                <input type="checkbox" id="dark-mode" class="ios-slider-input">
+                <label for="dark-mode" class="ios-glass-slider">
+                    <span class="slider-knob">
+                        <span class="icon sun-icon">☀️</span>
+                        <span class="icon moon-icon">🌙</span>
+                    </span>
+                </label>
+            </div>
+        </div>
         	<p align="center"><img src="img/cLL.gif"></p>
     	<h1 align="center" class="loader" style="color:#AA205C; font-size:36px; font-weight: bold; font-family:'Century Gothic'">Welcome to server maintenance<span class="loader__dot">.</span><span class="loader__dot">.</span><span class="loader__dot">.</span>
         </h1>

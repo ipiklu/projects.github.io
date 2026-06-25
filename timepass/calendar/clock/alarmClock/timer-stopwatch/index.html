@@ -26,11 +26,17 @@
                    <button id="printPageButton" class="btn signup btnEffect" onClick="window.print()" title="Print this page" style="background:#AA205C; color:#EEE; float:right">
                     <img src="img/print.gif" style="max-width:20px" /></button>                                              
      		</div> 
-            <br /> <br /><br />   
+            <br /> <br /><br /> 
                 <div align="right" id="printPageButton">
-                    <input type="checkbox" id="dark-mode">
-                    <label for="dark-mode"></label>
-                    <div class="background"></div>
+                    <div class="ios-glass-slider-wrapper">
+                        <input type="checkbox" id="dark-mode" class="ios-slider-input">
+                        <label for="dark-mode" class="ios-glass-slider">
+                            <span class="slider-knob">
+                                <span class="icon sun-icon">☀️</span>
+                                <span class="icon moon-icon">🌙</span>
+                            </span>
+                        </label>
+                    </div>
                 </div>                   
     <!---------------------------------------------------------->  
     <!-- Hidden Audio Element for Alarm -->

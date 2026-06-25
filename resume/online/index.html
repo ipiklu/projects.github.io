@@ -36,7 +36,7 @@ snowStorm.usePositionFixed = true; //if the user scrolls, the snow is not affect
 <style>
 html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 </style>
-<body class="w3-light-grey">
+<body>
 	<div>
        <div id="printPageButton" class="header" style="background-color:#AA205C">
      		<a href="../../index.html" title="Home"><img alt="logo" src="img/s.gif" class="imgS s-logo" /></a>
@@ -50,10 +50,16 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 		</div>
 			<br><br><br><br>
 		<div align="right" id="printPageButton">
-  			<input type="checkbox" id="dark-mode">
-  			<label for="dark-mode"></label>
-  			<div class="background"></div>
-		</div>
+            <div class="ios-glass-slider-wrapper">
+                <input type="checkbox" id="dark-mode" class="ios-slider-input">
+                <label for="dark-mode" class="ios-glass-slider">
+                    <span class="slider-knob">
+                        <span class="icon sun-icon">☀️</span>
+                        <span class="icon moon-icon">🌙</span>
+                    </span>
+                </label>
+            </div>
+        </div>
     </div>
 
 <!-- Page Container -->

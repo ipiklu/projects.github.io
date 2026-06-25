@@ -22,10 +22,16 @@
                 <h1><a class="index" onclick="return(reloadClear());" title="Reload" style="cursor:pointer;">Draw</a></h1>
   </div>        		
        <div align="right">
-  			<input type="checkbox" id="dark-mode">
-  			<label for="dark-mode"></label>
-  			<div class="background"></div>
-		</div>             
+            <div class="ios-glass-slider-wrapper">
+                <input type="checkbox" id="dark-mode" class="ios-slider-input">
+                <label for="dark-mode" class="ios-glass-slider">
+                    <span class="slider-knob">
+                        <span class="icon sun-icon">☀️</span>
+                        <span class="icon moon-icon">🌙</span>
+                    </span>
+                </label>
+            </div>
+        </div>             
   
     <canvas id="canvas" width="800" height="887"></canvas>
     <div class="toolbox">

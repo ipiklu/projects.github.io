@@ -34,10 +34,16 @@
     </div>    
     <br /><br /><br>
     <div id="printPageButton" align="right">
-  			<input type="checkbox" id="dark-mode">
-  			<label for="dark-mode"></label>
-  			<div class="background"></div>
-		</div>
+            <div class="ios-glass-slider-wrapper">
+                <input type="checkbox" id="dark-mode" class="ios-slider-input">
+                <label for="dark-mode" class="ios-glass-slider">
+                    <span class="slider-knob">
+                        <span class="icon sun-icon">☀️</span>
+                        <span class="icon moon-icon">🌙</span>
+                    </span>
+                </label>
+            </div>
+        </div>    
     <!-- Currency Converter -->
     <h1 class="heading text-center display-2 index">
         Currency Converter
@@ -57,8 +63,8 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" style="color: #AA205c;">From</span>
                         </div>
-                        <select class="form-control from" id="sel1" style="color: #AA205c;">
-                            <option value="">Select One …</option>
+                        <select class="form-control from dropdown_color" id="sel1">
+                            <option value="" selected disabled>Select One …</option>
                             <option value="USD">USD</option>
                             <option value="AED">AED</option>
                             <option value="ARS">ARS</option>
@@ -120,7 +126,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" style="color: #AA205c;">To</span>
                         </div>
-                        <select class="form-control to" id="sel2" style="color: #AA205c;">
+                        <select class="form-control to dropdown_color" id="sel2" style="color: #AA205c;">
                             <option value="">Select One …</option>
                             <option value="USD">USD</option>
                             <option value="AED">AED</option>
