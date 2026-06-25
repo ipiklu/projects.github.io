@@ -265,3 +265,35 @@ body.dark-theme .ios-glass-slider .moon-icon {
     transform: rotate(0deg) scale(1);
     filter: brightness(0) invert(1) drop-shadow(0 0 4px rgba(255, 255, 255, 0.6));
 }
+
+/* This media query ensures hover rules only apply to desktop screens with mice */
+@media (hover: hover) {
+    /* Track Hover Interaction - Wet Drop Volume Expansion */
+    .ios-glass-slider:hover {
+        transform: scale(1.15, 1.07); 
+        box-shadow: inset 0px 4px 10px rgba(0,0,0,0.2), inset 0px -4px 10px rgba(255,255,255,0.2);
+        animation: animated-border-glow 8s infinite linear;
+    }
+
+    /* Clear viscous envelope breaks cleanly past the structural boundary coordinates */
+    .ios-glass-slider:hover::after {
+        opacity: 1;
+        top: -3px; 
+        left: -4px; 
+        right: -4px; 
+        bottom: -3px;
+        transform: scale(1.02);
+    }
+
+    /* Extreme pill-stretching of the inner mercurial element on hover */
+    .ios-glass-slider:hover .slider-knob {
+        width: 48px; 
+        border-radius: 20px; 
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
+    }
+
+    /* Balance alignment parameters dynamically during active gel pulls on dark screens */
+    body.dark-theme .ios-glass-slider:hover .slider-knob {
+        transform: translateX(20px);
+    }
+}
