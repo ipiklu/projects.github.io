@@ -18,7 +18,7 @@
 			transform: translateZ(0);			
 			
         }
-		
+	
 /* Styling for the scrollbar track */
 body::-webkit-scrollbar {
     width: 8px; /* Set the width of the scrollbar */
@@ -41,7 +41,6 @@ body::-webkit-scrollbar-track {
             position: relative;
             display: inline-block;
         }
-
         /* The button */
         .dropbtn {
             /* Tailwind classes are used directly in HTML, but here's a base */
