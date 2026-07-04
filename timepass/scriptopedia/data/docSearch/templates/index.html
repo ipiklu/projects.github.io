@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP Analytics Engine</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="search-container">
+        <header class="app-header">
+            <h2>SOP Content Search</h2>
+            <p class="subtitle">Algorithmic Document Content & Description Retrieval</p>
+        </header>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search descriptive content inside SOPs...">
+            
+            <!-- Ultra-Modern Orbiting Button Container -->
+            <div id="searchBtnWrapper" class="ai-animated-button-wrapper">
+                <button id="searchBtn">
+                    <span class="btn-text">Search</span>
+                    <!-- Jumping Dots Loader Hidden by Default -->
+                    <div class="jumping-dots" id="loader">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <div id="results" class="results-container"></div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>

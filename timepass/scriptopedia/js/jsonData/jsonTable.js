@@ -151,8 +151,8 @@ const JSON_TABLE = [
 			</tr>
 			<tr>
 				<td width="38">
-					<a title="Click-To-Download" href="data/upssDashboard.zip" class="index-alert">
-						<img src="img/zip.png" title="Click-To-Download" style="max-width: 70px;">
+					<a title="View-Sample" onClick="window.open('../../dashboards/dashboard-v3.0/index.html','_blank','fullscreen,scrollbar');" class="index-alert">
+						<img src="img/zip.png" title="View-Sample" style="max-width: 70px;">
 					</a>
 				</td>
 				<td align="left">
@@ -167,6 +167,16 @@ const JSON_TABLE = [
 				</td>
 				<td align="left">
 					<a title="Click-To-Download"  href="data/borderDesign.zip" class="index-alert">borderDesign.zip</a>
+				</td>
+			</tr>
+			<tr>
+				<td width="38">
+					<a title="View-Sample" onClick="window.open('data/docSearch/templates/index.html','_blank','fullscreen,scrollbar');" class="index-alert">
+						<img src="img/javaIco.webp" title="View-Sample" style="max-width: 70px;">
+					</a>
+				</td>
+				<td align="left">
+					<a title="Click-To-Download"  href="data/docSearch.zip" class="index-alert">docSearch.zip</a>
 				</td>
 			</tr>
 		</tbody>

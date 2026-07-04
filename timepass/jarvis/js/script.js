@@ -707,16 +707,18 @@ function processCommand(command) {
         commadsView();
     }
     else {
-        // GLOBAL GOOGLE SEARCH FALLBACK MATRIX
-        statusMessage.innerHTML = `Searching Matrix: <span class='highlight'>"${command}"</span>`;
-        speak(`No direct routing matched, sir. Initiating a global Google search for ${command}.`);
-        
-        // Encode the spoken text string into a web-safe query parameter
-        const safeSearchQuery = encodeURIComponent(command);
-        const searchUrl = `https://www.google.com/search?q=${safeSearchQuery}`;
-        
-        // Deploy the search interface using your exact presentation parameters
-        window.open(searchUrl, '_blank', 'fullscreen scrollbar');
-    }
+		// GLOBAL NATIVE GOOGLE AI SEARCH FALLBACK
+		statusMessage.innerHTML = `Querying Google AI Matrix: <span class='highlight'>"${command}"</span>`;
+		speak(`No direct routing matched, sir. Launching Google AI Mode for ${command}.`);
+		
+		// Encode the spoken text string into a web-safe query parameter
+		const safeSearchQuery = encodeURIComponent(command);
+		
+		// udm=50 forces Google directly into its native AI Mode interface
+		const googleAiSearchUrl = `https://www.google.com/search?q=${safeSearchQuery}&udm=50`;
+		
+		// Deploy the search interface using your exact presentation parameters
+		window.open(googleAiSearchUrl, '_blank', 'fullscreen scrollbar');
+	}
 }
 // ----ALL USER Commands END

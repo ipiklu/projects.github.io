@@ -1,0 +1,276 @@
+/* ==========================================================================
+   1. PROPERTY INTERPOLATION & SYSTEM VARS
+   ========================================================================== */
+@property --orbit-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+:root {
+  --bg-dark: #0f1115;           /* Deep dark UI background */
+  --card-bg: #16181c;          /* Inside bubble background */
+  --card-nested: #1e2025;       /* Elevated element backgrounds */
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+  --border-thickness: 2px;
+  
+  /* Google AI Spectrum */
+  --google-blue: #4285f4;
+  --google-purple: #9b51e0;
+  --google-rose: #ea4335;
+  --google-cyan: #24b47e;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  margin: 0;
+  padding: 60px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.search-container {
+  width: 100%;
+  max-width: 850px;
+  background: var(--card-bg);
+  padding: 40px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.app-header {
+  margin-bottom: 32px;
+}
+
+.app-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin: 0 0 8px 0;
+  background: linear-gradient(120deg, #fff, var(--text-muted));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.app-header .subtitle {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.search-box {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 40px;
+  align-items: center;
+}
+
+#searchInput {
+  flex: 1;
+  padding: 16px 20px;
+  font-size: 16px;
+  background-color: var(--card-nested);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  color: var(--text-main);
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+#searchInput:focus,#searchInput:hover {
+  box-shadow: 0 0 0 4px rgba(66, 133, 244, 0.15);
+  animation: animated-border-glow 8s infinite linear;
+}
+
+/* ==========================================================================
+   2. THE ELIPTI-SNAP ORBITING BUTTON WRAPPER (Activated on Search)
+   ========================================================================== */
+.ai-animated-button-wrapper {
+  position: relative;
+  width: 140px;
+  height: 52px;
+  padding: var(--border-thickness);
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+}
+
+/* Class added via JS during runtime queries */
+.ai-animated-button-wrapper.searching {
+  background: conic-gradient(
+    from var(--orbit-angle),
+    var(--google-blue) 0deg,
+    var(--google-purple) 30deg,
+    var(--google-rose) 60deg,
+    var(--google-cyan) 90deg,
+    transparent 115deg,
+    transparent 360deg
+  );
+  clip-path: polygon(0% 18%, 14% 0%, 85% 0%, 100% 30%, 100% 100%, 0% 100%);
+  border-radius: 12px 24px 12px 12px;
+  animation: google-jumpy-orbit 3.5s cubic-bezier(0.68, -0.4, 0.27, 1.35) infinite;
+}
+
+#searchBtn {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: var(--card-nested);
+  color: #D7D7D7;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  transition: background-color 0.2s ease;
+}
+
+.ai-animated-button-wrapper.searching #searchBtn {
+  clip-path: inherit;
+  border-radius: inherit;
+  height: calc(100% - (var(--border-thickness) * 2));
+  width: calc(100% - (var(--border-thickness) * 2));
+  margin: var(--border-thickness);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#searchBtn:hover {
+  background-color: #262930;
+  color: #fff;
+}
+
+/* ==========================================================================
+   3. JUMPING DOTS LOADER
+   ========================================================================== */
+.jumping-dots {
+  display: none;
+  gap: 4px;
+}
+
+.jumping-dots span {
+  width: 6px;
+  height: 6px;
+  background-color: var(--google-blue);
+  border-radius: 50%;
+  display: inline-block;
+  animation: dot-jump 1.2s infinite ease-in-out both;
+}
+
+.jumping-dots span:nth-child(1) {
+  animation-delay: -0.32s;
+  background-color: var(--google-blue);
+}
+
+.jumping-dots span:nth-child(2) {
+  animation-delay: -0.16s;
+  background-color: var(--google-purple);
+}
+
+.jumping-dots span:nth-child(3) {
+  background-color: var(--google-rose);
+}
+
+@keyframes dot-jump {
+  0%, 80%, 100% { 
+    transform: scale(0);
+    opacity: 0.3;
+  } 40% { 
+    transform: translateY(-8px) scale(1);
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   4. RENDERING PANELS (RESULTS)
+   ========================================================================== */
+.results-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.result-item {
+  background: var(--card-nested);
+  border-left: 4px solid var(--google-blue);
+  padding: 24px;
+  border-radius: 0 16px 16px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.02);
+  border-right: 1px solid rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  transition: transform 0.2s ease;
+}
+
+.result-item:hover {
+  transform: translateX(4px);
+}
+
+.result-item h3 {
+  margin: 0 0 12px 0;
+  color: var(--text-main);
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.result-item p {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+.match-highlight {
+  background-color: rgba(66, 133, 244, 0.15);
+  color: #64b5f6;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   5. JUMPY/STAGGERED TIMELINE
+   ========================================================================== */
+@keyframes google-jumpy-orbit {
+  0% { --orbit-angle: 0deg; }
+  25% { --orbit-angle: 110deg; }
+  48% { --orbit-angle: 190deg; }
+  73% { --orbit-angle: 280deg; }
+  100% { --orbit-angle: 360deg; }
+}
+
+/* Keyframes for the new animated border glow */
+@keyframes animated-border-glow {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue */
+    }
+    25% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 255, 100, 0.7); /* Green */
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 100, 100, 0.7); /* Red */
+    }
+    75% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 255, 100, 0.7); /* Yellow */
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue (back to start) */
+    }
+}
