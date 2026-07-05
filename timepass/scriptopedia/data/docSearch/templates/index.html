@@ -3,25 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOP Analytics Engine</title>
+    <title>SOP Deep Content Search Engine</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
     <div class="search-container">
-        <header class="app-header">
-            <h2>SOP Content Search</h2>
-            <p class="subtitle">Algorithmic Document Content & Description Retrieval</p>
-        </header>
+        <div class="app-header">
+            <h2>SOP Descriptive Search</h2>
+            <p class="subtitle">Enterprise indexing engine for internal .docx/ .doc manuals</p>
+        </div>
+
+        <!-- Refined Inline Scope Action Row -->
+        <div class="filter-row">
+            <div class="filter-status-info">
+                Target SOPs: <strong id="filterStatusLabel">Loading SOPs...</strong>
+            </div>
+            <button class="open-modal-btn" id="openModalBtn" type="button">Required-SOPs</button>
+        </div>
 
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Search descriptive content inside SOPs...">
-            
-            <!-- Ultra-Modern Orbiting Button Container -->
-            <div id="searchBtnWrapper" class="ai-animated-button-wrapper">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Enter keyword or phrase to scan inside documents..."
+                autocomplete="off"
+            >
+            <div class="ai-animated-button-wrapper" id="buttonWrapper">
                 <button id="searchBtn">
-                    <span class="btn-text">Search</span>
-                    <!-- Jumping Dots Loader Hidden by Default -->
-                    <div class="jumping-dots" id="loader">
+                    <span id="btnText">Search</span>
+                    <div class="jumping-dots" id="loadingDots">
                         <span></span>
                         <span></span>
                         <span></span>
@@ -30,8 +41,31 @@
             </div>
         </div>
 
-        <div id="results" class="results-container"></div>
+        <div class="results-container" id="resultsContainer"></div>
     </div>
+
+    <!-- HTML5 Native Modal Box Structure Layout Overlay Container -->
+    <dialog class="doc-modal" id="docModal">
+        <div class="modal-header">
+            <h3>Select Target Documents</h3>
+        </div>
+        
+        <div class="master-toggle-box">
+            <label class="checkbox-item">
+                <input type="checkbox" id="selectAllDocs" checked>
+                <span class="master-checkbox-label">All Documents</span>
+            </label>
+        </div>
+
+        <div class="modal-scroll-area" id="individualDocsContainer">
+            <!-- Long dynamic document lists populate here safely via app.js -->
+        </div>
+
+        <div class="modal-actions">
+            <button class="close-modal-btn" id="closeModalBtn" type="button">Apply</button>
+        </div>
+    </dialog>
+
     <script src="js/script.js"></script>
 </body>
 </html>

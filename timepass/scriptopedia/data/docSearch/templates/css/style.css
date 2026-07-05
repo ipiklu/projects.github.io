@@ -14,7 +14,7 @@
   --text-main: #f3f4f6;
   --text-muted: #9ca3af;
   --border-thickness: 2px;
-  
+
   /* Google AI Spectrum */
   --google-blue: #4285f4;
   --google-purple: #9b51e0;
@@ -81,13 +81,211 @@ body {
   transition: all 0.25s ease;
 }
 
-#searchInput:focus,#searchInput:hover {
+#searchInput:focus, #searchInput:hover {
   box-shadow: 0 0 0 4px rgba(66, 133, 244, 0.15);
   animation: animated-border-glow 8s infinite linear;
 }
 
 /* ==========================================================================
-   2. THE ELIPTI-SNAP ORBITING BUTTON WRAPPER (Activated on Search)
+   2. FILTER ROW & MODAL DIALOGUE COMPONENTS (FIXED ANIMATION)
+   ========================================================================== */
+.filter-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--card-nested);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 12px 20px;
+  margin-bottom: 24px;
+}
+
+.filter-status-info {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.filter-status-info strong {
+  color: var(--text-main);
+  margin-left: 4px;
+}
+
+.open-modal-btn {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-main);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.open-modal-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.open-modal-btn:active{
+  transform: scale(0.94) !important; 
+  outline: none;
+  box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+  z-index: 1002;
+}
+
+/* --- Native HTML5 Dialog Base Setup --- */
+.doc-modal {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  background: #18191d; 
+  color: var(--text-main);
+  padding: 24px;
+  max-width: 550px;
+  width: 90%;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+
+  /* Transition Configurations */
+  opacity: 0;
+  transform: scale(0.92) translateY(15px);
+  transition: 
+    opacity 0.25s ease-out,
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    display 0.25s ease-out allow-discrete;
+}
+
+/* --- Native Dimmer Overlay Layer --- */
+.doc-modal::backdrop {
+  background: rgba(0, 0, 0, 0);
+  backdrop-filter: blur(0px);
+  transition: 
+    background-color 0.25s ease-out,
+    backdrop-filter 0.25s ease-out,
+    display 0.25s ease-out allow-discrete;
+}
+
+/* --- Active Target Open States --- */
+.doc-modal[open] {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.doc-modal[open]::backdrop {
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+}
+
+/* --- Starting point rules for entry animation --- */
+@starting-style {
+  .doc-modal[open] {
+    opacity: 0;
+    transform: scale(0.92) translateY(15px);
+  }
+  .doc-modal[open]::backdrop {
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 12px;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.master-toggle-box {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.master-checkbox-label {
+  font-weight: 600; 
+  color: var(--text-main);
+}
+
+.modal-scroll-area {
+  max-height: 280px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-right: 6px;
+  margin-bottom: 20px;
+}
+
+.modal-scroll-area::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-scroll-area::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.checkbox-item span {
+  word-break: break-all;
+  line-height: 1.4;
+}
+
+.checkbox-item input {
+  margin-top: 3px;
+  cursor: pointer;
+  accent-color: var(--google-blue);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.close-modal-btn {
+  background: #E2E8A6;
+  color: #1e1e1e;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.close-modal-btn:hover {
+  background: #B6C511;
+  color: #704266;
+  font-weight: bold;
+}
+.close-modal-btn:active{
+  transform: scale(0.94) !important; 
+  outline: none;
+  box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+  z-index: 1002;
+}
+/* ==========================================================================
+   3. THE ELIPTI-SNAP ORBITING BUTTON WRAPPER (Activated on Search)
    ========================================================================== */
 .ai-animated-button-wrapper {
   position: relative;
@@ -151,7 +349,7 @@ body {
 }
 
 /* ==========================================================================
-   3. JUMPING DOTS LOADER
+   4. JUMPING DOTS LOADER
    ========================================================================== */
 .jumping-dots {
   display: none;
@@ -182,17 +380,17 @@ body {
 }
 
 @keyframes dot-jump {
-  0%, 80%, 100% { 
+  0%, 80%, 100% {
     transform: scale(0);
     opacity: 0.3;
-  } 40% { 
+  } 40% {
     transform: translateY(-8px) scale(1);
     opacity: 1;
   }
 }
 
 /* ==========================================================================
-   4. RENDERING PANELS (RESULTS)
+   5. RENDERING PANELS (RESULTS)
    ========================================================================== */
 .results-container {
   display: flex;
@@ -241,7 +439,7 @@ body {
 }
 
 /* ==========================================================================
-   5. JUMPY/STAGGERED TIMELINE
+   6. ANIMATION TIMELINES
    ========================================================================== */
 @keyframes google-jumpy-orbit {
   0% { --orbit-angle: 0deg; }
@@ -251,7 +449,6 @@ body {
   100% { --orbit-angle: 360deg; }
 }
 
-/* Keyframes for the new animated border glow */
 @keyframes animated-border-glow {
     0% {
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
@@ -274,3 +471,4 @@ body {
                     0 0 10px rgba(100, 100, 255, 0.7); /* Blue (back to start) */
     }
 }
+
