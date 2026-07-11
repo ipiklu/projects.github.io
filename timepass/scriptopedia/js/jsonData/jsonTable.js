@@ -33,6 +33,29 @@ const JSON_TABLE = [
 		</tbody>
 		</table>`
 	},
+	{
+		title: "log find script alias set",
+		content: `<span class="index-alert">\u{0001F4E0}Set the <strong><i>alias</i></strong> after creating the script<strong>\u{2935}</strong> by following steps here \u{1F449}</span>
+				<img src="img/notepad.png" title="Click-To-Open" onClick="window.open('data/AliasLogFinder.txt','_blank','fullscreen,scrollbars');" class="img-right" />
+				<br><br>
+				<table width="500" border="2" bordercolor="#AA205C">
+				<thead> 
+					<tr>
+						<th class="zone-cell" colspan="3">LOG-FINDER-BASH-SCRIPT</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td width="38">
+							<a title="Click-To-Open" onClick="window.open('data/LogFinder.txt','_blank','fullscreen,scrollbars');" class="index-alert">\u{1F4C4}</a>
+						</td>
+						<td>
+							<a title="Click-To-Open" onClick="window.open('data/LogFinder.txt','_blank','fullscreen,scrollbars');" class="index-alert">LogFinder.txt</a>
+						</td>
+					</tr>
+				</tbody>
+				</table>`
+	},
 	{ 
 		title: "msoffice links",
 		content: `<table width="500" border="2" bordercolor="#AA205C">

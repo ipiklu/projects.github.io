@@ -1,0 +1,110 @@
+#!/bin/bash
+
+################# COLOR CODES ###################
+
+#echo -e "\e[41;1;37m This is red text \e[0m"
+
+##Black         0:30    Dark Gray       1:30
+##Blue          0:34    Light Blue      1:34
+##Green         0:32    Light Green     1:32
+##Cyan          0:36    Light Red       1:31
+##Red           0:31    Light Cyan      1:36
+##Purple        0:35    Light Purple    1:35
+##Brown         0:33    Yellow          1:33
+##Light Gray    0:37    White           1:37
+
+################################################
+#colors
+GREEN="\e[32m"
+RED="\e[31m"
+YELLOW="\e[33m"
+ADVRED="\e[41;1;37m"
+ADVGREEN="\e[48;5;236;32m"
+ADVGREY="\e[48;5;236;1m"
+ADVYELLOW="\e[48;5;236;33m"
+BLACKYELLOW="\e[0;4;30;46;44;43m"
+ADVBLINKGREEN="\e[48;5;236;32;1m"
+ADVBLUE="\e[0;33;1;44m"
+BLUE="\e[34m"
+RESET="\e[0m"
+###########################CLEAN-UP################################################
+
+SPIDER_PID=""
+
+cleanup() {
+	if [ -n "&SPIDER_PID" ]; then
+		kill "$SPIDER_PID" 2>/dev/null
+		wait "$SPIDER_PID" 2>/dev/null
+	fi
+}
+
+trap cleanup EXIT INT TERM
+
+#########################SPIDER_CRAWLER###########################################
+
+crawl_spider() {
+	WIDTH=20
+	POS=0
+	DIR=1
+	
+	# Old Putty friendly
+	SPIDER=$'\U1F577'
+	
+	while true; do
+		printf "\r%bSearching Logs%*s%s%b" \
+		"$ADVGREEN" "$POS" "" "$SPIDER" "$RESET"
+		
+		((POS += DIR))
+		
+		if (( POS >= WIDTH )); then
+			DIR=-1
+		elif (( POS <=0 )); then
+			DIR=1
+		fi
+	sleep 0.1
+	done
+}
+
+################## FIND LOGS LOGIC ##########################
+
+# Target directory passed from the alias
+TARGET_DIR="$1"
+
+# If an argument was passed, move to that directory
+if [ ! -z "$TARGET_DIR" ]; then
+	cd "$TARGET_DIR" || exit
+fi
+
+# --- Log searching commands goes here ---
+echo ""
+read -p $'\e[0;33;1;44mType IMSI/ MSISDN :\e[0m ' SEARCH_INPUT
+echo ""
+
+# Start Spider Animation
+crawl_spider &
+SPIDER_PID=$!
+
+OUTPUT=$(find . -type f -name "*log*" -exec grep -l "$SEARCH_INPUT" {} + | while read file; do awk -v val="$SEARCH_INPUT" '/^[0-9][0-9][0-9][0-9]-/ { if (block && found) { split(block,a,ORS); split(a[1],t,""); sub(/^\.\//,"",FILENAME); print FILENAME, t[1]" "substr(t[2],1,8); } block=$0; found=0; if(index($0,val)) found=1; next } { block=block ORS $0; if(index($0,val)) found=1 } END { if(block && found) { split(block,a,ORS); split(a[1],t,""); sub(/^\.\//,"",FILENAME); print FILENAME, t[1]" "substr(t[2],1,8); }}' "$file"; done)
+
+#Stop Spider Animation
+kill "$SPIDER_PID" 2>/dev/null
+wait "$SPIDER_PID" 2>/dev/null
+
+printf "\r%-80s\r" ""
+echo -e "${GREEN}\U2705 Search Completed${RESET}"
+printf "\n"
+
+if [ -z "$OUTPUT" ]; then
+	echo -e "$RED*No Logs Found$RESET"
+else
+	echo "$OUTPUT"
+	printf "\n"
+	echo -e "$ADVYELLOW *Choose the file name from above for which timestamp log need to displayed $RESET"
+	printf "\n"
+	read -p $'\e[0;33;1;44m Type File Name :\e[0m ' FILE_NAME_INPUT
+	printf "\n"
+	
+	awk -v val="$SEARCH_INPUT" '/^[0-9][0-9][0-9][0-9]-/ { if(block && found) print block "\n"; block=$0; found=0; if(index($0,val)) found=1; next } { block=block ORS $0; if(index($0,val)) found=1 } END { if(block && found) print block "\n" }' "$FILE_NAME_INPUT"
+fi
+printf "\n"
+################## END-OF-SCRIPT ##########################

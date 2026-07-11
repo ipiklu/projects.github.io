@@ -840,6 +840,25 @@ table {
 			color: transparent; /* Makes the text itself transparent to show the background */
 			animation: animated-text-color 4s infinite linear; /* New text color animation */		
 		}
+     .img-right {
+        border-radius: 10px;
+        max-width:40px;
+		max-height: 50%;
+		float:none;
+		transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	  }
+	  
+	.img-right:hover {
+			cursor:pointer;
+			animation: animated-border-glow 8s infinite linear;
+			transition: 0.2s all;
+			transform: scale(1.1); 
+		 }			
+		.img-right:active {
+			animation: animated-border-glow 8s infinite linear;
+			transition: 0.2s all;
+			transform: scale(0.94); 
+		 }			
      .imgS {
         border-radius: 10px;
 		margin-top: 10px;

@@ -1,0 +1,16 @@
+Step-1: Go to terminal window and type the below command
+
+alias logfind='clear;echo -e "\e[48;5;236;32m\U1F577\ufe0f\e[0m \e[0;33;1;44mCrawling Into:\e[0m \e[0;4;30;36;44;43m$(pwd)\e[0m"; /home/piklu/scripts/logfind.sh "$(pwd)"'
+
+Step-2: Now to make it permanent we need to put this above command in bashrc file (edit by typing the below command)
+
+vi ~/.bashrc
+i
+alias logfind='clear;echo -e "\e[48;5;236;32m\U1F577\ufe0f\e[0m \e[0;33;1;44mCrawling Into:\e[0m \e[0;4;30;36;44;43m$(pwd)\e[0m"; /home/piklu/scripts/logfind.sh "$(pwd)"'
+
+Esc
+:wq!
+
+Step-3: Now type the below command to execute
+
+~/.bashrc
