@@ -1,15 +1,47 @@
 // JavaScript Document
 
-// Dark mode toggle functionality
-const darkModeCheckbox = document.getElementById('darkModeCheckbox');
+// --- Dark mode toggle functionality with Persistence ---
+const initDarkMode = () => {
+    const darkModeCheckbox = document.getElementById('darkModeCheckbox');
+    
+    // Safety check in case the script runs before the HTML element renders
+    if (!darkModeCheckbox) return;
 
-darkModeCheckbox.addEventListener('change', function() {
-    if (this.checked) {
+    // 1. Check if a theme preference is already saved in localStorage
+    const savedDarkMode = localStorage.getItem('darkModeEnabled');
+
+    if (savedDarkMode === 'true') {
+        darkModeCheckbox.checked = true;
         document.body.classList.add('dark-mode');
-    } else {
+    } else if (savedDarkMode === 'false') {
+        darkModeCheckbox.checked = false;
         document.body.classList.remove('dark-mode');
+    } else {
+        // Fallback to the user's system device preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            darkModeCheckbox.checked = true;
+            document.body.classList.add('dark-mode');
+        }
     }
-});
+
+    // 2. Listen for switch toggles and save preferences instantly
+    darkModeCheckbox.addEventListener('change', function() {
+        if (this.checked) {
+            document.body.classList.add('dark-mode');
+            localStorage.setItem('darkModeEnabled', 'true');
+        } else {
+            document.body.classList.remove('dark-mode');
+            localStorage.setItem('darkModeEnabled', 'false');
+        }
+    });
+};
+
+// Execute as soon as the DOM structure is safely prepared by the browser
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initDarkMode);
+} else {
+    initDarkMode();
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     const chatForm = document.getElementById('chat-form');
@@ -55,6 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
     	const typingIndicator = document.createElement('div');
     	typingIndicator.classList.add('message', 'bot-message', 'typing-indicator');
     	typingIndicator.innerHTML = '<span class="bot-animated-sparkle">.</span><span class="bot-animated-sparkle">.</span><span class="bot-animated-sparkle">.</span>';
+		//typingIndicator.innerHTML = '<img src="img/GalaxyAI.gif" style="max-width: 40px"/>';
     	chatMessages.appendChild(typingIndicator);
     	chatMessages.scrollTop = chatMessages.scrollHeight;
     	return typingIndicator; // Return the element so we can easily remove it later
@@ -107,52 +140,94 @@ document.addEventListener('DOMContentLoaded', () => {
 		return "Going back to server index..";	
 	};
 
-	// New function to generate image
+// New function to generate image
 	const goToGenImg = () => {
 		// Convert the input to lowercase for case-insensitive matching
-  		const imageChoice = prompt("What kind of image would you like to generate? (e.g., cat, dog, bird, dudu, bubu, dudufudu,minion)");
+		const imageChoice = prompt("What kind of image would you like to generate? (e.g., cat, dog, bird, dudu, bubu, dudufudu,minion)");
+		
+		if (!imageChoice) return ""; // Safety check if user clicks cancel
+		
 		const input = imageChoice.toLowerCase();
+		let finalImgHtml = "";
+		let fallbackSearch = false; // Flag to check if we need to search Google
 		
 		if (input.includes('cat')) {
-			return '<img src="img/cat.gif" alt="A cat">';	
+			finalImgHtml = '<img src="img/cat.gif" alt="A cat">';	
 		}
 		else if (input.includes('dog')) {
-    		return '<img src="img/dog.gif" alt="A dog">';
+			finalImgHtml = '<img src="img/dog.gif" alt="A dog">';
 		}
 		else if (input.includes('bird')) {
-    		return '<img src="img/bird.gif" alt="A bird">';
-  		}
-		else if (input === 'dudu') {
-    		return '<img src="img/dudu.gif" alt="A bird">';
-  		}
-		else if (input === 'bubu') {
-    		return '<img src="img/bubu.gif" alt="A bird">';
-  		}
-		else if (input === 'dudufudu') {
-    		return '<img src="img/dudufudu.gif" alt="A bird">';
-  		}
-		else if (input === 'tilu') {
-    		return '<img src="img/tilu.jpg" style="max-height: 40vh" alt="creator baby">';
-  		}
-		else if (input.includes('tilu profile pic')) {
-    		return '<img src="img/tilufront.jpg" style="max-height: 40vh" alt="creator baby">';
-  		}	
-		else if (input === 'tilu colorful') {
-    		return '<img src="img/tilucolor.jpg" style="max-height: 40vh" alt="creator baby">';
-  		}
-		else if (input === 'tilu holi pic') {
-    		return '<img src="img/tilucolor.jpg" style="max-height: 40vh" alt="creator baby">';
-  		}
-		else if (input === 'tilu playing holi') {
-    		return '<img src="img/tilucolor.jpg" style="max-height: 40vh" alt="creator baby">';
-  		}		
-		else if (input.includes('minion')) {
-    		return '<img src="img/5G7b.gif" style="max-height: 40vh" alt="creator baby">';
-  		}																	
-		// A default image for any other input	
-		else {	
-			return `<img src="img/cLL.gif" alt="Generated image">`;
+			finalImgHtml = '<img src="img/bird.gif" alt="A bird">';
 		}
+		else if (input === 'dudu') {
+			finalImgHtml = '<img src="img/dudu.gif" alt="A bird">';
+		}
+		else if (input === 'bubu') {
+			finalImgHtml = '<img src="img/bubu.gif" alt="A bird">';
+		}
+		else if (input === 'dudufudu') {
+			finalImgHtml = '<img src="img/dudufudu.gif" alt="A bird">';
+		}
+		else if (input === 'tilu') {
+			finalImgHtml = '<img src="img/tilu.jpg" style="max-height: 40vh" alt="creator baby">';
+		}
+		else if (input.includes('tilu profile pic')) {
+			finalImgHtml = '<img src="img/tilufront.jpg" style="max-height: 40vh" alt="creator baby">';
+		}	
+		else if (input === 'tilu colorful') {
+			finalImgHtml = '<img src="img/tilucolor.jpg" style="max-height: 40vh" alt="creator baby">';
+		}
+		else if (input === 'tilu holi pic') {
+			finalImgHtml = '<img src="img/tilucolor.jpg" style="max-height: 40vh" alt="creator baby">';
+		}
+		else if (input === 'tilu playing holi') {
+			finalImgHtml = '<img src="img/tilucolor.jpg" style="max-height: 40vh" alt="creator baby">';
+		}		
+		else if (input.includes('minion')) {
+			finalImgHtml = '<img src="img/5G7b.gif" style="max-height: 40vh" alt="creator baby">';
+		}																	
+		// Triggered if the image isn't found in your local code list
+		else {	
+			fallbackSearch = true;
+			// Keep the interface exactly as you had it originally, using your default GIF footprint
+			finalImgHtml = `<img src="img/cLL.gif" alt="Generated image">`;
+		}
+
+		// Unique ID to track this specific image element instance
+		const targetId = "img-render-" + Math.floor(Math.random() * 100000);
+
+		// Wait 3 seconds, swap the elements, and instantly force a scroll adjustment
+		window.setTimeout(() => {
+			const checkExist = window.setInterval(() => {
+				const container = document.getElementById(targetId);
+				if (container) {
+					window.clearInterval(checkExist);
+					
+					// Swap loader tag for target image HTML element
+					container.outerHTML = finalImgHtml;
+					
+					// DIRECT REDIRECT: Pop open Google Images directly when the loader finishes
+					if (fallbackSearch) {
+						window.open(`https://www.google.com/search?q=${encodeURIComponent(imageChoice)}&tbm=isch`, '_blank', 'fullscreen,scrollbar');
+					}
+					
+					// Auto-scroll logic: Find the chat container block and push scroll down
+					const chatBody = document.getElementById('chat-messages') || 
+					                 document.getElementById('chat-container') || 
+					                 document.querySelector('.chat-messages');
+					                 
+					if (chatBody) {
+						setTimeout(() => {
+							chatBody.scrollTop = chatBody.scrollHeight;
+						}, 50);
+					}
+				}
+			}, 50);
+		}, 3000);
+
+		// Instantly returns your initial loader GIF structure
+		return `<span id="${targetId}"><img src="img/GalaxyAI.gif" style="max-width: 90px;" alt="Loading..."></span>`;
 	};
 	
 	// New function to navigate to Q&A app
@@ -674,9 +749,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+<!---Reload --->
 function reloadClear() {
+    // 1. Grab your current dark mode setting and save it to a variable
+    const currentDarkMode = localStorage.getItem("darkModeEnabled");
+    // 2. Clear everything else out of localStorage
     window.localStorage.clear();
-    window.location.reload(true);
+    // 3. If there was a setting saved, put it right back in
+    if (currentDarkMode !== null) {
+        localStorage.setItem("darkModeEnabled", currentDarkMode);
+    }
+    // 4. Reload the page cleanly
+    window.location.reload();
     return false;
 }
 
