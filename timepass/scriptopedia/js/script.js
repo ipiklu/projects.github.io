@@ -86,7 +86,8 @@ function showLoading(show) {
 
 function handleSearch() {
     typingTimers.forEach(t => clearTimeout(t));
-    const query = document.getElementById('searchInput').value.toLowerCase().trim();
+    const queryInput = document.getElementById('searchInput');
+    const query = queryInput.value.toLowerCase().trim();
     const container = document.getElementById('resultsContainer');
     
     if (!query) return;
@@ -97,53 +98,138 @@ function handleSearch() {
     setTimeout(() => {
         showLoading(false);
 
+        // 1. Try to find exact or substring matches first
         const results = JSON_DATA.filter(item => item.title.toLowerCase().includes(query))
                         .concat(JSON_TABLE.filter(item => item.title.toLowerCase().includes(query)));
 
-		if (results.length === 0) {
-			// 1. Create the paragraph element
-			const noMatchMsg = document.createElement('div');
-			const helpMsg = document.createElement('div');
-			const imageContainer = document.createElement('div');
-			noMatchMsg.className = "typing NoMatch";
-			helpMsg.className = "typing animated-tick";
-			
-			// Style the image element separately
-			const imgEl = document.createElement('img');
-			imgEl.src = "img/waiting_room_landscape.avif";
-			imgEl.style.maxWidth = "500px"; // Adjust size as needed
-			imageContainer.appendChild(imgEl);
-			
-			// 2. Append it to the container first
-			container.innerHTML = ''; // Clear previous content
-			container.appendChild(noMatchMsg);
-			container.appendChild(document.createElement('br'));
-			container.appendChild(helpMsg);
-			container.appendChild(document.createElement('br'));
-			container.appendChild(document.createElement('br'));
-			container.appendChild(imageContainer);
-			
-			// 3. Trigger the typing effect with your message
-			const message = `No matches found for "${query}"`;
-			const help_message = `Type <b><i class="index-alert">help</i></b> for searching keywords`;
-			typeEffect(noMatchMsg, message);
-			typeEffect(helpMsg, help_message);
-			
-			return;
-		}
+        if (results.length === 0) {
+            container.innerHTML = ''; 
 
+            // 2. Look for "Did you mean?" partial keyword matches
+            const queryWords = query.split(/\s+/).filter(word => word.length > 2); 
+            let suggestions = [];
+
+            if (queryWords.length > 0) {
+                const allItems = JSON_DATA.concat(JSON_TABLE);
+                
+                allItems.forEach(item => {
+                    const titleLower = item.title.toLowerCase();
+                    const matches = queryWords.filter(word => titleLower.includes(word));
+                    
+                    if (matches.length > 0) {
+                        suggestions.push({
+                            title: item.title,
+                            matchCount: matches.length
+                        });
+                    }
+                });
+
+                suggestions.sort((a, b) => b.matchCount - a.matchCount);
+            }
+
+            // 3. IF SUGGESTIONS EXIST: Run animation sequence
+            if (suggestions.length > 0) {
+                const suggestionBox = document.createElement('div');
+                suggestionBox.className = "suggestion-container-box";
+                
+                // Create element for the main heading
+                const headingEl = document.createElement('div');
+                headingEl.className = "typing suggestion-heading";
+                suggestionBox.appendChild(headingEl);
+                suggestionBox.appendChild(document.createElement('br'));
+
+                // Create a container for the animated image
+                const animationContainer = document.createElement('div');
+                animationContainer.className = "thinking-animation-container";
+                
+                const animImg = document.createElement('img');
+                animImg.src = "img/GalaxyAI.gif"; // Path to your animated gif/apng
+                animImg.className = "thinking-loader-image";
+                
+                animationContainer.appendChild(animImg);
+                suggestionBox.appendChild(animationContainer);
+
+                // Setup suggestion elements, but do NOT append them yet
+                const uniqueTopSuggestions = [...new Set(suggestions.map(s => s.title))];
+                const suggestionElements = [];
+
+                uniqueTopSuggestions.forEach((title) => {
+                    const linkWrap = document.createElement('div');
+                    linkWrap.className = "suggestion-link-wrapper";
+                    
+                    const linkEl = document.createElement('a');
+                    linkEl.href = "#";
+                    linkEl.className = "typing suggestion-link";
+                    
+                    const escapedTitle = title.replace(/'/g, "\\'");
+                    linkEl.setAttribute("onclick", `document.getElementById('searchInput').value='${escapedTitle}'; handleSearch(); return false;`);
+					linkEl.setAttribute("title", "Click-To-Search");
+                    
+                    linkWrap.appendChild(linkEl);
+                    suggestionElements.push({ wrapper: linkWrap, element: linkEl, text: title });
+                });
+
+                container.appendChild(suggestionBox);
+
+                // A. Type the heading first
+                const headingText = `Did you mean? <label style="color: #AA7503;">(Choose \u{1F447}/ Type <span href="#" title="Click-To-Search" class="suggestion-help-inline-link index-alert" onclick="document.getElementById('searchInput').value='help'; handleSearch(); return false;">help</span>)</label>`;
+                typeEffect(headingEl, headingText);
+
+                // B. Wait 5 seconds, remove the image, then type the links
+                setTimeout(() => {
+                    // Remove the animated image container
+                    if (animationContainer.parentNode) {
+                        animationContainer.parentNode.removeChild(animationContainer);
+                    }
+
+                    // Append and trigger typing for each suggestion link
+                    suggestionElements.forEach(item => {
+                        suggestionBox.appendChild(item.wrapper);
+                        typeEffect(item.element, item.text);
+                    });
+                }, 2000); // 5000 milliseconds = 5 seconds
+
+                return; 
+            }
+
+            // 4. FALLBACK: Run if zero exact AND zero partial matches are found
+            const noMatchMsg = document.createElement('div');
+            const helpMsg = document.createElement('div');
+            const imageContainer = document.createElement('div');
+            
+            noMatchMsg.className = "typing NoMatch";
+            helpMsg.className = "typing animated-tick";
+
+            container.appendChild(noMatchMsg);
+            container.appendChild(document.createElement('br'));
+            container.appendChild(helpMsg);
+            container.appendChild(document.createElement('br'));
+            container.appendChild(document.createElement('br'));
+
+            const imgEl = document.createElement('img');
+            imgEl.src = "img/waiting_room_landscape.avif";
+            imgEl.className = "fallback-error-image";
+            imageContainer.appendChild(imgEl);
+            container.appendChild(imageContainer);
+            
+            const message = `No matches found for "${query}"`;
+            const help_message = `Type <b><i class="index-alert">help</i></b> for searching keywords`;
+            typeEffect(noMatchMsg, message);
+            typeEffect(helpMsg, help_message);
+            
+            return;
+        }
+
+        // Render matching results if exact ones exist
         results.forEach(res => {
             const div = document.createElement('div');
             div.className = 'result-item';
             div.style.textAlign = 'center'; 
 
-            // Simpler check: Does the content string have "<table" in it?
             if (res.content.toLowerCase().includes('<table')) {
-                // Table: Display immediately without typeEffect
                 div.innerHTML = `<div>${res.content}</div>`;
                 container.appendChild(div);
             } else {
-                // Not a table: Use your working typeEffect logic
                 div.innerHTML = `<p class="typing animated-sparkle index-alert"></p>`;
                 container.appendChild(div);
                 typeEffect(div.querySelector('p'), res.content);

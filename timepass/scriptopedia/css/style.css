@@ -840,6 +840,108 @@ table {
 			color: transparent; /* Makes the text itself transparent to show the background */
 			animation: animated-text-color 4s infinite linear; /* New text color animation */		
 		}
+/* Did You Mean Container */
+.suggestion-container-box {
+    margin: 30px 0;
+    padding: 10px;
+    color: #AA205C;
+}
+
+/* Heading style */
+.suggestion-heading {
+    font-weight: bold;
+    font-size: 24px;
+    display: inline-block;
+}
+
+/* Custom Header Bulb Image */
+.suggestion-heading:before {
+    content: "";
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background-image: url("../img/solutionImg.png"); /* Your custom bulb static/thinking image */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+/* Inline Help Link within the Heading */
+.suggestion-help-inline-link {
+    text-decoration: none;
+    font-weight: bold;
+    font-style: italic;
+}
+.suggestion-help-inline-link:hover {
+	cursor: pointer;
+    transform: scale(1.05);
+}
+.suggestion-help-inline-link:active {
+    transform: scale(0.95);
+}
+
+/* Temporary Thinking Animation Style */
+.thinking-animation-container {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.thinking-loader-image {
+    max-width: 150px; /* Adjust size of your loader GIF */
+    width: 100%;
+    height: auto;
+}
+
+/* Wrapper structure to ensure typed links stack correctly */
+.suggestion-link-wrapper {
+    margin: 12px 0;
+    display: flex;
+	justify-content: flex-start;
+    padding-left: 38px;
+    align-items: center;
+}
+
+/* Bullet Point using pseudo-element */
+.suggestion-link-wrapper::before {
+    content: "•";
+    color: #AA205C;
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+/* Individual suggestion link styles */
+.suggestion-link {
+    color: #1a73e8;
+    font-style: italic;
+    font-size: 20px;
+    text-decoration: none;
+    display: inline-block; 
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.suggestion-link:hover {
+    color: #AA205C;
+    text-decoration: underline;
+    transform: scale(1.03);
+    cursor: pointer;
+}
+
+.suggestion-link:active {
+    transform: scale(0.98);
+}
+
+/* Fallback Graphic Profile */
+.fallback-error-image {
+    max-width: 500px;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+	
      .img-right {
         border-radius: 10px;
         max-width:40px;
