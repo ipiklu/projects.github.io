@@ -57,6 +57,34 @@ const JSON_TABLE = [
 				</table>`
 	},
 	{ 
+		title: "analytics dashboard sample",
+		content: `<table width="500" border="2" bordercolor="#AA205C">
+		<thead> 
+			<tr>
+				<th class="zone-cell" colspan="2">
+					<img src="img/analyticsDash.png" title="Click-Below-To-Open-Application" style="max-width:50px;">
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					<a class="index-alert">
+						<img src="img/html.png" onClick="window.open('data/analysisDashboard/index.html','_blank','fullscreen,scrollbars');" title="Click-To-Open-Application" style="max-width: 70px;">
+						<span title="Click-To-Download-HTML-Dashboard" onClick="window.location.href = 'data/analysisDashboard.zip';" class="index-alert">\u{1F4E5}</span>
+					</a>
+				</td>
+				<td>
+					<a class="index-alert">
+						<img src="img/excel.webp" onClick="openAnalyticsSample()" title="Click-To-Open-Application" style="max-width: 70px;">
+						<span title="Click-To-Download-Sheet-Dashboard" onClick="window.location.href = 'data/analysisDashboard/PowerBI_Dark_Executive_Dashboard.xlsx';" class="index-alert">\u{1F4E5}</span>
+					</a>
+				</td>
+			</tr>
+		</tbody>
+		</table>`
+	},
+	{ 
 		title: "msoffice links",
 		content: `<table width="500" border="2" bordercolor="#AA205C">
 		<thead> 
@@ -322,8 +350,30 @@ const JSON_TABLE = [
 		</table>`
 	},
 	{ 
+		title: "openai learning platform link",
+		content: `<table width="350" border="2" bordercolor="#AA205C">
+		<thead> 
+			<tr>
+				<th class="zone-cell" colspan="3">OpenAI-Learning-Platform-Link</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td width="38" align="center">
+					<a title="Click-To-Open-OpenAI-Learning-Platform" onClick="window.open('https://partners.openai.com/','_blank');" class="index-alert">
+						<img src="img/openai.png" title="OpenAI-Platform" style="max-width:25px;">
+					</a>
+				</td>
+				<td align="left">
+					<a title="Click-To-Open-OpenAI-Learning-Platform" onClick="window.open('https://partners.openai.com/','_blank');" class="index-alert">OpenAI Learning Platform</a>
+				</td>
+			</tr>
+		</tbody>
+		</table>`
+	},
+	{ 
 		title: "web links",
-		content: `<table width="220" border="2" bordercolor="#AA205C">
+		content: `<table width="300" border="2" bordercolor="#AA205C">
 		<thead> 
 			<tr>
 				<th class="zone-cell" title="\u{1F447}Press below links to open\u{1F447}" colspan="2">WEB-LINKS</th>
@@ -376,6 +426,16 @@ const JSON_TABLE = [
 				</td>
 				<td align="left">
 					<a title="Click-To-Open-Gargantua" onClick="window.open('../gargantua/index.html','_blank','fullscreen,scrollbars');" class="index-alert">Gargantua</a>
+				</td>
+			</tr>
+			<tr>
+				<td width="38" align="center">
+					<a title="Click-To-Open-OpenAI-Learning-Platform" onClick="window.open('https://partners.openai.com/','_blank');" class="index-alert">
+						<img src="img/openai.png" title="OpenAI-Platform" style="max-width:25px;">
+					</a>
+				</td>
+				<td align="left">
+					<a title="Click-To-Open-OpenAI-Learning-Platform" onClick="window.open('https://partners.openai.com/','_blank');" class="index-alert">OpenAI Learning Platform</a>
 				</td>
 			</tr>
 		</tbody>

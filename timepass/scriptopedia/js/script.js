@@ -338,6 +338,13 @@ function reloadClear() {
     return false;
 }
 
+<!---MicroSoft Excel function Sample Analytics file (Open locally)--->
+function openAnalyticsSample() {
+	const fileUrl = "https://ipiklu.github.io/projects.github.io/timepass/scriptopedia/data/analysisDashboard/PowerBI_Dark_Executive_Dashboard.xlsx";
+	//Encode only the file URL part
+	window.location.href = "ms-excel:ofe|u|" + encodeURI(fileUrl);
+}
+
 <!---MicroSoft Excel function (Open locally)--->
 function openExcel() {
 	const fileUrl = "https://ipiklu.github.io/projects.github.io/timepass/scriptopedia/data/blank/blank.xlsx";
