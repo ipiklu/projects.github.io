@@ -10,11 +10,13 @@ body {
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.08);
+			transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         
         .glass-panel:hover {
             border-color: rgba(59, 130, 246, 0.3);
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(59, 130, 246, 0.1);
+			animation: animated-border-glow 8s infinite linear;
         }
 
         /* Custom Scrollbars */
@@ -96,7 +98,56 @@ body {
 					/* Scaling button to 0.98 to its original size */
 					box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
 					/* Lowering the shadow */
-				}   
+				}
+				
+	input[type="text"]{
+		border: 1px none; border-radius: 10px; transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+	input[type="text"]:hover {
+		transform: scale(1.01); box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); color:#E59E11; cursor: text; background-color: rgba(0, 0, 0, 0.2);
+		border: 1px dashed #AA205c;
+	}
+	input[type="text"]:active {
+		transform: scale(0.98); box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); /*Lowering the shadow*/
+	}
+	
+	.dropdown {
+		outline: none; background: #121212; color: #E59E11; border-radius: 5em; transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+	.dropdown:hover {
+		transform: scale(1.01); box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); cursor: pointer; background: #121212; color: #E59E11;
+		border: 1px dashed #AA205c;
+	}
+	.dropdown:active {
+		outline: none; transform: scale(0.98); box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); /*Lowering the shadow*/
+	}
+	.dropdown:focus {
+  		outline: none !important;  border-color: rgba(55, 65, 81, 0.8) !important;
+	}   
+	
+	.index-alert { 
+			color: #AA205C;
+			transition: color 0.3s ease;
+		}
+
+		.index-alert:hover { 
+				/* Key properties for the AI effect */
+			background-image: linear-gradient(
+				90deg,
+				#1a73e8, /* Blue */
+				#34a853, /* Green */
+				#000, 	/* black */
+				#B6C511,
+				#1a73e8, /* Blue again for a smooth loop */
+				#34a853
+			);
+			background-size: 400% 100%; /* Make the gradient wider than the text */
+				-webkit-background-clip: text; /* Clips the background to the text shape */
+			background-clip: text;
+			color: transparent; /* Makes the text itself transparent to show the background */
+			animation: animated-text-color 4s infinite linear; /* New text color animation */		
+		}
+					
 	.imgS:hover {
 			animation: animated-border-glow 8s infinite linear;
 			transition: 0.2s all;
@@ -106,4 +157,48 @@ body {
 			animation: animated-border-glow 8s infinite linear;
 			transition: 0.2s all;
 			transform: scale(0.94); 
-		 }			
+		 }
+		 
+/* Keyframes for the new animated border glow */
+@keyframes animated-border-glow {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue */
+    }
+    25% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 255, 100, 0.7); /* Green */
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 100, 100, 0.7); /* Red */
+    }
+    75% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(255, 255, 100, 0.7); /* Yellow */
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(100, 100, 255, 0.7); /* Blue (back to start) */
+    }
+}
+
+/* Define the keyframes for the text color */
+@keyframes animated-text-color {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+/*New keyframe for image animation*/
+@-webkit-keyframes animated-text-color {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}

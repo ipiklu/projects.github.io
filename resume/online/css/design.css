@@ -135,7 +135,47 @@ body::-webkit-scrollbar-track {
 			transition: 0.2s all;
 			transform: scale(1.1); 
 	}	
-	  
+
+.certImg {
+	border-radius: 10px;
+	margin-top: 10px;
+	margin-bottom: 20px;
+	max-width:80px;
+	max-height: 90%;
+	float:left;
+	transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+	.certImg:hover {
+			animation: animated-border-glow 8s infinite linear;
+			transition: 0.2s all;
+			transform: scale(2.5);
+			cursor:pointer;
+	}	  
+	.certImg:active{
+		transition: 0.2s all;
+		transform: scale(1.5);
+	}
+.cert-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;           /* Space between individual badges/certificates */
+    margin-bottom: 15px; /* Gap between the first row and second row */
+}
+.cert-divider {
+    clear: both;
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    border: 0;
+    border-top: 1px solid #eee;
+}	
+hr {
+    clear: both;
+    display: block;
+    width: 100%;
+	margin-top: 15px;
+}	
 	  .w3-margin-bottom:hover{
 			margin-top:25px;
             /* Scaling button to 0.98 to its original size */
@@ -144,6 +184,7 @@ body::-webkit-scrollbar-track {
         }
 		
 		.w3-margin-b2:hover{
+			animation: animated-border-glow 8s infinite linear;
 			margin-top:25px;
             /* Scaling button to 0.98 to its original size */
             box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.5);
